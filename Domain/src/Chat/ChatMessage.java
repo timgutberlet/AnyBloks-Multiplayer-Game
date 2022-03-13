@@ -2,7 +2,7 @@ package Chat;
 
 import java.sql.Timestamp;
 import java.util.Date;
-import Game.Player;
+import GameLogic.Player;
 
 /**
  * @author tgeilen

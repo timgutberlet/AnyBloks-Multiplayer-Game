@@ -1,5 +1,5 @@
-import Game.Player;
-import Game.Session;
+import GameLogic.Player;
+import GameLogic.Session;
 
 /**
  * @author tgeilen
@@ -9,9 +9,10 @@ public class Main {
 
 	public static void main(String[] args){
 
-		Session session = new Session();
+
 		Player p1 = new Player("Player1");
-		session.addPlayer(p1);
+		Session session = new Session(p1);
+		
 
 		Player p2 = new Player("Player2");
 		session.addPlayer(p2);

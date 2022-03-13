@@ -1,4 +1,4 @@
-package Game;
+package GameLogic;
 
 import Chat.Chat;
 import java.util.ArrayList;
@@ -12,13 +12,22 @@ public class Session {
 	private Chat chat;
 	private ArrayList<Player> playerList;
 	private Game game;
+	private Player host;
 
-	public Session(){
+	public Session(Player player){
 		this.chat = new Chat();
 		this.playerList = new ArrayList<Player>();
+		this.host = player;
+		this.addPlayer(this.host);
 	}
 
 	public void addPlayer(Player player){
+		this.playerList.add(player);
+		player.joinSession(this);
+	}
+
+	public void addPlayer(String username){
+		Player player = new Player(username);
 		this.playerList.add(player);
 		player.joinSession(this);
 	}

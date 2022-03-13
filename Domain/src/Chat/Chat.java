@@ -1,7 +1,7 @@
 package Chat;
 
 import java.util.ArrayList;
-import Game.Player;
+import GameLogic.Player;
 
 /**
  * @author tgeilen

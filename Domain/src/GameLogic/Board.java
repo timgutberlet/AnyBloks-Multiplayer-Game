@@ -1,6 +1,4 @@
-package Game;
-
-import java.util.Arrays;
+package GameLogic;
 
 /**
  * @author tgeilen
