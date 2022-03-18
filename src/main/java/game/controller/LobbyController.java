@@ -20,7 +20,7 @@ public class LobbyController extends AbstractUiController {
   public void init(AbstractGameController gameController, Group root2D) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(LobbyController.class.getResource("LobbyView.fxml"));
+      loader.setLocation(getClass().getResource("/LobbyView.fxml"));
       loader.setControllerFactory(e -> this);
       root2D.getChildren().add(loader.load());
     } catch (IOException e) {

@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import engine.controller.AbstractGameController;
 import game.controller.MainMenuUiController;

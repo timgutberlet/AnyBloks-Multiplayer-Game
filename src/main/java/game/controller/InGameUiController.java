@@ -4,6 +4,8 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.view.InGameView;
 import javafx.scene.Group;
+import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 
 public class InGameUiController extends AbstractUiController {
 
@@ -22,13 +24,14 @@ public class InGameUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
-    /*for (Rectangle rectangle : inGameView.getBoardPane().getSquares()) {
+    for (Rectangle rectangle : inGameView.getBoardPane().getSquares()) {
       if (gameController.getInputHandler().isRectangleClicked(rectangle)) {
         System.out.println(
             "Rectangle " + GridPane.getRowIndex(rectangle) + " " + GridPane.getColumnIndex(
                 rectangle) + " is clicked");
-      }*/
-  }
+      }
+    }
 
+  }
 }
 

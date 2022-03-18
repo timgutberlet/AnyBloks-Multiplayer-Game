@@ -1,4 +1,4 @@
-package game;
+package game.core;
 
 import java.io.IOException;
 import javafx.application.Application;

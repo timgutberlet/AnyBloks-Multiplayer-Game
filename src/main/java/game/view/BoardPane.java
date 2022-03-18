@@ -1,9 +1,11 @@
 package game.view;
 
+import game.model.Board;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -23,13 +25,7 @@ public class BoardPane extends GridPane {
 
   void setSquare(Color color, int row, int column) {
     Rectangle r = new Rectangle(30, 30);
-
-    if (color == null) {
-      r.setFill(Color.GREY);
-    } else {
-      r.setFill(color);
-    }
-
+    r.setFill(color);
     squares.add(r);
     this.add(r, column, row);
 
@@ -38,7 +34,7 @@ public class BoardPane extends GridPane {
   final void setBoard() {
     for (int row = 0; row < Board.SIZE; row++) {
       for (int column = 0; column < Board.SIZE; column++) {
-        setSquare(board.getColorAt(row, column), row, column);
+        setSquare(board.getJavaColor(row, column), row, column);
       }
     }
   }

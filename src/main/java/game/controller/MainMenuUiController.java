@@ -26,7 +26,7 @@ public class MainMenuUiController extends AbstractUiController {
   public void init(AbstractGameController gameController, Group root2D) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(MainMenuUiController.class.getResource("MainMenuView.fxml"));
+      loader.setLocation(getClass().getResource("/MainMenuView.fxml"));
       loader.setControllerFactory(e -> this);
       root2D.getChildren().add(loader.load());
     } catch (IOException e) {
