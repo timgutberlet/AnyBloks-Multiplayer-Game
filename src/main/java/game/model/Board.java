@@ -1,5 +1,6 @@
 package game.model;
 
+import game.view.InGameView;
 import java.io.Serializable;
 import javax.print.DocFlavor.STRING;
 
@@ -41,6 +42,9 @@ public class Board implements Serializable, Cloneable {
   }
 
   public Color getColor(int n, int m) {
+    if (n >= getSize() || m >= getSize()) {
+      return Color.WHITE;
+    }
     return board[n][m].getColor();
   }
 
@@ -54,6 +58,20 @@ public class Board implements Serializable, Cloneable {
 
   public Square[][] getBoard() {
     return board;
+  }
+
+  /**
+   * Method updates the IngameView with the current colored Squares
+   *
+   * @param view current InGameView that is shown to the user
+   * @author tgutberl
+   */
+  public void updateBoard(InGameView view) {
+    for (int i = 0; i < getSize(); i++) {
+      for (int j = 0; j < getSize(); j++) {
+        view.getBoardPane().setSquare(this.getJavaColor(i, j), i, j);
+      }
+    }
   }
 
   /**

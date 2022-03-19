@@ -23,7 +23,7 @@ public class BoardPane extends GridPane {
     setStyle();
   }
 
-  void setSquare(Color color, int row, int column) {
+  public void setSquare(Color color, int row, int column) {
     Rectangle r = new Rectangle(30, 30);
     r.setFill(color);
     squares.add(r);

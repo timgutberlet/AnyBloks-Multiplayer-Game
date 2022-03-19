@@ -1,8 +1,10 @@
 package game.model;
 
+import game.view.InGameView;
+
 public class MainT {
 
-  public static void main(String[] args) {
+  public static void initGame(InGameView view) {
     GameState gameState = new GameState(GameMode.CLASSIC);
     GameLogic gameLogic = new GameLogic(gameState);
     Player p1 = new Player("AI1", PlayerType.AI_HARD, 0, 0);
@@ -17,10 +19,12 @@ public class MainT {
       System.out.println(p);
     }
     System.out.println(gameLogic.getGameState().getBoard());
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 50; i++) {
       gameLogic.playTurn(AI.calculateNextMove(p1, gameLogic));
+      gameLogic.getGameState().getBoard().updateBoard(view);
       System.out.println(gameLogic.getGameState().getBoard());
       gameLogic.playTurn(AI.calculateNextMove(p2, gameLogic));
+      gameLogic.getGameState().getBoard().updateBoard(view);
       System.out.println(gameLogic.getGameState().getBoard());
     }
   }

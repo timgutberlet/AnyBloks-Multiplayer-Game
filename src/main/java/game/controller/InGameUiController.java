@@ -2,8 +2,10 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
+import game.model.MainT;
 import game.view.InGameView;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 
@@ -19,6 +21,7 @@ public class InGameUiController extends AbstractUiController {
   public void init(AbstractGameController gameController, Group root) {
     inGameView = new InGameView();
     inGameView.init(gameController, root);
+    MainT.initGame(inGameView);
   }
 
   @Override

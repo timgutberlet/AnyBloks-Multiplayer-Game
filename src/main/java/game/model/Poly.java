@@ -8,6 +8,7 @@ import java.util.Objects;
  * this class represents a specific polygon of the game
  *
  * @author tiotto
+ * @author tgutberl
  */
 
 public class Poly {
@@ -50,16 +51,36 @@ public class Poly {
 
   public static ArrayList<boolean[][]> shapeList = new ArrayList<>();
 
+  /**
+   * Initializing all pieces of the basic Game
+   *
+   * @author tgutberl
+   * @author tiotto
+   */
   static {
-    boolean[][] s1 = new boolean[][]{{true, true}, {true, false}, {true, false}};
-    boolean[][] s2 = new boolean[][]{{true, true}, {true, true}};
-    boolean[][] s3 = new boolean[][]{{true, true}, {true, false}};
-    boolean[][] s4 = new boolean[][]{{true, true, true}, {true, false, false},
-        {true, false, false}};
-    shapeList.add(s4);
-    shapeList.add(s1);
-    shapeList.add(s2);
-    shapeList.add(s3);
+    boolean[][][] pieceList = {new boolean[][]{{true}}, new boolean[][]{{true, true}},
+        new boolean[][]{{false, true}, {true, true}}, new boolean[][]{{true, true, true}},
+        new boolean[][]{{true, true, true, true}},
+        new boolean[][]{{false, false, true}, {true, true, true}},
+        new boolean[][]{{true, true, false}, {false, true, true}},
+        new boolean[][]{{true, true}, {true, true}},
+        new boolean[][]{{true, true, true}, {false, true, false}},
+        new boolean[][]{{false, true, true}, {true, true, false}, {false, true, false}},
+        new boolean[][]{{true}, {true}, {true}, {true}, {true}},
+        new boolean[][]{{true, false}, {true, false}, {true, false}, {true, true}},
+        new boolean[][]{{false, false}, {true, true}, {true, false}, {true, false}},
+        new boolean[][]{{true, true}, {true, true}, {true, false}},
+        new boolean[][]{{true, true, true}, {false, true, false}, {false, true, false}},
+        new boolean[][]{{true, false, true}, {true, true, true}},
+        new boolean[][]{{false, false, true}, {false, false, true}, {true, true, true}},
+        new boolean[][]{{false, false, true}, {false, true, true}, {true, true, false}},
+        new boolean[][]{{false, true, false}, {true, true, true}, {false, true, false}},
+        new boolean[][]{{false, true}, {true, true}, {false, true}, {false, true}},
+        new boolean[][]{{true, true, false}, {false, true, false}, {false, true, true}}};
+    for (boolean[][] piece : pieceList) {
+      shapeList.add(piece);
+    }
+    ;
   }
 
   /**
