@@ -19,13 +19,14 @@ public class MainT {
       System.out.println(p);
     }
     System.out.println(gameLogic.getGameState().getBoard());
-    for (int i = 0; i < 500; i++) {
+    gameLogic.startGame();
+    while (gameLogic.getGameState().isStateRunning()) {
       gameLogic.playTurn(AI.calculateNextMove(p1, gameLogic));
       gameLogic.getGameState().getBoard().updateBoard(view);
-      System.out.println(gameLogic.getGameState().getBoard());
+      //System.out.println(gameLogic.getGameState().getBoard());
       gameLogic.playTurn(AI.calculateNextMove(p2, gameLogic));
       gameLogic.getGameState().getBoard().updateBoard(view);
-      System.out.println(gameLogic.getGameState().getBoard());
+      //System.out.println(gameLogic.getGameState().getBoard());
     }
   }
 }

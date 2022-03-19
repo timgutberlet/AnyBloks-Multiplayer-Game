@@ -11,19 +11,17 @@ import java.util.ArrayList;
 public class GameLogic {
 
   /**
+   * the game state represents the current state of the game, what the logic refers to
+   */
+  private final GameState gameState;
+  /**
    * states if an AI calculation is running
    */
   public boolean aiCalculationRunning = false;
-
   /**
    * states if an AI calculation is completed
    */
   public boolean aiCalculationCompleted = false;
-
-  /**
-   * the game state represents the current state of the game, what the logic refers to
-   */
-  private final GameState gameState;
 
   /**
    * initializes the default values
@@ -32,7 +30,6 @@ public class GameLogic {
    */
   public GameLogic(GameState gameState) {
     this.gameState = gameState;
-
   }
 
   /**
@@ -98,6 +95,7 @@ public class GameLogic {
       }
       return true;
     }
+    Debug.printMessage("No Poly Possible");
     return false;
   }
 
@@ -224,9 +222,27 @@ public class GameLogic {
     turn.setNumberBlockedSquares(num);
   }
 
+  public boolean checkEnd(Turn turn) {
+    for (Player p : gameState.getPlayer()) {
+      Debug.printMessage(getPossibleMoves(p).size() + " möglichkeiten Steine zu legen");
+      //Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
+      if (gameState.getRemainingPolys(p).size() == 0 || (getPossibleMoves(p).size() == 0 && gameState.getRound() > 1)){
+        gameState.setStateEnding("Spiel Vorbei");
+        gameState.setStateRunning(false);
+        Debug.printMessage("Spiel Vorbei");
+        Debug.printMessage(p.toString());
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public Player getPlayerCurrent() {
+    return gameState.getPlayerCurrent();
+  }
+
   public boolean playTurn(Turn turn) {
-    if (turn == null) {
-      gameState.incTurn();
+    if(checkEnd(turn)){
       return false;
     }
     if (gameState.getBoard().isPolyPossible(turn.getColumn(), turn.getRow(), turn.getPoly(),

@@ -29,22 +29,18 @@ public class GameState implements Serializable {
    * as their remaining polys)
    */
   private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
-
-  /**
-   * round number
-   */
-  private int round;
-
-  /**
-   * turn number
-   */
-  private int turn;
-
   /**
    * list of every participating player
    */
   private final ArrayList<Player> player;
-
+  /**
+   * round number
+   */
+  private int round;
+  /**
+   * turn number
+   */
+  private int turn;
   /**
    * states if the game is currently running
    */
@@ -89,6 +85,15 @@ public class GameState implements Serializable {
   public ArrayList<Poly> getRemainingPolys(Player p) {
 
     return remainingPolys.get(player.indexOf(p));
+  }
+
+  public Player getPlayerCurrent() {
+    if ( getPlayer().size() > 0 ) {
+      return getPlayer().get(this.turn);
+    }
+    else {
+      return null;
+    }
   }
 
   public ArrayList<Player> getPlayer() {
@@ -157,6 +162,7 @@ public class GameState implements Serializable {
   }
 
   public void setStateEnding(String stateEnding) {
+    this.setStateRunning(false);
     this.stateEnding = stateEnding;
   }
 
