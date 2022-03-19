@@ -8,6 +8,10 @@ public class App extends Application {
 
   private GameController controller;
 
+  public static void main(String[] args) {
+    launch();
+  }
+
   @Override
   public void start(Stage stage) throws IOException {
 
@@ -15,9 +19,5 @@ public class App extends Application {
     stage.setTitle("Test");
 
     stage.show();
-  }
-
-  public static void main(String[] args) {
-    launch();
   }
 }

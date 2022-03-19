@@ -22,13 +22,13 @@ public class GameState implements Serializable {
   /**
    * game board
    */
-  private Board board;
+  private final Board board;
 
   /**
    * list of arrays of the remaining polys of each player (every player has the same index in player
    * as their remaining polys)
    */
-  private ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
+  private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
 
   /**
    * round number
@@ -43,7 +43,7 @@ public class GameState implements Serializable {
   /**
    * list of every participating player
    */
-  private ArrayList<Player> player;
+  private final ArrayList<Player> player;
 
   /**
    * states if the game is currently running
@@ -54,6 +54,11 @@ public class GameState implements Serializable {
    * states if the game has already started
    */
   private boolean started;
+
+  /**
+   * The reason why the game ended.
+   */
+  private String stateEnding;
 
   /**
    * initializing of all default parameters
@@ -135,5 +140,29 @@ public class GameState implements Serializable {
   public boolean isFirstRound() {
     return (round == 1);
   }
+
+  public boolean isStateRunning() {
+    return running;
+  }
+
+  public void setStateRunning(boolean running) {
+    this.running = running;
+    if (running) {
+      started = true;
+    }
+  }
+
+  public String getStateEnding() {
+    return stateEnding;
+  }
+
+  public void setStateEnding(String stateEnding) {
+    this.stateEnding = stateEnding;
+  }
+
+  public boolean isStarted() {
+    return started;
+  }
+
 }
 

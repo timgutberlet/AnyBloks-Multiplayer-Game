@@ -2,7 +2,6 @@ package game.model;
 
 import game.view.InGameView;
 import java.io.Serializable;
-import javax.print.DocFlavor.STRING;
 
 public class Board implements Serializable, Cloneable {
 
@@ -13,17 +12,17 @@ public class Board implements Serializable, Cloneable {
   public Board(GameMode mode) {
     switch (mode) {
       case CLASSIC:
-        this.SIZE = 20;
+        SIZE = 20;
         break;
       case DUO:
       case JUNIOR:
-        this.SIZE = 14;
+        SIZE = 14;
         break;
       case TRIGON:
-        this.SIZE = 22;
+        SIZE = 22;
         break;
       default:
-        this.SIZE = 0;
+        SIZE = 0;
     }
 
     this.board = new Square[SIZE][SIZE];
@@ -36,7 +35,7 @@ public class Board implements Serializable, Cloneable {
   }
 
   public Board(int size) {
-    this.SIZE = size;
+    SIZE = size;
 
     this.board = new Square[SIZE][SIZE];
   }
@@ -97,10 +96,7 @@ public class Board implements Serializable, Cloneable {
       return true;
     }
     //left to the square
-    if (n > 0 && getColor(n - 1, m).equals(color)) {
-      return true;
-    }
-    return false;
+    return n > 0 && getColor(n - 1, m).equals(color);
   }
 
   /**
@@ -126,10 +122,7 @@ public class Board implements Serializable, Cloneable {
       return true;
     }
     //right and under to the square
-    if (n < getSize() && m < getSize() && getColor(n + 1, m + 1).equals(color)) {
-      return true;
-    }
-    return false;
+    return n < getSize() && m < getSize() && getColor(n + 1, m + 1).equals(color);
   }
 
   /**

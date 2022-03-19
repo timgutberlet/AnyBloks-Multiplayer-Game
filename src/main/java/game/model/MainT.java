@@ -19,7 +19,7 @@ public class MainT {
       System.out.println(p);
     }
     System.out.println(gameLogic.getGameState().getBoard());
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 500; i++) {
       gameLogic.playTurn(AI.calculateNextMove(p1, gameLogic));
       gameLogic.getGameState().getBoard().updateBoard(view);
       System.out.println(gameLogic.getGameState().getBoard());

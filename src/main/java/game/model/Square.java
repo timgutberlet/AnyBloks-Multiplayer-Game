@@ -44,6 +44,10 @@ public class Square implements Cloneable {
     return color;
   }
 
+  public void setColor(Color color) {
+    this.color = color;
+  }
+
   public javafx.scene.paint.Color getJavaColor() {
     switch (this.color) {
       case RED:
@@ -61,10 +65,6 @@ public class Square implements Cloneable {
 
   public Boolean isOccupied() {
     return (!color.equals(Color.WHITE));
-  }
-
-  public void setColor(Color color) {
-    this.color = color;
   }
 
   @Override

@@ -10,27 +10,27 @@ public class Player implements Serializable {
   /**
    * Name of the player.
    */
-  private String name;
+  private final String name;
 
   /**
    * Type of the player.
    */
-  private PlayerType type;
+  private final PlayerType type;
 
   /**
    * Current score of the player.
    */
-  private int score;
+  private final int score;
 
   /**
    * Starting coordinate on the x-scale
    */
-  private int startX;
+  private final int startX;
 
   /**
    * Starting coordinate on the y-scale
    */
-  private int startY;
+  private final int startY;
 
   /**
    * initializing the default values of a player

@@ -69,9 +69,9 @@ public class AI {
     }
 
     int currentRoomDiscovery = GameLogic.occupiedHeight(gameLogic.getColorFromPlayer(player),
-        gameLogic.getGameState().getBoard(), player.getStartX())
-        + GameLogic.occupiedHeight(gameLogic.getColorFromPlayer(player),
-        gameLogic.getGameState().getBoard(), player.getStartY());
+        gameLogic.getGameState().getBoard(), player.getStartX()) + GameLogic.occupiedHeight(
+        gameLogic.getColorFromPlayer(player), gameLogic.getGameState().getBoard(),
+        player.getStartY());
 
     if (currentRoomDiscovery > gameLogic.getGameState().getBoard()
         .getSize()) { //If more than the half of the game board is discovered, it concentrates on playing against the enemy

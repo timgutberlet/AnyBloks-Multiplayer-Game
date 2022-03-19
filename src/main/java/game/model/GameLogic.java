@@ -23,7 +23,7 @@ public class GameLogic {
   /**
    * the game state represents the current state of the game, what the logic refers to
    */
-  private GameState gameState;
+  private final GameState gameState;
 
   /**
    * initializes the default values
@@ -35,14 +35,78 @@ public class GameLogic {
 
   }
 
+  /**
+   * this method returns the maximum width a color has occupied measured from the starting edge
+   *
+   * @param c      Color, which is looked for
+   * @param b      viewed board
+   * @param startX 0 if the starting point is on the right side and b.getSize() if on the left side
+   * @return maximum width
+   */
+  public static int occupiedWidth(Color c, Board b, int startX) {
+    int maxWidth = 0;
+    for (int i = 0; i < b.getSize(); i++) {
+      for (int j = 0; j < b.getSize(); j++) {
+        if (b.getBoard()[i][j].getColor().equals(c)) {
+          if (startX == 0) { //if starting point was on the right side
+            maxWidth = (maxWidth > i ? maxWidth : i);
+          } else { //if starting point was on the left side
+            maxWidth = (maxWidth > b.getSize() - i ? maxWidth : b.getSize() - i);
+          }
+        }
+      }
+    }
+    return maxWidth;
+  }
+
+  /**
+   * this method returns the maximum height a color has occupied measured from the starting edge
+   *
+   * @param c      Color, which is looked for
+   * @param b      viewed board
+   * @param startY 0 if the starting point is on the top and b.getSize() if on the bottom
+   * @return maximum width
+   */
+  public static int occupiedHeight(Color c, Board b, int startY) {
+    int maxHeight = 0;
+    for (int i = 0; i < b.getSize(); i++) {
+      for (int j = 0; j < b.getSize(); j++) {
+        if (b.getBoard()[i][j].getColor().equals(c)) {
+          if (startY == 0) { //if starting point was on the right side
+            maxHeight = (maxHeight > j ? maxHeight : j);
+          } else { //if starting point was on the left side
+            maxHeight = (maxHeight > b.getSize() - j ? maxHeight : b.getSize() - j);
+          }
+        }
+      }
+    }
+    return maxHeight;
+  }
+
+  public static boolean playTurn(Turn turn, Board b, boolean isFirstTurn) {
+    if (turn == null) {
+      return false;
+    }
+    if (b.isPolyPossible(turn.getColumn(), turn.getRow(), turn.getPoly(), isFirstTurn)) {
+      for (int i = 0; i < turn.getPoly().getWidth(); i++) {
+        for (int j = 0; j < turn.getPoly().getHeight(); j++) {
+          if (turn.getPoly().getShape()[i][j]) {
+            b.getBoard()[turn.getColumn() + i][turn.getRow() + j].setColor(
+                turn.getPoly().getColor());
+          }
+        }
+      }
+      return true;
+    }
+    return false;
+  }
 
   public void addPlayer(Player player) {
     gameState.addPlayer(player);
   }
 
-
-  public void startGame() { //to be written toDo
-
+  public void startGame() {
+    gameState.setStateRunning(true);
   }
 
   public Color getColorFromPlayer(Player p) {
@@ -160,54 +224,6 @@ public class GameLogic {
     turn.setNumberBlockedSquares(num);
   }
 
-  /**
-   * this method returns the maximum width a color has occupied measured from the starting edge
-   *
-   * @param c      Color, which is looked for
-   * @param b      viewed board
-   * @param startX 0 if the starting point is on the right side and b.getSize() if on the left side
-   * @return maximum width
-   */
-  public static int occupiedWidth(Color c, Board b, int startX) {
-    int maxWidth = 0;
-    for (int i = 0; i < b.getSize(); i++) {
-      for (int j = 0; j < b.getSize(); j++) {
-        if (b.getBoard()[i][j].getColor().equals(c)) {
-          if (startX == 0) { //if starting point was on the right side
-            maxWidth = (maxWidth > i ? maxWidth : i);
-          } else { //if starting point was on the left side
-            maxWidth = (maxWidth > b.getSize() - i ? maxWidth : b.getSize() - i);
-          }
-        }
-      }
-    }
-    return maxWidth;
-  }
-
-  /**
-   * this method returns the maximum height a color has occupied measured from the starting edge
-   *
-   * @param c      Color, which is looked for
-   * @param b      viewed board
-   * @param startY 0 if the starting point is on the top and b.getSize() if on the bottom
-   * @return maximum width
-   */
-  public static int occupiedHeight(Color c, Board b, int startY) {
-    int maxHeight = 0;
-    for (int i = 0; i < b.getSize(); i++) {
-      for (int j = 0; j < b.getSize(); j++) {
-        if (b.getBoard()[i][j].getColor().equals(c)) {
-          if (startY == 0) { //if starting point was on the right side
-            maxHeight = (maxHeight > j ? maxHeight : j);
-          } else { //if starting point was on the left side
-            maxHeight = (maxHeight > b.getSize() - j ? maxHeight : b.getSize() - j);
-          }
-        }
-      }
-    }
-    return maxHeight;
-  }
-
   public boolean playTurn(Turn turn) {
     if (turn == null) {
       gameState.incTurn();
@@ -220,8 +236,7 @@ public class GameLogic {
         for (int j = 0; j < turn.getPoly().getHeight(); j++) {
           if (turn.getPoly().getShape()[i][j]) {
             gameState.getBoard().getBoard()[turn.getColumn() + i][turn.getRow() + j].setColor(
-                turn.getPoly()
-                    .getColor());
+                turn.getPoly().getColor());
           }
         }
       }
@@ -241,25 +256,6 @@ public class GameLogic {
       return true;
     }
     gameState.incTurn();
-    return false;
-  }
-
-
-  public static boolean playTurn(Turn turn, Board b, boolean isFirstTurn) {
-    if (turn == null) {
-      return false;
-    }
-    if (b.isPolyPossible(turn.getColumn(), turn.getRow(), turn.getPoly(), isFirstTurn)) {
-      for (int i = 0; i < turn.getPoly().getWidth(); i++) {
-        for (int j = 0; j < turn.getPoly().getHeight(); j++) {
-          if (turn.getPoly().getShape()[i][j]) {
-            b.getBoard()[turn.getColumn() + i][turn.getRow() + j].setColor(
-                turn.getPoly().getColor());
-          }
-        }
-      }
-      return true;
-    }
     return false;
   }
 

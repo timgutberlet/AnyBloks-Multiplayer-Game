@@ -13,42 +13,6 @@ import java.util.Objects;
 
 public class Poly {
 
-  /**
-   * represents the shape of the polygon as an array of boolean whether the position is filled with
-   * the polygon or not
-   */
-  public boolean[][] shape;
-
-  /**
-   * number of single squares contained
-   */
-  public int size;
-
-  /**
-   * height of the polygon (and the representing shape)
-   */
-  public int height;
-
-  /**
-   * width of the polygon (and the representing shape)
-   */
-  public int width;
-
-  /**
-   * color of the polygon
-   */
-  public Color color;
-
-  /**
-   * rotation of the polygon compared to the initial position
-   */
-  public int rotation; // rotation * 90 degrees
-
-  /**
-   * states if the polygon was mirrored compared to the initial position
-   */
-  public boolean isMirrored;
-
   public static ArrayList<boolean[][]> shapeList = new ArrayList<>();
 
   /**
@@ -80,8 +44,37 @@ public class Poly {
     for (boolean[][] piece : pieceList) {
       shapeList.add(piece);
     }
-    ;
   }
+
+  /**
+   * represents the shape of the polygon as an array of boolean whether the position is filled with
+   * the polygon or not
+   */
+  public boolean[][] shape;
+  /**
+   * number of single squares contained
+   */
+  public int size;
+  /**
+   * height of the polygon (and the representing shape)
+   */
+  public int height;
+  /**
+   * width of the polygon (and the representing shape)
+   */
+  public int width;
+  /**
+   * color of the polygon
+   */
+  public Color color;
+  /**
+   * rotation of the polygon compared to the initial position
+   */
+  public int rotation; // rotation * 90 degrees
+  /**
+   * states if the polygon was mirrored compared to the initial position
+   */
+  public boolean isMirrored;
 
   /**
    * Initializes the default values of a polygon
@@ -121,6 +114,19 @@ public class Poly {
         }
       }
     }
+  }
+
+  public static boolean shapeEquals(boolean[][] s1, boolean[][] s2) {
+    boolean res = true;
+    if (s1.length != s2.length || s1[0].length != s2[0].length) {
+      return false;
+    }
+    for (int i = 0; i < s1.length; i++) {
+      for (int j = 0; j < s1[0].length; j++) {
+        res = res && (s1[i][j] == s2[i][j]);
+      }
+    }
+    return res;
   }
 
   /**
@@ -185,7 +191,6 @@ public class Poly {
   public int getWidth() {
     return width;
   }
-
 
   public String toString() {
     StringBuffer res = new StringBuffer();
@@ -257,18 +262,5 @@ public class Poly {
     int result = Objects.hash(size, height, width, color, rotation, isMirrored);
     result = 31 * result + Arrays.hashCode(shape);
     return result;
-  }
-
-  public static boolean shapeEquals(boolean[][] s1, boolean[][] s2) {
-    boolean res = true;
-    if (s1.length != s2.length || s1[0].length != s2[0].length) {
-      return false;
-    }
-    for (int i = 0; i < s1.length; i++) {
-      for (int j = 0; j < s1[0].length; j++) {
-        res = res && (s1[i][j] == s2[i][j]);
-      }
-    }
-    return res;
   }
 }

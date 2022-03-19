@@ -26,7 +26,6 @@ public class InputHandler {
 
 
   public void registerRectangle(Rectangle rectangle) {
-
     rectangle.setOnMouseClicked((e -> {
       rectanglesClicked.add(rectangle);
     }));

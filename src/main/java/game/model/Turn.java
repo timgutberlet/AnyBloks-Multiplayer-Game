@@ -1,9 +1,5 @@
 package game.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-
 /**
  * this class represents a move of a player in one turn
  */
@@ -51,12 +47,12 @@ public class Turn {
     return this.turn;
   }
 
-  public void setNumberBlockedSquares(int numberBlockedSquares) {
-    this.numberBlockedSquares = numberBlockedSquares;
-  }
-
   public int getNumberBlockedSquares() {
     return numberBlockedSquares;
+  }
+
+  public void setNumberBlockedSquares(int numberBlockedSquares) {
+    this.numberBlockedSquares = numberBlockedSquares;
   }
 
   public int getColumn() {
@@ -67,12 +63,12 @@ public class Turn {
     return turn[1];
   }
 
-  public void setRoomDiscovery(int roomDiscovery) {
-    this.roomDiscovery = roomDiscovery;
-  }
-
   public int getRoomDiscovery() {
     return roomDiscovery;
+  }
+
+  public void setRoomDiscovery(int roomDiscovery) {
+    this.roomDiscovery = roomDiscovery;
   }
 
   public int getRotation() {
