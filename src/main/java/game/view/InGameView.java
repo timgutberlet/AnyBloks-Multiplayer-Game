@@ -3,7 +3,6 @@ package game.view;
 import engine.Initializable;
 import engine.controller.AbstractGameController;
 import game.model.Board;
-import game.model.GameModeENUM;
 import javafx.scene.Group;
 
 import game.model.gamemodes.*;
