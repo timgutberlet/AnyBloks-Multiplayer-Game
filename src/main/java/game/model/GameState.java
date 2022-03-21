@@ -2,6 +2,7 @@ package game.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import game.model.gamemodes.*;
 
 /**
  * this class represents the current state of one specific game

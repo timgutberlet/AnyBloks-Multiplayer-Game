@@ -1,11 +1,12 @@
 package game.model;
 
 import game.view.InGameView;
+import game.model.gamemodes.*;
 
 public class MainT {
 
   public static void initGame(InGameView view) {
-    GameState gameState = new GameState(GameMode.CLASSIC);
+    GameState gameState = new GameState(new GMClassic());
     GameLogic gameLogic = new GameLogic(gameState);
     Player p1 = new Player("AI1", PlayerType.AI_HARD, 0, 0);
     Player p2 = new Player("AI2", PlayerType.AI_MIDDLE, gameState.getBoard().getSize() - 1,

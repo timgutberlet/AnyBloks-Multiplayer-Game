@@ -9,6 +9,7 @@ public class App extends Application {
   private GameController controller;
 
   public static void main(String[] args) {
+
     launch();
   }
 

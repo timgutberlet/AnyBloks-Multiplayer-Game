@@ -2,23 +2,29 @@ package game.model;
 
 import game.view.InGameView;
 import java.io.Serializable;
+import game.model.gamemodes.GameMode;
 
 public class Board implements Serializable, Cloneable {
 
   public static int SIZE; //How do I make this final? There will be an error. - Tilman
+  /**
+  wenn du static und final benutzt musst du die Variable direkt setzen
+   weil im Konstruktor statische Variablen nicht verändert werden
+   @Tilamn -Tobi
+   */
 
   private final Square[][] board;
 
   public Board(GameMode mode) {
-    switch (mode) {
-      case CLASSIC:
+    switch (mode.getName()) {
+      case "CLASSIC":
         SIZE = 20;
         break;
-      case DUO:
-      case JUNIOR:
+      case "DUO":
+      case "JUNIOR":
         SIZE = 14;
         break;
-      case TRIGON:
+      case "TRIGON":
         SIZE = 22;
         break;
       default:
