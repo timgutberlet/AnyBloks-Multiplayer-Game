@@ -1,43 +1,38 @@
 package game.model;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
- * This class represents one square of a game board.
+ * @author tiotto
+ * @date 21.03.2022
  */
-
-public class Square implements Cloneable {
-
-  /**
-   * column of the square on the board
-   */
-  public int col;
+public class FieldTrigon extends Field implements Cloneable {
 
   /**
-   * row of the square on the board
+   * contains the position of the square
    */
-  public int row;
+  public int[] pos;
 
   /**
    * current color of the square
    */
   public Color color;
 
-  /**
-   * initializing the default values
-   *
-   * @param col column of the square on the board
-   * @param row row of the square on the board
-   * @author tiotto
-   */
-  public Square(int col, int row) {
-    this.col = col;
-    this.row = row;
+  public FieldTrigon(int x, int y, int isRight) {
+    super();
+    this.pos = new int[]{x, y, isRight};
     this.color = Color.WHITE;
   }
 
-  public Square(int col, int row, Color c) {
-    this.col = col;
-    this.row = row;
+  public FieldTrigon(int x, int y, int isRight, Color c) {
+    super();
+    this.pos = new int[]{x, y, isRight};
     this.color = c;
+  }
+
+  public boolean isPos(int x, int y, int isRight){
+    return x == pos[0] && y == pos[1] && isRight == pos[2];
   }
 
   public Color getColor() {
@@ -46,6 +41,10 @@ public class Square implements Cloneable {
 
   public void setColor(Color color) {
     this.color = color;
+  }
+
+  public int[] getPos() {
+    return pos;
   }
 
   public javafx.scene.paint.Color getJavaColor() {
@@ -67,9 +66,10 @@ public class Square implements Cloneable {
     return (!color.equals(Color.WHITE));
   }
 
+
   @Override
-  public Square clone() {
-    return new Square(this.col, this.row, this.color);
+  public game.model.FieldTrigon clone() {
+    return new game.model.FieldTrigon(this.pos[0], this.pos[1], this.pos[2], this.color);
   }
 
   @Override
@@ -90,4 +90,22 @@ public class Square implements Cloneable {
     }
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    FieldTrigon that = (FieldTrigon) o;
+    return Arrays.equals(pos, that.pos);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = Objects.hash(color);
+    result = 31 * result + Arrays.hashCode(pos);
+    return result;
+  }
 }

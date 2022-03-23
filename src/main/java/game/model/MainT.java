@@ -13,10 +13,10 @@ public class MainT {
         gameState.getBoard().getSize() - 1);
     gameLogic.addPlayer(p1);
     gameLogic.addPlayer(p2);
-    for (Poly p : gameState.getRemainingPolys(p1)) {
+    for (PolySquare p : gameState.getRemainingPolys(p1)) {
       System.out.println(p);
     }
-    for (Poly p : gameState.getRemainingPolys(p2)) {
+    for (PolySquare p : gameState.getRemainingPolys(p2)) {
       System.out.println(p);
     }
     System.out.println(gameLogic.getGameState().getBoard());

@@ -13,7 +13,7 @@ public class Board implements Serializable, Cloneable {
    @Tilamn -Tobi
    */
 
-  private final Square[][] board;
+  private final FieldSquare[][] board;
 
   public Board(GameMode mode) {
     switch (mode.getName()) {
@@ -31,11 +31,11 @@ public class Board implements Serializable, Cloneable {
         SIZE = 0;
     }
 
-    this.board = new Square[SIZE][SIZE];
+    this.board = new FieldSquare[SIZE][SIZE];
 
     for (int i = 0; i < SIZE; i++) {
       for (int j = 0; j < SIZE; j++) {
-        board[i][j] = new Square(i, j);
+        board[i][j] = new FieldSquare(i, j);
       }
     }
   }
@@ -43,7 +43,7 @@ public class Board implements Serializable, Cloneable {
   public Board(int size) {
     SIZE = size;
 
-    this.board = new Square[SIZE][SIZE];
+    this.board = new FieldSquare[SIZE][SIZE];
   }
 
   public Color getColor(int n, int m) {
@@ -61,7 +61,7 @@ public class Board implements Serializable, Cloneable {
     return SIZE;
   }
 
-  public Square[][] getBoard() {
+  public FieldSquare[][] getBoard() {
     return board;
   }
 
@@ -139,7 +139,7 @@ public class Board implements Serializable, Cloneable {
    * @param poly considered polygon
    * @return boolean, if a placement is legitimate or not at this position on the board
    */
-  public boolean isPolyPossible(int n, int m, Poly poly, boolean isFirstRound) {
+  public boolean isPolyPossible(int n, int m, PolySquare poly, boolean isFirstRound) {
     boolean indirectNeighbor = isFirstRound;
     for (int i = 0; i < poly.width; i++) {
       for (int j = 0; j < poly.height; j++) {

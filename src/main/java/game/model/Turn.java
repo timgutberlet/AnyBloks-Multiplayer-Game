@@ -39,9 +39,11 @@ public class Turn {
     this.turn = turn;
   }
 
-  public Poly getPoly() {
-    return poly;
+  public PolySquare getPoly() {
+    return (PolySquare) poly;
   }
+
+  public PolyTrigon getPolyTrigon(){return (PolyTrigon) poly;}
 
   public int[] getTurn() {
     return this.turn;
@@ -59,9 +61,15 @@ public class Turn {
     return turn[0];
   }
 
+  public int getX(){return turn[0];}
+
   public int getRow() {
     return turn[1];
   }
+
+  public int getY(){return turn[1];}
+
+  public int getIsRight(){return turn[2];}
 
   public int getRoomDiscovery() {
     return roomDiscovery;

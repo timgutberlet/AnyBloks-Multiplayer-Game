@@ -29,7 +29,7 @@ public class GameState implements Serializable {
    * list of arrays of the remaining polys of each player (every player has the same index in player
    * as their remaining polys)
    */
-  private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
+  private final ArrayList<ArrayList<PolySquare>> remainingPolys = new ArrayList<>();
   /**
    * list of every participating player
    */
@@ -83,7 +83,7 @@ public class GameState implements Serializable {
    * @param p player for whom the remaining parts are required
    * @return remaining polys for a specific player
    */
-  public ArrayList<Poly> getRemainingPolys(Player p) {
+  public ArrayList<PolySquare> getRemainingPolys(Player p) {
 
     return remainingPolys.get(player.indexOf(p));
   }
@@ -127,9 +127,9 @@ public class GameState implements Serializable {
 
   public void addPlayer(Player p) {
     this.player.add(p);
-    ArrayList<Poly> polyOfPlayer = new ArrayList<>();
-    for (boolean[][] shape : Poly.shapeList) {
-      polyOfPlayer.add(new Poly(shape, getColorFromPlayer(p)));
+    ArrayList<PolySquare> polyOfPlayer = new ArrayList<>();
+    for (boolean[][] shape : PolySquare.shapeList) {
+      polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
     }
     remainingPolys.add(polyOfPlayer);
   }

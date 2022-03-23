@@ -122,7 +122,7 @@ public class GameLogic {
    * @param color searched color
    * @return Arraylist with doubles inside, which contain the row and the column of the squares
    */
-  private ArrayList<int[]> possibleSquares(Color color) {
+  private ArrayList<int[]> possibleSquares(Color color) { //First Round need to be added
     ArrayList<int[]> res = new ArrayList<>();
     for (int i = 0; i < gameState.getBoard().getSize(); i++) {
       for (int j = 0; j < gameState.getBoard().getSize(); j++) {
@@ -144,7 +144,7 @@ public class GameLogic {
    */
   public ArrayList<Turn> getPossibleMoves(Player player) {
     ArrayList<Turn> res = new ArrayList<>();
-    for (Poly poly : gameState.getRemainingPolys(player)) {
+    for (PolySquare poly : gameState.getRemainingPolys(player)) {
       ArrayList<Turn> movesWithPoly = possibleSquaresAndShadesForPoly(poly);
       if (movesWithPoly.size() > 0) {
         res.addAll(movesWithPoly);
@@ -160,7 +160,7 @@ public class GameLogic {
    * @param poly the given polygon
    * @return list of turns with the specific poly
    */
-  private ArrayList<Turn> possibleSquaresAndShadesForPoly(Poly poly) {
+  private ArrayList<Turn> possibleSquaresAndShadesForPoly(PolySquare poly) {
     ArrayList<Turn> res = new ArrayList<>();
     for (int i = 0; i < gameState.getBoard().getSize() - poly.width - 1; i++) {
       for (int j = 0; j < gameState.getBoard().getSize() - poly.height - 1; j++) {
@@ -182,7 +182,7 @@ public class GameLogic {
    * @return list turns which contain the poly and a tuple out of integers: {row, column, rotation,
    * mirrored}
    */
-  private ArrayList<Turn> getPolyShadesPossible(int n, int m, Poly poly) {
+  private ArrayList<Turn> getPolyShadesPossible(int n, int m, PolySquare poly) {
     ArrayList<Turn> res = new ArrayList<>();
     for (Boolean mirrored : new boolean[]{false, true}) {
       for (int i = 0; i < 4; i++) {
@@ -259,7 +259,7 @@ public class GameLogic {
 
       System.out.println(gameState.getPlayerFromColor(turn.getPoly().getColor()));
       System.out.println(turn.getPoly());
-      for (Poly p : gameState.getRemainingPolys(
+      for (PolySquare p : gameState.getRemainingPolys(
           gameState.getPlayerFromColor(turn.getPoly().getColor()))) {
         if (p.equals(turn.getPoly())) {
           gameState.getRemainingPolys(gameState.getPlayerFromColor(turn.getPoly().getColor()))
