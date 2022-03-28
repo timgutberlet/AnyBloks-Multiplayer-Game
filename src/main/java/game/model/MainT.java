@@ -21,10 +21,10 @@ public class MainT {
     System.out.println(game.getGameState().getBoard());
     game.startGame();
     while (game.getGameState().isStateRunning()) {
-      game.getGameState().playTurn(AI.calculateNextMove(p1,game.getBoard(),game.getGameState().getRemainingPolys(p1),game.getGameState().isFirstRound()));
+      game.getGameState().playTurn(AI.calculateNextMove(game.getGameState(), p1));
       game.getGameState().getBoard().updateBoard(view);
       //System.out.println(gameLogic.getGameState().getBoard());
-      game.getGameState().playTurn(AI.calculateNextMove(p2,game.getBoard(),game.getGameState().getRemainingPolys(p2),game.getGameState().isFirstRound()));
+      game.getGameState().playTurn(AI.calculateNextMove(game.getGameState(), p2));
       game.getGameState().getBoard().updateBoard(view);
       //System.out.println(gameLogic.getGameState().getBoard());
     }

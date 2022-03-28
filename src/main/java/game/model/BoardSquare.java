@@ -341,9 +341,57 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   // ======================================================================
-  // ========================= Nicht fertiger AI-Stuff ====================
+  // ========================= AI-Stuff ===================================
   // ======================================================================
 
+  /**
+   * method that counts and safes the number of squares which could lead to a next turn for a
+   * different color, which are covered by the given turn
+   *
+   * @param turn the considered turn as a result the number is stored as an attribute of the turn
+   *             itself
+   */
+  @Override
+  public void assignNumberBlockedFields(Turn turn) {
+    int num = 0;
+    int xRef = turn.getPolySquare().shape.get(0).getPos()[0];
+    int yRef = turn.getPolySquare().shape.get(0).getPos()[1];
+    for (Color c : Color.values()) {
+      if (!c.equals(turn.getPoly().getColor())) {
+        for (FieldSquare fsPoly : turn.getPolySquare().getShape()) {
+          if (isColorIndirectNeighbor(fsPoly.getPos()[0] + turn.getX() - xRef,
+              fsPoly.getPos()[1] + turn.getY() - yRef, c)) {
+            num++;
+          }
+        }
+      }
+    }
+    turn.setNumberBlockedSquares(num);
+  }
+
+  @Override
+  public int getScoreOfColor(Color c){
+    int res = 0;
+    for (FieldSquare fs : board){
+      if (fs.getColor().equals(c)){
+        res++;
+      }
+    }
+    return res;
+  }
+
+  @Override
+  public int getScoreOfColorMiniMax(Color c){
+    int res = 0;
+    for (FieldSquare fs : board){
+      if (fs.getColor().equals(c)){
+        res++;
+      } else if (fs.isOccupied()) {
+        res--;
+      }
+    }
+    return res;
+  }
   /**
    * this method returns the maximum width a color has occupied measured from the starting edge
    *
@@ -394,33 +442,6 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       }
     }
     return maxHeight;
-  }
-
-   */
-
-  /**
-   * method that counts and safes the number of squares which could lead to a next turn for a
-   * different color, which are covered by the given turn
-   *
-   * @param turn the considered turn as a result the number is stored as an attribute of the turn
-   *             itself
-   */
-  /*
-  public void assignNumberBlockedSquares(Turn turn) {
-    int num = 0;
-    for (Color c : Color.values()) {
-      if (!c.equals(turn.getPoly().getColor())) {
-        for (int i = 0; i < turn.getPoly().getWidth(); i++) {
-          for (int j = 0; j < turn.getPoly().getHeight(); j++) {
-            if (turn.getPoly().getShape()[i][j] && gameState.getBoard()
-                .isColorIndirectNeighbor(turn.getColumn() + i, turn.getRow() + j, c)) {
-              num++;
-            }
-          }
-        }
-      }
-    }
-    turn.setNumberBlockedSquares(num);
   }
 
    */

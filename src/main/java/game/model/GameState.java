@@ -73,6 +73,24 @@ public class GameState implements Serializable {
     started = false;
   }
 
+  public GameState(GameMode gameMode, Board board, ArrayList<ArrayList<Poly>> remainingPolys, ArrayList<Player> player, int round, int turn, boolean running, boolean started, String stateEnding){
+    this.gameMode = gameMode;
+    this.board = board;
+    for (ArrayList<Poly> polys: remainingPolys){
+      ArrayList<Poly> help = new ArrayList<>();
+      for (Poly poly : polys) {
+        help.add(poly.clone());
+      }
+      this.remainingPolys.add(help);
+    }
+    this.player = player;
+    this.round = round;
+    this.turn = turn;
+    this.running = running;
+    this.started = started;
+    this.stateEnding = stateEnding;
+  }
+
   public Board getBoard() {
     return board;
   }
@@ -200,6 +218,20 @@ public class GameState implements Serializable {
     }
     incTurn();
     return res;
+  }
+
+  public GameState tryTurn(Turn turn){
+    Board help = this.board.clone();
+    help.playTurn(turn, this.isFirstRound());
+    return new GameState(this.gameMode, help, remainingPolys, player, round, this.turn, running, started, stateEnding );
+  }
+
+  public Color getNextColor(Color c){
+    switch (c){
+      case RED: return Color.BLUE;
+      case BLUE: return Color.RED;
+      default: return Color.BLUE;
+    }
   }
 
 }

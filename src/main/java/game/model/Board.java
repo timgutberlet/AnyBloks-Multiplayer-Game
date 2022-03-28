@@ -41,10 +41,16 @@ public abstract class Board {
 
   public abstract boolean playTurn(Turn turn, boolean isFirstRound);
 
+  public abstract Board clone();
+
   public abstract void updateBoard(InGameView view);
 
+  //AI Stuff
+  public abstract void assignNumberBlockedFields(Turn turn);
 
-  public abstract Board clone();
+  public abstract int getScoreOfColor(Color c);
+
+  public abstract int getScoreOfColorMiniMax(Color c);
 }
 
 

@@ -375,6 +375,60 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
       view.getBoardPane().setSquare(ft.getJavaColor(), ft.getPos()[0], ft.getPos()[1]);
     }
   }
+
+
+  // ======================================================================
+  // ========================= AI-Stuff ===================================
+  // ======================================================================
+
+  /**
+   * method that counts and safes the number of squares which could lead to a next turn for a
+   * different color, which are covered by the given turn
+   *
+   * @param turn the considered turn as a result the number is stored as an attribute of the turn
+   *             itself
+   */
+  @Override
+  public void assignNumberBlockedFields(Turn turn) {
+    int num = 0;
+    int xRef = turn.getPolyTrigon().shape.get(0).getPos()[0];
+    int yRef = turn.getPolyTrigon().shape.get(0).getPos()[1];
+    for (Color c : Color.values()) {
+      if (!c.equals(turn.getPoly().getColor())) {
+        for (FieldTrigon ftPoly : turn.getPolyTrigon().getShape()) {
+          if (isColorIndirectNeighbor(ftPoly.getPos()[0] + turn.getX() - xRef,
+              ftPoly.getPos()[1] + turn.getY() - yRef, ftPoly.getPos()[2], c)) {
+            num++;
+          }
+        }
+      }
+    }
+    turn.setNumberBlockedSquares(num);
+  }
+
+  @Override
+  public int getScoreOfColor(Color c){
+    int res = 0;
+    for (FieldTrigon ft : board){
+      if (ft.getColor().equals(c)){
+        res++;
+      }
+    }
+    return res;
+  }
+
+  @Override
+  public int getScoreOfColorMiniMax(Color c){
+    int res = 0;
+    for (FieldTrigon ft : board){
+      if (ft.getColor().equals(c)){
+        res++;
+      } else if (ft.isOccupied()) {
+        res--;
+      }
+    }
+    return res;
+  }
 }
 
 
