@@ -44,7 +44,7 @@ public class EndpointServer {
   /**
    * Remove a session.
    *
-   * @param ses
+   * @param ses from Set
    */
   @OnClose
   public void onClose(final Session ses) {
