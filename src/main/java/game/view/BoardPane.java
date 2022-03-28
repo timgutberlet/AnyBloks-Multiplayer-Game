@@ -1,6 +1,6 @@
 package game.view;
 
-import game.model.Board;
+import game.model.BoardSquare;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.GridPane;
@@ -12,10 +12,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class BoardPane extends GridPane {
 
-  private final Board board;
+  private final BoardSquare board;
   private final List<Rectangle> squares;
 
-  public BoardPane(Board board) {
+  public BoardPane(BoardSquare board) {
     this.board = board;
     this.squares = new ArrayList<>();
     setBoard();
@@ -31,8 +31,8 @@ public class BoardPane extends GridPane {
   }
 
   final void setBoard() {
-    for (int row = 0; row < Board.SIZE; row++) {
-      for (int column = 0; column < Board.SIZE; column++) {
+    for (int row = 0; row < board.SIZE; row++) {
+      for (int column = 0; column < board.SIZE; column++) {
         setSquare(board.getJavaColor(row, column), row, column);
       }
     }

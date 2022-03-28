@@ -1,5 +1,6 @@
 package game.model;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
 
 public class PolySquare extends Poly{
 
-  public static ArrayList<boolean[][]> shapeList = new ArrayList<>();
+  public static ArrayList<ArrayList<FieldSquare>> shapeList = new ArrayList<>();
 
   /**
    * Initializing all pieces of the basic Game
@@ -22,6 +23,49 @@ public class PolySquare extends Poly{
    * @author tiotto
    */
   static {
+    FieldSquare f00 = new FieldSquare(0,0);
+    FieldSquare f01 = new FieldSquare(0,1);
+    FieldSquare f02 = new FieldSquare(0,2);
+    FieldSquare f03 = new FieldSquare(0,3);
+    FieldSquare f04 = new FieldSquare(0,4);
+    FieldSquare f10 = new FieldSquare(1,0);
+    FieldSquare f11 = new FieldSquare(1,1);
+    FieldSquare f12 = new FieldSquare(1,2);
+    FieldSquare f13 = new FieldSquare(1,3);
+    FieldSquare f20 = new FieldSquare(2,0);
+    FieldSquare f21 = new FieldSquare(2,1);
+    FieldSquare f22 = new FieldSquare(2,2);
+    FieldSquare f31 = new FieldSquare(3,1);
+
+
+    ArrayList<FieldSquare>[] pieceList = new ArrayList[]{
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f11.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f10.clone(), f11.clone(), f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f11.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f11.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f02.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f11.clone(), f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f20.clone(), f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f02.clone(), f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f10.clone(), f11.clone(), f21.clone(), f31.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f21.clone(), f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f12.clone(), f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f13.clone(), f03.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f10.clone(), f11.clone(), f21.clone(), f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f01.clone(), f11.clone(), f12.clone(), f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(), f04.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f12.clone(), f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(), f11.clone())
+    };
+
+    for (ArrayList<FieldSquare> piece : pieceList){
+      shapeList.add(piece);
+    }
+    /*
     boolean[][][] pieceList = {new boolean[][]{{true}}, new boolean[][]{{true, true}},
         new boolean[][]{{false, true}, {true, true}}, new boolean[][]{{true, true, true}},
         new boolean[][]{{true, true, true, true}},
@@ -44,37 +88,14 @@ public class PolySquare extends Poly{
     for (boolean[][] piece : pieceList) {
       shapeList.add(piece);
     }
+     */
   }
 
   /**
    * represents the shape of the polygon as an array of boolean whether the position is filled with
    * the polygon or not
    */
-  public boolean[][] shape;
-  /**
-   * number of single squares contained
-   */
-  public int size;
-  /**
-   * height of the polygon (and the representing shape)
-   */
-  public int height;
-  /**
-   * width of the polygon (and the representing shape)
-   */
-  public int width;
-  /**
-   * color of the polygon
-   */
-  public Color color;
-  /**
-   * rotation of the polygon compared to the initial position
-   */
-  public int rotation; // rotation * 90 degrees
-  /**
-   * states if the polygon was mirrored compared to the initial position
-   */
-  public boolean isMirrored;
+  public ArrayList<FieldSquare> shape;
 
   /**
    * Initializes the default values of a polygon
@@ -82,117 +103,97 @@ public class PolySquare extends Poly{
    * @param shape shape of the polygon
    * @param color color of the polygon
    */
-  public PolySquare(boolean[][] shape, Color color) {
+  public PolySquare(ArrayList<FieldSquare> shape, Color color) {
+    super(color);
     this.shape = shape;
-    this.height = shape[0].length;
-    this.width = shape.length;
-    this.color = color;
-    rotation = 0;
-    isMirrored = false;
-    this.size = 0;
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        if (shape[i][j]) {
-          size++;
-        }
-      }
+    this.size = shape.size();
+    for (FieldSquare fs : shape){
+      fs.setColor(color);
     }
   }
 
-  public PolySquare(boolean[][] shape, Color color, int rotation, boolean isMirrored) {
+  public PolySquare(ArrayList<FieldSquare> shape, Color color, int rotation, boolean isMirrored) {
+    super(color, rotation, isMirrored);
     this.shape = shape;
-    this.height = shape[0].length;
-    this.width = shape.length;
-    this.color = color;
-    this.rotation = rotation;
-    this.isMirrored = isMirrored;
-    this.size = 0;
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        if (shape[i][j]) {
-          size++;
-        }
-      }
-    }
+    this.size = shape.size();
   }
 
-  public static boolean shapeEquals(boolean[][] s1, boolean[][] s2) {
-    boolean res = true;
-    if (s1.length != s2.length || s1[0].length != s2[0].length) {
+  public static boolean shapeEquals(ArrayList<FieldSquare> s1, ArrayList<FieldSquare> s2) {
+    if (s1.size() != s2.size()) {
       return false;
     }
-    for (int i = 0; i < s1.length; i++) {
-      for (int j = 0; j < s1[0].length; j++) {
-        res = res && (s1[i][j] == s2[i][j]);
+    for (FieldSquare fs1 : s1) {
+      boolean res = false;
+      for (FieldSquare fs2 : s2){
+        if(fs1.equals(fs2)){
+          res = true;
+        }
+      }
+      if(!res){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private int getHeight(){
+    int res = 0;
+    for (FieldSquare fs : shape){
+      if (fs.getPos()[1] > res){
+        res = fs.getPos()[1];
+      }
+    }
+    return res;
+  }
+
+  private int getWidth(){
+    int res = 0;
+    for (FieldSquare fs : shape){
+      if (fs.getPos()[0] > res){
+        res = fs.getPos()[0];
       }
     }
     return res;
   }
 
   /**
-   * rotates the polygon to the right
-   */
-  public void rotateRight() {
-    boolean[][] res = new boolean[height][width];
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        res[i][j] = shape[width - 1 - j][i];
-      }
-    }
-    shape = res;
-    this.height = shape[0].length;
-    this.width = shape.length;
-    rotation = ++rotation % 4;
-  }
-
-  /**
    * rotates the polygon to the left
    */
   public void rotateLeft() {
-    boolean[][] res = new boolean[height][width];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        res[height - 1 - j][i] = shape[i][j];
-      }
+    ArrayList<FieldSquare> newShape = new ArrayList<>();
+    for (FieldSquare fs : shape){
+      newShape.add(new FieldSquare(getHeight()-1-fs.getPos()[1], fs.getPos()[0], color));
     }
-    shape = res;
-    this.height = shape[0].length;
-    this.width = shape.length;
+    shape = newShape;
     rotation = --rotation % 4;
+  }
+
+  /**
+   * rotates the polygon to the right
+   */
+  public void rotateRight() {
+    for (int i = 1; i < 4; i++){
+      this.rotateLeft();
+    }
   }
 
   /**
    * mirrors the polygon
    */
   public void mirror() {
-    boolean help;
-    for (int i = 0; i < width / 2; i++) {
-      for (int j = 0; j < height; j++) {
-        help = shape[i][j];
-        shape[i][j] = shape[width - 1 - i][j];
-        shape[width - 1 - i][j] = help;
-      }
+    ArrayList<FieldSquare> newShape = new ArrayList<>();
+    for (FieldSquare fs : shape){
+      newShape.add(new FieldSquare(getWidth()-1-fs.getPos()[0], fs.getPos()[1], color));
     }
+    shape = newShape;
     isMirrored = !isMirrored;
   }
 
-  public boolean[][] getShape() {
+  public ArrayList<FieldSquare> getShape() {
     return shape;
   }
 
-  public Color getColor() {
-    return color;
-  }
-
-  public int getHeight() {
-    return height;
-  }
-
-  public int getWidth() {
-    return width;
-  }
-
-  public String toString() {
+  /* public String toString() {
     StringBuffer res = new StringBuffer();
     String element = "";
     switch (getColor()) {
@@ -220,15 +221,13 @@ public class PolySquare extends Poly{
       res.append("\n");
     }
     return res.toString();
-  }
+  } */
 
   @Override
   public PolySquare clone() {
-    boolean[][] newShape = new boolean[this.width][this.height];
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        newShape[i][j] = shape[i][j];
-      }
+    ArrayList<FieldSquare> newShape = new ArrayList<>();
+    for(FieldSquare fs : this.shape){
+      newShape.add(fs.clone());
     }
     return new PolySquare(newShape, color, rotation, isMirrored);
   }
@@ -255,12 +254,5 @@ public class PolySquare extends Poly{
       }
     }
     return res && color == poly.color;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = Objects.hash(size, height, width, color, rotation, isMirrored);
-    result = 31 * result + Arrays.hashCode(shape);
-    return result;
   }
 }

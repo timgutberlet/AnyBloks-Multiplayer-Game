@@ -2,31 +2,30 @@ package game.model;
 
 import game.view.InGameView;
 import game.model.gamemodes.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MainT {
 
   public static void initGame(InGameView view) {
-    GameState gameState = new GameState(new GMClassic());
-    GameLogic gameLogic = new GameLogic(gameState);
     Player p1 = new Player("AI1", PlayerType.AI_HARD, 0, 0);
-    Player p2 = new Player("AI2", PlayerType.AI_MIDDLE, gameState.getBoard().getSize() - 1,
-        gameState.getBoard().getSize() - 1);
-    gameLogic.addPlayer(p1);
-    gameLogic.addPlayer(p2);
-    for (PolySquare p : gameState.getRemainingPolys(p1)) {
+    Player p2 = new Player("AI2", PlayerType.AI_MIDDLE, 0,
+        0);
+    Game game = new Game((ArrayList) Arrays.asList(p1,p2), new GMClassic());
+    for (Poly p : game.getGameState().getRemainingPolys(p1)) {
       System.out.println(p);
     }
-    for (PolySquare p : gameState.getRemainingPolys(p2)) {
+    for (Poly p : game.getGameState().getRemainingPolys(p2)) {
       System.out.println(p);
     }
-    System.out.println(gameLogic.getGameState().getBoard());
-    gameLogic.startGame();
-    while (gameLogic.getGameState().isStateRunning()) {
-      gameLogic.playTurn(AI.calculateNextMove(p1, gameLogic));
-      gameLogic.getGameState().getBoard().updateBoard(view);
+    System.out.println(game.getGameState().getBoard());
+    game.startGame();
+    while (game.getGameState().isStateRunning()) {
+      game.getGameState().playTurn(AI.calculateNextMove(game.getBoard(),game.getGameState().getRemainingPolys(p1),game.getGameState().isFirstRound()));
+      game.getGameState().getBoard().updateBoard(view);
       //System.out.println(gameLogic.getGameState().getBoard());
-      gameLogic.playTurn(AI.calculateNextMove(p2, gameLogic));
-      gameLogic.getGameState().getBoard().updateBoard(view);
+      game.getGameState().playTurn(AI.calculateNextMove(game.getBoard(),game.getGameState().getRemainingPolys(p2),game.getGameState().isFirstRound()));
+      game.getGameState().getBoard().updateBoard(view);
       //System.out.println(gameLogic.getGameState().getBoard());
     }
   }

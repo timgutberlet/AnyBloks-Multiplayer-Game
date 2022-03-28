@@ -12,11 +12,13 @@ public class Game {
 	private Board board;
 	private GameMode gamemode;
 	private ArrayList<Player> players;
+	private GameState gameState;
 
 	public Game(ArrayList<Player> players, GameMode gamemode){
-		this.board = new Board(gamemode);
+		this.board = new BoardSquare(gamemode);
 		this.gamemode = gamemode;
 		this.players = players;
+		this.gameState = new GameState(gamemode);
 	}
 
 
@@ -44,4 +46,11 @@ public class Game {
 		return players;
 	}
 
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	public void startGame(){
+		gameState.setStateRunning(true);
+	}
 }

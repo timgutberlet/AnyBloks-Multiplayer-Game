@@ -2,7 +2,7 @@ package game.view;
 
 import engine.Initializable;
 import engine.controller.AbstractGameController;
-import game.model.Board;
+import game.model.BoardSquare;
 import javafx.scene.Group;
 
 import game.model.gamemodes.*;
@@ -20,7 +20,7 @@ public class InGameView implements Initializable {
   public void init(AbstractGameController gameController, Group root2D) {
     this.root2D = root2D;
     this.gameController = gameController;
-    this.boardPane = new BoardPane(new Board(new GMClassic()));
+    this.boardPane = new BoardPane(new BoardSquare(new GMClassic()));
     this.root2D.getChildren().add(this.boardPane);
   }
 

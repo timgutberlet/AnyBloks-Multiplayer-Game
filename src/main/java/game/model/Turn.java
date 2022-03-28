@@ -39,7 +39,7 @@ public class Turn {
     this.turn = turn;
   }
 
-  public PolySquare getPoly() {
+  public PolySquare getPolySquare() {
     return (PolySquare) poly;
   }
 

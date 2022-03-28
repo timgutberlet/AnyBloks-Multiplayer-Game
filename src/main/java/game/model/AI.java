@@ -11,6 +11,10 @@ import java.util.Comparator;
 
 public class AI {
 
+  public static Turn calculateNextMove(Board board, ArrayList<Poly> remainingPolys, boolean isFirstRound){
+    return board.getPossibleMoves(remainingPolys, isFirstRound).get(0);
+  }
+/*
   public static Turn calculateNextMove(Player player, GameLogic gameLogic) {
     switch (player.getType()) {
       case AI_EASY:
@@ -94,4 +98,5 @@ public class AI {
   }
 
 
+ */
 }

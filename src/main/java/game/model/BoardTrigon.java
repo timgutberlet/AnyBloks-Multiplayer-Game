@@ -1,22 +1,18 @@
 package game.model;
 
-import game.model.gamemodes.GameMode;
 import game.view.InGameView;
+import java.io.Serializable;
 import java.util.ArrayList;
-import javax.swing.plaf.basic.BasicBorders.FieldBorder;
 
 /**
  * @author tiotto
  * @date 21.03.2022
  */
-public class BoardTrigon {
+public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   private final ArrayList<FieldTrigon> board = new ArrayList<>();
 
-  private final int SIZE = 18;
-
   public BoardTrigon() {
-
     for (int i = 0; i < 18; i++) {
       for (int j = 0; j < 18; j++) {
         if (i + j == 8) {
@@ -31,6 +27,7 @@ public class BoardTrigon {
         }
       }
     }
+    this.SIZE = 18;
   }
 
   public BoardTrigon(ArrayList<FieldTrigon> board) {
@@ -39,6 +36,14 @@ public class BoardTrigon {
     }
   }
 
+  public ArrayList<FieldTrigon> getBoard(){
+    return board;
+  }
+
+  @Override
+  public Color getColor(int[] pos){
+    return getColor(pos[0], pos[1], pos[2]);
+  }
 
   public Color getColor(int x, int y, int isRight) {
     if (isOnTheBoard(x, y, isRight)) {
@@ -47,8 +52,18 @@ public class BoardTrigon {
     return null;
   }
 
+  @Override
+  public boolean isOnTheBoard(int[] pos){
+    return isOnTheBoard(pos[0], pos[1], pos[2]);
+  }
+
   public boolean isOnTheBoard(int x, int y, int isRight) {
     return x + y > 8 && x + y < SIZE || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0;
+  }
+
+  @Override
+  public Field getField(int[] pos){
+    return getField(pos[0], pos[1], pos[2]);
   }
 
   public FieldTrigon getField(int x, int y, int isRight) {
@@ -60,31 +75,19 @@ public class BoardTrigon {
     return null;
   }
 
+  @Override
+  public javafx.scene.paint.Color getJavaColor(int[] pos){
+    return getJavaColor(pos[0], pos[1], pos[2]);
+  }
+
   public javafx.scene.paint.Color getJavaColor(int x, int y, int isRight) {
     return getField(x, y, isRight).getJavaColor();
   }
 
-  public int getSize() {
-    return SIZE;
+  @Override
+  public boolean isColorDirectNeighbor(int[] pos, Color c){
+    return isColorDirectNeighbor(pos[0], pos[1], pos[2], c);
   }
-
-  public ArrayList<FieldTrigon> getBoard() {
-    return board;
-  }
-
-  /**
-   * Method updates the IngameView with the current colored Squares
-   *
-   * @param view current InGameView that is shown to the user
-   * @author tgutberl
-   */
-    /*public void updateBoard (InGameView view){
-      for (int i = 0; i < getSize(); i++) {
-        for (int j = 0; j < getSize(); j++) {
-          view.getBoardPane().setSquare(this.getJavaColor(i, j), i, j);
-        }
-      }
-    }*/
 
   /**
    * Method that gives back, if a specific square on the board has a side by side neighbor square of
@@ -113,6 +116,11 @@ public class BoardTrigon {
     return false;
   }
 
+  @Override
+  public boolean isColorIndirectNeighbor (int[] pos, Color c){
+    return isColorIndirectNeighbor(pos[0], pos[1], pos[2], c);
+  }
+
   /**
    * Method that gives back, if a specific square on the board has a neighbor over the edge of a
    * specific color
@@ -129,7 +137,7 @@ public class BoardTrigon {
     boolean hasNeighborOfGrad2Color = false;
     hasNeighborOfGrad2Color =
         hasNeighborOfGrad2Color || isOnTheBoard(x, y + 1, isRight) && getColor(x, y + 1,
-            isRight).equals(color);
+            isRight).equals(color); //TODO Wieso Warnung, dass der Bool immer false sein sollte?
     hasNeighborOfGrad2Color =
         hasNeighborOfGrad2Color || isOnTheBoard(x + 1, y, isRight) && getColor(x + 1, y,
             isRight).equals(color);
@@ -155,7 +163,7 @@ public class BoardTrigon {
     int add = (isRight == 1 ? 1 : -1);
     hasNeighborOfGrad3Color =
         hasNeighborOfGrad3Color || isOnTheBoard(x - 1, y + 1, 1 - isRight) && getColor(x - 1, y + 1,
-            1 - isRight).equals(color);
+            1 - isRight).equals(color); //TODO Warum Warnung, dass Bool immer false sein sollte?
     hasNeighborOfGrad3Color =
         hasNeighborOfGrad3Color || isOnTheBoard(x + 1, y - 1, 1 - isRight) && getColor(x + 1, y - 1,
             1 - isRight).equals(color);
@@ -164,6 +172,12 @@ public class BoardTrigon {
             y + add, 1 - isRight).equals(color);
 
     return hasNeighborOfGrad3Color;
+  }
+
+
+  @Override
+  public boolean isPolyPossible(int[] pos, Poly poly, boolean isFirstRound) {
+    return isPolyPossible(pos[0], pos[1], pos[2], (PolyTrigon) poly, isFirstRound);
   }
 
   /**
@@ -210,9 +224,52 @@ public class BoardTrigon {
     return indirectNeighbor;
   }
 
+
+
+  /**
+   * Method that gives back a list of all the possible positions, that are over the edge to already
+   * placed polygons
+   *
+   * @param color searched color
+   * @return Arraylist with coordinates inside, which contain the position of the fields
+   */
   @Override
-  public game.model.BoardTrigon clone() {
-    return new game.model.BoardTrigon(this.board);
+  public ArrayList<int[]> getPossibleFields(Color color, boolean isFirstRound) { //toDo FirstRound need to be added
+    ArrayList<int[]> res = new ArrayList<>();
+    for (FieldTrigon ft : board) {
+      if (!isColorDirectNeighbor(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2], color)
+          && isColorIndirectNeighbor(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2], color)) {
+        res.add(ft.getPos());
+      }
+    }
+    return res;
+  }
+
+
+  /**
+   * Method that gives back a list of all possible moves of a list of remaining polygons
+   *
+   * @param remainingPolys list of remaining polys
+   * @param isFirstRound boolean, if it is the first round
+   * @return returns a List with all the possible moves. This class contains position, rotation and
+   * if the polygon has to be mirrored.
+   */
+  @Override
+  public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound) {
+    ArrayList<Turn> res = new ArrayList<>();
+    for (Poly poly : remainingPolys) {
+      ArrayList<Turn> movesWithPoly = possibleFieldsAndShadesForPoly((PolyTrigon) poly,isFirstRound);
+      if (movesWithPoly.size() > 0) {
+        res.addAll(movesWithPoly);
+      }
+    }
+    return res;
+  }
+
+
+  @Override
+  public ArrayList<Turn> getPolyShadesPossible(int[] pos, Poly poly, boolean isFirstRound){
+    return getPolyShadesPossible(pos[0], pos[1], pos[2], (PolyTrigon) poly, isFirstRound);
   }
 
   /**
@@ -242,6 +299,11 @@ public class BoardTrigon {
     return res;
   }
 
+
+  @Override
+  public ArrayList<Turn>  getPossibleFieldsAndShadesForPoly(Poly poly, boolean isFirstRound){
+    return possibleFieldsAndShadesForPoly((PolyTrigon) poly, isFirstRound);
+  }
   /**
    * this method gives back a list of the possible positions and the specific placement of possible
    * placements of a given polygon represented by a list of turns
@@ -250,7 +312,7 @@ public class BoardTrigon {
    * @param isFirstRound boolean, if it is the firstRound
    * @return list of turns with the specific poly
    */
-  private ArrayList<Turn> possibleSquaresAndShadesForPoly(PolyTrigon poly, boolean isFirstRound) {
+  private ArrayList<Turn> possibleFieldsAndShadesForPoly(PolyTrigon poly, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
     for (FieldTrigon ft : board){
         ArrayList<Turn> erg = getPolyShadesPossible(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2], poly, isFirstRound);
@@ -262,42 +324,7 @@ public class BoardTrigon {
     return res;
   }
 
-  /**
-   * Method that gives back a list of all possible moves of all remaining polygons of a player
-   *
-   * @param player player who can play the moves, which are searched for
-   * @return returns a List with all the possible moves. This class contains position, rotation and
-   * if the polygon has to be mirrored.
-   */
-  public ArrayList<Turn> getPossibleMoves(Player player, ArrayList<PolyTrigon> remainingPolys, boolean isFirstRound) {
-    ArrayList<Turn> res = new ArrayList<>();
-    for (PolyTrigon poly : remainingPolys) {
-      ArrayList<Turn> movesWithPoly = possibleSquaresAndShadesForPoly(poly,isFirstRound);
-      if (movesWithPoly.size() > 0) {
-        res.addAll(movesWithPoly);
-      }
-    }
-    return res;
-  }
-
-  /**
-   * Method that gives back a list of all the possible squares, that are over the edge to already
-   * placed polygons
-   *
-   * @param color searched color
-   * @return Arraylist with doubles inside, which contain the row and the column of the squares
-   */
-  private ArrayList<FieldTrigon> possibleSquares(Color color, boolean isFirstRound) { //toDo FirstRound need to be added
-    ArrayList<FieldTrigon> res = new ArrayList<>();
-    for (FieldTrigon ft : board) {
-      if (!isColorDirectNeighbor(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2], color)
-          && isColorIndirectNeighbor(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2], color)) {
-        res.add(ft);
-      }
-    }
-    return res;
-  }
-
+  @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
     if (isPolyPossible(turn.getX(), turn.getY(), turn.getIsRight(), turn.getPolyTrigon(), isFirstRound)) {
       System.out.println("Poly possible");
@@ -311,6 +338,23 @@ public class BoardTrigon {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public game.model.BoardTrigon clone() {
+    return new game.model.BoardTrigon(this.board);
+  }
+
+  /**
+   * Method updates the IngameView with the current colored Squares
+   *
+   * @param view current InGameView that is shown to the user
+   * @author tgutberl
+   */
+  public void updateBoard(InGameView view) {
+    for (FieldTrigon ft : board) {
+      view.getBoardPane().setSquare(ft.getJavaColor(), ft.getPos()[0], ft.getPos()[1]);
+    }
   }
 }
 

@@ -11,29 +11,13 @@ import java.util.ArrayList;
 
 public class PolyTrigon extends Poly {
 
-  public static ArrayList<boolean[][]> shapeList = new ArrayList<>();
+  public static ArrayList<ArrayList<FieldTrigon>> shapeList = new ArrayList<>();
 
   /**
    * represents the shape of the polygon as an array of boolean whether the position is filled with
    * the polygon or not
    */
   public ArrayList<FieldTrigon> shape;
-  /**
-   * number of single squares contained
-   */
-  public int size;
-  /**
-   * color of the polygon
-   */
-  public Color color;
-  /**
-   * rotation of the polygon compared to the initial position
-   */
-  public int rotation; // rotation * 60 degrees
-  /**
-   * states if the polygon was mirrored compared to the initial position
-   */
-  public boolean isMirrored;
 
   /**
    * Initializes the default values of a polygon
@@ -42,20 +26,17 @@ public class PolyTrigon extends Poly {
    * @param color color of the polygon
    */
   public PolyTrigon(ArrayList<FieldTrigon> shape, Color color) {
-    super();
+    super(color);
     this.shape = shape;
-    this.color = color;
-    rotation = 0;
-    isMirrored = false;
     this.size = shape.size();
+    for (FieldTrigon ft : shape){
+      ft.setColor(color);
+    }
   }
 
   public PolyTrigon(ArrayList<FieldTrigon> shape, Color color, int rotation, boolean isMirrored) {
-    super();
+    super(color, rotation, isMirrored);
     this.shape = shape;
-    this.color = color;
-    this.rotation = rotation;
-    this.isMirrored = isMirrored;
     this.size = shape.size();
   }
 
@@ -70,7 +51,7 @@ public class PolyTrigon extends Poly {
           res = true;
         }
       }
-      if(res == false){
+      if(!res){
         return false;
       }
     }
@@ -178,10 +159,6 @@ public class PolyTrigon extends Poly {
 
   public ArrayList<FieldTrigon> getShape() {
     return shape;
-  }
-
-  public Color getColor() {
-    return color;
   }
 
   @Override

@@ -29,7 +29,7 @@ public class GameState implements Serializable {
    * list of arrays of the remaining polys of each player (every player has the same index in player
    * as their remaining polys)
    */
-  private final ArrayList<ArrayList<PolySquare>> remainingPolys = new ArrayList<>();
+  private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
   /**
    * list of every participating player
    */
@@ -65,7 +65,7 @@ public class GameState implements Serializable {
    */
   public GameState(GameMode gameMode) {
     this.gameMode = gameMode;
-    board = new Board(gameMode);
+    board = new BoardSquare(gameMode);
     round = 1;
     turn = 0;
     player = new ArrayList<>();
@@ -83,7 +83,7 @@ public class GameState implements Serializable {
    * @param p player for whom the remaining parts are required
    * @return remaining polys for a specific player
    */
-  public ArrayList<PolySquare> getRemainingPolys(Player p) {
+  public ArrayList<Poly> getRemainingPolys(Player p) {
 
     return remainingPolys.get(player.indexOf(p));
   }
@@ -127,8 +127,8 @@ public class GameState implements Serializable {
 
   public void addPlayer(Player p) {
     this.player.add(p);
-    ArrayList<PolySquare> polyOfPlayer = new ArrayList<>();
-    for (boolean[][] shape : PolySquare.shapeList) {
+    ArrayList<Poly> polyOfPlayer = new ArrayList<>();
+    for (ArrayList<FieldSquare> shape : PolySquare.shapeList) {
       polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
     }
     remainingPolys.add(polyOfPlayer);
@@ -169,6 +169,30 @@ public class GameState implements Serializable {
 
   public boolean isStarted() {
     return started;
+  }
+
+  public boolean checkEnd(Turn turn) {
+    for (Player p : player) {
+      Debug.printMessage(board.getPossibleMoves(remainingPolys.get(player.indexOf(p)),isFirstRound()).size() + " möglichkeiten Steine zu legen");
+      //Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
+      if (getRemainingPolys(p).size() == 0 || (board.getPossibleMoves(remainingPolys.get(player.indexOf(p)),isFirstRound()).size() == 0 && getRound() > 1)){
+        setStateEnding("Spiel Vorbei");
+        setStateRunning(false);
+        Debug.printMessage("Spiel Vorbei");
+        Debug.printMessage(p.toString());
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean playTurn(Turn turn){
+    if (checkEnd(turn)){
+      return false;
+    }
+    boolean res = board.playTurn(turn, isFirstRound());
+    incTurn();
+    return res;
   }
 
 }
