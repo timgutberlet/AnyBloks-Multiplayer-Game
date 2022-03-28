@@ -11,39 +11,31 @@ import java.util.Comparator;
 
 public class AI {
 
-  public static Turn calculateNextMove(Board board, ArrayList<Poly> remainingPolys, boolean isFirstRound){
-    return board.getPossibleMoves(remainingPolys, isFirstRound).get(0);
-  }
-/*
-  public static Turn calculateNextMove(Player player, GameLogic gameLogic) {
+  public static Turn calculateNextMove(Player player, Board board, ArrayList<Poly> remainingPolys, boolean isFirstRound){
     switch (player.getType()) {
-      case AI_EASY:
-        return calculateNextEasyMove(player, gameLogic);
-      case AI_MIDDLE:
-        return calculateNextMiddleMove(player, gameLogic);
       case AI_HARD:
-        return calculateNextHardMove(player, gameLogic);
+        // return calculateNextHardMove(player, gameLogic);
+      case AI_MIDDLE:
+        //return calculateNextMiddleMove(player, gameLogic);
+      case AI_EASY:
+        return calculateNextEasyMove(board, remainingPolys, isFirstRound);
       default:
         System.out.println("AI move for human player");
-
         return null;
     }
   }
 
-  public static Turn calculateNextEasyMove(Player player, GameLogic gameLogic) {
-    ArrayList<Turn> possibleMoves = gameLogic.getPossibleMoves(player);
-    System.out.println(gameLogic.getColorFromPlayer(player));
-    System.out.println(possibleMoves.size());
-    System.out.println();
+  public static Turn calculateNextEasyMove(Board board, ArrayList<Poly> remainingPolys, boolean isFirstRound) {
+    ArrayList<Turn> possibleMoves = board.getPossibleMoves(remainingPolys,isFirstRound);
+    possibleMoves.sort((o1, o2) -> o1.getPoly().getSize() - o2.getPoly().getSize());
     if (possibleMoves.size() == 0) {
       return null;
     } else {
-      System.out.println(possibleMoves.get(0));
-      System.out.println();
       return possibleMoves.get(0);
     }
   }
 
+/*
   public static Turn calculateNextMiddleMove(Player player, GameLogic gameLogic) {
     ArrayList<Turn> possibleMoves = gameLogic.getPossibleMoves(player);
     for (Turn turn : possibleMoves) {
