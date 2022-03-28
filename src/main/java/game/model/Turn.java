@@ -45,6 +45,12 @@ public class Turn {
 
   public PolyTrigon getPolyTrigon(){return (PolyTrigon) poly;}
 
+  public Poly getPoly(){return poly;}
+
+  public Color getColor(){
+    return poly.getColor();
+  }
+
   public int[] getTurn() {
     return this.turn;
   }

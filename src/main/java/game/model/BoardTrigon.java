@@ -12,6 +12,8 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   private final ArrayList<FieldTrigon> board = new ArrayList<>();
 
+  private final ArrayList<FieldTrigon> startFields = new ArrayList<>();
+
   public BoardTrigon() {
     for (int i = 0; i < 18; i++) {
       for (int j = 0; j < 18; j++) {
@@ -28,6 +30,13 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
       }
     }
     this.SIZE = 18;
+
+    startFields.add(new FieldTrigon(6,6,0));
+    startFields.add(new FieldTrigon(11,3,1));
+    startFields.add(new FieldTrigon(14,6,0));
+    startFields.add(new FieldTrigon(11,11,1));
+    startFields.add(new FieldTrigon(6,14,0));
+    startFields.add(new FieldTrigon(3,11,1));
   }
 
   public BoardTrigon(ArrayList<FieldTrigon> board) {
@@ -214,12 +223,15 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
         return false;
       }
 
-      indirectNeighbor = indirectNeighbor || isColorIndirectNeighbor(ftPoly.getPos()[0] + x - xRef,
-          ftPoly.getPos()[1] + y - yRef, ftPoly.getPos()[2], poly.getColor());
-
-    }
-
-    if (isFirstRound) { //toDo
+      if (isFirstRound) {
+        for (FieldTrigon ft : startFields) {
+          indirectNeighbor = indirectNeighbor || ftPoly.equals(ft);
+        }
+      } else {
+        indirectNeighbor =
+            indirectNeighbor || isColorIndirectNeighbor(ftPoly.getPos()[0] + x - xRef,
+                ftPoly.getPos()[1] + y - yRef, ftPoly.getPos()[2], poly.getColor());
+      }
     }
     return indirectNeighbor;
   }
@@ -234,12 +246,19 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    * @return Arraylist with coordinates inside, which contain the position of the fields
    */
   @Override
-  public ArrayList<int[]> getPossibleFields(Color color, boolean isFirstRound) { //toDo FirstRound need to be added
+  public ArrayList<int[]> getPossibleFields(Color color, boolean isFirstRound) {
     ArrayList<int[]> res = new ArrayList<>();
     for (FieldTrigon ft : board) {
       if (!isColorDirectNeighbor(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2], color)
           && isColorIndirectNeighbor(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2], color)) {
         res.add(ft.getPos());
+      }
+    }
+    if (isFirstRound){
+      for (FieldTrigon ft : startFields){
+        if (!getField(ft.getPos()).isOccupied()){
+          res.add(ft.getPos());
+        }
       }
     }
     return res;
@@ -334,7 +353,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
       for(FieldTrigon ft : turn.getPolyTrigon().getShape()){
         getField(ft.getPos()[0] + turn.getX() - xRef, ft.getPos()[1] + turn.getY() - yRef,
             ft.getPos()[2]).setColor(turn.getPolyTrigon().getColor());
-      } //delete Poly in Remaining Poly in calling method
+      }
       return true;
     }
     return false;

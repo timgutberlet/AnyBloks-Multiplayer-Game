@@ -50,4 +50,8 @@ public abstract class Poly implements Cloneable{
     return color;
   }
 
+  public int getSize(){
+    return size;
+  }
+
 }

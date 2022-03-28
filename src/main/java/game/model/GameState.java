@@ -190,7 +190,14 @@ public class GameState implements Serializable {
     if (checkEnd(turn)){
       return false;
     }
-    boolean res = board.playTurn(turn, isFirstRound());
+    boolean res = board.playTurn(turn, isFirstRound()); //play turn
+    if (res){ // remove played poly from remaining polys
+      for (Poly p : getRemainingPolys(getPlayerFromColor(turn.getColor()))){
+        if(p.equals(turn.getPoly())){
+          getRemainingPolys(getPlayerFromColor(turn.getColor())).remove(p);
+        }
+      }
+    }
     incTurn();
     return res;
   }
