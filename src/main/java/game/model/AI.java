@@ -41,7 +41,7 @@ public class AI {
    */
   public static Turn calculateNextEasyMove(Board board, ArrayList<Poly> remainingPolys, boolean isFirstRound) {
     ArrayList<Turn> possibleMoves = board.getPossibleMoves(remainingPolys,isFirstRound);
-    possibleMoves.sort((o1, o2) -> o1.getPoly().getSize() - o2.getPoly().getSize());
+    possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
     if (possibleMoves.size() == 0) {
       return null;
     } else {
@@ -62,8 +62,8 @@ public class AI {
     for (Turn turn : possibleMoves) {
       board.assignNumberBlockedFields(turn);
     }
-    possibleMoves.sort((o1, o2) -> o1.getPoly().getSize() - o2.getPoly().getSize());
-    possibleMoves.sort((o1, o2) -> o1.getNumberBlockedSquares() - o2.getNumberBlockedSquares());
+    possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+    possibleMoves.sort((o1, o2) -> o2.getNumberBlockedSquares() - o1.getNumberBlockedSquares());
     if (possibleMoves.size() == 0) {
       return null;
     }
