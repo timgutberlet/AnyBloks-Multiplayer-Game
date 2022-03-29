@@ -48,6 +48,17 @@ public abstract class Board {
 
   public abstract void updateBoard(InGameView view);
 
+  @Override
+  public String toString(){
+    StringBuffer res = new StringBuffer();
+    res.append("----------------------------------\n");
+    for (Color c : Color.values()){
+      res.append("Score " + c.name() + ": " + getScoreOfColor(c) + "\n");
+    }
+    res.append("----------------------------------\n\n");
+    return res.toString();
+  }
+
   //AI Stuff
   public abstract void assignNumberBlockedFields(Turn turn);
 

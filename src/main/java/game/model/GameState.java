@@ -73,6 +73,18 @@ public class GameState implements Serializable {
     started = false;
   }
 
+  /**
+   * Constructor to copy a GameState
+   * @param gameMode
+   * @param board
+   * @param remainingPolys
+   * @param player
+   * @param round
+   * @param turn
+   * @param running
+   * @param started
+   * @param stateEnding
+   */
   public GameState(GameMode gameMode, Board board, ArrayList<ArrayList<Poly>> remainingPolys, ArrayList<Player> player, int round, int turn, boolean running, boolean started, String stateEnding){
     this.gameMode = gameMode;
     this.board = board;
@@ -212,6 +224,7 @@ public class GameState implements Serializable {
       for (Poly p : getRemainingPolys(getPlayerFromColor(turn.getColor()))){
         if(p.equals(turn.getPoly())){
           getRemainingPolys(getPlayerFromColor(turn.getColor())).remove(p);
+          break;
         }
       }
     }

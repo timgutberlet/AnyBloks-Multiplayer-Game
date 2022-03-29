@@ -54,7 +54,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   public Color getColor(int x, int y) {
-    if (isOnTheBoard(x, y)) {
+    if (!isOnTheBoard(x, y)) {
       return null;
     }
     return getField(x, y).getColor();
@@ -76,10 +76,11 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   public FieldSquare getField(int x, int y) {
     for (FieldSquare fs : board) {
-      if (fs.pos.equals(new int[]{x, y})) {
+      if (fs.pos[0] == x && fs.pos[1] == y) {
         return fs;
       }
     }
+    System.out.println("" + x + "," + y);
     return null;
   }
 
@@ -108,19 +109,19 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorDirectNeighbor(int x, int y, Color color) {
     //over the square
-    if (y > 0 && getColor(x, y - 1).equals(color)) {
+    if (y-1 > 0 && getColor(x, y - 1).equals(color)) {
       return true;
     }
     //right to the square
-    if (x < getSize() && getColor(x + 1, y).equals(color)) {
+    if (x+1 < getSize() && getColor(x + 1, y).equals(color)) {
       return true;
     }
     //under the square
-    if (y < getSize() && getColor(x, y + 1).equals(color)) {
+    if (y+1 < getSize() && getColor(x, y + 1).equals(color)) {
       return true;
     }
     //left to the square
-    return x > 0 && getColor(x - 1, y).equals(color);
+    return x-1 > 0 && getColor(x - 1, y).equals(color);
   }
 
 
@@ -140,19 +141,19 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorIndirectNeighbor(int x, int y, Color color) {
     //left and over the square
-    if (y > 0 && x > 0 && getColor(x - 1, y - 1).equals(color)) {
+    if (y-1 > 0 && x-1 > 0 && getColor(x - 1, y - 1).equals(color)) {
       return true;
     }
     //right and over to the square
-    if (y > 0 && x < getSize() && getColor(x + 1, y - 1).equals(color)) {
+    if (y-1 > 0 && x+1 < getSize() && getColor(x + 1, y - 1).equals(color)) {
       return true;
     }
     //left and under the square
-    if (x > 0 && y < getSize() && getColor(x - 1, y + 1).equals(color)) {
+    if (x-1 > 0 && y+1 < getSize() && getColor(x - 1, y + 1).equals(color)) {
       return true;
     }
     //right and under to the square
-    return x < getSize() && y < getSize() && getColor(x + 1, y + 1).equals(color);
+    return x+1 < getSize() && y+1 < getSize() && getColor(x + 1, y + 1).equals(color);
   }
 
   @Override
@@ -309,12 +310,12 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   public boolean playTurn(Turn turn, boolean isFirstRound) {
     if (isPolyPossible(turn.getX(), turn.getY(), turn.getPolySquare(), isFirstRound)) {
       System.out.println("Poly possible");
-      int xRef = turn.getPolyTrigon().shape.get(0).getPos()[0];
-      int yRef = turn.getPolyTrigon().shape.get(0).getPos()[1];
+      int xRef = turn.getPolySquare().shape.get(0).getPos()[0];
+      int yRef = turn.getPolySquare().shape.get(0).getPos()[1];
 
-      for (FieldTrigon ft : turn.getPolyTrigon().getShape()) {
-        getField(ft.getPos()[0] + turn.getX() - xRef, ft.getPos()[1] + turn.getY() - yRef).setColor(
-            turn.getPolyTrigon().getColor());
+      for (FieldSquare fs : turn.getPolySquare().getShape()) {
+        getField(fs.getPos()[0] + turn.getX() - xRef, fs.getPos()[1] + turn.getY() - yRef).setColor(
+            turn.getPolySquare().getColor());
       }
       return true;
     }
@@ -326,7 +327,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     return new game.model.BoardSquare(this.board, this.SIZE);
   }
 
-  public String toString() {
+ /* public String toString() {
     StringBuffer res = new StringBuffer();
     for (FieldSquare fs : board) {
       res.append(fs);
@@ -335,7 +336,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       }
     }
     return res.toString();
-  }
+  }*/
 
   /**
    * Method updates the IngameView with the current colored Squares

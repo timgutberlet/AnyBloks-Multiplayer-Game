@@ -21,6 +21,10 @@ public class Game {
     this.gamemode = gamemode;
     this.players = players;
     this.gameState = new GameState(gamemode);
+    for (Player p : players){
+      this.gameState.addPlayer(p);
+    }
+
   }
 
 

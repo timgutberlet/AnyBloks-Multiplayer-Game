@@ -77,7 +77,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   public FieldTrigon getField(int x, int y, int isRight) {
     for (FieldTrigon ft : board) {
-      if (ft.pos.equals(new int[]{x, y, isRight})) {
+      if (ft.pos[0]==x && ft.pos[1]==y && ft.pos[2]==isRight) {
         return ft;
       }
     }
