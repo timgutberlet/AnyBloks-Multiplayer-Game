@@ -75,6 +75,7 @@ public class GameState implements Serializable {
 
   /**
    * Constructor to copy a GameState
+   *
    * @param gameMode
    * @param board
    * @param remainingPolys
@@ -85,10 +86,12 @@ public class GameState implements Serializable {
    * @param started
    * @param stateEnding
    */
-  public GameState(GameMode gameMode, Board board, ArrayList<ArrayList<Poly>> remainingPolys, ArrayList<Player> player, int round, int turn, boolean running, boolean started, String stateEnding){
+  public GameState(GameMode gameMode, Board board, ArrayList<ArrayList<Poly>> remainingPolys,
+      ArrayList<Player> player, int round, int turn, boolean running, boolean started,
+      String stateEnding) {
     this.gameMode = gameMode;
     this.board = board;
-    for (ArrayList<Poly> polys: remainingPolys){
+    for (ArrayList<Poly> polys : remainingPolys) {
       ArrayList<Poly> help = new ArrayList<>();
       for (Poly poly : polys) {
         help.add(poly.clone());
@@ -202,9 +205,13 @@ public class GameState implements Serializable {
 
   public boolean checkEnd(Turn turn) {
     for (Player p : player) {
-      Debug.printMessage(board.getPossibleMoves(remainingPolys.get(player.indexOf(p)),isFirstRound()).size() + " möglichkeiten Steine zu legen");
+      Debug.printMessage(
+          board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size()
+              + " möglichkeiten Steine zu legen");
       //Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
-      if (getRemainingPolys(p).size() == 0 || (board.getPossibleMoves(remainingPolys.get(player.indexOf(p)),isFirstRound()).size() == 0 && getRound() > 1)){
+      if (getRemainingPolys(p).size() == 0 || (
+          board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size() == 0
+              && getRound() > 1)) {
         setStateEnding("Spiel Vorbei");
         setStateRunning(false);
         Debug.printMessage("Spiel Vorbei");
@@ -215,14 +222,14 @@ public class GameState implements Serializable {
     return false;
   }
 
-  public boolean playTurn(Turn turn){
-    if (checkEnd(turn)){
+  public boolean playTurn(Turn turn) {
+    if (checkEnd(turn)) {
       return false;
     }
     boolean res = board.playTurn(turn, isFirstRound()); //play turn
-    if (res){ // remove played poly from remaining polys
-      for (Poly p : getRemainingPolys(getPlayerFromColor(turn.getColor()))){
-        if(p.equals(turn.getPoly())){
+    if (res) { // remove played poly from remaining polys
+      for (Poly p : getRemainingPolys(getPlayerFromColor(turn.getColor()))) {
+        if (p.equals(turn.getPoly())) {
           getRemainingPolys(getPlayerFromColor(turn.getColor())).remove(p);
           break;
         }
@@ -232,17 +239,21 @@ public class GameState implements Serializable {
     return res;
   }
 
-  public GameState tryTurn(Turn turn){
+  public GameState tryTurn(Turn turn) {
     Board help = this.board.clone();
     help.playTurn(turn, this.isFirstRound());
-    return new GameState(this.gameMode, help, remainingPolys, player, round, this.turn, running, started, stateEnding );
+    return new GameState(this.gameMode, help, remainingPolys, player, round, this.turn, running,
+        started, stateEnding);
   }
 
-  public Color getNextColor(Color c){
-    switch (c){
-      case RED: return Color.BLUE;
-      case BLUE: return Color.RED;
-      default: return Color.BLUE;
+  public Color getNextColor(Color c) {
+    switch (c) {
+      case RED:
+        return Color.BLUE;
+      case BLUE:
+        return Color.RED;
+      default:
+        return Color.BLUE;
     }
   }
 

@@ -109,19 +109,19 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorDirectNeighbor(int x, int y, Color color) {
     //over the square
-    if (y-1 > 0 && getColor(x, y - 1).equals(color)) {
+    if (y - 1 > 0 && getColor(x, y - 1).equals(color)) {
       return true;
     }
     //right to the square
-    if (x+1 < getSize() && getColor(x + 1, y).equals(color)) {
+    if (x + 1 < getSize() && getColor(x + 1, y).equals(color)) {
       return true;
     }
     //under the square
-    if (y+1 < getSize() && getColor(x, y + 1).equals(color)) {
+    if (y + 1 < getSize() && getColor(x, y + 1).equals(color)) {
       return true;
     }
     //left to the square
-    return x-1 > 0 && getColor(x - 1, y).equals(color);
+    return x - 1 > 0 && getColor(x - 1, y).equals(color);
   }
 
 
@@ -141,19 +141,19 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorIndirectNeighbor(int x, int y, Color color) {
     //left and over the square
-    if (y-1 > 0 && x-1 > 0 && getColor(x - 1, y - 1).equals(color)) {
+    if (y - 1 > 0 && x - 1 > 0 && getColor(x - 1, y - 1).equals(color)) {
       return true;
     }
     //right and over to the square
-    if (y-1 > 0 && x+1 < getSize() && getColor(x + 1, y - 1).equals(color)) {
+    if (y - 1 > 0 && x + 1 < getSize() && getColor(x + 1, y - 1).equals(color)) {
       return true;
     }
     //left and under the square
-    if (x-1 > 0 && y+1 < getSize() && getColor(x - 1, y + 1).equals(color)) {
+    if (x - 1 > 0 && y + 1 < getSize() && getColor(x - 1, y + 1).equals(color)) {
       return true;
     }
     //right and under to the square
-    return x+1 < getSize() && y+1 < getSize() && getColor(x + 1, y + 1).equals(color);
+    return x + 1 < getSize() && y + 1 < getSize() && getColor(x + 1, y + 1).equals(color);
   }
 
   @Override
