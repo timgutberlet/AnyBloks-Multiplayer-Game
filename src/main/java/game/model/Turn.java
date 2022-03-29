@@ -43,11 +43,15 @@ public class Turn {
     return (PolySquare) poly;
   }
 
-  public PolyTrigon getPolyTrigon(){return (PolyTrigon) poly;}
+  public PolyTrigon getPolyTrigon() {
+    return (PolyTrigon) poly;
+  }
 
-  public Poly getPoly(){return poly;}
+  public Poly getPoly() {
+    return poly;
+  }
 
-  public Color getColor(){
+  public Color getColor() {
     return poly.getColor();
   }
 
@@ -67,15 +71,21 @@ public class Turn {
     return turn[0];
   }
 
-  public int getX(){return turn[0];}
+  public int getX() {
+    return turn[0];
+  }
 
   public int getRow() {
     return turn[1];
   }
 
-  public int getY(){return turn[1];}
+  public int getY() {
+    return turn[1];
+  }
 
-  public int getIsRight(){return turn[2];}
+  public int getIsRight() {
+    return turn[2];
+  }
 
   public int getRoomDiscovery() {
     return roomDiscovery;

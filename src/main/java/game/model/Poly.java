@@ -4,7 +4,8 @@ package game.model;
  * @author tiotto
  * @date 23.03.2022
  */
-public abstract class Poly implements Cloneable{
+public abstract class Poly implements Cloneable {
+
   /**
    * number of single squares contained
    */
@@ -22,13 +23,13 @@ public abstract class Poly implements Cloneable{
    */
   public boolean isMirrored;
 
-  public Poly(Color color){
+  public Poly(Color color) {
     this.color = color;
     rotation = 0;
     isMirrored = false;
   }
 
-  public Poly(Color color, int rotation, boolean isMirrored){
+  public Poly(Color color, int rotation, boolean isMirrored) {
     this.color = color;
     this.rotation = rotation;
     this.isMirrored = isMirrored;
@@ -46,11 +47,11 @@ public abstract class Poly implements Cloneable{
 
   public abstract boolean equals(Object o);
 
-  public Color getColor(){
+  public Color getColor() {
     return color;
   }
 
-  public int getSize(){
+  public int getSize() {
     return size;
   }
 

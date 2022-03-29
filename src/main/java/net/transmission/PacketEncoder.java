@@ -1,10 +1,10 @@
 package net.transmission;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.packet.Packet;
 
 
@@ -14,14 +14,15 @@ import net.packet.Packet;
  * @author tbuscher
  */
 public class PacketEncoder implements Encoder.Text<Packet> {
-  private ObjectMapper oMapper = new ObjectMapper();
+
+  private final ObjectMapper oMapper = new ObjectMapper();
 
   /**
    * Empty. Needs to be implemented to inherit from Encoder.
    *
    * @param config
    */
-  public void init(final EndpointConfig config){
+  public void init(final EndpointConfig config) {
   }
 
 
@@ -34,15 +35,16 @@ public class PacketEncoder implements Encoder.Text<Packet> {
   public String encode(final Packet toEncode) throws EncodeException {
     try {
       return oMapper.writeValueAsString(toEncode);
-    } catch (JsonProcessingException e){
-      throw new EncodeException(toEncode, "The packet could not be encoded. See error message: \n", e);
+    } catch (JsonProcessingException e) {
+      throw new EncodeException(toEncode, "The packet could not be encoded. See error message: \n",
+          e);
     }
   }
 
   /**
    * Empty. Needs to be implemented to inherit from Encoder.
    */
-  public void destroy(){
+  public void destroy() {
   }
 
 

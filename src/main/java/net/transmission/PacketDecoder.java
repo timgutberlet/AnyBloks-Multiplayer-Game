@@ -14,7 +14,7 @@ import net.packet.Packet;
  */
 public class PacketDecoder implements Decoder.Text<Packet> {
 
-  private ObjectMapper oMapper = new ObjectMapper();
+  private final ObjectMapper oMapper = new ObjectMapper();
 
   /**
    * Empty. Needs to be implemented to inherit from Decoder.

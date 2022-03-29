@@ -3,13 +3,13 @@ package net.transmission;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.EncodeException;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
 import net.packet.CreateAccountRequestPacket;
 import net.packet.Packet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
 
 /**
  * Endpoint for clients.

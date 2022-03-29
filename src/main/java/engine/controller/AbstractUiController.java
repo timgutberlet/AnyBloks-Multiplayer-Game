@@ -10,9 +10,8 @@ import javafx.stage.Stage;
  */
 public abstract class AbstractUiController implements Initializable {
 
-  Group root = new Group();
-
   public SubScene subScene;
+  Group root = new Group();
 
   public AbstractUiController(AbstractGameController gameController) {
     Stage stage = gameController.getStage();
@@ -26,8 +25,6 @@ public abstract class AbstractUiController implements Initializable {
 
   public void update(AbstractGameController gameController, double deltaTime) {
   }
-
-  ;
 
   public Group getGroup() {
     return this.root;

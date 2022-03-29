@@ -24,9 +24,9 @@ public class CreateAccountResponsePacket extends Packet {
    * Packet sent by server in response to CreateAccountRequestPacket
    *
    * @param accountCreated flag whether request was handled successfully
-   * @param errorMessage problem(s) that occured
+   * @param errorMessage   problem(s) that occured
    */
-  public CreateAccountResponsePacket(boolean accountCreated, String errorMessage){
+  public CreateAccountResponsePacket(boolean accountCreated, String errorMessage) {
     super(PacketType.CREATE_ACCOUNT_RESPONSE_PACKET);
     this.accountCreated = accountCreated;
     this.errorMessage = errorMessage;
@@ -37,7 +37,7 @@ public class CreateAccountResponsePacket extends Packet {
    *
    * @return accountCreated
    */
-  public boolean getAccountCreated(){
+  public boolean getAccountCreated() {
     return this.accountCreated;
   }
 
@@ -46,7 +46,7 @@ public class CreateAccountResponsePacket extends Packet {
    *
    * @return errorMessage
    */
-  public String getErrorMessage(){
+  public String getErrorMessage() {
     return this.errorMessage;
   }
 

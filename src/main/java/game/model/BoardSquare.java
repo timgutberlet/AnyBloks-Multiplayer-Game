@@ -1,8 +1,8 @@
 package game.model;
 
+import game.model.gamemodes.GameMode;
 import game.view.InGameView;
 import java.io.Serializable;
-import game.model.gamemodes.GameMode;
 import java.util.ArrayList;
 
 public class BoardSquare extends Board implements Serializable, Cloneable {
@@ -15,16 +15,16 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     switch (mode.getName()) {
       case "CLASSIC":
         SIZE = 20;
-        startFields.add(new FieldSquare(SIZE-1, SIZE-1));
-        startFields.add(new FieldSquare(0, SIZE-1));
-        startFields.add(new FieldSquare(SIZE-1, 0));
+        startFields.add(new FieldSquare(SIZE - 1, SIZE - 1));
+        startFields.add(new FieldSquare(0, SIZE - 1));
+        startFields.add(new FieldSquare(SIZE - 1, 0));
         startFields.add(new FieldSquare(0, 0));
         break;
       case "DUO":
       case "JUNIOR":
         SIZE = 14;
-        startFields.add(new FieldSquare(4,4));
-        startFields.add(new FieldSquare(9,9));
+        startFields.add(new FieldSquare(4, 4));
+        startFields.add(new FieldSquare(9, 9));
         break;
       default:
         SIZE = 0;
@@ -39,7 +39,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   public BoardSquare(ArrayList<FieldSquare> board, int size) {
     SIZE = size;
-    for (FieldSquare fs : board){
+    for (FieldSquare fs : board) {
       this.board.add(fs.clone());
     }
   }
@@ -49,34 +49,34 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   @Override
-  public Color getColor(int[] pos){
+  public Color getColor(int[] pos) {
     return getColor(pos[0], pos[1]);
   }
 
   public Color getColor(int x, int y) {
-    if (isOnTheBoard(x,y)) {
+    if (isOnTheBoard(x, y)) {
       return null;
     }
-    return getField(x,y).getColor();
+    return getField(x, y).getColor();
   }
 
   @Override
-  public boolean isOnTheBoard(int[] pos){
+  public boolean isOnTheBoard(int[] pos) {
     return isOnTheBoard(pos[0], pos[1]);
   }
 
-  public boolean isOnTheBoard(int x, int y){
+  public boolean isOnTheBoard(int x, int y) {
     return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
   }
 
   @Override
-  public Field getField(int[] pos){
+  public Field getField(int[] pos) {
     return getField(pos[0], pos[1]);
   }
 
-  public FieldSquare getField(int x, int y){
-    for (FieldSquare fs : board){
-      if (fs.pos.equals(new int[]{x,y})){
+  public FieldSquare getField(int x, int y) {
+    for (FieldSquare fs : board) {
+      if (fs.pos.equals(new int[]{x, y})) {
         return fs;
       }
     }
@@ -84,16 +84,16 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   @Override
-  public javafx.scene.paint.Color getJavaColor(int[] pos){
+  public javafx.scene.paint.Color getJavaColor(int[] pos) {
     return getJavaColor(pos[0], pos[1]);
   }
 
   public javafx.scene.paint.Color getJavaColor(int x, int y) {
-    return getField(x,y).getJavaColor();
+    return getField(x, y).getJavaColor();
   }
 
   @Override
-  public boolean isColorDirectNeighbor(int[] pos, Color c){
+  public boolean isColorDirectNeighbor(int[] pos, Color c) {
     return isColorDirectNeighbor(pos[0], pos[1], c);
   }
 
@@ -125,9 +125,10 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
 
   @Override
-  public boolean isColorIndirectNeighbor (int[] pos, Color c){
+  public boolean isColorIndirectNeighbor(int[] pos, Color c) {
     return isColorIndirectNeighbor(pos[0], pos[1], c);
   }
+
   /**
    * Method that gives back, if a specific square on the board has a neighbor over the edge of a
    * specific color
@@ -181,7 +182,8 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
         return false;
       }
 
-      if (isColorDirectNeighbor(fsPoly.getPos()[0] + x - xRef, fsPoly.getPos()[1] + y - yRef, poly.getColor())) {
+      if (isColorDirectNeighbor(fsPoly.getPos()[0] + x - xRef, fsPoly.getPos()[1] + y - yRef,
+          poly.getColor())) {
         return false;
       }
       if (isFirstRound) {
@@ -205,7 +207,8 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    * @return Arraylist with coordinates inside, which contain the position of the fields
    */
   @Override
-  public ArrayList<int[]> getPossibleFields(Color color, boolean isFirstRound) { //toDo FirstRound need to be added
+  public ArrayList<int[]> getPossibleFields(Color color,
+      boolean isFirstRound) { //toDo FirstRound need to be added
     ArrayList<int[]> res = new ArrayList<>();
     for (FieldSquare fs : board) {
       if (!isColorDirectNeighbor(fs.getPos()[0], fs.getPos()[1], color)
@@ -213,9 +216,9 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
         res.add(fs.getPos());
       }
     }
-    if (isFirstRound){
-      for (FieldSquare fs : startFields){
-        if (!getField(fs.getPos()).isOccupied()){
+    if (isFirstRound) {
+      for (FieldSquare fs : startFields) {
+        if (!getField(fs.getPos()).isOccupied()) {
           res.add(fs.getPos());
         }
       }
@@ -227,7 +230,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    * Method that gives back a list of all possible moves of a list of remaining polygons
    *
    * @param remainingPolys list of remaining polys
-   * @param isFirstRound boolean, if it is the first round
+   * @param isFirstRound   boolean, if it is the first round
    * @return returns a List with all the possible moves. This class contains position, rotation and
    * if the polygon has to be mirrored.
    */
@@ -235,7 +238,8 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
     for (Poly poly : remainingPolys) {
-      ArrayList<Turn> movesWithPoly = possibleFieldsAndShadesForPoly((PolySquare) poly,isFirstRound);
+      ArrayList<Turn> movesWithPoly = possibleFieldsAndShadesForPoly((PolySquare) poly,
+          isFirstRound);
       if (movesWithPoly.size() > 0) {
         res.addAll(movesWithPoly);
       }
@@ -244,20 +248,22 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   @Override
-  public ArrayList<Turn> getPolyShadesPossible(int[] pos, Poly poly, boolean isFirstRound){
+  public ArrayList<Turn> getPolyShadesPossible(int[] pos, Poly poly, boolean isFirstRound) {
     return getPolyShadesPossible(pos[0], pos[1], (PolySquare) poly, isFirstRound);
   }
+
   /**
    * this method gives back the list of the specific placements of a polygon for a given position
    *
-   * @param x x value of the position
-   * @param y y value of the position
+   * @param x            x value of the position
+   * @param y            y value of the position
    * @param isFirstRound boolean, if it is the first Round
-   * @param poly given polygon
+   * @param poly         given polygon
    * @return list turns which contain the poly and a tuple out of integers: {row, column, rotation,
    * mirrored}
    */
-  private ArrayList<Turn> getPolyShadesPossible(int x, int y, PolySquare poly, boolean isFirstRound) {
+  private ArrayList<Turn> getPolyShadesPossible(int x, int y, PolySquare poly,
+      boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
     for (Boolean mirrored : new boolean[]{false, true}) {
       for (int i = 0; i < 4; i++) {
@@ -275,21 +281,23 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
 
   @Override
-  public ArrayList<Turn>  getPossibleFieldsAndShadesForPoly(Poly poly, boolean isFirstRound){
+  public ArrayList<Turn> getPossibleFieldsAndShadesForPoly(Poly poly, boolean isFirstRound) {
     return possibleFieldsAndShadesForPoly((PolySquare) poly, isFirstRound);
   }
+
   /**
    * this method gives back a list of the possible positions and the specific placement of possible
    * placements of a given polygon represented by a list of turns
    *
-   * @param poly the given polygon
+   * @param poly         the given polygon
    * @param isFirstRound boolean, if it is the firstRound
    * @return list of turns with the specific poly
    */
   private ArrayList<Turn> possibleFieldsAndShadesForPoly(PolySquare poly, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
-    for (FieldSquare fs : board){
-      ArrayList<Turn> erg = getPolyShadesPossible(fs.getPos()[0], fs.getPos()[1], poly, isFirstRound);
+    for (FieldSquare fs : board) {
+      ArrayList<Turn> erg = getPolyShadesPossible(fs.getPos()[0], fs.getPos()[1], poly,
+          isFirstRound);
       if (erg.size() > 0) {
         res.addAll(erg);
       }
@@ -304,8 +312,9 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       int xRef = turn.getPolyTrigon().shape.get(0).getPos()[0];
       int yRef = turn.getPolyTrigon().shape.get(0).getPos()[1];
 
-      for(FieldTrigon ft : turn.getPolyTrigon().getShape()){
-        getField(ft.getPos()[0] + turn.getX() - xRef, ft.getPos()[1] + turn.getY() - yRef).setColor(turn.getPolyTrigon().getColor());
+      for (FieldTrigon ft : turn.getPolyTrigon().getShape()) {
+        getField(ft.getPos()[0] + turn.getX() - xRef, ft.getPos()[1] + turn.getY() - yRef).setColor(
+            turn.getPolyTrigon().getColor());
       }
       return true;
     }
@@ -319,9 +328,9 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   public String toString() {
     StringBuffer res = new StringBuffer();
-    for (FieldSquare fs : board){
+    for (FieldSquare fs : board) {
       res.append(fs);
-      if (fs.getPos()[1] == SIZE -1) {
+      if (fs.getPos()[1] == SIZE - 1) {
         res.append("\n");
       }
     }
@@ -336,7 +345,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public void updateBoard(InGameView view) {
     for (FieldSquare fs : board) {
-        view.getBoardPane().setSquare(fs.getJavaColor(), fs.getPos()[0], fs.getPos()[1]);
+      view.getBoardPane().setSquare(fs.getJavaColor(), fs.getPos()[0], fs.getPos()[1]);
     }
   }
 
@@ -370,10 +379,10 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   @Override
-  public int getScoreOfColor(Color c){
+  public int getScoreOfColor(Color c) {
     int res = 0;
-    for (FieldSquare fs : board){
-      if (fs.getColor().equals(c)){
+    for (FieldSquare fs : board) {
+      if (fs.getColor().equals(c)) {
         res++;
       }
     }
@@ -381,10 +390,10 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   @Override
-  public int getScoreOfColorMiniMax(Color c){
+  public int getScoreOfColorMiniMax(Color c) {
     int res = 0;
-    for (FieldSquare fs : board){
-      if (fs.getColor().equals(c)){
+    for (FieldSquare fs : board) {
+      if (fs.getColor().equals(c)) {
         res++;
       } else if (fs.isOccupied()) {
         res--;

@@ -25,10 +25,10 @@ public class CreateAccountRequestPacket extends Packet {
   /**
    * Packet for Creating an Account by a user
    *
-   * @param username desired username
+   * @param username     desired username
    * @param passwordHash HASHED password to set
    */
-  public CreateAccountRequestPacket(String username, String passwordHash){
+  public CreateAccountRequestPacket(String username, String passwordHash) {
     super(PacketType.CREATE_ACCOUNT_REQUEST_PACKET);
     this.username = username;
     this.passwordHash = passwordHash;
@@ -39,7 +39,7 @@ public class CreateAccountRequestPacket extends Packet {
    *
    * @return desired username
    */
-  public String getUsername(){
+  public String getUsername() {
     return this.username;
   }
 
@@ -48,7 +48,7 @@ public class CreateAccountRequestPacket extends Packet {
    *
    * @return hashed password
    */
-  public String getPasswordHash(){
+  public String getPasswordHash() {
     return this.passwordHash;
   }
 

@@ -1,9 +1,7 @@
 package game.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * this class represents a specific polygon of the game
@@ -12,7 +10,7 @@ import java.util.Objects;
  * @author tgutberl
  */
 
-public class PolySquare extends Poly{
+public class PolySquare extends Poly {
 
   public static ArrayList<ArrayList<FieldSquare>> shapeList = new ArrayList<>();
 
@@ -23,20 +21,19 @@ public class PolySquare extends Poly{
    * @author tiotto
    */
   static {
-    FieldSquare f00 = new FieldSquare(0,0);
-    FieldSquare f01 = new FieldSquare(0,1);
-    FieldSquare f02 = new FieldSquare(0,2);
-    FieldSquare f03 = new FieldSquare(0,3);
-    FieldSquare f04 = new FieldSquare(0,4);
-    FieldSquare f10 = new FieldSquare(1,0);
-    FieldSquare f11 = new FieldSquare(1,1);
-    FieldSquare f12 = new FieldSquare(1,2);
-    FieldSquare f13 = new FieldSquare(1,3);
-    FieldSquare f20 = new FieldSquare(2,0);
-    FieldSquare f21 = new FieldSquare(2,1);
-    FieldSquare f22 = new FieldSquare(2,2);
-    FieldSquare f31 = new FieldSquare(3,1);
-
+    FieldSquare f00 = new FieldSquare(0, 0);
+    FieldSquare f01 = new FieldSquare(0, 1);
+    FieldSquare f02 = new FieldSquare(0, 2);
+    FieldSquare f03 = new FieldSquare(0, 3);
+    FieldSquare f04 = new FieldSquare(0, 4);
+    FieldSquare f10 = new FieldSquare(1, 0);
+    FieldSquare f11 = new FieldSquare(1, 1);
+    FieldSquare f12 = new FieldSquare(1, 2);
+    FieldSquare f13 = new FieldSquare(1, 3);
+    FieldSquare f20 = new FieldSquare(2, 0);
+    FieldSquare f21 = new FieldSquare(2, 1);
+    FieldSquare f22 = new FieldSquare(2, 2);
+    FieldSquare f31 = new FieldSquare(3, 1);
 
     ArrayList<FieldSquare>[] pieceList = new ArrayList[]{
         (ArrayList<FieldSquare>) Arrays.asList(f00.clone()),
@@ -48,21 +45,33 @@ public class PolySquare extends Poly{
         (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f11.clone()),
         (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f02.clone()),
         (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f11.clone(), f21.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f20.clone(), f21.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f02.clone(), f22.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f10.clone(), f11.clone(), f21.clone(), f31.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f21.clone(), f22.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f12.clone(), f21.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f13.clone(), f03.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f10.clone(), f11.clone(), f21.clone(), f22.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f01.clone(), f11.clone(), f12.clone(), f21.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(), f04.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f12.clone(), f22.clone()),
-        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(), f11.clone())
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f11.clone(),
+            f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f20.clone(),
+            f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f02.clone(),
+            f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f10.clone(), f11.clone(), f21.clone(),
+            f31.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f21.clone(),
+            f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f12.clone(),
+            f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f11.clone(), f12.clone(), f13.clone(),
+            f03.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f10.clone(), f11.clone(), f21.clone(),
+            f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f10.clone(), f01.clone(), f11.clone(), f12.clone(),
+            f21.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(),
+            f04.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f12.clone(),
+            f22.clone()),
+        (ArrayList<FieldSquare>) Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(),
+            f11.clone())
     };
 
-    for (ArrayList<FieldSquare> piece : pieceList){
+    for (ArrayList<FieldSquare> piece : pieceList) {
       shapeList.add(piece);
     }
     /*
@@ -107,7 +116,7 @@ public class PolySquare extends Poly{
     super(color);
     this.shape = shape;
     this.size = shape.size();
-    for (FieldSquare fs : shape){
+    for (FieldSquare fs : shape) {
       fs.setColor(color);
     }
   }
@@ -124,32 +133,32 @@ public class PolySquare extends Poly{
     }
     for (FieldSquare fs1 : s1) {
       boolean res = false;
-      for (FieldSquare fs2 : s2){
-        if(fs1.equals(fs2)){
+      for (FieldSquare fs2 : s2) {
+        if (fs1.equals(fs2)) {
           res = true;
         }
       }
-      if(!res){
+      if (!res) {
         return false;
       }
     }
     return true;
   }
 
-  private int getHeight(){
+  private int getHeight() {
     int res = 0;
-    for (FieldSquare fs : shape){
-      if (fs.getPos()[1] > res){
+    for (FieldSquare fs : shape) {
+      if (fs.getPos()[1] > res) {
         res = fs.getPos()[1];
       }
     }
     return res;
   }
 
-  private int getWidth(){
+  private int getWidth() {
     int res = 0;
-    for (FieldSquare fs : shape){
-      if (fs.getPos()[0] > res){
+    for (FieldSquare fs : shape) {
+      if (fs.getPos()[0] > res) {
         res = fs.getPos()[0];
       }
     }
@@ -161,8 +170,8 @@ public class PolySquare extends Poly{
    */
   public void rotateLeft() {
     ArrayList<FieldSquare> newShape = new ArrayList<>();
-    for (FieldSquare fs : shape){
-      newShape.add(new FieldSquare(getHeight()-1-fs.getPos()[1], fs.getPos()[0], color));
+    for (FieldSquare fs : shape) {
+      newShape.add(new FieldSquare(getHeight() - 1 - fs.getPos()[1], fs.getPos()[0], color));
     }
     shape = newShape;
     rotation = --rotation % 4;
@@ -172,7 +181,7 @@ public class PolySquare extends Poly{
    * rotates the polygon to the right
    */
   public void rotateRight() {
-    for (int i = 1; i < 4; i++){
+    for (int i = 1; i < 4; i++) {
       this.rotateLeft();
     }
   }
@@ -182,8 +191,8 @@ public class PolySquare extends Poly{
    */
   public void mirror() {
     ArrayList<FieldSquare> newShape = new ArrayList<>();
-    for (FieldSquare fs : shape){
-      newShape.add(new FieldSquare(getWidth()-1-fs.getPos()[0], fs.getPos()[1], color));
+    for (FieldSquare fs : shape) {
+      newShape.add(new FieldSquare(getWidth() - 1 - fs.getPos()[0], fs.getPos()[1], color));
     }
     shape = newShape;
     isMirrored = !isMirrored;
@@ -226,7 +235,7 @@ public class PolySquare extends Poly{
   @Override
   public PolySquare clone() {
     ArrayList<FieldSquare> newShape = new ArrayList<>();
-    for(FieldSquare fs : this.shape){
+    for (FieldSquare fs : this.shape) {
       newShape.add(fs.clone());
     }
     return new PolySquare(newShape, color, rotation, isMirrored);

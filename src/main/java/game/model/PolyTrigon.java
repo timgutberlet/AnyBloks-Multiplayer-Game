@@ -29,7 +29,7 @@ public class PolyTrigon extends Poly {
     super(color);
     this.shape = shape;
     this.size = shape.size();
-    for (FieldTrigon ft : shape){
+    for (FieldTrigon ft : shape) {
       ft.setColor(color);
     }
   }
@@ -46,12 +46,12 @@ public class PolyTrigon extends Poly {
     }
     for (FieldTrigon ft1 : s1) {
       boolean res = false;
-      for (FieldTrigon ft2 : s2){
-        if(ft1.equals(ft2)){
+      for (FieldTrigon ft2 : s2) {
+        if (ft1.equals(ft2)) {
           res = true;
         }
       }
-      if(!res){
+      if (!res) {
         return false;
       }
     }
@@ -64,40 +64,72 @@ public class PolyTrigon extends Poly {
   public void rotateLeft() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
 
-    for (FieldTrigon ft : this.shape){ //toDo Idee: Sortierung der Zeilen aendern, um immer unten links als Referenzstein zu haben
-      if (ft.isPos(0,0,0)) {newShape.add(new FieldTrigon(3,0,1,this.color));}
-      else if (ft.isPos(0,0,1)) {newShape.add(new FieldTrigon(3,1,0,this.color));}
-      else if (ft.isPos(1,0,0)) {newShape.add(new FieldTrigon(3,1,1,this.color));}
-      else if (ft.isPos(1,0,1)) {newShape.add(new FieldTrigon(3,2,0,this.color));}
-      else if (ft.isPos(2,0,0)) {newShape.add(new FieldTrigon(3,2,1,this.color));}
-      else if (ft.isPos(2,0,1)) {newShape.add(new FieldTrigon(3,3,0,this.color));}
-      else if (ft.isPos(3,0,0)) {newShape.add(new FieldTrigon(3,3,1,this.color));}
-      else if (ft.isPos(2,1,0)) {newShape.add(new FieldTrigon(2,3,1,this.color));}
-      else if (ft.isPos(1,1,1)) {newShape.add(new FieldTrigon(2,3,0,this.color));}
-      else if (ft.isPos(1,2,0)) {newShape.add(new FieldTrigon(1,3,1,this.color));}
-      else if (ft.isPos(0,2,1)) {newShape.add(new FieldTrigon(1,3,0,this.color));}
-      else if (ft.isPos(0,3,0)) {newShape.add(new FieldTrigon(0,3,1,this.color));}
-      else if (ft.isPos(0,2,0)) {newShape.add(new FieldTrigon(1,2,1,this.color));}
-      else if (ft.isPos(0,1,1)) {newShape.add(new FieldTrigon(2,2,0,this.color));}
-      else if (ft.isPos(0,1,0)) {newShape.add(new FieldTrigon(2,1,1,this.color));}
-      else if (ft.isPos(1,1,0)) {newShape.add(new FieldTrigon(2,2,1,this.color));}
-
-      else if (ft.isPos(3,0,1)) {newShape.add(new FieldTrigon(3,0,0,this.color));}
-      else if (ft.isPos(3,1,0)) {newShape.add(new FieldTrigon(2,0,1,this.color));}
-      else if (ft.isPos(3,1,1)) {newShape.add(new FieldTrigon(2,1,0,this.color));}
-      else if (ft.isPos(3,2,0)) {newShape.add(new FieldTrigon(1,1,1,this.color));}
-      else if (ft.isPos(3,2,1)) {newShape.add(new FieldTrigon(1,2,0,this.color));}
-      else if (ft.isPos(3,3,0)) {newShape.add(new FieldTrigon(0,2,1,this.color));}
-      else if (ft.isPos(3,3,1)) {newShape.add(new FieldTrigon(0,3,0,this.color));}
-      else if (ft.isPos(2,3,1)) {newShape.add(new FieldTrigon(0,2,0,this.color));}
-      else if (ft.isPos(2,3,0)) {newShape.add(new FieldTrigon(0,1,1,this.color));}
-      else if (ft.isPos(1,3,1)) {newShape.add(new FieldTrigon(0,1,0,this.color));}
-      else if (ft.isPos(1,3,0)) {newShape.add(new FieldTrigon(0,0,1,this.color));}
-      else if (ft.isPos(0,3,1)) {newShape.add(new FieldTrigon(0,0,0,this.color));}
-      else if (ft.isPos(1,2,1)) {newShape.add(new FieldTrigon(1,0,0,this.color));}
-      else if (ft.isPos(2,2,0)) {newShape.add(new FieldTrigon(1,0,1,this.color));}
-      else if (ft.isPos(2,1,1)) {newShape.add(new FieldTrigon(2,0,0,this.color));}
-      else if (ft.isPos(2,2,1)) {newShape.add(new FieldTrigon(1,1,0,this.color));}
+    for (FieldTrigon ft : this.shape) { //toDo Idee: Sortierung der Zeilen aendern, um immer unten links als Referenzstein zu haben
+      if (ft.isPos(0, 0, 0)) {
+        newShape.add(new FieldTrigon(3, 0, 1, this.color));
+      } else if (ft.isPos(0, 0, 1)) {
+        newShape.add(new FieldTrigon(3, 1, 0, this.color));
+      } else if (ft.isPos(1, 0, 0)) {
+        newShape.add(new FieldTrigon(3, 1, 1, this.color));
+      } else if (ft.isPos(1, 0, 1)) {
+        newShape.add(new FieldTrigon(3, 2, 0, this.color));
+      } else if (ft.isPos(2, 0, 0)) {
+        newShape.add(new FieldTrigon(3, 2, 1, this.color));
+      } else if (ft.isPos(2, 0, 1)) {
+        newShape.add(new FieldTrigon(3, 3, 0, this.color));
+      } else if (ft.isPos(3, 0, 0)) {
+        newShape.add(new FieldTrigon(3, 3, 1, this.color));
+      } else if (ft.isPos(2, 1, 0)) {
+        newShape.add(new FieldTrigon(2, 3, 1, this.color));
+      } else if (ft.isPos(1, 1, 1)) {
+        newShape.add(new FieldTrigon(2, 3, 0, this.color));
+      } else if (ft.isPos(1, 2, 0)) {
+        newShape.add(new FieldTrigon(1, 3, 1, this.color));
+      } else if (ft.isPos(0, 2, 1)) {
+        newShape.add(new FieldTrigon(1, 3, 0, this.color));
+      } else if (ft.isPos(0, 3, 0)) {
+        newShape.add(new FieldTrigon(0, 3, 1, this.color));
+      } else if (ft.isPos(0, 2, 0)) {
+        newShape.add(new FieldTrigon(1, 2, 1, this.color));
+      } else if (ft.isPos(0, 1, 1)) {
+        newShape.add(new FieldTrigon(2, 2, 0, this.color));
+      } else if (ft.isPos(0, 1, 0)) {
+        newShape.add(new FieldTrigon(2, 1, 1, this.color));
+      } else if (ft.isPos(1, 1, 0)) {
+        newShape.add(new FieldTrigon(2, 2, 1, this.color));
+      } else if (ft.isPos(3, 0, 1)) {
+        newShape.add(new FieldTrigon(3, 0, 0, this.color));
+      } else if (ft.isPos(3, 1, 0)) {
+        newShape.add(new FieldTrigon(2, 0, 1, this.color));
+      } else if (ft.isPos(3, 1, 1)) {
+        newShape.add(new FieldTrigon(2, 1, 0, this.color));
+      } else if (ft.isPos(3, 2, 0)) {
+        newShape.add(new FieldTrigon(1, 1, 1, this.color));
+      } else if (ft.isPos(3, 2, 1)) {
+        newShape.add(new FieldTrigon(1, 2, 0, this.color));
+      } else if (ft.isPos(3, 3, 0)) {
+        newShape.add(new FieldTrigon(0, 2, 1, this.color));
+      } else if (ft.isPos(3, 3, 1)) {
+        newShape.add(new FieldTrigon(0, 3, 0, this.color));
+      } else if (ft.isPos(2, 3, 1)) {
+        newShape.add(new FieldTrigon(0, 2, 0, this.color));
+      } else if (ft.isPos(2, 3, 0)) {
+        newShape.add(new FieldTrigon(0, 1, 1, this.color));
+      } else if (ft.isPos(1, 3, 1)) {
+        newShape.add(new FieldTrigon(0, 1, 0, this.color));
+      } else if (ft.isPos(1, 3, 0)) {
+        newShape.add(new FieldTrigon(0, 0, 1, this.color));
+      } else if (ft.isPos(0, 3, 1)) {
+        newShape.add(new FieldTrigon(0, 0, 0, this.color));
+      } else if (ft.isPos(1, 2, 1)) {
+        newShape.add(new FieldTrigon(1, 0, 0, this.color));
+      } else if (ft.isPos(2, 2, 0)) {
+        newShape.add(new FieldTrigon(1, 0, 1, this.color));
+      } else if (ft.isPos(2, 1, 1)) {
+        newShape.add(new FieldTrigon(2, 0, 0, this.color));
+      } else if (ft.isPos(2, 2, 1)) {
+        newShape.add(new FieldTrigon(1, 1, 0, this.color));
+      }
     }
     this.shape = newShape;
     rotation = --rotation % 6;
@@ -107,7 +139,7 @@ public class PolyTrigon extends Poly {
    * rotates the polygon to the left
    */
   public void rotateRight() {
-    for (int i = 1; i < 6; i++){
+    for (int i = 1; i < 6; i++) {
       this.rotateLeft();
     }
   }
@@ -118,40 +150,72 @@ public class PolyTrigon extends Poly {
   public void mirror() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
 
-    for (FieldTrigon ft : this.shape){
-      if (ft.isPos(0,0,0)) {newShape.add(new FieldTrigon(3,0,0,this.color));}
-      else if (ft.isPos(0,0,1)) {newShape.add(new FieldTrigon(2,0,1,this.color));}
-      else if (ft.isPos(1,0,0)) {newShape.add(new FieldTrigon(2,0,0,this.color));}
-      else if (ft.isPos(1,0,1)) {newShape.add(new FieldTrigon(1,0,1,this.color));}
-      else if (ft.isPos(2,0,0)) {newShape.add(new FieldTrigon(1,0,0,this.color));}
-      else if (ft.isPos(2,0,1)) {newShape.add(new FieldTrigon(0,0,1,this.color));}
-      else if (ft.isPos(3,0,0)) {newShape.add(new FieldTrigon(0,0,0,this.color));}
-      else if (ft.isPos(2,1,0)) {newShape.add(new FieldTrigon(0,1,0,this.color));}
-      else if (ft.isPos(1,1,1)) {newShape.add(new FieldTrigon(0,1,1,this.color));}
-      else if (ft.isPos(1,2,0)) {newShape.add(new FieldTrigon(0,2,0,this.color));}
-      else if (ft.isPos(0,2,1)) {newShape.add(new FieldTrigon(0,2,1,this.color));}
-      else if (ft.isPos(0,3,0)) {newShape.add(new FieldTrigon(0,3,0,this.color));}
-      else if (ft.isPos(0,2,0)) {newShape.add(new FieldTrigon(1,2,0,this.color));}
-      else if (ft.isPos(0,1,1)) {newShape.add(new FieldTrigon(1,1,1,this.color));}
-      else if (ft.isPos(0,1,0)) {newShape.add(new FieldTrigon(2,1,0,this.color));}
-      else if (ft.isPos(1,1,0)) {newShape.add(new FieldTrigon(1,1,0,this.color));}
-
-      else if (ft.isPos(3,0,1)) {newShape.add(new FieldTrigon(3,0,1,this.color));}
-      else if (ft.isPos(3,1,0)) {newShape.add(new FieldTrigon(3,1,0,this.color));}
-      else if (ft.isPos(3,1,1)) {newShape.add(new FieldTrigon(2,1,1,this.color));}
-      else if (ft.isPos(3,2,0)) {newShape.add(new FieldTrigon(2,2,0,this.color));}
-      else if (ft.isPos(3,2,1)) {newShape.add(new FieldTrigon(1,2,1,this.color));}
-      else if (ft.isPos(3,3,0)) {newShape.add(new FieldTrigon(1,3,0,this.color));}
-      else if (ft.isPos(3,3,1)) {newShape.add(new FieldTrigon(0,3,1,this.color));}
-      else if (ft.isPos(2,3,1)) {newShape.add(new FieldTrigon(1,3,1,this.color));}
-      else if (ft.isPos(2,3,0)) {newShape.add(new FieldTrigon(2,3,0,this.color));}
-      else if (ft.isPos(1,3,1)) {newShape.add(new FieldTrigon(2,3,1,this.color));}
-      else if (ft.isPos(1,3,0)) {newShape.add(new FieldTrigon(3,3,0,this.color));}
-      else if (ft.isPos(0,3,1)) {newShape.add(new FieldTrigon(3,3,1,this.color));}
-      else if (ft.isPos(1,2,1)) {newShape.add(new FieldTrigon(3,2,1,this.color));}
-      else if (ft.isPos(2,2,0)) {newShape.add(new FieldTrigon(3,2,0,this.color));}
-      else if (ft.isPos(2,1,1)) {newShape.add(new FieldTrigon(3,1,1,this.color));}
-      else if (ft.isPos(2,2,1)) {newShape.add(new FieldTrigon(2,2,1,this.color));}
+    for (FieldTrigon ft : this.shape) {
+      if (ft.isPos(0, 0, 0)) {
+        newShape.add(new FieldTrigon(3, 0, 0, this.color));
+      } else if (ft.isPos(0, 0, 1)) {
+        newShape.add(new FieldTrigon(2, 0, 1, this.color));
+      } else if (ft.isPos(1, 0, 0)) {
+        newShape.add(new FieldTrigon(2, 0, 0, this.color));
+      } else if (ft.isPos(1, 0, 1)) {
+        newShape.add(new FieldTrigon(1, 0, 1, this.color));
+      } else if (ft.isPos(2, 0, 0)) {
+        newShape.add(new FieldTrigon(1, 0, 0, this.color));
+      } else if (ft.isPos(2, 0, 1)) {
+        newShape.add(new FieldTrigon(0, 0, 1, this.color));
+      } else if (ft.isPos(3, 0, 0)) {
+        newShape.add(new FieldTrigon(0, 0, 0, this.color));
+      } else if (ft.isPos(2, 1, 0)) {
+        newShape.add(new FieldTrigon(0, 1, 0, this.color));
+      } else if (ft.isPos(1, 1, 1)) {
+        newShape.add(new FieldTrigon(0, 1, 1, this.color));
+      } else if (ft.isPos(1, 2, 0)) {
+        newShape.add(new FieldTrigon(0, 2, 0, this.color));
+      } else if (ft.isPos(0, 2, 1)) {
+        newShape.add(new FieldTrigon(0, 2, 1, this.color));
+      } else if (ft.isPos(0, 3, 0)) {
+        newShape.add(new FieldTrigon(0, 3, 0, this.color));
+      } else if (ft.isPos(0, 2, 0)) {
+        newShape.add(new FieldTrigon(1, 2, 0, this.color));
+      } else if (ft.isPos(0, 1, 1)) {
+        newShape.add(new FieldTrigon(1, 1, 1, this.color));
+      } else if (ft.isPos(0, 1, 0)) {
+        newShape.add(new FieldTrigon(2, 1, 0, this.color));
+      } else if (ft.isPos(1, 1, 0)) {
+        newShape.add(new FieldTrigon(1, 1, 0, this.color));
+      } else if (ft.isPos(3, 0, 1)) {
+        newShape.add(new FieldTrigon(3, 0, 1, this.color));
+      } else if (ft.isPos(3, 1, 0)) {
+        newShape.add(new FieldTrigon(3, 1, 0, this.color));
+      } else if (ft.isPos(3, 1, 1)) {
+        newShape.add(new FieldTrigon(2, 1, 1, this.color));
+      } else if (ft.isPos(3, 2, 0)) {
+        newShape.add(new FieldTrigon(2, 2, 0, this.color));
+      } else if (ft.isPos(3, 2, 1)) {
+        newShape.add(new FieldTrigon(1, 2, 1, this.color));
+      } else if (ft.isPos(3, 3, 0)) {
+        newShape.add(new FieldTrigon(1, 3, 0, this.color));
+      } else if (ft.isPos(3, 3, 1)) {
+        newShape.add(new FieldTrigon(0, 3, 1, this.color));
+      } else if (ft.isPos(2, 3, 1)) {
+        newShape.add(new FieldTrigon(1, 3, 1, this.color));
+      } else if (ft.isPos(2, 3, 0)) {
+        newShape.add(new FieldTrigon(2, 3, 0, this.color));
+      } else if (ft.isPos(1, 3, 1)) {
+        newShape.add(new FieldTrigon(2, 3, 1, this.color));
+      } else if (ft.isPos(1, 3, 0)) {
+        newShape.add(new FieldTrigon(3, 3, 0, this.color));
+      } else if (ft.isPos(0, 3, 1)) {
+        newShape.add(new FieldTrigon(3, 3, 1, this.color));
+      } else if (ft.isPos(1, 2, 1)) {
+        newShape.add(new FieldTrigon(3, 2, 1, this.color));
+      } else if (ft.isPos(2, 2, 0)) {
+        newShape.add(new FieldTrigon(3, 2, 0, this.color));
+      } else if (ft.isPos(2, 1, 1)) {
+        newShape.add(new FieldTrigon(3, 1, 1, this.color));
+      } else if (ft.isPos(2, 2, 1)) {
+        newShape.add(new FieldTrigon(2, 2, 1, this.color));
+      }
     }
     this.shape = newShape;
     isMirrored = !isMirrored;
@@ -164,7 +228,7 @@ public class PolyTrigon extends Poly {
   @Override
   public PolyTrigon clone() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
-    for(FieldTrigon ft : this.shape){
+    for (FieldTrigon ft : this.shape) {
       newShape.add(ft.clone());
     }
     return new PolyTrigon(newShape, color, rotation, isMirrored);

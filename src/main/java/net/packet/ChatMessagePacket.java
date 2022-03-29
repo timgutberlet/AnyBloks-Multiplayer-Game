@@ -5,7 +5,7 @@ package net.packet;
  *
  * @author tbuscher
  */
-public class ChatMessagePacket extends Packet{
+public class ChatMessagePacket extends Packet {
 
   /**
    * To implement Serializable
@@ -23,7 +23,7 @@ public class ChatMessagePacket extends Packet{
    *
    * @param text text of the message
    */
-  public ChatMessagePacket(String text){
+  public ChatMessagePacket(String text) {
     super(PacketType.CHAT_MESSAGE_PACKET);
     this.text = text;
   }
@@ -33,8 +33,8 @@ public class ChatMessagePacket extends Packet{
    *
    * @return text of the message
    */
- public String getText(){
+  public String getText() {
     return this.text;
- }
+  }
 
 }

@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggingRequestFilter implements ContainerRequestFilter {
 
-  private static final Logger LOG = LoggerFactory
-      .getLogger(LoggingRequestFilter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(LoggingRequestFilter.class);
 
   /**
    * Filter request. Throws exception.

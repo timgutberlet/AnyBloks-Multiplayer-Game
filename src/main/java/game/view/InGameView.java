@@ -3,9 +3,8 @@ package game.view;
 import engine.Initializable;
 import engine.controller.AbstractGameController;
 import game.model.BoardSquare;
+import game.model.gamemodes.GMClassic;
 import javafx.scene.Group;
-
-import game.model.gamemodes.*;
 
 /**
  * @author lbaudenb

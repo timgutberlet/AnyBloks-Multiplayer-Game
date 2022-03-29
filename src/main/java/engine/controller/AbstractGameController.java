@@ -15,12 +15,9 @@ public abstract class AbstractGameController extends AnimationTimer {
   private final Stage stage;
 
   private final Group gameRoot;
-
-  private AbstractUiController activeUiController;
-
   private final Application application;
-
-  private InputHandler inputHandler;
+  private AbstractUiController activeUiController;
+  private final InputHandler inputHandler;
 
   private long lastNanoTime;
 

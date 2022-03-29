@@ -10,7 +10,7 @@ import java.io.Serializable;
 public abstract class Packet implements Serializable {
 
   /**
-  * To implement Serializable
+   * To implement Serializable
    */
   private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public abstract class Packet implements Serializable {
    *
    * @param type type of packet to be created
    */
-  public Packet(PacketType type){
+  public Packet(PacketType type) {
     this.type = type;
   }
 

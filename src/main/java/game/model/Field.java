@@ -35,6 +35,7 @@ public abstract class Field {
 
   /**
    * method, that gives back the javafx color of the field
+   *
    * @return javafx color, that the field has
    */
   public javafx.scene.paint.Color getJavaColor() {
@@ -54,6 +55,7 @@ public abstract class Field {
 
   /**
    * if the field is already occupied
+   *
    * @return boolean, if the field is already occupied
    */
   public Boolean isOccupied() {
@@ -62,6 +64,7 @@ public abstract class Field {
 
   /**
    * abstract clone method, that needs to be implemented in the subclasses
+   *
    * @return gives back a real copy of the field
    */
   @Override
@@ -69,6 +72,7 @@ public abstract class Field {
 
   /**
    * method, that converts the field into a string for a Terminaloutput
+   *
    * @return String of the Field
    */
   @Override
@@ -91,6 +95,7 @@ public abstract class Field {
 
   /**
    * method, that determine if to fields are the same, depending on their position
+   *
    * @param o field, that will be determined, if it is equal
    * @return boolean, if the two fields have the same position
    */

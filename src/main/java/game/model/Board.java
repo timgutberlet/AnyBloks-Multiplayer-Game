@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * @date 27.03.2022
  */
 public abstract class Board {
+
   public int SIZE;
 
   public int getSize() {
@@ -33,11 +34,13 @@ public abstract class Board {
 
   public abstract ArrayList<int[]> getPossibleFields(Color color, boolean isFirstRound);
 
-  public abstract ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound);
+  public abstract ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys,
+      boolean isFirstRound);
 
   public abstract ArrayList<Turn> getPolyShadesPossible(int[] pos, Poly poly, boolean isFirstRound);
 
-  public abstract ArrayList<Turn> getPossibleFieldsAndShadesForPoly(Poly poly, boolean isFirstRound);
+  public abstract ArrayList<Turn> getPossibleFieldsAndShadesForPoly(Poly poly,
+      boolean isFirstRound);
 
   public abstract boolean playTurn(Turn turn, boolean isFirstRound);
 
