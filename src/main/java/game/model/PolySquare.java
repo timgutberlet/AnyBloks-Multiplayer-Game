@@ -152,7 +152,7 @@ public class PolySquare extends Poly {
         res = fs.getPos()[1];
       }
     }
-    return res;
+    return res+1;
   }
 
   private int getWidth() {
@@ -162,7 +162,7 @@ public class PolySquare extends Poly {
         res = fs.getPos()[0];
       }
     }
-    return res;
+    return res+1;
   }
 
   /**
@@ -263,5 +263,45 @@ public class PolySquare extends Poly {
       }
     }
     return res && color == poly.color;
+  }
+
+  public boolean containsField(int x, int y){
+    for (FieldSquare fs : shape){
+      if (fs.pos[0]==x && fs.pos[1]==y){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    StringBuffer res = new StringBuffer();
+    String element = "";
+    switch (getColor()) {
+      case RED:
+        element = "\uD83D\uDFE5";
+        break;
+      case BLUE:
+        element = "\uD83D\uDFE6";
+        break;
+      case GREEN:
+        element = "\uD83D\uDFE9";
+        break;
+      case YELLOW:
+        element = "\uD83D\uDFE8";
+        break;
+    }
+    for (int i = 0; i < getWidth(); i++) {
+      for (int j = 0; j < getHeight(); j++) {
+        if (containsField(i,j)) {
+          res.append(element);
+        } else {
+          res.append("\uD83D\uDFEB");
+        }
+      }
+      res.append("\n");
+    }
+    return res.toString();
   }
 }

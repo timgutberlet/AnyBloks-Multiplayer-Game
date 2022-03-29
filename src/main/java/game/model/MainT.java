@@ -37,7 +37,7 @@ public class MainT {
     Player p1 = new Player("AI1", PlayerType.AI_EASY, 0, 0);
     Player p2 = new Player("AI2", PlayerType.AI_MIDDLE, 0,
         0);
-    Game game = new Game((ArrayList) Arrays.asList(p1, p2), new GMClassic());
+    Game game = new Game( new ArrayList<>(Arrays.asList(p1, p2)), new GMClassic());
     for (Poly p : game.getGameState().getRemainingPolys(p1)) {
       System.out.println(p);
     }
