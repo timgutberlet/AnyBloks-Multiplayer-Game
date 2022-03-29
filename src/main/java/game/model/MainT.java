@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class MainT {
 
   public static void initGame(InGameView view) {
-    Player p1 = new Player("AI1", PlayerType.AI_HARD, 0, 0);
+    Player p1 = new Player("AI1", PlayerType.AI_EASY, 0, 0);
     Player p2 = new Player("AI2", PlayerType.AI_MIDDLE, 0,
         0);
     Game game = new Game((ArrayList) Arrays.asList(p1,p2), new GMClassic());
