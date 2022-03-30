@@ -34,10 +34,14 @@ public class MainT {
   }
 
   public static void main(String[] args) {
-    Player p1 = new Player("AI1", PlayerType.AI_EASY, 0, 0);
-    Player p2 = new Player("AI2", PlayerType.AI_MIDDLE, 0,
+    Player p1 = new Player("AI1", PlayerType.AI_RANDOM, 0, 0);
+    Player p2 = new Player("AI2", PlayerType.AI_RANDOM, 0,
         0);
-    Game game = new Game( new ArrayList<>(Arrays.asList(p1, p2)), new GMClassic());
+    Player p3 = new Player("AI3", PlayerType.AI_EASY, 0,
+        0);
+    Player p4 = new Player("AI4", PlayerType.AI_MIDDLE, 0,
+        0);
+    Game game = new Game( new ArrayList<>(Arrays.asList(p1, p2,p3,p4)), new GMClassic());
     for (Poly p : game.getGameState().getRemainingPolys(p1)) {
       System.out.println(p);
     }
@@ -45,11 +49,31 @@ public class MainT {
       System.out.println(p);
     }
     System.out.println(game.getGameState().getBoard());
+
     game.startGame();
     while (game.getGameState().isStateRunning()) {
-      game.getGameState().playTurn(AI.calculateNextMove(game.getGameState(), p1));
+      Turn t1 = AI.calculateNextMove(game.getGameState(), p1);
+      System.out.println(t1);
+      game.getGameState().playTurn(t1);
+      System.out.println(game.getGameState());
       System.out.println(game.getGameState().getBoard());
-      game.getGameState().playTurn(AI.calculateNextMove(game.getGameState(), p2));
+
+      Turn t2 = AI.calculateNextMove(game.getGameState(), p2);
+      System.out.println(t2);
+      game.getGameState().playTurn(t2);
+      System.out.println(game.getGameState());
+      System.out.println(game.getGameState().getBoard());
+
+      Turn t3 = AI.calculateNextMove(game.getGameState(), p3);
+      System.out.println(t3);
+      game.getGameState().playTurn(t3);
+      System.out.println(game.getGameState());
+      System.out.println(game.getGameState().getBoard());
+
+      Turn t4 = AI.calculateNextMove(game.getGameState(), p4);
+      System.out.println(t4);
+      game.getGameState().playTurn(t4);
+      System.out.println(game.getGameState());
       System.out.println(game.getGameState().getBoard());
     }
   }

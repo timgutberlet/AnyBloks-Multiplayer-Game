@@ -109,7 +109,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorDirectNeighbor(int x, int y, Color color) {
     //over the square
-    if (y - 1 > 0 && getColor(x, y - 1).equals(color)) {
+    if (y  > 0 && getColor(x, y - 1).equals(color)) {
       return true;
     }
     //right to the square
@@ -121,7 +121,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       return true;
     }
     //left to the square
-    return x - 1 > 0 && getColor(x - 1, y).equals(color);
+    return x > 0 && getColor(x - 1, y).equals(color);
   }
 
 
@@ -141,15 +141,15 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorIndirectNeighbor(int x, int y, Color color) {
     //left and over the square
-    if (y - 1 > 0 && x - 1 > 0 && getColor(x - 1, y - 1).equals(color)) {
+    if (y > 0 && x > 0 && getColor(x - 1, y - 1).equals(color)) {
       return true;
     }
     //right and over to the square
-    if (y - 1 > 0 && x + 1 < getSize() && getColor(x + 1, y - 1).equals(color)) {
+    if (y > 0 && x + 1 < getSize() && getColor(x + 1, y - 1).equals(color)) {
       return true;
     }
     //left and under the square
-    if (x - 1 > 0 && y + 1 < getSize() && getColor(x - 1, y + 1).equals(color)) {
+    if (x > 0 && y + 1 < getSize() && getColor(x - 1, y + 1).equals(color)) {
       return true;
     }
     //right and under to the square
@@ -170,7 +170,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    * @return boolean, if a placement is legitimate or not at this position on the board
    */
   public boolean isPolyPossible(int x, int y, PolySquare poly, boolean isFirstRound) {
-    boolean indirectNeighbor = isFirstRound;
+    boolean indirectNeighbor = false;
     int xRef = poly.shape.get(0).getPos()[0];
     int yRef = poly.shape.get(0).getPos()[1];
 
@@ -189,7 +189,9 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       }
       if (isFirstRound) {
         for (FieldSquare fs : startFields) {
-          indirectNeighbor = indirectNeighbor || fsPoly.equals(fs);
+          indirectNeighbor = indirectNeighbor || (fs.pos[0] == fsPoly.getPos()[0] + x - xRef && fs.pos[1] == fsPoly.getPos()[1] + y - yRef);
+          if (fsPoly.equals(fs)){
+          }
         }
       } else {
         indirectNeighbor =
@@ -209,7 +211,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   @Override
   public ArrayList<int[]> getPossibleFields(Color color,
-      boolean isFirstRound) { //toDo FirstRound need to be added
+      boolean isFirstRound) {
     ArrayList<int[]> res = new ArrayList<>();
     for (FieldSquare fs : board) {
       if (!isColorDirectNeighbor(fs.getPos()[0], fs.getPos()[1], color)
@@ -308,6 +310,9 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
+    if (turn == null){
+      return false;
+    }
     if (isPolyPossible(turn.getX(), turn.getY(), turn.getPolySquare(), isFirstRound)) {
       System.out.println("Poly possible");
       int xRef = turn.getPolySquare().shape.get(0).getPos()[0];
@@ -402,6 +407,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     }
     return res;
   }
+   /*
   /**
    * this method returns the maximum width a color has occupied measured from the starting edge
    *
@@ -428,7 +434,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
    */
-
+ /*
   /**
    * this method returns the maximum height a color has occupied measured from the starting edge
    *
@@ -475,4 +481,17 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
    */
+
+  public String toString(){
+    StringBuffer res = new StringBuffer();
+    res.append(super.toString() + "\n");
+    int i = 0;
+    for (FieldSquare fs : board){
+      res.append(fs.toString());
+      if (++i % 20 == 0){
+        res.append("\n");
+      }
+    }
+    return res.toString();
+  }
 }

@@ -108,7 +108,13 @@ public abstract class Field {
       return false;
     }
     Field that = (Field) o;
-    return Arrays.equals(pos, that.pos);
+    boolean res = true;
+    for (int i = 0; i < pos.length; i++){
+      if (!(pos[i]==that.pos[i])){
+        return false;
+      }
+    }
+    return true;
   }
 
   @Override

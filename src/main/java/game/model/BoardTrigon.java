@@ -197,7 +197,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    * @return boolean, if a placement is legitimate or not at this position on the board
    */
   public boolean isPolyPossible(int x, int y, int isRight, PolyTrigon poly, boolean isFirstRound) {
-    boolean indirectNeighbor = isFirstRound;
+    boolean indirectNeighbor = false;
     int xRef = poly.shape.get(0).getPos()[0];
     int yRef = poly.shape.get(0).getPos()[1];
     if (poly.shape.get(0).getPos()[2] != isRight) {
@@ -222,7 +222,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
       if (isFirstRound) {
         for (FieldTrigon ft : startFields) {
-          indirectNeighbor = indirectNeighbor || ftPoly.equals(ft);
+          indirectNeighbor = indirectNeighbor || (ft.pos[0] == ftPoly.getPos()[0] + x - xRef && ft.pos[1] == ftPoly.getPos()[1] + y - yRef && ft.pos[2] == ftPoly.getPos()[2]);
         }
       } else {
         indirectNeighbor =
@@ -345,6 +345,9 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
+    if (turn == null){
+      return false;
+    }
     if (isPolyPossible(turn.getX(), turn.getY(), turn.getIsRight(), turn.getPolyTrigon(),
         isFirstRound)) {
       System.out.println("Poly possible");

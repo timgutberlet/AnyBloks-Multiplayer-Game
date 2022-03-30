@@ -76,15 +76,15 @@ public class GameState implements Serializable {
   /**
    * Constructor to copy a GameState
    *
-   * @param gameMode
-   * @param board
-   * @param remainingPolys
-   * @param player
-   * @param round
-   * @param turn
-   * @param running
-   * @param started
-   * @param stateEnding
+   * @param gameMode       gameMode
+   * @param board          board
+   * @param remainingPolys remainingPolys
+   * @param player         player
+   * @param round          round
+   * @param turn           turn
+   * @param running        running
+   * @param started        started
+   * @param stateEnding    stateEnding
    */
   public GameState(GameMode gameMode, Board board, ArrayList<ArrayList<Poly>> remainingPolys,
       ArrayList<Player> player, int round, int turn, boolean running, boolean started,
@@ -204,20 +204,35 @@ public class GameState implements Serializable {
   }
 
   public boolean checkEnd(Turn turn) {
+    boolean end = true;
     for (Player p : player) {
       Debug.printMessage(
           board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size()
               + " möglichkeiten Steine zu legen");
       //Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
-      if (getRemainingPolys(p).size() == 0 || (
-          board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size() == 0
-              && getRound() > 1)) {
-        setStateEnding("Spiel Vorbei");
-        setStateRunning(false);
-        Debug.printMessage("Spiel Vorbei");
-        Debug.printMessage(p.toString());
-        return true;
+      if (getRemainingPolys(p).size() > 0 && (
+          board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size()
+              > 0)) {
+        end = false;
       }
+    }
+    if (end) {
+      setStateEnding("Spiel Vorbei");
+      setStateRunning(false);
+      Debug.printMessage("Spiel Vorbei");
+
+      int bestScore = 0;
+      for (Player p : player){
+        bestScore = Math.max(bestScore, board.getScoreOfColor(getColorFromPlayer(p)));
+      }
+      Debug.printMessage("Gewinner ist: ");
+      for (Player p : player){
+        if (board.getScoreOfColor(getColorFromPlayer(p)) == bestScore){
+          Debug.printMessage(p.getName() + " (" + getColorFromPlayer(p).toString()+ " | " + p.getType() + ")");
+        }
+      }
+
+      return true;
     }
     return false;
   }
@@ -257,5 +272,16 @@ public class GameState implements Serializable {
     }
   }
 
+  @Override
+  public String toString() {
+    return "GameState{" +
+        "\n player=" + player +
+        "\n round=" + round +
+        "\n turn=" + turn +
+        "\n running=" + running +
+        "\n started=" + started +
+        "\n stateEnding='" + stateEnding + '\'' +
+        '}' + '\n';
+  }
 }
 

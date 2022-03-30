@@ -27,9 +27,31 @@ public class AI {
       case AI_EASY:
         return calculateNextEasyMove(gameState.getBoard(), gameState.getRemainingPolys(player),
             gameState.isFirstRound());
+      case AI_RANDOM:
+        return calculateNextRandomMove(gameState.getBoard(), gameState.getRemainingPolys(player),
+            gameState.isFirstRound());
       default:
         System.out.println("AI move for human player");
         return null;
+    }
+  }
+
+  /**
+   * chooses out of the possible next moves a random one
+   *
+   * @param board          considered board
+   * @param remainingPolys remaining polys of the player which the calculation is for
+   * @param isFirstRound   boolean, if they are in the first round
+   * @return random turn
+   */
+  public static Turn calculateNextRandomMove(Board board, ArrayList<Poly> remainingPolys,
+      boolean isFirstRound) {
+    ArrayList<Turn> possibleMoves = board.getPossibleMoves(remainingPolys, isFirstRound);
+    int rand = (int) (Math.random() * possibleMoves.size());
+    if (possibleMoves.size() == 0) {
+      return null;
+    } else {
+      return possibleMoves.get(rand);
     }
   }
 
@@ -45,10 +67,17 @@ public class AI {
       boolean isFirstRound) {
     ArrayList<Turn> possibleMoves = board.getPossibleMoves(remainingPolys, isFirstRound);
     possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+    int rand = 0;
+    for (int i = 0; i < possibleMoves.size(); i++) {
+      if (possibleMoves.get(0).getPoly().getSize() > possibleMoves.get(i).getPoly().getSize()) {
+        rand = (int) (Math.random() * i);
+        break;
+      }
+    }
     if (possibleMoves.size() == 0) {
       return null;
     } else {
-      return possibleMoves.get(0);
+      return possibleMoves.get(rand);
     }
   }
 
@@ -70,6 +99,15 @@ public class AI {
     }
     possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
     possibleMoves.sort((o1, o2) -> o2.getNumberBlockedSquares() - o1.getNumberBlockedSquares());
+    int rand = 0;
+    for (int i = 0; i < possibleMoves.size(); i++) {
+      if (possibleMoves.get(0).getNumberBlockedSquares() > possibleMoves.get(i)
+          .getNumberBlockedSquares()
+          || possibleMoves.get(0).getPoly().getSize() > possibleMoves.get(i).getPoly().getSize()) {
+        rand = (int) (Math.random() * i);
+        break;
+      }
+    }
     if (possibleMoves.size() == 0) {
       return null;
     }
