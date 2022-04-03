@@ -20,16 +20,16 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
         if (i + j == 8) {
           board.add(new FieldTrigon(i, j, 1));
         }
-        if (i + j == 17) {
+        if (i + j == 26) {
           board.add(new FieldTrigon(i, j, 0));
         }
-        if (i + j > 8 && i + j < 17) {
+        if (i + j > 8 && i + j < 26) {
           board.add(new FieldTrigon(i, j, 0));
           board.add(new FieldTrigon(i, j, 1));
         }
       }
     }
-    this.SIZE = 18;
+    this.SIZE = 26;
 
     startFields.add(new FieldTrigon(6, 6, 0));
     startFields.add(new FieldTrigon(11, 3, 1));
@@ -67,7 +67,8 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   public boolean isOnTheBoard(int x, int y, int isRight) {
-    return x + y > 8 && x + y < SIZE || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0;
+    return x >= 0 && x < 18 && y >= 0 && y < 18 && (x + y > 8 && x + y < SIZE
+        || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0);
   }
 
   @Override
@@ -81,6 +82,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
         return ft;
       }
     }
+    Debug.printMessage("(" + x + ", " + y + ", " + isRight + ")");
     return null;
   }
 
@@ -222,7 +224,8 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
       if (isFirstRound) {
         for (FieldTrigon ft : startFields) {
-          indirectNeighbor = indirectNeighbor || (ft.pos[0] == ftPoly.getPos()[0] + x - xRef && ft.pos[1] == ftPoly.getPos()[1] + y - yRef && ft.pos[2] == ftPoly.getPos()[2]);
+          indirectNeighbor = indirectNeighbor || (ft.pos[0] == ftPoly.getPos()[0] + x - xRef
+              && ft.pos[1] == ftPoly.getPos()[1] + y - yRef && ft.pos[2] == ftPoly.getPos()[2]);
         }
       } else {
         indirectNeighbor =
@@ -345,12 +348,16 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
-    if (turn == null){
+    if (turn == null) {
       return false;
     }
     if (isPolyPossible(turn.getX(), turn.getY(), turn.getIsRight(), turn.getPolyTrigon(),
         isFirstRound)) {
-      System.out.println("Poly possible");
+      Debug.printMessage("Poly size: " + turn.getPoly().getSize());
+      if (turn.getPoly().getSize() > 6) {
+        Debug.printMessage(
+            "!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!");
+      }
       int xRef = turn.getPolyTrigon().shape.get(0).getPos()[0];
       int yRef = turn.getPolyTrigon().shape.get(0).getPos()[1];
 

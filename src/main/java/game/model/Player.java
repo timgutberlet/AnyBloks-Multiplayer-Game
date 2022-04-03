@@ -23,16 +23,6 @@ public class Player implements Serializable {
   private int score;
 
   /**
-   * Starting coordinate on the x-scale
-   */
-  private int startX;
-
-  /**
-   * Starting coordinate on the y-scale
-   */
-  private int startY;
-
-  /**
    * current session of player
    */
   private Session session;
@@ -45,23 +35,10 @@ public class Player implements Serializable {
    * @param type type of the player
    * @author tiotto
    */
-  public Player(String name, PlayerType type, int startX, int startY) {
+  public Player(String name, PlayerType type) {
     this.name = name;
     this.type = type;
     this.score = 0;
-    this.startX = startX;
-    this.startY = startY;
-  }
-
-  /**
-   * creates a new Player with only a name
-   *
-   * @param name
-   * @author tgeilen
-   */
-  public Player(String name, PlayerType playerType) {
-    this.name = name;
-    this.type = playerType;
   }
 
   /**
@@ -76,20 +53,6 @@ public class Player implements Serializable {
 
 
   /**
-   * adds more info about player when joining a board
-   *
-   * @param startX
-   * @param startY
-   * @author tgeilen
-   */
-
-  public void joinBoard(int startX, int startY) {
-    this.score = 0;
-    this.startX = startX;
-    this.startY = startY;
-  }
-
-  /**
    * add message to chat
    *
    * @param msg
@@ -102,14 +65,6 @@ public class Player implements Serializable {
 
   public PlayerType getType() {
     return type;
-  }
-
-  public int getStartX() {
-    return startX;
-  }
-
-  public int getStartY() {
-    return startY;
   }
 
   public String getName() {

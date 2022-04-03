@@ -55,4 +55,23 @@ public abstract class Poly implements Cloneable {
     return size;
   }
 
+
+  /**
+   * checks if the equals test works for every rotation and mirror
+   *
+   * @return result of the test, true if everything works, false if not
+   */
+  public boolean polyTest() {
+    Poly test = this.clone();
+    for (boolean mirror : new boolean[]{false, true}) {
+      do {
+        test.rotateRight();
+        if (!this.equals(test)) {
+          return false;
+        }
+      } while (test.rotation != 0);
+    }
+    return true;
+  }
+
 }

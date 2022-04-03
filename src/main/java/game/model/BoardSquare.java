@@ -109,7 +109,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorDirectNeighbor(int x, int y, Color color) {
     //over the square
-    if (y  > 0 && getColor(x, y - 1).equals(color)) {
+    if (y > 0 && getColor(x, y - 1).equals(color)) {
       return true;
     }
     //right to the square
@@ -189,8 +189,9 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       }
       if (isFirstRound) {
         for (FieldSquare fs : startFields) {
-          indirectNeighbor = indirectNeighbor || (fs.pos[0] == fsPoly.getPos()[0] + x - xRef && fs.pos[1] == fsPoly.getPos()[1] + y - yRef);
-          if (fsPoly.equals(fs)){
+          indirectNeighbor = indirectNeighbor || (fs.pos[0] == fsPoly.getPos()[0] + x - xRef
+              && fs.pos[1] == fsPoly.getPos()[1] + y - yRef);
+          if (fsPoly.equals(fs)) {
           }
         }
       } else {
@@ -310,7 +311,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
-    if (turn == null){
+    if (turn == null) {
       return false;
     }
     if (isPolyPossible(turn.getX(), turn.getY(), turn.getPolySquare(), isFirstRound)) {
@@ -482,13 +483,13 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
    */
 
-  public String toString(){
+  public String toString() {
     StringBuffer res = new StringBuffer();
     res.append(super.toString() + "\n");
     int i = 0;
-    for (FieldSquare fs : board){
+    for (FieldSquare fs : board) {
       res.append(fs.toString());
-      if (++i % 20 == 0){
+      if (++i % SIZE == 0) {
         res.append("\n");
       }
     }

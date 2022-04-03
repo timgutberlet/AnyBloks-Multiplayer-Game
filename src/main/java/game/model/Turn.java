@@ -105,9 +105,16 @@ public class Turn {
 
   public String toString() {
     StringBuffer res = new StringBuffer(poly.toString());
-    res.append("\n" + "column : " + getColumn());
-    res.append("\n" + "row : " + getRow());
+    if (poly.getClass().getName().equals("game.model.PolyTrigon")) {
+      res.append("\n" + "x : " + getX());
+      res.append("\n" + "y : " + getY());
+      res.append("\n" + "isRight : " + getIsRight());
+    } else {
+      res.append("\n" + "column : " + getColumn());
+      res.append("\n" + "row : " + getRow());
+    }
     return res.toString();
+
   }
 
 }

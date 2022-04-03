@@ -12,7 +12,9 @@ import java.util.Arrays;
 
 public class PolySquare extends Poly {
 
-  public static ArrayList<ArrayList<FieldSquare>> shapeList = new ArrayList<>();
+  public static ArrayList<ArrayList<FieldSquare>> shapeListClassic = new ArrayList<>();
+  public static ArrayList<ArrayList<FieldSquare>> shapeListDuo = new ArrayList<>();
+  public static ArrayList<ArrayList<FieldSquare>> shapeListJunior = new ArrayList<>();
 
   /**
    * Initializing all pieces of the basic Game
@@ -35,7 +37,7 @@ public class PolySquare extends Poly {
     FieldSquare f22 = new FieldSquare(2, 2);
     FieldSquare f31 = new FieldSquare(3, 1);
 
-    ArrayList<FieldSquare>[] pieceList = new ArrayList[]{
+    ArrayList<FieldSquare>[] pieceListClassic = new ArrayList[]{
         new ArrayList(Arrays.asList(f00.clone())),
         new ArrayList(Arrays.asList(f00.clone(), f01.clone())),
         new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f02.clone())),
@@ -71,33 +73,48 @@ public class PolySquare extends Poly {
             f11.clone()))
     };
 
-    for (ArrayList<FieldSquare> piece : pieceList) {
-      shapeList.add(piece);
+    for (ArrayList<FieldSquare> piece : pieceListClassic) {
+      shapeListClassic.add(piece);
     }
-    /*
-    boolean[][][] pieceList = {new boolean[][]{{true}}, new boolean[][]{{true, true}},
-        new boolean[][]{{false, true}, {true, true}}, new boolean[][]{{true, true, true}},
-        new boolean[][]{{true, true, true, true}},
-        new boolean[][]{{false, false, true}, {true, true, true}},
-        new boolean[][]{{true, true, false}, {false, true, true}},
-        new boolean[][]{{true, true}, {true, true}},
-        new boolean[][]{{true, true, true}, {false, true, false}},
-        new boolean[][]{{false, true, true}, {true, true, false}, {false, true, false}},
-        new boolean[][]{{true}, {true}, {true}, {true}, {true}},
-        new boolean[][]{{true, false}, {true, false}, {true, false}, {true, true}},
-        new boolean[][]{{false, false}, {true, true}, {true, false}, {true, false}},
-        new boolean[][]{{true, true}, {true, true}, {true, false}},
-        new boolean[][]{{true, true, true}, {false, true, false}, {false, true, false}},
-        new boolean[][]{{true, false, true}, {true, true, true}},
-        new boolean[][]{{false, false, true}, {false, false, true}, {true, true, true}},
-        new boolean[][]{{false, false, true}, {false, true, true}, {true, true, false}},
-        new boolean[][]{{false, true, false}, {true, true, true}, {false, true, false}},
-        new boolean[][]{{false, true}, {true, true}, {false, true}, {false, true}},
-        new boolean[][]{{true, true, false}, {false, true, false}, {false, true, true}}};
-    for (boolean[][] piece : pieceList) {
-      shapeList.add(piece);
+
+    shapeListDuo = shapeListClassic;
+
+    ArrayList<FieldSquare>[] pieceListJunior = new ArrayList[]{
+        new ArrayList(Arrays.asList(f00.clone())),
+        new ArrayList(Arrays.asList(f00.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f10.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f10.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f10.clone(), f20.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f10.clone(), f20.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f02.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f02.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f10.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f10.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f11.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f10.clone(), f11.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f12.clone())),
+        new ArrayList(Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f12.clone())),
+        new ArrayList(
+            Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(), f10.clone())),
+        new ArrayList(
+            Arrays.asList(f00.clone(), f01.clone(), f02.clone(), f03.clone(), f10.clone())),
+        new ArrayList(
+            Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f10.clone(), f02.clone())),
+        new ArrayList(
+            Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f10.clone(), f02.clone())),
+        new ArrayList(
+            Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f12.clone(), f13.clone())),
+        new ArrayList(
+            Arrays.asList(f00.clone(), f01.clone(), f11.clone(), f12.clone(), f13.clone()))
+    };
+
+    for (ArrayList<FieldSquare> piece : pieceListJunior) {
+      shapeListJunior.add(piece);
     }
-     */
   }
 
   /**
@@ -152,7 +169,7 @@ public class PolySquare extends Poly {
         res = fs.getPos()[1];
       }
     }
-    return res+1;
+    return res + 1;
   }
 
   private int getWidth() {
@@ -162,7 +179,7 @@ public class PolySquare extends Poly {
         res = fs.getPos()[0];
       }
     }
-    return res+1;
+    return res + 1;
   }
 
   /**
@@ -265,9 +282,9 @@ public class PolySquare extends Poly {
     return res && color == poly.color;
   }
 
-  public boolean containsField(int x, int y){
-    for (FieldSquare fs : shape){
-      if (fs.pos[0]==x && fs.pos[1]==y){
+  public boolean containsField(int x, int y) {
+    for (FieldSquare fs : shape) {
+      if (fs.pos[0] == x && fs.pos[1] == y) {
         return true;
       }
     }
@@ -294,7 +311,7 @@ public class PolySquare extends Poly {
     }
     for (int i = 0; i < getWidth(); i++) {
       for (int j = 0; j < getHeight(); j++) {
-        if (containsField(i,j)) {
+        if (containsField(i, j)) {
           res.append(element);
         } else {
           res.append("\uD83D\uDFEB");

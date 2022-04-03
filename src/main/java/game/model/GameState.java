@@ -3,6 +3,7 @@ package game.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import game.model.gamemodes.*;
+import java.util.Arrays;
 
 /**
  * this class represents the current state of one specific game
@@ -43,6 +44,10 @@ public class GameState implements Serializable {
    */
   private int turn;
   /**
+   *
+   */
+  private ArrayList<ArrayList<Turn>> history = new ArrayList<>();
+  /**
    * states if the game is currently running
    */
   private boolean running;
@@ -65,7 +70,11 @@ public class GameState implements Serializable {
    */
   public GameState(GameMode gameMode) {
     this.gameMode = gameMode;
-    board = new BoardSquare(gameMode);
+    if (gameMode.getName().equals("TRIGON")) {
+      board = new BoardTrigon();
+    } else {
+      board = new BoardSquare(gameMode);
+    }
     round = 1;
     turn = 0;
     player = new ArrayList<>();
@@ -160,10 +169,37 @@ public class GameState implements Serializable {
   public void addPlayer(Player p) {
     this.player.add(p);
     ArrayList<Poly> polyOfPlayer = new ArrayList<>();
-    for (ArrayList<FieldSquare> shape : PolySquare.shapeList) {
-      polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+    history.add(new ArrayList<>());
+
+    switch (this.gameMode.getName()) { //remaining polys for every gamemode
+      case "CLASSIC": {
+        for (ArrayList<FieldSquare> shape : PolySquare.shapeListClassic) {
+          polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+        }
+        break;
+      }
+      case "DUO": {
+        for (ArrayList<FieldSquare> shape : PolySquare.shapeListDuo) {
+          polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+        }
+        break;
+      }
+      case "JUNIOR": {
+        for (ArrayList<FieldSquare> shape : PolySquare.shapeListJunior) {
+          polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+        }
+        break;
+      }
+      case "TRIGON": {
+        for (ArrayList<FieldTrigon> shape : PolyTrigon.shapeListTrigon) {
+          polyOfPlayer.add(new PolyTrigon(shape, getColorFromPlayer(p)));
+        }
+        break;
+      }
     }
     remainingPolys.add(polyOfPlayer);
+
+
   }
 
   public void incTurn() {
@@ -222,13 +258,17 @@ public class GameState implements Serializable {
       Debug.printMessage("Spiel Vorbei");
 
       int bestScore = 0;
-      for (Player p : player){
+      Debug.printMessage("Scores:");
+      for (Player p : player) {
+        Debug.printMessage(p.getName() + ": " + board.getScoreOfColor(getColorFromPlayer(p)) + " ("
+            + getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
         bestScore = Math.max(bestScore, board.getScoreOfColor(getColorFromPlayer(p)));
       }
-      Debug.printMessage("Gewinner ist: ");
-      for (Player p : player){
-        if (board.getScoreOfColor(getColorFromPlayer(p)) == bestScore){
-          Debug.printMessage(p.getName() + " (" + getColorFromPlayer(p).toString()+ " | " + p.getType() + ")");
+      Debug.printMessage("Winner: ");
+      for (Player p : player) {
+        if (board.getScoreOfColor(getColorFromPlayer(p)) == bestScore) {
+          Debug.printMessage(
+              p.getName() + " (" + getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
         }
       }
 
@@ -251,6 +291,8 @@ public class GameState implements Serializable {
       }
     }
     incTurn();
+
+    history.get(this.turn % player.size()).add(turn);
     return res;
   }
 
@@ -283,5 +325,44 @@ public class GameState implements Serializable {
         "\n stateEnding='" + stateEnding + '\'' +
         '}' + '\n';
   }
+
+/*  private static String twoDigit(int i){
+    if (i < 10){
+      return "0" + i;
+    }
+    return Integer.toString(i);
+  }
+
+  public String getHistory(){ // table over all played poly sizes for every player
+    StringBuffer res = new StringBuffer();
+    for (int i = 1; i < getRound(); i++){
+      res.append("" + twoDigit(i));
+      for (int j = 0; j < player.size(); j++){
+        Turn t = history.get(j).get(i-1);
+        int size = 0;
+        if (t != null){
+          size = t.getPoly().getSize();
+        }
+        res.append(" | " + size);
+      }
+      res.append("\n");
+    }
+    res.append("--");
+    for (Player p : player){
+      res.append("----");
+    }
+    res.append("\n  ");
+    for (int i = 0; i < player.size(); i++){
+      int sum = 0;
+      for (Turn t : history.get(i)){
+        if (t == null){
+          break;
+        }
+        sum += t.getPoly().getSize();
+      }
+      res.append(" | "+ sum);
+    }
+    return res.toString();
+  }*/
 }
 

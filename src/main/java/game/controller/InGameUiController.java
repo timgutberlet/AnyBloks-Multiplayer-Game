@@ -25,7 +25,6 @@ public class InGameUiController extends AbstractUiController {
 
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
-
     for (Rectangle rectangle : inGameView.getBoardPane().getSquares()) {
       if (gameController.getInputHandler().isRectangleClicked(rectangle)) {
         System.out.println(
