@@ -335,4 +335,31 @@ public class PolyTrigon extends Poly {
     }
     return res && color == poly.color;
   }
+
+  @Override
+  public boolean equalsReal(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    PolyTrigon poly = (PolyTrigon) o;
+    boolean res = true;
+
+    if (poly.shape.size() != this.shape.size()){
+      return false;
+    }
+
+    outer:
+    for (FieldTrigon fs1 : poly.getShape()){
+      for(FieldTrigon fs2 : this.getShape()){
+        if (fs1.equals(fs2)){
+          continue outer;
+        }
+      }
+      return false;
+    }
+    return res && color == poly.color;
+  }
 }

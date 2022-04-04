@@ -1,6 +1,8 @@
 package game.model;
 
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.ArrayList;
+import java.util.Timer;
 
 /**
  * This class controls the AI player of the game.
@@ -9,6 +11,12 @@ import java.util.ArrayList;
  */
 
 public class AI {
+
+  /**
+   * Initial values of Alpha and Beta for the minimax algorithm with alpha-beta pruning
+   */
+  static int MAX = 1000;
+  static int MIN = -1000;
 
   /**
    * calculated the next move for an AI Player depending on the set difficulty
@@ -122,16 +130,23 @@ public class AI {
    * @return the next "best" move
    */
   public static Turn calculateNextHardMove(GameState gameState, Player player) {
-    int bestVal = -1000;
+    long start = System.currentTimeMillis();
+    int bestVal = MIN;
     Turn bestTurn = null;
-    for (Turn t : gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player),
-        gameState.isFirstRound())) { //for every possible turn are the future steps been calculated and then the best is chosen
+    int alpha = MIN;
+    int beta = MAX;
+    ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player),
+        gameState.isFirstRound());
+    possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+    for (Turn t : possibleMoves) { //for every possible turn are the future steps been calculated and then the best is chosen
       int turnVal;
       if (gameState.getPlayer().size()
           == 2) { //with two players the real minimax algorithm can be used for the evaluation of the turn
-        turnVal = minimax2Player(gameState.tryTurn(t),
-            gameState.getNextColor(gameState.getColorFromPlayer(player)), 0, false,
-            3); // start with the next color
+//        turnVal = minimax2Player(gameState.tryTurn(t),
+//            gameState.getNextColor(gameState.getColorFromPlayer(player)), 0, false,
+//            2); // start with the next color
+        turnVal = minimax2Player2(gameState.tryTurn(t),gameState.getNextColor(gameState.getColorFromPlayer(player)),0,false, alpha, beta, 2);
+
       } else { //with four players a variation of the minimax algorithm can be used for the evaluation of the turn
         turnVal = minimax4Player(gameState.tryTurn(t), gameState.getColorFromPlayer(player), 0,
             2); // always with the color of the current player
@@ -140,7 +155,13 @@ public class AI {
         bestTurn = t;
         bestVal = turnVal;
       }
+      alpha = Math.max(bestVal , turnVal);
+      if (beta <= alpha){
+        break;
+      }
     }
+    long finish = System.currentTimeMillis();
+    System.out.println("Time: " + (finish-start) + " ms");
     return bestTurn;
   }
 
@@ -157,7 +178,11 @@ public class AI {
    */
   public static int minimax2Player(GameState gameState, Color c, int depth, boolean isMax, int h) {
     if (depth == h) {
-      return evaluate(gameState.getBoard(), c);
+      if (h%2 == 0) {
+        return evaluate(gameState.getBoard(), gameState.getNextColor(c));
+      } else {
+        return evaluate(gameState.getBoard(), c);
+      }
     }
 
     if (isMax) { //calculation for the max player with the goal to maximize the best integer
@@ -178,6 +203,56 @@ public class AI {
         best = Math.min(best,
             minimax2Player(gameState.tryTurn(t), gameState.getNextColor(c), depth + 1, true,
                 h)); //min of the already calculated evaluation and the current evaluation with the played turn
+      }
+      return best;
+    }
+  }
+
+  public static int minimax2Player2(GameState gameState, Color c, int depth, boolean isMax, int alpha, int beta, int h) {
+    if (depth == h) {
+        if (h%2 == 0) {
+          return evaluate(gameState.getBoard(), gameState.getNextColor(c));
+        } else {
+          return evaluate(gameState.getBoard(), c);
+        }
+    }
+
+    if (isMax) { //calculation for the max player with the goal to maximize the best integer
+      int best = MIN; //lower than the worst result
+      ArrayList<Turn> possibleMoves = gameState.getBoard()
+          .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
+              gameState.isFirstRound());
+      possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+
+      for (Turn t : possibleMoves) { //for every possible turn, the result of the next player will be calculated
+        int val = Math.max(best,
+            minimax2Player2(gameState.tryTurn(t), gameState.getNextColor(c), depth + 1, false, alpha, beta,
+                h)); //max of the already calculated evaluation and the current evaluation with the played turn
+        best = Math.max(best, val);
+        alpha = Math.max(alpha, best);
+
+        if (beta <= alpha){
+          break;
+        }
+      }
+      return best;
+    } else { //calculation for the min player with the goal to minimize the best integer
+      int best = MAX; //higher than the best result
+      ArrayList<Turn> possibleMoves = gameState.getBoard()
+          .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
+              gameState.isFirstRound());
+      possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+
+      for (Turn t : possibleMoves) {//for every possible turn, the result of the next player will be calculated
+        int val = Math.min(best,
+            minimax2Player2(gameState.tryTurn(t), gameState.getNextColor(c), depth + 1, true, alpha, beta,
+                h));
+        best = Math.min(best, val);
+        beta = Math.min(beta, best);
+
+        if (beta <= alpha){ //alpha-beta pruning
+          break;
+        }
       }
       return best;
     }
@@ -220,7 +295,7 @@ public class AI {
           gameState.getRemainingPolys(gameState.getPlayerFromColor(current)),
           gameState.isFirstRound()));
     }
-    int best = -1000; //lower that the worst possible result
+    int best = -1000; //lower than the worst possible result
     for (Turn t : gameState.getBoard()
         .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
             gameState.isFirstRound())) { //for every possible turn, another round will be calculated

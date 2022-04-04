@@ -9,7 +9,7 @@ import java.util.Arrays;
  * this class represents the current state of one specific game
  */
 
-public class GameState implements Serializable {
+public class GameState implements Serializable, Cloneable {
 
   /**
    * Required for serializable objects.
@@ -97,15 +97,11 @@ public class GameState implements Serializable {
    */
   public GameState(GameMode gameMode, Board board, ArrayList<ArrayList<Poly>> remainingPolys,
       ArrayList<Player> player, int round, int turn, boolean running, boolean started,
-      String stateEnding) {
+      String stateEnding, ArrayList<ArrayList<Turn>> history) {
     this.gameMode = gameMode;
     this.board = board;
-    for (ArrayList<Poly> polys : remainingPolys) {
-      ArrayList<Poly> help = new ArrayList<>();
-      for (Poly poly : polys) {
-        help.add(poly.clone());
-      }
-      this.remainingPolys.add(help);
+    for (ArrayList<Poly> polys : remainingPolys){
+      this.remainingPolys.add(polys);
     }
     this.player = player;
     this.round = round;
@@ -113,6 +109,9 @@ public class GameState implements Serializable {
     this.running = running;
     this.started = started;
     this.stateEnding = stateEnding;
+    for (ArrayList<Turn> turns : history){
+      this.history.add(turns);
+    }
   }
 
   public Board getBoard() {
@@ -296,11 +295,43 @@ public class GameState implements Serializable {
     return res;
   }
 
+  @Override
+  public GameState clone() {
+    Board boardCopy = this.board.clone();
+    ArrayList<ArrayList<Poly>> remainingPolysCopy = new ArrayList<>();
+    for (ArrayList<Poly> polys : this.remainingPolys){
+      ArrayList<Poly> polysCopy = new ArrayList<>();
+      for (Poly p : polys){
+        polysCopy.add(p.clone());
+      }
+      remainingPolysCopy.add(polysCopy);
+    }
+    ArrayList<Player> playerCopy = new ArrayList<>();
+    for (Player p : player){
+      playerCopy.add(p);
+    }
+    ArrayList<ArrayList<Turn>> historyCopy = new ArrayList<>();
+    for (ArrayList<Turn> turns : this.history){
+      ArrayList<Turn> turnsCopy = new ArrayList<>();
+      for (Turn t : turns){
+        if (t == null) {
+          turnsCopy.add(null);
+        } else {
+          turnsCopy.add(t.clone());
+        }
+      }
+      historyCopy.add(turnsCopy);
+    }
+    return new GameState(this.gameMode, boardCopy, remainingPolysCopy, playerCopy, round, turn, running, started, stateEnding, historyCopy);
+  }
+
   public GameState tryTurn(Turn turn) {
-    Board help = this.board.clone();
-    help.playTurn(turn, this.isFirstRound());
-    return new GameState(this.gameMode, help, remainingPolys, player, round, this.turn, running,
-        started, stateEnding);
+    if (turn == null){
+      return this.clone();
+    }
+    GameState gameStateCopy = this.clone();
+    gameStateCopy.getBoard().playTurn(turn, gameStateCopy.isFirstRound());
+    return gameStateCopy;
   }
 
   public Color getNextColor(Color c) {
@@ -325,6 +356,7 @@ public class GameState implements Serializable {
         "\n stateEnding='" + stateEnding + '\'' +
         '}' + '\n';
   }
+
 
 /*  private static String twoDigit(int i){
     if (i < 10){

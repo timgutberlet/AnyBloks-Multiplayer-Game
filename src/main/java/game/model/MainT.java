@@ -2,9 +2,9 @@ package game.model;
 
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
+import game.model.gamemodes.GameMode;
 import game.model.gamemodes.GMJunior;
 import game.model.gamemodes.GMTrigon;
-import game.model.gamemodes.GameMode;
 import game.view.InGameView;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,13 +39,13 @@ public class MainT {
   }
 
   public static void main(String[] args) {
-    GameMode gameMode = new GMTrigon(); //change here if you want to change the gamemode
+    GameMode gameMode = new GMDuo(); //change here if you want to change the gamemode
 
     if (gameMode.getName().equals("CLASSIC") || gameMode.getName().equals(
         "TRIGON")) { //ToDo semantic mistake with the TRIGON-Mode, because some polys are too big and give a score over 6 so a over all score of 122 is possible
       Player p1 = new Player("AI1", PlayerType.AI_RANDOM);
       Player p2 = new Player("AI2", PlayerType.AI_RANDOM);
-      Player p3 = new Player("AI3", PlayerType.AI_EASY);
+      Player p3 = new Player("AI3", PlayerType.AI_HARD);
       Player p4 = new Player("AI4", PlayerType.AI_MIDDLE);
       Game game = new Game(new ArrayList<>(Arrays.asList(p1, p2, p3, p4)), gameMode);
       int i = 0;
@@ -80,8 +80,8 @@ public class MainT {
         System.out.println(game.getGameState().getBoard());
       }
     } else {
-      Player p1 = new Player("AI1", PlayerType.AI_EASY);
-      Player p2 = new Player("AI2", PlayerType.AI_MIDDLE);
+      Player p1 = new Player("AI1", PlayerType.AI_RANDOM);
+      Player p2 = new Player("AI2", PlayerType.AI_HARD);
       Game game = new Game(new ArrayList<>(Arrays.asList(p1, p2)), gameMode);
       for (Poly p : game.getGameState().getRemainingPolys(p1)) {
         System.out.println(p);
@@ -96,13 +96,11 @@ public class MainT {
         Turn t1 = AI.calculateNextMove(game.getGameState(), p1);
         System.out.println(t1);
         game.getGameState().playTurn(t1);
-        System.out.println(game.getGameState());
         System.out.println(game.getGameState().getBoard());
 
         Turn t2 = AI.calculateNextMove(game.getGameState(), p2);
         System.out.println(t2);
         game.getGameState().playTurn(t2);
-        System.out.println(game.getGameState());
         System.out.println(game.getGameState().getBoard());
       }
     }

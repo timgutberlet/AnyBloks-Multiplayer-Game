@@ -39,9 +39,12 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     startFields.add(new FieldTrigon(3, 11, 1));
   }
 
-  public BoardTrigon(ArrayList<FieldTrigon> board) {
+  public BoardTrigon(ArrayList<FieldTrigon> board, ArrayList<FieldTrigon> startFields) {
     for (FieldTrigon ft : board) {
       this.board.add(ft.clone());
+    }
+    for (FieldTrigon ft : startFields) {
+      this.startFields.add(ft.clone());
     }
   }
 
@@ -278,9 +281,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     for (Poly poly : remainingPolys) {
       ArrayList<Turn> movesWithPoly = possibleFieldsAndShadesForPoly((PolyTrigon) poly,
           isFirstRound);
-      if (movesWithPoly.size() > 0) {
-        res.addAll(movesWithPoly);
-      }
+      res.addAll(movesWithPoly);
     }
     return res;
   }
@@ -336,11 +337,13 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   private ArrayList<Turn> possibleFieldsAndShadesForPoly(PolyTrigon poly, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
     for (FieldTrigon ft : board) {
+      if (ft.isOccupied()){
+        continue;
+      }
       ArrayList<Turn> erg = getPolyShadesPossible(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2],
           poly, isFirstRound);
-      if (erg.size() > 0) {
-        res.addAll(erg);
-      }
+      res.addAll(erg);
+
     }
 
     return res;
@@ -372,7 +375,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   @Override
   public game.model.BoardTrigon clone() {
-    return new game.model.BoardTrigon(this.board);
+    return new game.model.BoardTrigon(this.board, this.startFields);
   }
 
   /**

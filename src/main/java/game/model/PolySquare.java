@@ -282,6 +282,33 @@ public class PolySquare extends Poly {
     return res && color == poly.color;
   }
 
+  @Override
+  public boolean equalsReal(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    PolySquare poly = (PolySquare) o;
+    boolean res = true;
+
+    if (poly.shape.size() != this.shape.size()){
+      return false;
+    }
+
+    outer:
+    for (FieldSquare fs1 : poly.getShape()){
+      for(FieldSquare fs2 : this.getShape()){
+        if (fs1.equals(fs2)){
+          continue outer;
+        }
+      }
+      return false;
+    }
+    return res && color == poly.color;
+  }
+
   public boolean containsField(int x, int y) {
     for (FieldSquare fs : shape) {
       if (fs.pos[0] == x && fs.pos[1] == y) {
