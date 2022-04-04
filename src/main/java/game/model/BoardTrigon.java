@@ -383,7 +383,8 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    */
   public void updateBoard(InGameView view) {
     for (FieldTrigon ft : board) {
-      view.getBoardPane().setSquare(ft.getJavaColor(), ft.getPos()[0], ft.getPos()[1]);
+      //Funktioniert nicht weil noch kein TrigonBoardPane exestiert
+      //view.getBoardPane().setSquare(ft.getJavaColor(), ft.getPos()[0], ft.getPos()[1]);
     }
   }
 
