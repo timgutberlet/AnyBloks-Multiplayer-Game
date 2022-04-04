@@ -1,15 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171"
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+  prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
   xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.LobbyController">
-  <Label text="Secondary View"/>
-  <Button text="Switch to Main Menu" onAction="#backToMainMenu"/>
-  <Button text="Play Test" onAction="#playTest"/>
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
-</VBox>
+  <children>
+    <SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
+      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+      AnchorPane.topAnchor="0.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <children>
+            <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+              </rowConstraints>
+              <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.rowIndex="1">
+                  <children>
+                    <Button mnemonicParsing="false" onAction="#decreaseDifficulty1" text="-"/>
+                    <Label text="${difficultyPlayer1.text}"/>
+                    <Button mnemonicParsing="false" onAction="#increaseDifficulty1" text="+"/>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <children>
+                    <Label fx:id="namePlayer1" text="-"/>
+                    <Label fx:id="difficultyPlayer1" text="-"/>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <children>
+                    <Label fx:id="namePlayer2" text="-"/>
+                    <Label fx:id="difficultyPlayer2" text="-"/>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.rowIndex="2">
+                  <children>
+                    <Button mnemonicParsing="false" onAction="#decreaseDifficulty2" text="-"/>
+                    <Label text="${difficultyPlayer2.text}"/>
+                    <Button mnemonicParsing="false" onAction="#increaseDifficulty2" text="+"/>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.rowIndex="3">
+                  <children>
+                    <Button mnemonicParsing="false" onAction="#decreaseDifficulty3" text="-"/>
+                    <Label text="${difficultyPlayer3.text}"/>
+                    <Button mnemonicParsing="false" onAction="#increaseDifficulty3" text="+"/>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <children>
+                    <Label fx:id="namePlayer3" text="-"/>
+                    <Label fx:id="difficultyPlayer3" text="-"/>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.columnIndex="1">
+                  <children>
+                    <Label fx:id="nameHostPlayer" text="You"/>
+                  </children>
+                </HBox>
+              </children>
+            </GridPane>
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <children>
+            <GridPane layoutX="172.0" layoutY="13.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+              </rowConstraints>
+              <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.columnIndex="1">
+                  <children>
+                    <Button mnemonicParsing="false" onAction="#play" text="Play"/>
+                    <Button mnemonicParsing="false" onAction="#back" text="Back"/>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <children>
+                    <ComboBox fx:id="gameModes" prefWidth="150.0"/>
+                  </children>
+                </HBox>
+              </children>
+            </GridPane>
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
+  </children>
+</AnchorPane>

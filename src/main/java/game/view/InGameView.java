@@ -1,26 +1,22 @@
 package game.view;
 
-import engine.Initializable;
-import engine.controller.AbstractGameController;
 import game.model.BoardSquare;
+import game.model.Game;
 import game.model.gamemodes.GMClassic;
 import javafx.scene.Group;
 
-/**
- * @author lbaudenb
- */
-public class InGameView implements Initializable {
+public class InGameView {
 
-  private Group root2D;
-  private AbstractGameController gameController;
+  private Group root;
+  private Game game;
   private BoardPane boardPane;
 
-  @Override
-  public void init(AbstractGameController gameController, Group root2D) {
-    this.root2D = root2D;
-    this.gameController = gameController;
-    this.boardPane = new BoardPane(new BoardSquare(new GMClassic()));
-    this.root2D.getChildren().add(this.boardPane);
+  public void init(Group root, Game game) {
+    this.root = root;
+    this.game = game;
+    boardPane = new BoardSquarePane(new BoardSquare(new GMClassic()));
+    root.getChildren().add(boardPane);
+    //setBoardPane(game);
   }
 
   public BoardPane getBoardPane() {

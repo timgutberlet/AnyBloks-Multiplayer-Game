@@ -7,14 +7,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 
+/**
+ * @author lbaudenb
+ */
+
 public class MainMenuUiController extends AbstractUiController {
 
   private final AbstractGameController gameController;
 
   public MainMenuUiController(AbstractGameController gameController) {
-    super(gameController);
+    super();
     this.gameController = gameController;
-    System.out.println("gameController : " + gameController);
+    init(super.root);
   }
 
   @FXML
@@ -22,15 +26,15 @@ public class MainMenuUiController extends AbstractUiController {
     gameController.setActiveUiController(new LobbyController(gameController));
   }
 
-  @Override
-  public void init(AbstractGameController gameController, Group root2D) {
+  public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(getClass().getResource("/MainMenuView.fxml"));
       loader.setControllerFactory(e -> this);
-      root2D.getChildren().add(loader.load());
+      root.getChildren().add(loader.load());
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 }
+

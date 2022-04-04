@@ -1,22 +1,18 @@
 package engine.controller;
 
-import engine.Initializable;
 import javafx.scene.Group;
 import javafx.scene.SubScene;
-import javafx.stage.Stage;
 
 /**
  * @author lbaudenb
  */
-public abstract class AbstractUiController implements Initializable {
+public abstract class AbstractUiController {
 
   public SubScene subScene;
-  Group root = new Group();
+  protected Group root = new Group();
 
-  public AbstractUiController(AbstractGameController gameController) {
-    Stage stage = gameController.getStage();
+  public AbstractUiController() {
     subScene = new SubScene(root, 1920, 1080);
-    this.init(gameController, root);
   }
 
   public void attachToRoot(Group gameRoot) {
@@ -24,10 +20,6 @@ public abstract class AbstractUiController implements Initializable {
   }
 
   public void update(AbstractGameController gameController, double deltaTime) {
-  }
-
-  public Group getGroup() {
-    return this.root;
   }
 }
 

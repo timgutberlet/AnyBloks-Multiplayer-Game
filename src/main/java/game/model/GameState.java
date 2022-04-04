@@ -132,7 +132,7 @@ public class GameState implements Serializable {
 
   public Player getPlayerCurrent() {
     if (getPlayer().size() > 0) {
-      return getPlayer().get(this.turn);
+      return getPlayer().get(this.turn % 4);
     } else {
       return null;
     }
