@@ -22,7 +22,7 @@ public class Packet implements Serializable {
   /**
    * Holds the original packet
    */
-  private final Object originalPacket;
+  private Object originalPacket;
 
   /**
    * Constructor for packets
@@ -33,6 +33,15 @@ public class Packet implements Serializable {
   public Packet(PacketType type, Object originalPacket) {
     this.type = type;
     this.originalPacket = originalPacket;
+  }
+
+  /**
+   * Constructor for packets
+   *
+   * @param type type of packet to be created
+   */
+  public Packet(PacketType type) {
+    this.type = type;
   }
 
   /**
