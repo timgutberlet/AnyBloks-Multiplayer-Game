@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @author tbuscher
  */
-public abstract class Packet implements Serializable {
+public class Packet implements Serializable {
 
   /**
    * To implement Serializable
@@ -20,12 +20,19 @@ public abstract class Packet implements Serializable {
   private final PacketType type;
 
   /**
+   * Holds the original packet
+   */
+  private final Object originalPacket;
+
+  /**
    * Constructor for packets
    *
    * @param type type of packet to be created
+   * @param originalPacket the packet of a certain type, that can be cast back later
    */
-  public Packet(PacketType type) {
+  public Packet(PacketType type, Object originalPacket) {
     this.type = type;
+    this.originalPacket = originalPacket;
   }
 
   /**
@@ -36,4 +43,15 @@ public abstract class Packet implements Serializable {
   public PacketType getPacketType() {
     return this.type;
   }
+
+  /**
+   * affords access to the original Packet cast into an Object.
+   * get the Packet of a type by using this and then casting back.
+   *
+   * @return Object originalPacket cast to Object
+   */
+  public Object getOriginalPacket(){
+    return this.originalPacket;
+  }
+
 }
