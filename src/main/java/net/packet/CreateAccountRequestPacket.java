@@ -1,7 +1,7 @@
 package net.packet;
 
 /**
- * Packet send by client to try and create an account
+ * Packet send by client to try and create an account.
  *
  * @author tbuscher
  */
@@ -13,17 +13,17 @@ public class CreateAccountRequestPacket extends Packet {
   private static final long serialVersionUID = 1L;
 
   /**
-   * Desired username
+   * Desired username.
    */
   private final String username;
 
   /**
-   * HASHED password to set
+   * HASHED password to set.
    */
   private final String passwordHash;
 
   /**
-   * Packet for Creating an Account by a user
+   * Packet for Creating an Account by a user.
    *
    * @param username     desired username
    * @param passwordHash HASHED password to set
@@ -35,7 +35,7 @@ public class CreateAccountRequestPacket extends Packet {
   }
 
   /**
-   * public getter for desired username
+   * public getter for desired username.
    *
    * @return desired username
    */
@@ -44,7 +44,7 @@ public class CreateAccountRequestPacket extends Packet {
   }
 
   /**
-   * public getter for hashed password
+   * public getter for hashed password.
    *
    * @return hashed password
    */

@@ -20,11 +20,8 @@ import net.packet.Packet;
  * @author tbuscher
  */
 
-@ServerEndpoint(
-    value = "/packet",
-    encoders = {PacketEncoder.class},
-    decoders = {PacketDecoder.class}
-)
+@ServerEndpoint(value = "/packet", encoders = {PacketEncoder.class}, decoders = {
+    PacketDecoder.class})
 public class EndpointServer {
 
   // Creating HashSet for all Sessions
@@ -34,7 +31,7 @@ public class EndpointServer {
   /**
    * Add a new session to the active ones.
    *
-   * @param ses
+   * @param ses Session to be added
    */
   @OnOpen
   public void onOpen(final Session ses) {
@@ -54,9 +51,9 @@ public class EndpointServer {
   /**
    * Broadcast a message to all clients that have a session.
    *
-   * @param packet
-   * @throws IOException
-   * @throws EncodeException
+   * @param packet to be sent out
+   * @throws IOException     is thrown
+   * @throws EncodeException is thrown
    */
   @OnMessage
   public void onMessage(final Packet packet) throws IOException, EncodeException {

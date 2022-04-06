@@ -15,12 +15,12 @@ import net.packet.Packet;
  */
 public class PacketEncoder implements Encoder.Text<Packet> {
 
-  private final ObjectMapper oMapper = new ObjectMapper();
+  private final ObjectMapper objMapper = new ObjectMapper();
 
   /**
    * Empty. Needs to be implemented to inherit from Encoder.
    *
-   * @param config
+   * @param config for init
    */
   public void init(final EndpointConfig config) {
   }
@@ -29,12 +29,12 @@ public class PacketEncoder implements Encoder.Text<Packet> {
   /**
    * Method to convert a packet into a string. Those strings can be sent via websockets.
    *
-   * @param toEncode
-   * @throws EncodeException
+   * @param toEncode Packet that is to be encoded
+   * @throws EncodeException is thrown
    */
   public String encode(final Packet toEncode) throws EncodeException {
     try {
-      return oMapper.writeValueAsString(toEncode);
+      return objMapper.writeValueAsString(toEncode);
     } catch (JsonProcessingException e) {
       throw new EncodeException(toEncode, "The packet could not be encoded. See error message: \n",
           e);

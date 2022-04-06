@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Logs incoming requests.
+ *
  * @author tbuscher
  */
 public class LoggingRequestFilter implements ContainerRequestFilter {

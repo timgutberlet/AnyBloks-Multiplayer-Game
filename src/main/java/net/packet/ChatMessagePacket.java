@@ -1,25 +1,25 @@
 package net.packet;
 
 /**
- * Packet for sending a chat message into a chatroom
+ * Packet for sending a chat message into a chatroom.
  *
  * @author tbuscher
  */
 public class ChatMessagePacket extends Packet {
 
   /**
-   * To implement Serializable
+   * To implement Serializable.
    */
   private static final long serialVersionUID = 1L;
 
 
   /**
-   * Contains the text of the message
+   * Contains the text of the message.
    */
   private final String text;
 
   /**
-   * Create new ChatMessagePacket
+   * Create new ChatMessagePacket.
    *
    * @param text text of the message
    */
@@ -29,7 +29,7 @@ public class ChatMessagePacket extends Packet {
   }
 
   /**
-   * public getter for text of message
+   * public getter for text of message.
    *
    * @return text of the message
    */

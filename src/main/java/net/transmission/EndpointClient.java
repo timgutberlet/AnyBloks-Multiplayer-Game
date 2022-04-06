@@ -21,22 +21,21 @@ import org.slf4j.LoggerFactory;
 
 public class EndpointClient {
 
-  private static final Logger LOG = LoggerFactory
-      .getLogger(EndpointClient.class);
+  private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
 
   /**
    * Method used to connect to server. TODO : evaluate createAccount / Login
    *
-   * @param ses
-   * @param username
-   * @param hashedPW
-   * @throws IOException
-   * @throws EncodeException
+   * @param ses      Session in use
+   * @param username of user
+   * @param hashedPw that user requests
+   * @throws IOException     is thrown
+   * @throws EncodeException is thrown
    */
   @OnOpen
-  public void onOpen(final Session ses, String username, String hashedPW)
+  public void onOpen(final Session ses, String username, String hashedPw)
       throws IOException, EncodeException {
-    ses.getBasicRemote().sendObject(new CreateAccountRequestPacket(username, hashedPW));
+    ses.getBasicRemote().sendObject(new CreateAccountRequestPacket(username, hashedPw));
   }
 
   @OnMessage

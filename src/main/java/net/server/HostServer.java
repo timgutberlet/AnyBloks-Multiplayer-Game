@@ -7,12 +7,12 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.websocket.jsr356.ClientContainer;
 import org.eclipse.jetty.websocket.jsr356.server.ServerContainer;
 import org.eclipse.jetty.websocket.jsr356.server.deploy.WebSocketServerContainerInitializer;
 import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.eclipse.jetty.websocket.jsr356.ClientContainer;
 
 
 /**
@@ -30,7 +30,7 @@ public class HostServer {
   /**
    * Starting the server itself.
    *
-   * @param portNumber
+   * @param portNumber port to use
    */
   public void startServer(int portNumber) throws Exception {
 

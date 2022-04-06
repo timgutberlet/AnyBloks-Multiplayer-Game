@@ -14,20 +14,27 @@ import net.packet.Packet;
  */
 public class PacketDecoder implements Decoder.Text<Packet> {
 
-  private final ObjectMapper oMapper = new ObjectMapper();
+  private final ObjectMapper objMapper = new ObjectMapper();
 
   /**
    * Empty. Needs to be implemented to inherit from Decoder.
    *
-   * @param config
+   * @param config for init
    */
   public void init(final EndpointConfig config) {
   }
 
+  /**
+   * Most used method of this class: recreate a packet out of String.
+   *
+   * @param toDecode String that has previously been encoded
+   * @return Packet that was regenerated
+   * @throws DecodeException is thrown
+   */
   public Packet decode(final String toDecode) throws DecodeException {
     final Packet decoded;
     try {
-      decoded = oMapper.readValue(toDecode, Packet.class);
+      decoded = objMapper.readValue(toDecode, Packet.class);
     } catch (IOException e) {
       throw new DecodeException(toDecode, "The string could not be decoded into a packet!", e);
     }
@@ -38,7 +45,7 @@ public class PacketDecoder implements Decoder.Text<Packet> {
   /**
    * Empty. Needs to be implemented to inherit from Decoder.
    *
-   * @param str
+   * @param str to be checked
    */
   public boolean willDecode(final String str) {
     return true;

@@ -1,7 +1,7 @@
 package net.packet;
 
 /**
- * All possible types of packets for communication between server & clients
+ * All possible types of packets for communication between server & clients.
  *
  * @author tbuscher
  */

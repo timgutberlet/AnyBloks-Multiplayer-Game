@@ -1,27 +1,29 @@
 package net.packet;
 
 /**
+ * Packet sent by server to acknowledge account creation / inform about failure to do so.
+ *
  * @author tbuscher
  */
 public class CreateAccountResponsePacket extends Packet {
 
   /**
-   * To implement Serializable
+   * To implement Serializable.
    */
   private static final long serialVersionUID = 1L;
 
   /**
-   * flag whether request was successful
+   * flag whether request was successful.
    */
   private final boolean accountCreated;
 
   /**
-   * Error Message explained any errors encountered while processing CreateAccountRequestPacket
+   * Error Message explained any errors encountered while processing CreateAccountRequestPacket.
    */
   private final String errorMessage;
 
   /**
-   * Packet sent by server in response to CreateAccountRequestPacket
+   * Packet sent by server in response to CreateAccountRequestPacket.
    *
    * @param accountCreated flag whether request was handled successfully
    * @param errorMessage   problem(s) that occured
@@ -33,7 +35,7 @@ public class CreateAccountResponsePacket extends Packet {
   }
 
   /**
-   * public getter for accountCreated
+   * public getter for accountCreated.
    *
    * @return accountCreated
    */
@@ -42,7 +44,7 @@ public class CreateAccountResponsePacket extends Packet {
   }
 
   /**
-   * public getter for errorMessage
+   * public getter for errorMessage.
    *
    * @return errorMessage
    */
