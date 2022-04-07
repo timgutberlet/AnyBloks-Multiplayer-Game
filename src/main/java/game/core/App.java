@@ -17,7 +17,7 @@ public class App extends Application {
   public void start(Stage stage) throws IOException {
 
     controller = new GameController(stage, this);
-    stage.setTitle("Test");
+    stage.setTitle("Bloks3");
 
     stage.show();
   }
