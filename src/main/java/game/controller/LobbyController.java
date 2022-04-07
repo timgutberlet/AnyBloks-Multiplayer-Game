@@ -200,7 +200,7 @@ public class LobbyController extends AbstractUiController {
 
   @FXML
   public void initialize() {
-    list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
+    list = FXCollections.observableArrayList("Classic", "Duo", "Junior");
     gameModes.setItems(list);
   }
 
@@ -214,11 +214,13 @@ public class LobbyController extends AbstractUiController {
           difficultyPlayer.setText("Middle");
           break;
         case "Middle":
-          difficultyPlayer.setText("Hard");
-          break;
-        case "Hard":
           difficultyPlayer.setText("-");
           namePlayer.setText("-");
+          ;
+          break;
+        /*case "Hard":
+          difficultyPlayer.setText("-");
+          namePlayer.setText("-");*/
       }
     }
   }
@@ -232,8 +234,8 @@ public class LobbyController extends AbstractUiController {
       case "Middle":
         difficultyPlayer.setText("Easy");
         break;
-      case "Hard":
-        difficultyPlayer.setText("Middle");
+     /* case "Hard":
+        difficultyPlayer.setText("Middle");*/
     }
   }
 

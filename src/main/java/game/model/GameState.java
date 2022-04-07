@@ -131,7 +131,7 @@ public class GameState implements Serializable, Cloneable {
 
   public Player getPlayerCurrent() {
     if (getPlayer().size() > 0) {
-      return getPlayer().get(this.turn % 4);
+      return getPlayer().get(this.turn % this.player.size());
     } else {
       return null;
     }
