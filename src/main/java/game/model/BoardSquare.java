@@ -43,7 +43,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     for (FieldSquare fs : board) {
       this.board.add(fs.clone());
     }
-    for (FieldSquare fs : startFields){
+    for (FieldSquare fs : startFields) {
       this.startFields.add(fs.clone());
     }
   }
@@ -302,7 +302,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   private ArrayList<Turn> possibleFieldsAndShadesForPoly(PolySquare poly, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
     for (FieldSquare fs : board) {
-      if (fs.isOccupied()){
+      if (fs.isOccupied()) {
         continue;
       }
       ArrayList<Turn> erg = getPolyShadesPossible(fs.getPos()[0], fs.getPos()[1], poly,

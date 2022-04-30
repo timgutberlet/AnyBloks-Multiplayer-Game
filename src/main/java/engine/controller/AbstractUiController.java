@@ -12,7 +12,7 @@ public abstract class AbstractUiController {
   protected Group root = new Group();
 
   public AbstractUiController() {
-    subScene = new SubScene(root, 1920, 1080);
+    subScene = new SubScene(root, 1280, 720);
   }
 
   public void attachToRoot(Group gameRoot) {

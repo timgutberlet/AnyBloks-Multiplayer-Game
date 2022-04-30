@@ -3,8 +3,6 @@ package game.model;
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
 import game.model.gamemodes.GameMode;
-import game.model.gamemodes.GMJunior;
-import game.model.gamemodes.GMTrigon;
 import game.view.InGameView;
 import java.util.ArrayList;
 import java.util.Arrays;

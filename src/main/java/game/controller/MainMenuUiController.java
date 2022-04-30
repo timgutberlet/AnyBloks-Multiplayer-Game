@@ -9,6 +9,7 @@ import javafx.scene.Group;
 
 /**
  * @author lbaudenb
+ * @author tgutberl
  */
 
 public class MainMenuUiController extends AbstractUiController {
@@ -21,11 +22,6 @@ public class MainMenuUiController extends AbstractUiController {
     init(super.root);
   }
 
-  @FXML
-  public void lobby() {
-    gameController.setActiveUiController(new LobbyController(gameController));
-  }
-
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -36,5 +32,48 @@ public class MainMenuUiController extends AbstractUiController {
       e.printStackTrace();
     }
   }
+
+  /**
+   * Method to Start LobbyController - to get into LobbyUi
+   * @lbaudenb
+   */
+  @FXML
+  public void lobby() {
+    gameController.setActiveUiController(new LobbyController(gameController));
+  }
+  /**
+   * Method to Start Tutuorial
+   * @tgutberl
+   */
+  @FXML
+  public void tutorial() {
+
+  }
+  /**
+   * Method to get into SettingController - to get into SettingUI
+   * @tgutberl
+   */
+  @FXML
+  public void setting() {
+    gameController.setActiveUiController(new SettingUiController(gameController));
+  }
+  /**
+   * Method to get Quit Menu - to End the Program
+   * @tgutberl
+   */
+  @FXML
+  public void quit() {
+
+  }
+  /**
+   * Method to get get into the credits view
+   * @tgutberl
+   */
+  @FXML
+  public void credits() {
+
+  }
+
+
 }
 

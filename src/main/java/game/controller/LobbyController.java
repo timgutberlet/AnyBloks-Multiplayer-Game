@@ -124,7 +124,7 @@ public class LobbyController extends AbstractUiController {
       }
     }
 
-    players.add(new Player("You", PlayerType.AI_EASY));
+    players.add(new Player("You", PlayerType.REMOTE_PLAYER));
 
     String gameMode = gameModes.getValue();
 

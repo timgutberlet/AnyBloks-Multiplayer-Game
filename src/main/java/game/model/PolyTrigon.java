@@ -347,14 +347,14 @@ public class PolyTrigon extends Poly {
     PolyTrigon poly = (PolyTrigon) o;
     boolean res = true;
 
-    if (poly.shape.size() != this.shape.size()){
+    if (poly.shape.size() != this.shape.size()) {
       return false;
     }
 
     outer:
-    for (FieldTrigon fs1 : poly.getShape()){
-      for(FieldTrigon fs2 : this.getShape()){
-        if (fs1.equals(fs2)){
+    for (FieldTrigon fs1 : poly.getShape()) {
+      for (FieldTrigon fs2 : this.getShape()) {
+        if (fs1.equals(fs2)) {
           continue outer;
         }
       }

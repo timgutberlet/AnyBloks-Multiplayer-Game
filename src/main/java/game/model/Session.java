@@ -9,14 +9,13 @@ import java.util.ArrayList;
  * gamemode, chat, etc...
  *
  * @author tgeilen
- * @Date 21.03.22
  */
 public class Session {
 
   private final Chat chat;
   private final ArrayList<Player> playerList;
-  private Game game;
   private final Player host;
+  private Game game;
 
   /**
    * a Session is created by a Player in the MainMenu

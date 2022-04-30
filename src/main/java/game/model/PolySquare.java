@@ -293,14 +293,14 @@ public class PolySquare extends Poly {
     PolySquare poly = (PolySquare) o;
     boolean res = true;
 
-    if (poly.shape.size() != this.shape.size()){
+    if (poly.shape.size() != this.shape.size()) {
       return false;
     }
 
     outer:
-    for (FieldSquare fs1 : poly.getShape()){
-      for(FieldSquare fs2 : this.getShape()){
-        if (fs1.equals(fs2)){
+    for (FieldSquare fs1 : poly.getShape()) {
+      for (FieldSquare fs2 : this.getShape()) {
+        if (fs1.equals(fs2)) {
           continue outer;
         }
       }

@@ -117,7 +117,7 @@ public class Turn {
 
   }
 
-  public Turn clone(){
+  public Turn clone() {
     return new Turn(this.poly.clone(), turn);
   }
 

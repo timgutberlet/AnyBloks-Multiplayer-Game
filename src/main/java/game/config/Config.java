@@ -1,0 +1,111 @@
+package game.config;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
+
+/**
+ * Handles Config Properties, saving/loading from config.properties file
+ *
+ * @author timgutberlet
+ */
+public class Config {
+
+  /**
+   * Path of config.properties path
+   */
+  private static final String configPath = "./src/main/resources/config.properties";
+  /**
+   * Properties Object, which will be used locally in the Class
+   */
+  private static final Properties property = new Properties();
+
+  private Config() {
+
+  }
+
+  /**
+   * Void Method that loads the value of the StandardConfig Java Class. Will mainly be used, if the
+   * Config File does not exist
+   */
+  public static void loadStandardConfig() {
+    for (int i = 0; i < StandardConfig.standardConfig.length; i++) {
+      property.setProperty(StandardConfig.standardConfig[i][0],
+          StandardConfig.standardConfig[i][1]);
+    }
+  }
+
+  /**
+   * Returns value of Config, as String
+   *
+   * @param value String for that the value should be returned of
+   * @return value
+   */
+  public static String getString(String value) {
+
+    return value;
+  }
+
+  /**
+   * Returns Value of Config, but converted into Integer
+   *
+   * @param value String for that the value should be returned of
+   * @return value
+   */
+  public static int getIntValue(String value) {
+    return 0;
+  }
+
+  /**
+   * Saves Property to the config.properties File
+   */
+  public static void saveProperty() {
+    try {
+      OutputStream outStream = new FileOutputStream(configPath);
+      property.store(outStream, "File for Config values");
+      outStream.close();
+    } catch (IOException e) {
+      System.err.println("Error in Saving Property File");
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Loads the Properties Values from config.properties value. If the File does not exist, the
+   * dafault properties will be loaded
+   */
+  public static void loadProperty() {
+    File propertyFile = new File(configPath);
+    if (propertyFile.exists()) {
+      try {
+        BufferedInputStream inputStream = new BufferedInputStream(
+            new FileInputStream(propertyFile));
+        property.load(inputStream);
+        inputStream.close();
+        if (!property.contains("CONFIG_VERSION") || !property.getProperty("CONFIG_VERSION")
+            .equals(StandardConfig.standardConfig[0][1])) {
+          loadStandardConfig();
+          saveProperty();
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    } else {
+      try {
+        Files.createFile(Paths.get(configPath));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      loadStandardConfig();
+      saveProperty();
+    }
+  }
+
+}

@@ -2,16 +2,77 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
   minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #D8D8D8;"
   stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171"
   xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.MainMenuUiController">
   <children>
-    <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+    <GridPane prefHeight="200.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0"
       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+      <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES"/>
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints vgrow="SOMETIMES"/>
+        </rowConstraints>
+        <children>
+          <GridPane GridPane.rowIndex="1">
+            <columnConstraints>
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0"
+                prefWidth="150.0"/>
+              <ColumnConstraints hgrow="SOMETIMES"/>
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0"
+                prefWidth="150.0"/>
+            </columnConstraints>
+            <rowConstraints>
+              <RowConstraints vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+              <Button mnemonicParsing="false" onAction="#credits"
+                prefWidth="110.0" text="CREDITS" GridPane.columnIndex="2"
+                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                <font>
+                  <Font size="20.0"/>
+                </font>
+              </Button>
+              <Button mnemonicParsing="false" onAction="#quit"
+                prefWidth="110.0" text="QUIT" GridPane.halignment="CENTER"
+                GridPane.valignment="CENTER">
+                <font>
+                  <Font size="20.0"/>
+                </font>
+              </Button>
+            </children>
+          </GridPane>
+          <VBox alignment="CENTER" spacing="40.0">
+            <children>
+              <Button alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false"
+                onAction="#lobby" prefWidth="400.0" text="START LOBBY">
+                <font>
+                  <Font size="36.0"/>
+                </font>
+              </Button>
+              <Button alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false"
+                onAction="#tutorial" prefWidth="400.0" text="TUTORIAL">
+                <font>
+                  <Font size="36.0"/>
+                </font>
+              </Button>
+              <Button alignment="CENTER" graphicTextGap="20.0" mnemonicParsing="false"
+                onAction="#setting" prefWidth="400.0" text="SETTINGS">
+                <font>
+                  <Font size="36.0"/>
+                </font>
+              </Button>
+            </children>
+          </VBox>
+        </children>
+      </GridPane>
+      </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES"/>
       </columnConstraints>
@@ -19,13 +80,6 @@
         <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES"/>
         <RowConstraints vgrow="SOMETIMES"/>
       </rowConstraints>
-      <Button text="Create Lobby" onAction="#lobby" mnemonicParsing="false"
-        prefWidth="200.0" GridPane.halignment="CENTER"
-        GridPane.valignment="CENTER">
-        <font>
-          <Font size="20.0"/>
-        </font>
-      </Button>
     </GridPane>
   </children>
 </AnchorPane>

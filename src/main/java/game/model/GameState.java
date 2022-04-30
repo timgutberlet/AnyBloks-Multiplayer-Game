@@ -1,9 +1,8 @@
 package game.model;
 
+import game.model.gamemodes.GameMode;
 import java.io.Serializable;
 import java.util.ArrayList;
-import game.model.gamemodes.*;
-import java.util.Arrays;
 
 /**
  * this class represents the current state of one specific game
@@ -100,7 +99,7 @@ public class GameState implements Serializable, Cloneable {
       String stateEnding, ArrayList<ArrayList<Turn>> history) {
     this.gameMode = gameMode;
     this.board = board;
-    for (ArrayList<Poly> polys : remainingPolys){
+    for (ArrayList<Poly> polys : remainingPolys) {
       this.remainingPolys.add(polys);
     }
     this.player = player;
@@ -109,7 +108,7 @@ public class GameState implements Serializable, Cloneable {
     this.running = running;
     this.started = started;
     this.stateEnding = stateEnding;
-    for (ArrayList<Turn> turns : history){
+    for (ArrayList<Turn> turns : history) {
       this.history.add(turns);
     }
   }
@@ -299,21 +298,21 @@ public class GameState implements Serializable, Cloneable {
   public GameState clone() {
     Board boardCopy = this.board.clone();
     ArrayList<ArrayList<Poly>> remainingPolysCopy = new ArrayList<>();
-    for (ArrayList<Poly> polys : this.remainingPolys){
+    for (ArrayList<Poly> polys : this.remainingPolys) {
       ArrayList<Poly> polysCopy = new ArrayList<>();
-      for (Poly p : polys){
+      for (Poly p : polys) {
         polysCopy.add(p.clone());
       }
       remainingPolysCopy.add(polysCopy);
     }
     ArrayList<Player> playerCopy = new ArrayList<>();
-    for (Player p : player){
+    for (Player p : player) {
       playerCopy.add(p);
     }
     ArrayList<ArrayList<Turn>> historyCopy = new ArrayList<>();
-    for (ArrayList<Turn> turns : this.history){
+    for (ArrayList<Turn> turns : this.history) {
       ArrayList<Turn> turnsCopy = new ArrayList<>();
-      for (Turn t : turns){
+      for (Turn t : turns) {
         if (t == null) {
           turnsCopy.add(null);
         } else {
@@ -322,11 +321,12 @@ public class GameState implements Serializable, Cloneable {
       }
       historyCopy.add(turnsCopy);
     }
-    return new GameState(this.gameMode, boardCopy, remainingPolysCopy, playerCopy, round, turn, running, started, stateEnding, historyCopy);
+    return new GameState(this.gameMode, boardCopy, remainingPolysCopy, playerCopy, round, turn,
+        running, started, stateEnding, historyCopy);
   }
 
   public GameState tryTurn(Turn turn) {
-    if (turn == null){
+    if (turn == null) {
       return this.clone();
     }
     GameState gameStateCopy = this.clone();

@@ -7,14 +7,13 @@ import java.util.ArrayList;
  * a game is started in a Session by the host and dies when someone wins
  *
  * @author tgeilen
- * @Date 21.03.22
  */
 public class Game {
 
+  private final GameState gameState;
   private Board board;
   private GameMode gamemode;
   private ArrayList<Player> players;
-  private final GameState gameState;
 
   public Game(ArrayList<Player> players, GameMode gamemode) {
     this.board = new BoardSquare(gamemode);

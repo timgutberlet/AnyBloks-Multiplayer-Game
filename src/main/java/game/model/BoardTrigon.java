@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * @author tiotto
- * @date 21.03.2022
  */
 public class BoardTrigon extends Board implements Serializable, Cloneable {
 
@@ -337,7 +336,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   private ArrayList<Turn> possibleFieldsAndShadesForPoly(PolyTrigon poly, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
     for (FieldTrigon ft : board) {
-      if (ft.isOccupied()){
+      if (ft.isOccupied()) {
         continue;
       }
       ArrayList<Turn> erg = getPolyShadesPossible(ft.getPos()[0], ft.getPos()[1], ft.getPos()[2],

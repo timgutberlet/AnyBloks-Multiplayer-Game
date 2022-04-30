@@ -4,7 +4,6 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.model.AI;
 import game.model.BoardSquare;
-import game.model.Color;
 import game.model.Game;
 import game.model.Player;
 import game.model.PlayerType;

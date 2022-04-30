@@ -7,7 +7,6 @@ import java.util.Objects;
  * This class is the abstract version of a single peace on the board
  *
  * @author tiotto
- * @date 21.03.2022
  */
 public abstract class Field {
 
@@ -109,8 +108,8 @@ public abstract class Field {
     }
     Field that = (Field) o;
     boolean res = true;
-    for (int i = 0; i < pos.length; i++){
-      if (!(pos[i]==that.pos[i])){
+    for (int i = 0; i < pos.length; i++) {
+      if (!(pos[i] == that.pos[i])) {
         return false;
       }
     }
