@@ -3,7 +3,6 @@ package game.config;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -27,6 +26,9 @@ public class Config {
    */
   private static final Properties property = new Properties();
 
+  /**
+   * Make Config private
+   */
   private Config() {
 
   }
@@ -45,22 +47,23 @@ public class Config {
   /**
    * Returns value of Config, as String
    *
-   * @param value String for that the value should be returned of
+   * @param name String for that the value should be returned of
    * @return value
    */
-  public static String getString(String value) {
-
-    return value;
-  }
-
-  /**
-   * Returns Value of Config, but converted into Integer
-   *
-   * @param value String for that the value should be returned of
-   * @return value
-   */
-  public static int getIntValue(String value) {
-    return 0;
+  public static String getStringValue(String name) {
+    if (property.containsKey(name)) {
+      return property.getProperty(name);
+    } else {
+      for (int i = 0; i < StandardConfig.standardConfig.length; ++i) {
+        if (StandardConfig.standardConfig[i][0].equals(name)) {
+          property.setProperty(name, StandardConfig.standardConfig[i][1]);
+          return StandardConfig.standardConfig[i][1];
+        }
+      }
+      System.err.println(
+          "Property Value, you try to get, does not exist. Name of the Value is: " + name);
+      throw new IllegalArgumentException();
+    }
   }
 
   /**
@@ -107,5 +110,4 @@ public class Config {
       saveProperty();
     }
   }
-
 }

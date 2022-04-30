@@ -11,11 +11,12 @@ public class StandardConfig {
    * File is not used or outdated
    */
   public static final String[][] standardConfig = new String[][]{
-      {"VERSION", "2"},
+      {"VERSION", "3"},
       {"SCREEN_WIDTH", "1280"},
       {"SCREEN_HEIGHT", "720"},
       {"SCREEN_MINIMUM_WIDTH", "1920"},
       {"SCREEN_MINIMUM_HEIGHT", "720"},
+      {"THEME", "Standard"},
   };
 
   private StandardConfig() {
