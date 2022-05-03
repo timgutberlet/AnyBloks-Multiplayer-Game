@@ -7,10 +7,6 @@ package net.packet;
  */
 public class CreateAccountResponsePacket extends Packet {
 
-  /**
-   * To implement Serializable.
-   */
-  private static final long serialVersionUID = 1L;
 
   /**
    * flag whether request was successful.
@@ -29,7 +25,6 @@ public class CreateAccountResponsePacket extends Packet {
    * @param errorMessage   problem(s) that occured
    */
   public CreateAccountResponsePacket(boolean accountCreated, String errorMessage) {
-    super(PacketType.CREATE_ACCOUNT_RESPONSE_PACKET);
     this.accountCreated = accountCreated;
     this.errorMessage = errorMessage;
   }

@@ -50,7 +50,10 @@ public class HostServer {
    * @param portNumber bind to specified port
    */
   public void startWebsocket(int portNumber) throws Exception {
+    System.out.println("Got here1");
+
     Server server = new Server(portNumber);
+    System.out.println("dindt Got here");
 
     ServletContextHandler context = new ServletContextHandler();
     context.setContextPath("/");
@@ -66,7 +69,32 @@ public class HostServer {
     serverContainer.addEndpoint(EndpointServer.class);
 
     server.start();
+
   }
 
+  /**
+   * Stop jetty instance.
+   */
+  public void stop() {
+    if(server == null || !server.isRunning()) {
+      if(LOG.isWarnEnabled()) {
+        LOG.warn("No Jetty server running");
+      }
+
+      return;
+    }
+
+    try {
+      server.stop();
+
+      if(LOG.isInfoEnabled()) {
+        LOG.info("Stopped Jetty server");
+      }
+    } catch (Exception e) {
+      LOG.error("Could not stop jetty server", e);
+    } finally {
+      server.destroy();
+    }
+  }
 
 }

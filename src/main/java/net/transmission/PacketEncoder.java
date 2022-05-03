@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
-import net.packet.Packet;
+import net.packet.WrappedPacket;
 
 
 /**
@@ -13,7 +13,7 @@ import net.packet.Packet;
  *
  * @author tbuscher
  */
-public class PacketEncoder implements Encoder.Text<Packet> {
+public class PacketEncoder implements Encoder.Text<WrappedPacket> {
 
   private final ObjectMapper objMapper = new ObjectMapper();
 
@@ -32,7 +32,7 @@ public class PacketEncoder implements Encoder.Text<Packet> {
    * @param toEncode Packet that is to be encoded
    * @throws EncodeException is thrown
    */
-  public String encode(final Packet toEncode) throws EncodeException {
+  public String encode(final WrappedPacket toEncode) throws EncodeException {
     try {
       return objMapper.writeValueAsString(toEncode);
     } catch (JsonProcessingException e) {

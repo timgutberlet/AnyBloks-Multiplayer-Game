@@ -5,14 +5,14 @@ import java.io.IOException;
 import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
-import net.packet.Packet;
+import net.packet.WrappedPacket;
 
 /**
  * Class to regenerate packets out of strings of encoded packets.
  *
  * @author tbuscher
  */
-public class PacketDecoder implements Decoder.Text<Packet> {
+public class PacketDecoder implements Decoder.Text<WrappedPacket> {
 
   private final ObjectMapper objMapper = new ObjectMapper();
 
@@ -31,10 +31,10 @@ public class PacketDecoder implements Decoder.Text<Packet> {
    * @return Packet that was regenerated
    * @throws DecodeException is thrown
    */
-  public Packet decode(final String toDecode) throws DecodeException {
-    final Packet decoded;
+  public WrappedPacket decode(final String toDecode) throws DecodeException {
+    final WrappedPacket decoded;
     try {
-      decoded = objMapper.readValue(toDecode, Packet.class);
+      decoded = objMapper.readValue(toDecode, WrappedPacket.class);
     } catch (IOException e) {
       throw new DecodeException(toDecode, "The string could not be decoded into a packet!", e);
     }

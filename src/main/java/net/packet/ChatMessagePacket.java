@@ -7,11 +7,6 @@ package net.packet;
  */
 public class ChatMessagePacket extends Packet {
 
-  /**
-   * To implement Serializable.
-   */
-  private static final long serialVersionUID = 1L;
-
 
   /**
    * Contains the text of the message.
@@ -24,7 +19,6 @@ public class ChatMessagePacket extends Packet {
    * @param text text of the message
    */
   public ChatMessagePacket(String text) {
-    super(PacketType.CHAT_MESSAGE_PACKET);
     this.text = text;
   }
 

@@ -11,7 +11,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import net.packet.Packet;
+import net.packet.WrappedPacket;
 
 
 /**
@@ -51,15 +51,17 @@ public class EndpointServer {
   /**
    * Broadcast a message to all clients that have a session.
    *
-   * @param packet to be sent out
+   * @param hashedPW message to be sent out
    * @throws IOException     is thrown
    * @throws EncodeException is thrown
    */
   @OnMessage
-  public void onMessage(final Packet packet) throws IOException, EncodeException {
-    for (final Session ses : allSessions) {
-      ses.getBasicRemote().sendObject(packet);
-    }
+//  public void onMessage(final WrappedPacket packet) throws IOException, EncodeException {
+    public void onMessage(final String hashedPW) throws IOException, EncodeException {
+      System.out.println(hashedPW);
+//      for (final Session ses : allSessions) {
+////      ses.getBasicRemote().sendObject(packet);
+//    }
   }
 
 

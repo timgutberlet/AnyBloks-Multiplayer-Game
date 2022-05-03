@@ -8,11 +8,6 @@ package net.packet;
 public class CreateAccountRequestPacket extends Packet {
 
   /**
-   * To implement Serializable
-   */
-  private static final long serialVersionUID = 1L;
-
-  /**
    * Desired username.
    */
   private final String username;
@@ -29,7 +24,6 @@ public class CreateAccountRequestPacket extends Packet {
    * @param passwordHash HASHED password to set
    */
   public CreateAccountRequestPacket(String username, String passwordHash) {
-    super(PacketType.CREATE_ACCOUNT_REQUEST_PACKET);
     this.username = username;
     this.passwordHash = passwordHash;
   }
