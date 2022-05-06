@@ -3,9 +3,11 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ErrorMessageHandler;
+import game.model.Debug;
 import game.model.Game;
 import game.model.Player;
 import game.model.PlayerType;
+import game.model.Session;
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
 import game.model.gamemodes.GMJunior;
@@ -32,6 +34,8 @@ public class LobbyController extends AbstractUiController {
   private final String nameAiPlayer1 = "Bob";
   private final String nameAiPlayer2 = "Anna";
   private final String nameAiPlayer3 = "Tom";
+
+  private Session session;
 
   private GameMode gameMode;
   private ObservableList<String> list;
@@ -62,6 +66,7 @@ public class LobbyController extends AbstractUiController {
 
   public LobbyController(AbstractGameController gameController) {
     super();
+    this.session = new Session(new Player("NAME_HOST_PLAYER",PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
   }
@@ -84,47 +89,60 @@ public class LobbyController extends AbstractUiController {
 
   @FXML
   public void play() {
-    ArrayList<Player> players = new ArrayList<>();
+    ArrayList<Player> players = this.session.getPlayerList();
     boolean error = false;
 
     if (!namePlayer1.equals("-")) {
       switch (difficultyPlayer1.getText()) {
         case "Easy":
-          players.add(new Player(nameAiPlayer1, PlayerType.AI_EASY));
+          this.session.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_EASY));
+          //players.add(new Player(nameAiPlayer1, PlayerType.AI_EASY));
           break;
         case "Middle":
-          players.add(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
+          this.session.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
+          //players.add(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
           break;
         case "Hard":
-          players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
+          this.session.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_HARD));
+          //players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
       }
+      Debug.printMessage(""+this.session.getPlayerList().size());
     }
     if (!namePlayer2.equals("-")) {
       switch (difficultyPlayer2.getText()) {
         case "Easy":
-          players.add(new Player(nameAiPlayer2, PlayerType.AI_EASY));
+          this.session.addPlayer(new Player(nameAiPlayer2, PlayerType.AI_EASY));
+          //players.add(new Player(nameAiPlayer2, PlayerType.AI_EASY));
           break;
         case "Middle":
-          players.add(new Player(nameAiPlayer2, PlayerType.AI_MIDDLE));
+          this.session.addPlayer(new Player(nameAiPlayer2, PlayerType.AI_MIDDLE));
+          //players.add(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
           break;
         case "Hard":
-          players.add(new Player(nameAiPlayer2, PlayerType.AI_HARD));
+          this.session.addPlayer(new Player(nameAiPlayer2, PlayerType.AI_HARD));
+          //players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
       }
+      Debug.printMessage(""+this.session.getPlayerList().size());
     }
     if (!namePlayer3.equals("-")) {
       switch (difficultyPlayer3.getText()) {
         case "Easy":
-          players.add(new Player(nameAiPlayer3, PlayerType.AI_EASY));
+          this.session.addPlayer(new Player(nameAiPlayer3, PlayerType.AI_EASY));
+          //players.add(new Player(nameAiPlayer3, PlayerType.AI_EASY));
           break;
         case "Middle":
-          players.add(new Player(nameAiPlayer3, PlayerType.AI_MIDDLE));
+          this.session.addPlayer(new Player(nameAiPlayer3, PlayerType.AI_MIDDLE));
+          //players.add(new Player(nameAiPlayer3, PlayerType.AI_MIDDLE));
           break;
         case "Hard":
-          players.add(new Player(nameAiPlayer3, PlayerType.AI_HARD));
+          this.session.addPlayer(new Player(nameAiPlayer3, PlayerType.AI_HARD));
+          //players.add(new Player(nameAiPlayer3, PlayerType.AI_HARD));
       }
+      Debug.printMessage(""+this.session.getPlayerList().size());
     }
-
-    players.add(new Player("You", PlayerType.REMOTE_PLAYER));
+    this.session.addHost(new Player("You", PlayerType.AI_EASY));
+    System.out.println(this.session.getPlayerList().size());
+    //players.add(new Player("You", PlayerType.AI_EASY));
 
     String gameMode = gameModes.getValue();
 
@@ -160,10 +178,15 @@ public class LobbyController extends AbstractUiController {
       error = true;
     }
     if (!error) {
-      Game game = new Game(players, this.gameMode);
-      game.startGame();
+      //for(Player p: players){
+      //  p.setSession(this.session);
+      //}
+      //Game game = new Game(players, this.gameMode);
+      this.session.setGame(new Game(this.session, this.gameMode));
+      this.session.startGame();
+      //game.startGame();
       gameController.setActiveUiController(
-          new InGameUiController(gameController, game));
+          new InGameUiController(gameController, this.session.getGame(), session));
     }
 
   }

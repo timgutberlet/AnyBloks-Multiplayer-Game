@@ -10,19 +10,22 @@ import java.util.ArrayList;
  */
 public class Game {
 
+  private Session session;
   private final GameState gameState;
   private Board board;
   private GameMode gamemode;
   private ArrayList<Player> players;
 
-  public Game(ArrayList<Player> players, GameMode gamemode) {
+
+  public Game(Session session, GameMode gamemode) {
+    this.session = session;
     this.board = new BoardSquare(gamemode);
     this.gamemode = gamemode;
-    this.players = players;
-    this.gameState = new GameState(gamemode);
-    for (Player p : players) {
-      this.gameState.addPlayer(p);
-    }
+    this.players = session.getPlayerList();
+    this.gameState = new GameState(this.session, gamemode);
+    //for (Player p : players) {
+    //  this.gameState.addPlayer(p);
+    //}
 
   }
 

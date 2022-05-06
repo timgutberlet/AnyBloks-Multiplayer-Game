@@ -14,7 +14,7 @@ public class Session {
 
   private final Chat chat;
   private final ArrayList<Player> playerList;
-  private final Player host;
+  private  Player host;
   private Game game;
 
   /**
@@ -24,50 +24,44 @@ public class Session {
    * @author tgeilen
    */
   public Session(Player player) {
+    //create chatThread and start it
     this.chat = new Chat();
+    this.chat.run();
+
     this.playerList = new ArrayList<Player>();
-    this.host = player;
-    this.addPlayer(this.host);
+    //this.host = player;
+    //this.addPlayer(this.host);
   }
 
   /**
    * a Player can join a Session from the MainMenu
    *
-   * @param username
+   * @param player
    * @author tgeilen
    */
-  public void addPlayer(String username) {
-    Player player = new Player(username, PlayerType.REMOTE_PLAYER);
+  public void addPlayer(Player player) {
     this.playerList.add(player);
-    player.joinSession(this);
+    player.setSession(this);
   }
 
   /**
-   * overloading needed to add host to game
    *
    * @param host
    * @author tgeilen
    */
-  public void addPlayer(Player host) {
+  public void addHost(Player host) {
     this.playerList.add(host);
-    host.joinSession(this);
+    host.setSession(this);
   }
 
 
   /**
-   * starts a new Game of a given GameMode object and adds BOT players
+   * starts a new Game
    *
-   * @param gameMode
    * @author tgeilen
    */
-  public void startGame(GameMode gameMode, PlayerType difficulty) {
-    while (this.playerList.size() != gameMode.getNeededPlayers()) {
-      this.playerList.add(new Player("BOT", difficulty));
-    }
-
-    this.game = new Game(this.playerList, gameMode);
-    //TODO change view to game
-
+  public void startGame() {
+    this.game.startGame();
   }
 
   public Chat getChat() {
@@ -76,6 +70,12 @@ public class Session {
 
   public Game getGame() {
     return this.game;
+  }
+
+  public ArrayList<Player> getPlayerList(){return this.playerList;}
+
+  public void setGame(Game game){
+    this.game = game;
   }
 
 

@@ -7,6 +7,8 @@ import game.model.BoardSquare;
 import game.model.Game;
 import game.model.Player;
 import game.model.PlayerType;
+import game.model.Session;
+import game.model.chat.Chat;
 import game.view.BoardPane;
 import game.view.BoardSquarePane;
 import game.view.StackPane;
@@ -20,7 +22,11 @@ import javafx.scene.layout.VBox;
 
 public class InGameUiController extends AbstractUiController {
 
+  private Session session;
+
   private Game game;
+
+  private Chat chat;
 
   private AbstractGameController gameController;
 
@@ -35,9 +41,11 @@ public class InGameUiController extends AbstractUiController {
   private Button quitButton;
 
 
-  public InGameUiController(AbstractGameController gameController, Game game) {
+  public InGameUiController(AbstractGameController gameController, Game game, Session session) {
     super();
-    this.game = game;
+    this.session = session;
+    this.game = session.getGame();
+    this.chat = session.getChat();
     this.gameController = gameController;
     this.Gui = new HBox();
     playerPoints = new ArrayList<>();
@@ -54,13 +62,13 @@ public class InGameUiController extends AbstractUiController {
 
   private void setUpUi() {
     playerStacks = new VBox();
-    for (Player p : game.getPlayers()) {
+    for (Player p : this.session.getPlayerList()) {
       StackPane squareStack = new StackSquarePane(p, game.getGameState().getRemainingPolys(p));
       playerStacks.getChildren().add(squareStack);
     }
     Gui.getChildren().add(playerStacks);
 
-    for (Player p : game.getPlayers()) {
+    for (Player p : this.session.getPlayerList()) {
       Label label = new Label("0");
       playerPoints.add(label);
     }
@@ -99,6 +107,7 @@ public class InGameUiController extends AbstractUiController {
           || this.game.getGameState().getPlayerCurrent().getType().equals(PlayerType.AI_HARD)) {
         this.game.getGameState().playTurn(AI.calculateNextMove(this.game.getGameState(),
             this.game.getGameState().getPlayerCurrent()));
+        this.game.getGameState().getPlayerCurrent().talk();
       }
     }
     boardPane.repaint(game.getGameState().getBoard());

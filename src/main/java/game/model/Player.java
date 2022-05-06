@@ -47,7 +47,7 @@ public class Player implements Serializable {
    * @param session
    * @author tgeilen
    */
-  public void joinSession(Session session) {
+  public void setSession(Session session) {
     this.session = session;
   }
 
@@ -62,6 +62,11 @@ public class Player implements Serializable {
 
   }
 
+  public void talk() {
+    if (Math.floor(Math.random() * 100) % 4 == 0) {
+      this.session.getChat().addMessage(this, "Hallo Welt " + this.score);
+    }
+  }
 
   public PlayerType getType() {
     return type;

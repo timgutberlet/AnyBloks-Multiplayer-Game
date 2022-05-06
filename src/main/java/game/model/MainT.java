@@ -1,3 +1,4 @@
+/**
 package game.model;
 
 import game.model.gamemodes.GMClassic;
@@ -104,3 +105,4 @@ public class MainT {
     }
   }
 }
+*/

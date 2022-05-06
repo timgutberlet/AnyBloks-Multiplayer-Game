@@ -3,6 +3,7 @@ package game.model;
 import game.model.gamemodes.GameMode;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.function.DoubleToIntFunction;
 
 /**
  * this class represents the current state of one specific game
@@ -14,6 +15,11 @@ public class GameState implements Serializable, Cloneable {
    * Required for serializable objects.
    */
   private static final long serialVersionUID = 1L;
+
+  /**
+   * The session of this GameState
+   */
+  private final Session session;
 
   /**
    * used game mode
@@ -67,24 +73,26 @@ public class GameState implements Serializable, Cloneable {
    * @param gameMode gives the game mode for the current game
    * @author tiotto
    */
-  public GameState(GameMode gameMode) {
+  public GameState(Session session, GameMode gameMode) {
     this.gameMode = gameMode;
     if (gameMode.getName().equals("TRIGON")) {
       board = new BoardTrigon();
     } else {
       board = new BoardSquare(gameMode);
     }
-    round = 1;
-    turn = 0;
-    player = new ArrayList<>();
-    running = false;
-    started = false;
+    this.round = 1;
+    this.turn = 0;
+    this.session = session;
+    this.player = this.session.getPlayerList();
+    this.running = false;
+    this.started = false;
+
+    init();
   }
 
   /**
    * Constructor to copy a GameState
-   *
-   * @param gameMode       gameMode
+   *  @param gameMode       gameMode
    * @param board          board
    * @param remainingPolys remainingPolys
    * @param player         player
@@ -94,11 +102,13 @@ public class GameState implements Serializable, Cloneable {
    * @param started        started
    * @param stateEnding    stateEnding
    */
-  public GameState(GameMode gameMode, Board board, ArrayList<ArrayList<Poly>> remainingPolys,
+  public GameState(Session session, GameMode gameMode, Board board,
+      ArrayList<ArrayList<Poly>> remainingPolys,
       ArrayList<Player> player, int round, int turn, boolean running, boolean started,
       String stateEnding, ArrayList<ArrayList<Turn>> history) {
     this.gameMode = gameMode;
     this.board = board;
+    this.session = session;
     for (ArrayList<Poly> polys : remainingPolys) {
       this.remainingPolys.add(polys);
     }
@@ -113,6 +123,46 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  /**
+   * initalises the polys for all players depending on the selected gamemode
+   */
+  private void init(){
+    for (Player p: this.player){
+      ArrayList<Poly> polyOfPlayer = new ArrayList<>();
+      history.add(new ArrayList<>());
+
+      switch (this.gameMode.getName()) { //remaining polys for every gamemode
+        case "CLASSIC": {
+          for (ArrayList<FieldSquare> shape : PolySquare.shapeListClassic) {
+            polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+        case "DUO": {
+          for (ArrayList<FieldSquare> shape : PolySquare.shapeListDuo) {
+            polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+        case "JUNIOR": {
+          for (ArrayList<FieldSquare> shape : PolySquare.shapeListJunior) {
+            polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+        case "TRIGON": {
+          for (ArrayList<FieldTrigon> shape : PolyTrigon.shapeListTrigon) {
+            polyOfPlayer.add(new PolyTrigon(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+      }
+      remainingPolys.add(polyOfPlayer);
+
+    }
+  }
+
+
   public Board getBoard() {
     return board;
   }
@@ -124,8 +174,8 @@ public class GameState implements Serializable, Cloneable {
    * @return remaining polys for a specific player
    */
   public ArrayList<Poly> getRemainingPolys(Player p) {
-
-    return remainingPolys.get(player.indexOf(p));
+    //Debug.printMessage("GET REMAINING POLYS: " + this.session.getPlayerList().size());
+    return remainingPolys.get(this.session.getPlayerList().indexOf(p));
   }
 
   public Player getPlayerCurrent() {
@@ -164,41 +214,6 @@ public class GameState implements Serializable, Cloneable {
     return Color.values()[getPlayer().indexOf(p) + 1];
   }
 
-  public void addPlayer(Player p) {
-    this.player.add(p);
-    ArrayList<Poly> polyOfPlayer = new ArrayList<>();
-    history.add(new ArrayList<>());
-
-    switch (this.gameMode.getName()) { //remaining polys for every gamemode
-      case "CLASSIC": {
-        for (ArrayList<FieldSquare> shape : PolySquare.shapeListClassic) {
-          polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
-        }
-        break;
-      }
-      case "DUO": {
-        for (ArrayList<FieldSquare> shape : PolySquare.shapeListDuo) {
-          polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
-        }
-        break;
-      }
-      case "JUNIOR": {
-        for (ArrayList<FieldSquare> shape : PolySquare.shapeListJunior) {
-          polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
-        }
-        break;
-      }
-      case "TRIGON": {
-        for (ArrayList<FieldTrigon> shape : PolyTrigon.shapeListTrigon) {
-          polyOfPlayer.add(new PolyTrigon(shape, getColorFromPlayer(p)));
-        }
-        break;
-      }
-    }
-    remainingPolys.add(polyOfPlayer);
-
-
-  }
 
   public void incTurn() {
     this.turn = turn + 1;
@@ -321,7 +336,7 @@ public class GameState implements Serializable, Cloneable {
       }
       historyCopy.add(turnsCopy);
     }
-    return new GameState(this.gameMode, boardCopy, remainingPolysCopy, playerCopy, round, turn,
+    return new GameState(this.session, this.gameMode, boardCopy, remainingPolysCopy, playerCopy, round, turn,
         running, started, stateEnding, historyCopy);
   }
 

@@ -1,6 +1,9 @@
 package game.core;
 
 import game.config.Config;
+import game.model.Player;
+import game.model.PlayerType;
+import game.model.Session;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
