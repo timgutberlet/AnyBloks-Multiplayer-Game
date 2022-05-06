@@ -29,6 +29,14 @@ public class CreateAccountRequestPacket extends Packet {
   }
 
   /**
+   * default constructor
+   */
+  public CreateAccountRequestPacket() {
+    username = "";
+    passwordHash = "";
+  }
+
+  /**
    * public getter for desired username.
    *
    * @return desired username

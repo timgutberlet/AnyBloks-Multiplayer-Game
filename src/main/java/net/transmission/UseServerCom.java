@@ -2,7 +2,11 @@ package net.transmission;
 
 import java.net.URI;
 import javax.websocket.ContainerProvider;
+import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
+import net.packet.CreateAccountRequestPacket;
+import net.packet.PacketType;
+import net.packet.WrappedPacket;
 import net.server.HostServer;
 
 /**
@@ -14,7 +18,7 @@ public class UseServerCom {
 
   static HostServer hostServer = new HostServer();
 
-  public static void main(String[] args){
+  public static void main(String[] args) {
 
     try {
       System.out.println("Got here Caller function");
@@ -26,9 +30,14 @@ public class UseServerCom {
       EndpointClient client = new EndpointClient();
       System.out.println("Gonna connect");
 
-      container.connectToServer(client, URI.create("ws://localhost:8080/packet"));
+      Session ses = container.connectToServer(client, URI.create("ws://localhost:8080/packet"));
       System.out.println("Past connection here");
 
+      WrappedPacket packet = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+          new CreateAccountRequestPacket("testuser", "unhashed"));
+
+      ses.getBasicRemote().sendObject(packet);
+      ses.close();
       hostServer.stop();
 
     } catch (Exception e) {

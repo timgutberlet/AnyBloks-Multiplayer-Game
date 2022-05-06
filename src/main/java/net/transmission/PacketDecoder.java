@@ -25,7 +25,7 @@ public class PacketDecoder implements Decoder.Text<WrappedPacket> {
   }
 
   /**
-   * Most used method of this class: recreate a packet out of String.
+   * Most used method of this class: recreate a WrappedPacket out of String.
    *
    * @param toDecode String that has previously been encoded
    * @return Packet that was regenerated
@@ -36,7 +36,7 @@ public class PacketDecoder implements Decoder.Text<WrappedPacket> {
     try {
       decoded = objMapper.readValue(toDecode, WrappedPacket.class);
     } catch (IOException e) {
-      throw new DecodeException(toDecode, "The string could not be decoded into a packet!", e);
+      throw new DecodeException(toDecode, "The string could not be decoded into a WrappedPacket!", e);
     }
 
     return decoded;

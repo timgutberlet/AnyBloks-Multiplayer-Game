@@ -1,6 +1,9 @@
 package net.packet;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 /**
  * The class packets are wrapped in, when sent
@@ -20,13 +23,21 @@ public class WrappedPacket implements Serializable {
   /**
    * Constructor
    *
-   * @param type of packet
+   * @param type   of packet
    * @param packet to be sent
    */
-  public  WrappedPacket(PacketType type, Packet packet){
+  public WrappedPacket(PacketType type, Packet packet) {
     this.type = type;
     this.packet = packet;
   }
+
+  /**
+   * Constructor
+   */
+  public WrappedPacket() {
+  }
+
+  ;
 
   /**
    * Getter
@@ -38,11 +49,25 @@ public class WrappedPacket implements Serializable {
   }
 
   /**
+   * Setter
+   */
+  public void setPacket(Packet packet) {
+    this.packet = packet;
+  }
+
+  /**
    * Getter
    *
    * @return PacketType type
    */
   public PacketType getPacketType() {
     return type;
+  }
+
+  /**
+   * Setter
+   */
+  public void setPacketType(PacketType type) {
+    this.type = type;
   }
 }

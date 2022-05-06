@@ -11,6 +11,8 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import net.packet.CreateAccountRequestPacket;
+import net.packet.PacketType;
 import net.packet.WrappedPacket;
 
 
@@ -51,17 +53,23 @@ public class EndpointServer {
   /**
    * Broadcast a message to all clients that have a session.
    *
-   * @param hashedPW message to be sent out
+   * @param packet message to be sent out
    * @throws IOException     is thrown
    * @throws EncodeException is thrown
    */
   @OnMessage
 //  public void onMessage(final WrappedPacket packet) throws IOException, EncodeException {
-    public void onMessage(final String hashedPW) throws IOException, EncodeException {
-      System.out.println(hashedPW);
-//      for (final Session ses : allSessions) {
-////      ses.getBasicRemote().sendObject(packet);
-//    }
+    public void onMessage(final WrappedPacket packet) throws IOException, EncodeException {
+      System.out.println(packet);
+      System.out.println("___FIND___");
+      System.out.println(packet.getPacketType());
+      PacketType type = packet.getPacketType();
+      switch (type){
+      case CREATE_ACCOUNT_REQUEST_PACKET: System.out.println("Received Create Account REQUEST PACKET ");
+      break;
+        default: System.out.println("Received a packet of type: " + type);
+
+    }
   }
 
 
