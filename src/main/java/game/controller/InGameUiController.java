@@ -52,6 +52,8 @@ public class InGameUiController extends AbstractUiController {
 
     createBoard();
     setUpUi();
+
+
   }
 
   public void createBoard() {
@@ -98,18 +100,18 @@ public class InGameUiController extends AbstractUiController {
     Gui.getChildren().addAll(playerPoints);*/
   }
 
+  /**
+   * function that updates the screen and calls the next move to be made
+   * @param gameController
+   * @param deltaTime
+   *
+   * @author //TODO hier die klasse hat jemand anders geschrieben. ich habe nur paar changes gemacht. echter autor am besten noch dazu schreiben
+   * @author tgeilen
+   */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
     refreshUi();
-    if (this.game.getGameState().isStateRunning()) {
-      if (this.game.getGameState().getPlayerCurrent().getType().equals(PlayerType.AI_EASY)
-          || this.game.getGameState().getPlayerCurrent().getType().equals(PlayerType.AI_MIDDLE)
-          || this.game.getGameState().getPlayerCurrent().getType().equals(PlayerType.AI_HARD)) {
-        this.game.getGameState().playTurn(AI.calculateNextMove(this.game.getGameState(),
-            this.game.getGameState().getPlayerCurrent()));
-        this.game.getGameState().getPlayerCurrent().talk();
-      }
-    }
+    this.game.makeMove();
     boardPane.repaint(game.getGameState().getBoard());
 
   }

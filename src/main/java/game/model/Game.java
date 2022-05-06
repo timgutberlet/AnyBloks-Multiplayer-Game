@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Game {
 
   private Session session;
-  private final GameState gameState;
+  private GameState gameState;
   private Board board;
   private GameMode gamemode;
   private ArrayList<Player> players;
@@ -23,9 +23,28 @@ public class Game {
     this.gamemode = gamemode;
     this.players = session.getPlayerList();
     this.gameState = new GameState(this.session, gamemode);
-    //for (Player p : players) {
-    //  this.gameState.addPlayer(p);
-    //}
+
+  }
+
+
+  /**
+   * function that calls the next move to be made
+   * @author tgeilen
+   */
+
+  public void makeMove(){
+
+    if (this.gameState.isStateRunning()){
+
+        Player currentPlayer = this.gameState.getPlayerCurrent();
+        Debug.printMessage("[GAMECONSOLE] " + currentPlayer.getName() + " is now the active player");
+
+        Turn turn = currentPlayer.makeTurn(this.gameState);
+        if(this.gameState.playTurn(turn)) {
+        this.session.increaseScore(currentPlayer, turn.getValue());
+        currentPlayer.talk();
+      }
+    }
 
   }
 
@@ -59,6 +78,8 @@ public class Game {
   }
 
   public void startGame() {
-    gameState.setStateRunning(true);
+    System.out.println("AAAAA Message Thread started");
+    this.gameState.setStateRunning(true);
+    //this.run();
   }
 }

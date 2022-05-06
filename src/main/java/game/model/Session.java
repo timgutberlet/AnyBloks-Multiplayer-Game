@@ -3,6 +3,8 @@ package game.model;
 import game.model.chat.Chat;
 import game.model.gamemodes.GameMode;
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 
 /**
  * a session is the central place taking care of players joining, starting a game, selecting
@@ -16,6 +18,8 @@ public class Session {
   private final ArrayList<Player> playerList;
   private  Player host;
   private Game game;
+
+  private HashMap<String,Integer> scoreboard = new HashMap<String,Integer>();
 
   /**
    * a Session is created by a Player in the MainMenu
@@ -34,6 +38,21 @@ public class Session {
   }
 
   /**
+   * a Session is created
+   *
+   * @param
+   * @author tgeilen
+   */
+  public Session() {
+    //create chatThread and start it
+    this.chat = new Chat();
+    this.chat.run();
+
+    this.playerList = new ArrayList<Player>();
+
+  }
+
+  /**
    * a Player can join a Session from the MainMenu
    *
    * @param player
@@ -45,7 +64,7 @@ public class Session {
   }
 
   /**
-   *
+   * function to set the host of a session
    * @param host
    * @author tgeilen
    */
@@ -56,12 +75,32 @@ public class Session {
 
 
   /**
-   * starts a new Game
+   * creates and starts a new Game
    *
    * @author tgeilen
    */
-  public void startGame() {
+  public Game startGame(GameMode gameMode) {
+    this.game = new Game(this, gameMode);
     this.game.startGame();
+    return this.game;
+  }
+
+
+  /**
+   * add the value of the placed poly to the scoreboard
+   * @param player
+   * @param value
+   * @author tgeilen
+   */
+  public void increaseScore(Player player, int value){
+    Integer currentScore = this.scoreboard.get(player.getName());
+
+    if(currentScore != null){
+      this.scoreboard.put(player.getName(),currentScore+value);
+    } else {
+      this.scoreboard.put(player.getName(), value);
+    }
+
   }
 
   public Chat getChat() {
@@ -72,11 +111,31 @@ public class Session {
     return this.game;
   }
 
-  public ArrayList<Player> getPlayerList(){return this.playerList;}
+  public ArrayList<Player> getPlayerList(){
+    return this.playerList;
+  }
 
   public void setGame(Game game){
     this.game = game;
   }
+
+  /**
+   * function that helps to output the most relevant information of a session
+   * @return
+   * @author tgeilen
+   */
+  @Override
+  public String toString(){
+    String str = "[SESSION INFO] \n";
+
+    for(Player p: this.playerList){
+      str += p.getName() + "  |  " + p.getType() + "  |  " + this.scoreboard.get(p.getName()) + "\n";
+    }
+
+    return str;
+  }
+
+
 
 
 }

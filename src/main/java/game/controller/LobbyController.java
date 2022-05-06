@@ -182,8 +182,11 @@ public class LobbyController extends AbstractUiController {
       //  p.setSession(this.session);
       //}
       //Game game = new Game(players, this.gameMode);
-      this.session.setGame(new Game(this.session, this.gameMode));
-      this.session.startGame();
+      Debug.printMessage("Hallo");
+      //this.session.setGame(new Game(this.session, this.gameMode));
+      Debug.printMessage("Hallo2");
+      this.session.startGame(this.gameMode);
+      Debug.printMessage("Hallo3");
       //game.startGame();
       gameController.setActiveUiController(
           new InGameUiController(gameController, this.session.getGame(), session));

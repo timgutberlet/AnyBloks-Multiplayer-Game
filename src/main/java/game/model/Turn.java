@@ -39,6 +39,10 @@ public class Turn {
     this.turn = turn;
   }
 
+  public int getValue(){
+    return this.poly.getSize();
+  }
+
   public PolySquare getPolySquare() {
     return (PolySquare) poly;
   }
