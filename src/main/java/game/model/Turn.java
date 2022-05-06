@@ -1,5 +1,9 @@
 package game.model;
 
+import game.model.polygon.Poly;
+import game.model.polygon.PolySquare;
+import game.model.polygon.PolyTrigon;
+
 /**
  * this class represents a move of a player in one turn
  */
@@ -109,7 +113,7 @@ public class Turn {
 
   public String toString() {
     StringBuffer res = new StringBuffer(poly.toString());
-    if (poly.getClass().getName().equals("game.model.PolyTrigon")) {
+    if (poly.getClass().getName().equals("game.model.polygon.PolyTrigon")) {
       res.append("\n" + "x : " + getX());
       res.append("\n" + "y : " + getY());
       res.append("\n" + "isRight : " + getIsRight());

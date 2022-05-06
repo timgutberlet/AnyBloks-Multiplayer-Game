@@ -1,4 +1,6 @@
-package game.model;
+package game.model.field;
+
+import game.model.Color;
 
 /**
  * This class represents one triangle of a trigon game board
@@ -55,8 +57,8 @@ public class FieldTrigon extends Field implements Cloneable {
    * @return real copy of the triangle
    */
   @Override
-  public game.model.FieldTrigon clone() {
-    return new game.model.FieldTrigon(this.pos[0], this.pos[1], this.pos[2], this.color);
+  public FieldTrigon clone() {
+    return new FieldTrigon(this.pos[0], this.pos[1], this.pos[2], this.color);
   }
 
 }

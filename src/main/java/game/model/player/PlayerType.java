@@ -1,4 +1,4 @@
-package game.model;
+package game.model.player;
 
 /**
  * Enum that stores the different types of players who can play AnyBloks.

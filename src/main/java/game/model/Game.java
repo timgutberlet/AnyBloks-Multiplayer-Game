@@ -1,6 +1,9 @@
 package game.model;
 
+import game.model.board.Board;
+import game.model.board.BoardSquare;
 import game.model.gamemodes.GameMode;
+import game.model.player.Player;
 import java.util.ArrayList;
 
 /**

@@ -1,6 +1,6 @@
 package game.view;
 
-import game.model.Board;
+import game.model.board.Board;
 import javafx.scene.layout.GridPane;
 
 /**

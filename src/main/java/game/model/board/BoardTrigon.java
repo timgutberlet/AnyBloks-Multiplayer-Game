@@ -1,5 +1,12 @@
-package game.model;
+package game.model.board;
 
+import game.model.Color;
+import game.model.Debug;
+import game.model.field.Field;
+import game.model.field.FieldTrigon;
+import game.model.polygon.Poly;
+import game.model.polygon.PolyTrigon;
+import game.model.Turn;
 import game.view.InGameView;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -373,8 +380,8 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   @Override
-  public game.model.BoardTrigon clone() {
-    return new game.model.BoardTrigon(this.board, this.startFields);
+  public BoardTrigon clone() {
+    return new BoardTrigon(this.board, this.startFields);
   }
 
   /**

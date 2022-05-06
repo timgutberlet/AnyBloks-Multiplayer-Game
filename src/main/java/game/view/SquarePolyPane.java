@@ -1,6 +1,6 @@
 package game.view;
 
-import game.model.PolySquare;
+import game.model.polygon.PolySquare;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

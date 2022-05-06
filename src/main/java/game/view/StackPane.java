@@ -1,7 +1,7 @@
 package game.view;
 
-import game.model.Player;
-import game.model.Poly;
+import game.model.player.Player;
+import game.model.polygon.Poly;
 import java.util.List;
 import javafx.scene.layout.GridPane;
 

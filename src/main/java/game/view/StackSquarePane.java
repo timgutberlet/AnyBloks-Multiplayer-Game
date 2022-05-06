@@ -1,8 +1,8 @@
 package game.view;
 
-import game.model.Player;
-import game.model.Poly;
-import game.model.PolySquare;
+import game.model.player.Player;
+import game.model.polygon.Poly;
+import game.model.polygon.PolySquare;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,5 +1,11 @@
-package game.model;
+package game.model.board;
 
+import game.model.Color;
+import game.model.field.Field;
+import game.model.field.FieldSquare;
+import game.model.polygon.Poly;
+import game.model.polygon.PolySquare;
+import game.model.Turn;
 import game.model.gamemodes.GameMode;
 import game.view.BoardSquarePane;
 import game.view.InGameView;
@@ -332,7 +338,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   @Override
   public BoardSquare clone() {
-    return new game.model.BoardSquare(this.board, this.SIZE, this.startFields);
+    return new BoardSquare(this.board, this.SIZE, this.startFields);
   }
 
  /* public String toString() {

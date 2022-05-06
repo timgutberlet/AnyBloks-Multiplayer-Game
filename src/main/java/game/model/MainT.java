@@ -2,7 +2,8 @@
 package game.model;
 
 import game.model.gamemodes.GMClassic;
-import game.model.gamemodes.GMTrigon;
+import game.model.player.Player;
+import game.model.player.PlayerType;
 
 
 public class MainT {
@@ -22,7 +23,7 @@ public class MainT {
 		session.addPlayer(new Player("BOT4", PlayerType.AI_EASY));
 
 
-		Game game = session.startGame(new GMTrigon());
+		Game game = session.startGame(new GMClassic());
 
 		while (game.getGameState().isStateRunning()) {
 			Debug.printMessage(session.toString());

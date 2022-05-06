@@ -1,4 +1,6 @@
-package game.model;
+package game.model.field;
+
+import game.model.Color;
 
 /**
  * This class represents one square of a square game board.

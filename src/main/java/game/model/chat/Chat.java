@@ -1,7 +1,7 @@
 package game.model.chat;
 
 import game.model.Debug;
-import game.model.Player;
+import game.model.player.Player;
 import java.util.ArrayList;
 
 /**

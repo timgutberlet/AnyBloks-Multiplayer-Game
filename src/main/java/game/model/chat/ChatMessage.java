@@ -1,6 +1,6 @@
 package game.model.chat;
 
-import game.model.Player;
+import game.model.player.Player;
 import java.sql.Timestamp;
 import java.util.Date;
 

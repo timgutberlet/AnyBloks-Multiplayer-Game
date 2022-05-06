@@ -1,8 +1,8 @@
 package game.view;
 
-import game.model.Board;
-import game.model.BoardSquare;
-import game.model.FieldSquare;
+import game.model.board.Board;
+import game.model.board.BoardSquare;
+import game.model.field.FieldSquare;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.paint.Color;

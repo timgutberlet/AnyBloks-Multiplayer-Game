@@ -2,8 +2,8 @@ package game.model;
 
 import game.model.chat.Chat;
 import game.model.gamemodes.GameMode;
+import game.model.player.Player;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 /**

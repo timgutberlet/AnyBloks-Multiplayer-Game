@@ -1,4 +1,6 @@
-package game.model;
+package game.model.polygon;
+
+import game.model.Color;
 
 /**
  * @author tiotto

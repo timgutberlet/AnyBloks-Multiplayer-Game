@@ -1,7 +1,11 @@
-package game.model;
+package game.model.player;
 
+import game.model.GameState;
+import game.model.Session;
+import game.model.Turn;
+import game.model.player.AI;
+import game.model.player.PlayerType;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * This class represents one player of the game.

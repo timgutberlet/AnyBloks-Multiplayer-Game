@@ -1,9 +1,17 @@
 package game.model;
 
+import game.model.board.Board;
+import game.model.board.BoardSquare;
+import game.model.board.BoardTrigon;
+import game.model.field.FieldSquare;
+import game.model.field.FieldTrigon;
 import game.model.gamemodes.GameMode;
+import game.model.player.Player;
+import game.model.polygon.Poly;
+import game.model.polygon.PolySquare;
+import game.model.polygon.PolyTrigon;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.function.DoubleToIntFunction;
 
 /**
  * this class represents the current state of one specific game

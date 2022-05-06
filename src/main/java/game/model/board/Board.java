@@ -1,5 +1,9 @@
-package game.model;
+package game.model.board;
 
+import game.model.Color;
+import game.model.field.Field;
+import game.model.polygon.Poly;
+import game.model.Turn;
 import game.view.InGameView;
 import java.util.ArrayList;
 

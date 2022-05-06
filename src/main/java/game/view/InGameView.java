@@ -1,6 +1,6 @@
 package game.view;
 
-import game.model.BoardSquare;
+import game.model.board.BoardSquare;
 import game.model.Game;
 import game.model.gamemodes.GMClassic;
 import javafx.scene.Group;

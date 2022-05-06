@@ -1,5 +1,6 @@
-package game.model;
+package game.model.field;
 
+import game.model.Color;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -67,7 +68,7 @@ public abstract class Field {
    * @return gives back a real copy of the field
    */
   @Override
-  public abstract game.model.Field clone();
+  public abstract Field clone();
 
   /**
    * method, that converts the field into a string for a Terminaloutput

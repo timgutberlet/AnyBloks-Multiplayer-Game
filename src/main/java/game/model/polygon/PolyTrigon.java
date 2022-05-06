@@ -1,5 +1,7 @@
-package game.model;
+package game.model.polygon;
 
+import game.model.Color;
+import game.model.field.FieldTrigon;
 import java.util.ArrayList;
 import java.util.Arrays;
 

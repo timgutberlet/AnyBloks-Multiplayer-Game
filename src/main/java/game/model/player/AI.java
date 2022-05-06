@@ -1,5 +1,10 @@
-package game.model;
+package game.model.player;
 
+import game.model.Color;
+import game.model.GameState;
+import game.model.Turn;
+import game.model.board.Board;
+import game.model.polygon.Poly;
 import java.util.ArrayList;
 
 /**
