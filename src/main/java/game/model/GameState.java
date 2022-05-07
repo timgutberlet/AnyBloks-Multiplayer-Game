@@ -131,6 +131,8 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+
+
   /**
    * initalises the polys for all players depending on the selected gamemode
    */
@@ -370,6 +372,16 @@ public class GameState implements Serializable, Cloneable {
 
   @Override
   public String toString() {
+
+    String result = "";
+
+    for (Player p : this.player) {
+      result += p.getName() + "\n";
+    }
+
+    return result;
+  }
+    /*
     return "GameState{" +
         "\n player=" + player +
         "\n round=" + round +
@@ -379,7 +391,7 @@ public class GameState implements Serializable, Cloneable {
         "\n stateEnding='" + stateEnding + '\'' +
         '}' + '\n';
   }
-
+*/
 
 /*  private static String twoDigit(int i){
     if (i < 10){

@@ -29,5 +29,7 @@ public class MainT {
 			Debug.printMessage(gameSession.toString());
 			game.makeMove();
 		}
+
+		gameSession.stopSession();
 	}
 }

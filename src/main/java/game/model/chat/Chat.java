@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author tgeilen
  * @Date 21.03.22
  */
-public class Chat extends Thread {
+public class Chat  {
 
   private final ArrayList<ChatMessage> chatMessages;
   private boolean running;
