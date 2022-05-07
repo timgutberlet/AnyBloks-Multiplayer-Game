@@ -53,7 +53,7 @@ public class testGameStateTransmission {
       Debug.printMessage(gameSession.toString());
       game.makeMove();
       counter++;
-      if(counter==4){
+      if(counter==2){
         GameUpdatePacket gameUpdatePacket = new GameUpdatePacket(game.getGameState(),
             game.getGameState().getPlayerCurrent().getName());
         WrappedPacket wrappedPacket = new WrappedPacket(GAME_UPDATE_PACKET, gameUpdatePacket);
@@ -75,7 +75,6 @@ public class testGameStateTransmission {
         } catch (EncodeException e) {
           e.printStackTrace();
         }
-
       }
 
 

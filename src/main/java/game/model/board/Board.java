@@ -7,6 +7,28 @@ import game.model.Turn;
 import game.view.InGameView;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import net.packet.ChatMessagePacket;
+import net.packet.CreateAccountRequestPacket;
+import net.packet.CreateAccountResponsePacket;
+import net.packet.GameUpdatePacket;
+import net.packet.InitPacket;
+import net.packet.LoginRequestPacket;
+import net.packet.LoginResponsePacket;
+import net.packet.PlayerOrderPacket;
+import net.packet.UpdateAccountRequestPacket;
+
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = BoardSquare.class, name = "BoardSquare"),
+    @JsonSubTypes.Type(value = BoardTrigon.class, name = "BoardTrigon"),}
+
+)
+
 /**
  * @author tiotto
  * @date 27.03.2022

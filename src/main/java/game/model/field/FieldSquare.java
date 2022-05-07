@@ -1,6 +1,10 @@
 package game.model.field;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.Color;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 
 /**
  * This class represents one square of a square game board.

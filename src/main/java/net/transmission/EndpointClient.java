@@ -39,6 +39,8 @@ public class EndpointClient {
 //        ses.getBasicRemote().sendObject(new CreateAccountRequestPacket("testuser", "testPW"));
     ses.getBasicRemote().sendObject(new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
         new CreateAccountRequestPacket("testuser", "testPW")));
+    ses.setMaxBinaryMessageBufferSize(1024*1024*20);
+    ses.setMaxTextMessageBufferSize(1024*1024*20);
   }
 
   @OnMessage

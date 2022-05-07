@@ -1,5 +1,6 @@
 package game.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.board.Board;
 import game.model.board.BoardSquare;
 import game.model.board.BoardTrigon;
@@ -12,6 +13,9 @@ import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
 import java.io.Serializable;
 import java.util.ArrayList;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 
 /**
  * this class represents the current state of one specific game

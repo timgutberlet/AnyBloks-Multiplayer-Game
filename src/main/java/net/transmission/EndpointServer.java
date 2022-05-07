@@ -48,6 +48,9 @@ public class EndpointServer {
    */
   @OnOpen
   public void onOpen(final Session ses) {
+    sessions.add(ses);
+    ses.setMaxBinaryMessageBufferSize(1024*1024*20);
+    ses.setMaxTextMessageBufferSize(1024*1024*20);
 
   }
 
@@ -58,6 +61,7 @@ public class EndpointServer {
    */
   @OnClose
   public void onClose(final Session ses) {
+    sessions.remove(ses);
   }
 
   /**
