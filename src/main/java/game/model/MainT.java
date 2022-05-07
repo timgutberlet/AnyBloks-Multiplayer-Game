@@ -28,7 +28,6 @@ public class MainT {
 		while (game.getGameState().isStateRunning()) {
 			Debug.printMessage(gameSession.toString());
 			game.makeMove();
-
 		}
 	}
 }

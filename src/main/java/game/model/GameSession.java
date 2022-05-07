@@ -120,6 +120,10 @@ public class GameSession {
 
   }
 
+  public void stopSession(){
+    hostServer.stop();
+  }
+
   public Chat getChat() {
     return this.chat;
   }

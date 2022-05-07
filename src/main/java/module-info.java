@@ -22,9 +22,26 @@ module bloks3 {
     opens game.controller to javafx.fxml;
     opens game.core to javafx.fxml;
     opens net.packet;
+    opens game.model;
+    opens game.model.board;
+    opens game.model.field;
+    opens game.model.player;
+    opens game.model.chat;
+    opens game.model.gamemodes;
+
 
     exports game.core;
     exports net.transmission;
     exports net.packet;
+    exports game.model;
+    exports game.model.board;
+    exports game.model.field;
+    exports game.model.player;
+    exports game.model.chat;
+    exports game.model.gamemodes;
 
-    }
+
+
+
+
+}

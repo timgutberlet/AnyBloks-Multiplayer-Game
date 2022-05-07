@@ -8,7 +8,9 @@ import game.model.player.PlayerType;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -30,10 +32,12 @@ import net.server.ServerHandler;
 @ServerEndpoint(value = "/packet", encoders = {PacketEncoder.class}, decoders = {
     PacketDecoder.class})
 public class EndpointServer {
+  private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
 
   // Creating HashSet for all Sessions
-  private static final HashMap<String, Session> allSessions = (HashMap<String, Session>) Collections.synchronizedMap(
-      new HashMap<String, Session>());
+//  private static final HashMap<String, Session> allSessions = (HashMap<String, Session>) Collections.synchronizedMap(
+//      new HashMap<String, Session>());
+
   private ServerHandler serverHandler;
   private GameSession gameSession;
 
@@ -84,21 +88,33 @@ public class EndpointServer {
         if (response[0].equals("true")) {
           this.
               gameSession.addPlayer(new Player(response[1], PlayerType.REMOTE_PLAYER));
-          allSessions.put(response[1], client);
+          //allSessions.put(response[1], client);
         } else {
           client.getBasicRemote().sendObject(
               new LoginResponsePacket("Credentials could not be verified"));
         }
         break;
       case CHAT_MESSAGE_PACKET:
-        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
-          clientEntry.getValue().getBasicRemote().sendObject(packet);
+//        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
+//          clientEntry.getValue().getBasicRemote().sendObject(packet);
+//        }
+        for (final Session session : sessions) {
+          session.getBasicRemote().sendObject(packet);
         }
         serverHandler.saveChatMessage(packet);
         break;
       case PLAYER_ORDER_PACKET:
-        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
-          clientEntry.getValue().getBasicRemote().sendObject(packet);
+//        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
+//          clientEntry.getValue().getBasicRemote().sendObject(packet);
+//        }
+        break;
+      case GAME_UPDATE_PACKET:
+        //TODO: this packet should never be received by server, only by client! Remove it
+//        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
+//          clientEntry.getValue().getBasicRemote().sendObject(packet);
+//        }
+        for (final Session session : sessions) {
+          session.getBasicRemote().sendObject(packet);
         }
       default:
         System.out.println("Received a packet of type: " + type);
