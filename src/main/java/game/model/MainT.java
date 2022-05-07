@@ -15,18 +15,18 @@ public class MainT {
 	 */
   public static void main(String[] args) {
 
-		Session session = new Session();
+		GameSession gameSession = new GameSession();
 
-		session.addPlayer(new Player("BOT1", PlayerType.AI_EASY));
-		session.addPlayer(new Player("BOT2", PlayerType.AI_EASY));
-		session.addPlayer(new Player("BOT3", PlayerType.AI_EASY));
-		session.addPlayer(new Player("BOT4", PlayerType.AI_EASY));
+		gameSession.addPlayer(new Player("BOT1", PlayerType.AI_EASY));
+		gameSession.addPlayer(new Player("BOT2", PlayerType.AI_EASY));
+		gameSession.addPlayer(new Player("BOT3", PlayerType.AI_EASY));
+		gameSession.addPlayer(new Player("BOT4", PlayerType.AI_EASY));
 
 
-		Game game = session.startGame(new GMClassic());
+		Game game = gameSession.startGame(new GMClassic());
 
 		while (game.getGameState().isStateRunning()) {
-			Debug.printMessage(session.toString());
+			Debug.printMessage(gameSession.toString());
 			game.makeMove();
 
 		}

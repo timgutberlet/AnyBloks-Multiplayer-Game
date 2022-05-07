@@ -12,14 +12,17 @@ public class ChatMessagePacket extends Packet {
    * Contains the text of the message.
    */
   private final String text;
+  private final String sender;
 
   /**
    * Create new ChatMessagePacket.
    *
    * @param text text of the message
+   * @param username of sender
    */
-  public ChatMessagePacket(String text) {
+  public ChatMessagePacket(String text, String username) {
     this.text = text;
+    this.sender = username;
   }
 
   /**
@@ -31,4 +34,10 @@ public class ChatMessagePacket extends Packet {
     return this.text;
   }
 
+  /**
+   * Getter
+   */
+  public String getSender() {
+    return sender;
+  }
 }

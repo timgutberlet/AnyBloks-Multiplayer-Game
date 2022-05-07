@@ -27,7 +27,7 @@ public class GameState implements Serializable, Cloneable {
   /**
    * The session of this GameState
    */
-  private final Session session;
+  private final GameSession gameSession;
 
   /**
    * used game mode
@@ -81,7 +81,7 @@ public class GameState implements Serializable, Cloneable {
    * @param gameMode gives the game mode for the current game
    * @author tiotto
    */
-  public GameState(Session session, GameMode gameMode) {
+  public GameState(GameSession gameSession, GameMode gameMode) {
     this.gameMode = gameMode;
     if (gameMode.getName().equals("TRIGON")) {
       board = new BoardTrigon();
@@ -90,8 +90,8 @@ public class GameState implements Serializable, Cloneable {
     }
     this.round = 1;
     this.turn = 0;
-    this.session = session;
-    this.player = this.session.getPlayerList();
+    this.gameSession = gameSession;
+    this.player = this.gameSession.getPlayerList();
     this.running = false;
     this.started = false;
 
@@ -110,13 +110,13 @@ public class GameState implements Serializable, Cloneable {
    * @param started        started
    * @param stateEnding    stateEnding
    */
-  public GameState(Session session, GameMode gameMode, Board board,
+  public GameState(GameSession gameSession, GameMode gameMode, Board board,
       ArrayList<ArrayList<Poly>> remainingPolys,
       ArrayList<Player> player, int round, int turn, boolean running, boolean started,
       String stateEnding, ArrayList<ArrayList<Turn>> history) {
     this.gameMode = gameMode;
     this.board = board;
-    this.session = session;
+    this.gameSession = gameSession;
     for (ArrayList<Poly> polys : remainingPolys) {
       this.remainingPolys.add(polys);
     }
@@ -183,7 +183,7 @@ public class GameState implements Serializable, Cloneable {
    */
   public ArrayList<Poly> getRemainingPolys(Player p) {
     //Debug.printMessage("GET REMAINING POLYS: " + this.session.getPlayerList().size());
-    return remainingPolys.get(this.session.getPlayerList().indexOf(p));
+    return remainingPolys.get(this.gameSession.getPlayerList().indexOf(p));
   }
 
   public Player getPlayerCurrent() {
@@ -344,7 +344,7 @@ public class GameState implements Serializable, Cloneable {
       }
       historyCopy.add(turnsCopy);
     }
-    return new GameState(this.session, this.gameMode, boardCopy, remainingPolysCopy, playerCopy, round, turn,
+    return new GameState(this.gameSession, this.gameMode, boardCopy, remainingPolysCopy, playerCopy, round, turn,
         running, started, stateEnding, historyCopy);
   }
 

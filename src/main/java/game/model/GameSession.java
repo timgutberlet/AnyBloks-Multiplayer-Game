@@ -5,6 +5,7 @@ import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.server.HostServer;
 
 /**
  * a session is the central place taking care of players joining, starting a game, selecting
@@ -12,11 +13,13 @@ import java.util.HashMap;
  *
  * @author tgeilen
  */
-public class Session {
+public class GameSession {
+
+  private static HostServer hostServer = new HostServer();
 
   private final Chat chat;
   private final ArrayList<Player> playerList;
-  private  Player host;
+  private  Player hostPlayer;
   private Game game;
 
   private HashMap<String,Integer> scoreboard = new HashMap<String,Integer>();
@@ -27,7 +30,7 @@ public class Session {
    * @param player
    * @author tgeilen
    */
-  public Session(Player player) {
+  public GameSession(Player player) {
     //create chatThread and start it
     this.chat = new Chat();
     this.chat.run();
@@ -35,6 +38,13 @@ public class Session {
     this.playerList = new ArrayList<Player>();
     //this.host = player;
     //this.addPlayer(this.host);
+
+    try {
+      hostServer.startWebsocket(8080);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -43,12 +53,19 @@ public class Session {
    * @param
    * @author tgeilen
    */
-  public Session() {
+  public GameSession() {
     //create chatThread and start it
     this.chat = new Chat();
     this.chat.run();
 
     this.playerList = new ArrayList<Player>();
+
+    try {
+      hostServer.startWebsocket(8080);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
   }
 

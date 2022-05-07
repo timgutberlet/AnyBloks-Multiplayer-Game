@@ -13,19 +13,19 @@ import java.util.ArrayList;
  */
 public class Game {
 
-  private Session session;
+  private GameSession gameSession;
   private GameState gameState;
   private Board board;
   private GameMode gamemode;
   private ArrayList<Player> players;
 
 
-  public Game(Session session, GameMode gamemode) {
-    this.session = session;
+  public Game(GameSession gameSession, GameMode gamemode) {
+    this.gameSession = gameSession;
     this.board = new BoardSquare(gamemode);
     this.gamemode = gamemode;
-    this.players = session.getPlayerList();
-    this.gameState = new GameState(this.session, gamemode);
+    this.players = gameSession.getPlayerList();
+    this.gameState = new GameState(this.gameSession, gamemode);
 
   }
 
@@ -44,7 +44,7 @@ public class Game {
 
         Turn turn = currentPlayer.makeTurn(this.gameState);
         if(this.gameState.playTurn(turn)) {
-        this.session.increaseScore(currentPlayer, turn.getValue());
+        this.gameSession.increaseScore(currentPlayer, turn.getValue());
         currentPlayer.talk();
       }
     }
@@ -81,7 +81,7 @@ public class Game {
   }
 
   public void startGame() {
-    System.out.println("AAAAA Message Thread started");
+    System.out.println("[GAMECONSOLE] Game started");
     this.gameState.setStateRunning(true);
     //this.run();
   }

@@ -5,7 +5,7 @@ import engine.controller.AbstractUiController;
 import game.model.board.BoardSquare;
 import game.model.Game;
 import game.model.player.Player;
-import game.model.Session;
+import game.model.GameSession;
 import game.model.chat.Chat;
 import game.view.BoardPane;
 import game.view.BoardSquarePane;
@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
 
 public class InGameUiController extends AbstractUiController {
 
-  private Session session;
+  private GameSession gameSession;
 
   private Game game;
 
@@ -39,11 +39,11 @@ public class InGameUiController extends AbstractUiController {
   private Button quitButton;
 
 
-  public InGameUiController(AbstractGameController gameController, Game game, Session session) {
+  public InGameUiController(AbstractGameController gameController, Game game, GameSession gameSession) {
     super();
-    this.session = session;
-    this.game = session.getGame();
-    this.chat = session.getChat();
+    this.gameSession = gameSession;
+    this.game = gameSession.getGame();
+    this.chat = gameSession.getChat();
     this.gameController = gameController;
     this.Gui = new HBox();
     playerPoints = new ArrayList<>();
@@ -62,13 +62,13 @@ public class InGameUiController extends AbstractUiController {
 
   private void setUpUi() {
     playerStacks = new VBox();
-    for (Player p : this.session.getPlayerList()) {
+    for (Player p : this.gameSession.getPlayerList()) {
       StackPane squareStack = new StackSquarePane(p, game.getGameState().getRemainingPolys(p));
       playerStacks.getChildren().add(squareStack);
     }
     Gui.getChildren().add(playerStacks);
 
-    for (Player p : this.session.getPlayerList()) {
+    for (Player p : this.gameSession.getPlayerList()) {
       Label label = new Label("0");
       playerPoints.add(label);
     }
