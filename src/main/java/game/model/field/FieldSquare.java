@@ -22,6 +22,15 @@ public class FieldSquare extends Field implements Cloneable {
    * @param row row of the square on the board
    * @author tiotto
    */
+
+  /**
+   * empty constructor for jackson
+   */
+  public FieldSquare(){
+
+  }
+
+
   public FieldSquare(int col, int row) {
     this.pos = new int[]{col, row};
     this.color = Color.WHITE;

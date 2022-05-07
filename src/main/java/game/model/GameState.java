@@ -31,27 +31,27 @@ public class GameState implements Serializable, Cloneable {
   /**
    * The session of this GameState
    */
-  private final GameSession gameSession;
+  private  GameSession gameSession;
 
   /**
    * used game mode
    */
-  private final GameMode gameMode;
+  private  GameMode gameMode;
 
   /**
    * game board
    */
-  private final Board board;
+  private Board board;
 
   /**
    * list of arrays of the remaining polys of each player (every player has the same index in player
    * as their remaining polys)
    */
-  private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
+  private  ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
   /**
    * list of every participating player
    */
-  private final ArrayList<Player> player;
+  private ArrayList<Player> player;
   /**
    * round number
    */
@@ -135,7 +135,12 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  /**
+   * empty constructor for jackson
+   */
+  public GameState(){
 
+  }
 
   /**
    * initalises the polys for all players depending on the selected gamemode
@@ -377,7 +382,7 @@ public class GameState implements Serializable, Cloneable {
   @Override
   public String toString() {
 
-    String result = "";
+    String result = "Hallo";
 
     for (Player p : this.player) {
       result += p.getName() + "\n";

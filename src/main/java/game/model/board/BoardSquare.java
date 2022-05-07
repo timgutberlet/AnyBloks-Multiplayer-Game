@@ -18,6 +18,14 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   private final ArrayList<FieldSquare> startFields = new ArrayList<>();
 
+
+  /**
+   * empty constructor for jackson
+   */
+  public BoardSquare(){
+
+  }
+
   public BoardSquare(GameMode mode) {
     switch (mode.getName()) {
       case "CLASSIC":

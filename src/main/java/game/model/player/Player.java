@@ -13,12 +13,12 @@ public class Player implements Serializable {
   /**
    * Name of the player.
    */
-  private final String name;
+  private  String name;
 
   /**
    * Type of the player.
    */
-  private final PlayerType type;
+  private  PlayerType type;
 
   /**
    * Current score of the player.
@@ -84,6 +84,15 @@ public class Player implements Serializable {
         type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
     this.isHost = isHost;
   }
+
+  /**
+   * empty constructor for jackson
+   */
+
+  public Player(){
+
+  }
+
 
   /**
    * join an existing session
