@@ -4,7 +4,7 @@ import javafx.scene.Node;
 
 /**
  * This class enables elements to be draggable
- * @author timgutberlet
+ * @author timgutbe
  */
 public class DragHandler {
 
