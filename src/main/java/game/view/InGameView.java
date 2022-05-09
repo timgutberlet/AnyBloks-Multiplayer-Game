@@ -4,6 +4,7 @@ import game.model.board.BoardSquare;
 import game.model.Game;
 import game.model.gamemodes.GMClassic;
 import javafx.scene.Group;
+import javafx.scene.Node;
 
 public class InGameView {
 
@@ -15,7 +16,7 @@ public class InGameView {
     this.root = root;
     this.game = game;
     boardPane = new BoardSquarePane(new BoardSquare(new GMClassic()));
-    root.getChildren().add(boardPane);
+    root.getChildren().add((Node) boardPane);
     //setBoardPane(game);
   }
 

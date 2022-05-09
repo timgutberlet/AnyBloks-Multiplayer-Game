@@ -4,15 +4,18 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.model.board.BoardSquare;
 import game.model.Game;
+import game.model.board.BoardTrigon;
 import game.model.player.Player;
 import game.model.GameSession;
 import game.model.chat.Chat;
 import game.view.BoardPane;
 import game.view.BoardSquarePane;
+import game.view.BoardTrigonPane;
 import game.view.StackPane;
 import game.view.StackSquarePane;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -55,17 +58,41 @@ public class InGameUiController extends AbstractUiController {
   }
 
   public void createBoard() {
-    this.boardPane = new BoardSquarePane((BoardSquare) game.getGameState().getBoard());
-    Gui.getChildren().add(boardPane);
+    switch (game.getGamemode().getName()) {
+      case "JUNIOR":
+        ;
+      case "DUO":
+        ;
+      case "CLASSIC":
+        boardPane = new BoardSquarePane((BoardSquare) game.getGameState().getBoard());
+        break;
+      case "TRIGON":
+        boardPane = new BoardTrigonPane((BoardTrigon) game.getGameState().getBoard());
+        break;
+    }
+    Gui.getChildren().add((Node) boardPane);
     super.root.getChildren().add(Gui);
   }
 
+
   private void setUpUi() {
     playerStacks = new VBox();
-    for (Player p : this.gameSession.getPlayerList()) {
-      StackPane squareStack = new StackSquarePane(p, game.getGameState().getRemainingPolys(p));
-      playerStacks.getChildren().add(squareStack);
+    switch (game.getGamemode().getName()) {
+      case "JUNIOR":
+        ;
+      case "DUO":
+        ;
+      case "CLASSIC":
+        for (Player p : this.gameSession.getPlayerList()) {
+          StackPane squareStack = new StackSquarePane(p, game.getGameState().getRemainingPolys(p));
+          playerStacks.getChildren().add(squareStack);
+        }
+        ;
+        break;
+      case "TRIGON":
+        break; // not implemented yet
     }
+
     Gui.getChildren().add(playerStacks);
 
     for (Player p : this.gameSession.getPlayerList()) {
@@ -108,7 +135,7 @@ public class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
-    refreshUi();
+    //refreshUi();
     this.game.makeMove();
     boardPane.repaint(game.getGameState().getBoard());
 

@@ -2,18 +2,25 @@ package game.view;
 
 import game.model.board.Board;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 /**
  * @author lbaudenb
  */
-public abstract class BoardPane extends GridPane {
+public interface BoardPane {
 
-  protected final Board board;
-
-  public BoardPane(Board board) {
-    this.board = board;
+  /**
+   * Method that is used to set up the BoardPane for the first time
+   */
+  private void setBoard() {
   }
 
-  public abstract void repaint(Board board);
+  /**
+   * Method that updates the BoardPane
+   *
+   * @param board
+   */
+  void repaint(Board board);
 
 }
+

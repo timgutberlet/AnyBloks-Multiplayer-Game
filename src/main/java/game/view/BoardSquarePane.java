@@ -5,18 +5,21 @@ import game.model.board.BoardSquare;
 import game.model.field.FieldSquare;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
  * @author lbaudenb
  */
-public class BoardSquarePane extends BoardPane {
+public class BoardSquarePane extends GridPane implements BoardPane {
 
   private final List<Rectangle> squares;
 
+  private BoardSquare boardSquare;
+
   public BoardSquarePane(BoardSquare boardSquare) {
-    super(boardSquare);
+    this.boardSquare = boardSquare;
     squares = new ArrayList<>();
     setBoard();
     setStyle();
@@ -30,10 +33,10 @@ public class BoardSquarePane extends BoardPane {
   }
 
   void setBoard() {
-    for (int row = 0; row < board.SIZE; row++) {
-      for (int column = 0; column < board.SIZE; column++) {
+    for (int row = 0; row < boardSquare.SIZE; row++) {
+      for (int column = 0; column < boardSquare.SIZE; column++) {
         int[] pos = {row, column};
-        setSquare(board.getJavaColor(pos), row, column);
+        setSquare(boardSquare.getJavaColor(pos), row, column);
       }
     }
   }

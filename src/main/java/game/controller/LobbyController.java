@@ -225,7 +225,7 @@ public class LobbyController extends AbstractUiController {
 
   @FXML
   public void initialize() {
-    list = FXCollections.observableArrayList("Classic", "Duo", "Junior");
+    list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     gameModes.setItems(list);
   }
 
