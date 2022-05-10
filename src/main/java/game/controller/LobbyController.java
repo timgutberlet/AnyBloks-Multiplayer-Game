@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 
 /**
  * @author lbaudenb
+ * @author tgutberl
  */
 
 public class LobbyController extends AbstractUiController {
@@ -63,8 +64,14 @@ public class LobbyController extends AbstractUiController {
   @FXML
   private Label difficultyPlayer3;
 
+  /**
+   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize
+   * @param gameController Gamecontroller Object currently used
+   *
+   * @author tgutberl
+   */
   public LobbyController(AbstractGameController gameController) {
-    super();
+    super(gameController);
     this.gameSession = new GameSession(new Player("NAME_HOST_PLAYER",PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
@@ -184,6 +191,7 @@ public class LobbyController extends AbstractUiController {
       Debug.printMessage("Hallo");
       //this.session.setGame(new Game(this.session, this.gameMode));
       Debug.printMessage("Hallo2");
+
       this.gameSession.startGame(this.gameMode);
       Debug.printMessage("Hallo3");
       //game.startGame();
@@ -264,4 +272,13 @@ public class LobbyController extends AbstractUiController {
     }
   }
 
+  @Override
+  public void onExit() {
+
+  }
+
+  @Override
+  public void update(AbstractGameController gameController) {
+
+  }
 }

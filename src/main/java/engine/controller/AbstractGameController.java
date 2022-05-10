@@ -23,6 +23,14 @@ public abstract class AbstractGameController extends AnimationTimer {
 
   private long lastNanoTime;
 
+  /**
+   * Constructor of Abstract Game Controller, used to set stage, application, scene and inputhandler.
+   * Also sets MinWidth and Min Height
+   * @param stage
+   * @param application
+   *
+   * @author tgutberl
+   */
   public AbstractGameController(Stage stage, Application application) {
     gameRoot = new Group();
     Scene scene = new Scene(gameRoot, Config.getIntValue("SCREEN_WIDTH"), Config.getIntValue("SCREEN_HEIGHT"));
@@ -31,6 +39,8 @@ public abstract class AbstractGameController extends AnimationTimer {
     this.application = application;
     lastNanoTime = System.nanoTime();
     inputHandler = new InputHandler();
+    stage.setMinWidth(Config.getIntValue("SCREEN_MINIMUM_WIDTH"));
+    stage.setMinHeight(Config.getIntValue("SCREEN_MINIMUM_HEIGHT"));
     this.start();
   }
 
@@ -60,5 +70,15 @@ public abstract class AbstractGameController extends AnimationTimer {
 
   public InputHandler getInputHandler() {
     return this.inputHandler;
+  }
+
+
+  /**
+   * Method that closes the game
+   * @author tgutberl
+   */
+  public void close() {
+    super.stop();
+    activeUiController.onExit();
   }
 }

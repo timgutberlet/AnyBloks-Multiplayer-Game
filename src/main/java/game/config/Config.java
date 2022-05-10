@@ -87,6 +87,8 @@ public class Config {
   /**
    * Loads the Properties Values from config.properties value. If the File does not exist, the
    * dafault properties will be loaded
+   *
+   * @author tgutberl
    */
   public static void loadProperty() {
     File propertyFile = new File(configPath);
@@ -96,7 +98,7 @@ public class Config {
             new FileInputStream(propertyFile));
         property.load(inputStream);
         inputStream.close();
-        if (!property.contains("CONFIG_VERSION") || !property.getProperty("CONFIG_VERSION")
+        if (property.getProperty("VERSION") == null || !property.getProperty("VERSION")
             .equals(StandardConfig.standardConfig[0][1])) {
           loadStandardConfig();
           saveProperty();

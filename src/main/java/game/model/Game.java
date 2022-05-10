@@ -36,7 +36,6 @@ public class Game {
    */
 
   public void makeMove(){
-
     if (this.gameState.isStateRunning()){
 
         Player currentPlayer = this.gameState.getPlayerCurrent();
@@ -48,7 +47,6 @@ public class Game {
         currentPlayer.talk();
       }
     }
-
   }
 
   public Player getCurrentPlayer(){

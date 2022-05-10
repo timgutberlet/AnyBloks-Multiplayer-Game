@@ -15,6 +15,7 @@ import game.view.StackPane;
 import game.view.StackSquarePane;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,7 +44,7 @@ public class InGameUiController extends AbstractUiController {
 
 
   public InGameUiController(AbstractGameController gameController, Game game, GameSession gameSession) {
-    super();
+    super(gameController);
     this.gameSession = gameSession;
     this.game = gameSession.getGame();
     this.chat = gameSession.getChat();
@@ -141,5 +142,34 @@ public class InGameUiController extends AbstractUiController {
 
   }
 
+  /**
+   * Exit Method given by Abstract Class
+   *
+   * @author tgutberl
+   */
+  @Override
+  public void onExit() {
+
+  }
+  /**
+   * Init Method given by Abstract Class
+   *
+   * @author tgutberl
+   */
+  @Override
+  public void init(Group root) {
+
+  }
+
+  /**
+   * Method used to update the current frame
+   * @param gameController GameController of game
+   *
+   * @author tgutberl
+   */
+  @Override
+  public void update(AbstractGameController gameController) {
+
+  }
 }
 

@@ -15,7 +15,7 @@ import javafx.scene.control.Label;
 
 /**
  * Ui Controller Class, used for Controlling the Settings View
- * @author timgutberlet
+ * @author tgutberl
  */
 public class SettingUiController extends AbstractUiController {
 
@@ -34,6 +34,7 @@ public class SettingUiController extends AbstractUiController {
   private void increaseWidth(){
     windowWidth.setText(String.valueOf(Integer.parseInt(windowWidth.getText()) + 10));
     Config.set("SCREEN_WIDTH", windowWidth.getText());
+    System.out.println("Screen width increast" + windowWidth.getText());
   }
 
   @FXML
@@ -101,7 +102,7 @@ public class SettingUiController extends AbstractUiController {
    * @param gameController AbstractGameController Object
    */
   public SettingUiController(AbstractGameController gameController) {
-    super();
+    super(gameController);
     this.gameController = gameController;
     init(super.root);
   }
@@ -110,7 +111,18 @@ public class SettingUiController extends AbstractUiController {
    * load Settings from Config File
    */
   private void loadSettings(){
+    Config.loadProperty();
     windowWidth.setText(Config.getStringValue("SCREEN_WIDTH"));
     windowHeight.setText(Config.getStringValue("SCREEN_HEIGHT"));
+  }
+
+  @Override
+  public void onExit() {
+
+  }
+
+  @Override
+  public void update(AbstractGameController gameController) {
+
   }
 }

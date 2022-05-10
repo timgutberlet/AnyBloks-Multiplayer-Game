@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0"
-  stylesheets="@style.css" xmlns="http://javafx.com/javafx/18"
+  stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
   fx:controller="game.controller.SettingUiController">
   <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#back" text="BACK"/>
   <Button layoutX="501.0" layoutY="362.0" mnemonicParsing="false" onAction="#reset" text="RESET"/>

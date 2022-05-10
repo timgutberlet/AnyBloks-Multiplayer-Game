@@ -19,4 +19,20 @@ public class App extends Application {
     stage.setTitle("Bloks3");
     stage.show();
   }
+
+  /**
+   * Method to stop the Application
+   *
+   * @author tgutberl
+   */
+  @Override
+  public void stop(){
+    controller.close();
+    Config.saveProperty();
+    try {
+      super.stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }
