@@ -11,12 +11,11 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
   minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
-  stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" fx:controller="game.controller.MainMenuUiController"
+  stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="game.controller.MainMenuUiController"
   fx:id="menuPane">
   <children>
-    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-      alignment="CENTER" gridLinesVisible="true" prefHeight="400.0"
-      prefWidth="600.0">
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+      AnchorPane.topAnchor="0.0" alignment="CENTER" gridLinesVisible="true">
       <children>
         <GridPane GridPane.rowIndex="1">
           <children>
@@ -39,8 +38,8 @@
                 </Button>
               </children>
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0"
-                  minWidth="150.0" prefWidth="150.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0"
+                  minWidth="160.0" prefWidth="160.0"/>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0"
                   prefWidth="1348.2804870605469"/>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0"
@@ -100,7 +99,7 @@
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="524.7535400390625" minHeight="10.0" prefHeight="96.0"
+        <RowConstraints maxHeight="524.7535400390625" minHeight="10.0" prefHeight="100.0"
           vgrow="SOMETIMES"/>
         <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5"
           vgrow="SOMETIMES"/>

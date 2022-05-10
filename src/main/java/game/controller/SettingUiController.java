@@ -12,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * Ui Controller Class, used for Controlling the Settings View
@@ -21,6 +22,8 @@ public class SettingUiController extends AbstractUiController {
 
   private final AbstractGameController gameController;
 
+  @FXML
+  AnchorPane settingsPane;
 
   @FXML
   public void back() {
@@ -39,7 +42,7 @@ public class SettingUiController extends AbstractUiController {
 
   @FXML
   private void decreaseWidth(){
-    if(!(Integer.parseInt(windowWidth.getText())-10 <= 200)){
+    if(!(Integer.parseInt(windowWidth.getText())-10 < 1280)){
       windowWidth.setText(String.valueOf(Integer.parseInt(windowWidth.getText()) - 10));
       Config.set("SCREEN_WIDTH", windowWidth.getText());
     }
@@ -53,7 +56,7 @@ public class SettingUiController extends AbstractUiController {
 
   @FXML
   private void decreaseHeight(){
-    if(!(Integer.parseInt(windowHeight.getText())-10 <= 200)){
+    if(!(Integer.parseInt(windowHeight.getText())-10 < 720)){
       windowHeight.setText(String.valueOf(Integer.parseInt(windowHeight.getText()) - 10));
       Config.set("SCREEN_HEIGHT", windowHeight.getText());
     }
@@ -75,6 +78,7 @@ public class SettingUiController extends AbstractUiController {
   @FXML
   public void save(){
     Config.saveProperty();
+    updateSize(settingsPane, gameController.getStage());
     // set alert type
     a.setAlertType(AlertType.CONFIRMATION);
 
@@ -124,5 +128,9 @@ public class SettingUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController) {
 
+  }
+  @FXML
+  public void initialize(){
+    updateSize(settingsPane, gameController.getStage());
   }
 }

@@ -28,12 +28,19 @@ public class MainMenuUiController extends AbstractUiController {
     init(super.root);
   }
 
+  /**
+   * Method to initialize the FXML
+   * @param root Group Object
+   *
+   * @author tgutberl
+   */
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(getClass().getResource("/MainMenuView.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
+      updateSize(menuPane, gameController.getStage());
     } catch (IOException e) {
       e.printStackTrace();
     }

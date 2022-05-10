@@ -35,7 +35,7 @@ public class Config {
 
   /**
    * Void Method that loads the value of the StandardConfig Java Class. Will mainly be used, if the
-   * Config File does not exist
+   * Config File does not exist or if a reset is done
    */
   public static void loadStandardConfig() {
     for (int i = 0; i < StandardConfig.standardConfig.length; i++) {
