@@ -33,7 +33,7 @@ public class testChatServer {
 
 	public static void main(String[] args) {
 		try {
-			org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+			//org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
 			hostServer.startWebsocket(8081);
 			Debug.printMessage("[testChatServer] Server is running");
 			TimeUnit.SECONDS.sleep(3);

@@ -39,22 +39,21 @@ public class EndpointClient {
   public void onOpen(final Session ses)
       throws IOException, EncodeException {
 //        ses.getBasicRemote().sendObject(new CreateAccountRequestPacket("testuser", "testPW"));
-    ses.getBasicRemote().sendObject((new WrappedPacket((PacketType.CHAT_MESSAGE_PACKET),
-        new ChatMessagePacket("Hello World", "username"))));
-    Debug.printMessage(this,"CHAT_MESSAGE_PACKET sent");
 
-   // ses.getBasicRemote().sendObject(new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-     //   new CreateAccountRequestPacket("testuser", "testPW")));
-   // Debug.printMessage(this,"CREATE_ACCOUNT_REQUEST sent");
+/*
+   ses.getBasicRemote().sendObject(new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+      new CreateAccountRequestPacket("testuser", "testPW")));
+   Debug.printMessage(this,"CREATE_ACCOUNT_REQUEST sent to " + ses.getId());
+*/
 
     ses.setMaxBinaryMessageBufferSize(1024*1024*20);
     ses.setMaxTextMessageBufferSize(1024*1024*20);
   }
 
   @OnMessage
-  public void onMessage(final WrappedPacket wrappedPacket) {
-    LOG.info("A packet has been sent here by the server, it is of the type: {}",
-        wrappedPacket.getPacketType().toString());
+  public void onMessage(final WrappedPacket wrappedPacket, Session ses) {
+    LOG.info("A packet has been sent here by the server, it is of the type: {} send by {}",
+        wrappedPacket.getPacketType().toString(),ses.getId());
     PacketType type = wrappedPacket.getPacketType();
     switch (type) {
       case PLAYER_ORDER_PACKET:
@@ -67,11 +66,13 @@ public class EndpointClient {
         break;
 
       case CHAT_MESSAGE_PACKET:
+        Debug.printMessage(this, "ChatMessagePacket recieved in Handler");
         ChatMessagePacket chatMessagePacket = (ChatMessagePacket) wrappedPacket.getPacket();
 
         System.out.println(chatMessagePacket.getSender());
         System.out.println(chatMessagePacket.getText());
         System.out.println("Enter this string: aaaJJJ to find this in console");
+        break;
 
       case REQUEST_TURN_PACKET:
 

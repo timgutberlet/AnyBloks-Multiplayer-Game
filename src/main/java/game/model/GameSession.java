@@ -62,7 +62,7 @@ public class GameSession {
     this.playerList = new ArrayList<Player>();
 
     try {
-      hostServer.startWebsocket(8080);
+      //hostServer.startWebsocket(8080);
 
     } catch (Exception e) {
       e.printStackTrace();

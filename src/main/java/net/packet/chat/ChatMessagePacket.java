@@ -1,5 +1,6 @@
 package net.packet.chat;
 
+import java.io.Serializable;
 import net.packet.abstr.Packet;
 
 /**
@@ -10,12 +11,21 @@ import net.packet.abstr.Packet;
 public class ChatMessagePacket extends Packet {
 
 
+
+
   /**
    * Contains the text of the message.
    */
   private final String text;
   private final String sender;
 
+  /**
+   * default constructor for jackson
+   */
+  public ChatMessagePacket(){
+  this.text = null;
+  this.sender = null;
+  }
   /**
    * Create new ChatMessagePacket.
    *

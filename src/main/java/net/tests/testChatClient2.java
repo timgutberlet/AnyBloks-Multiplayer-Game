@@ -1,12 +1,8 @@
 package net.tests;
 
 import game.model.Debug;
-import game.model.Game;
-import game.model.GameSession;
-import game.model.gamemodes.GMClassic;
 import java.io.IOException;
 import java.net.URI;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.ContainerProvider;
@@ -17,23 +13,20 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.chat.ChatMessagePacket;
-import net.packet.game.PlayerOrderPacket;
-import net.server.HostServer;
 import net.transmission.EndpointClient;
-import org.eclipse.jetty.util.log.Logger;
 
 /**
  * Tests only
  *
  * @author tgeilen
  */
-public class testChatClient {
+public class testChatClient2 {
 
 
 
 	private static ChatMessagePacket chatMessagePacket;
 
-	public testChatClient() {
+	public testChatClient2() {
 
 	}
 
@@ -43,7 +36,7 @@ public class testChatClient {
 
 
 		org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(LocalDateTime.now().toString() + " Hello World", "user1");
+		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(LocalDateTime.now().toString() + " Hallo Welt", "user2");
 		//WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -63,7 +56,7 @@ public class testChatClient {
 			ses.getBasicRemote().sendObject(wrappedPacket);
 			int counter = 0;
 			while(counter < 20) {
-				TimeUnit.SECONDS.sleep(1);
+				TimeUnit.SECONDS.sleep((int)Math.floor(Math.random()*5));
 
 				wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 

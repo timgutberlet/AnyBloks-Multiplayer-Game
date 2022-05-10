@@ -1,5 +1,6 @@
 package net.server;
 
+import game.model.Debug;
 import game.model.GameSession;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
@@ -24,7 +25,7 @@ public class ServerHandler {
   private EndpointServer server;
   private GameSession gameSession;
 
-  private HashMap<String, Session> username2Session;
+
   /**
    * Constructor
    */
@@ -46,13 +47,18 @@ public class ServerHandler {
    */
   public String[] verifyLogin(WrappedPacket wrappedPacket, Session session){
 
+    Debug.printMessage(this,"LOGIN_REQUEST_PACKET recieved in Handler");
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
     String passwordHash = loginPacket.getPasswordHash();
 
+    Debug.printMessage(this, username + " " + passwordHash);
+
     //TODO add logic with database here
     String[] toReturn = {"true", username};
-    this.username2Session.put(username,session);
+
+    this.server.addUsernameSession(username,session);
+    Debug.printMessage(this,"New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
     return toReturn;
   }
 
@@ -64,9 +70,8 @@ public class ServerHandler {
     GameStartPacket gameStartPacket = new GameStartPacket(initGamePacket.getGameMode());
     WrappedPacket wrP = new WrappedPacket(PacketType.GAME_START_PACKET,gameStartPacket);
 
-    for(String username: this.username2Session.keySet()){
-      Session client = this.username2Session.get(username);
-      this.server.sendMessage(wrP,client);
+    for(String username: this.server.getUsername2Session().keySet()){
+      this.server.sendMessage(wrP,username);
     }
 
 
@@ -76,10 +81,11 @@ public class ServerHandler {
   }
 
   public void broadcastChatMessage(WrappedPacket wrappedPacket){
-    System.out.println("Message recieved");
-    for(String username: this.username2Session.keySet()){
-      Session client = this.username2Session.get(username);
-      this.server.sendMessage(wrappedPacket,client);
+    Debug.printMessage(this, "ChatMessage recieved in Handler");
+    Debug.printMessage(this,"Number of Sessions: " + this.server.getUsername2Session().keySet().size());
+    for(String username: this.server.getUsername2Session().keySet()){
+      this.server.sendMessage(wrappedPacket,username);
+      Debug.printMessage(this, "ChatMessage sent to " + username);
     }
 
   }
@@ -91,7 +97,7 @@ public class ServerHandler {
    */
   public void requestTurn(Player player){
 
-    Session client = this.username2Session.get(player.getName());
+    //Session client = this.username2Session.get(player.getName());
 
 
   //TODO send RequestTurnPacket to client
