@@ -1,6 +1,7 @@
-package net.packet;
+package net.packet.game;
 
 import java.util.HashMap;
+import net.packet.abstr.Packet;
 
 /**
  * Packet sent by server to all players specifying the order of all players

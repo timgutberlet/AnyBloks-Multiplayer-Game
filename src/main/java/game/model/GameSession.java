@@ -21,6 +21,7 @@ public class GameSession {
   private final ArrayList<Player> playerList;
   private  Player hostPlayer;
   private Game game;
+  private GameServer gameServer;
 
   private HashMap<String,Integer> scoreboard = new HashMap<String,Integer>();
 
@@ -138,6 +139,10 @@ public class GameSession {
 
   public void setGame(Game game){
     this.game = game;
+  }
+
+  public GameServer getGameServer() {
+    return gameServer;
   }
 
   /**

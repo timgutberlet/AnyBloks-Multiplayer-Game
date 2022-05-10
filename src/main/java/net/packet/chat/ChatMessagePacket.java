@@ -1,4 +1,6 @@
-package net.packet;
+package net.packet.chat;
+
+import net.packet.abstr.Packet;
 
 /**
  * Packet for sending a chat message into a chatroom.

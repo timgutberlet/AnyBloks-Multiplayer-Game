@@ -1,4 +1,6 @@
-package net.packet;
+package net.packet.account;
+
+import net.packet.abstr.Packet;
 
 /**
  * Packet sent by server to acknowledge account creation / inform about failure to do so.

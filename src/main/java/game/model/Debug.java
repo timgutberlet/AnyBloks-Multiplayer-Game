@@ -13,4 +13,10 @@ public class Debug {
       System.out.println(message);
     }
   }
+
+  public static void printMessage(Object o,String message) {
+    if (debug) {
+      System.out.println("["+o.getClass().getName()+"]"+ message);
+    }
+  }
 }

@@ -1,4 +1,4 @@
-package net.packet;
+package net.packet.abstr;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.websocket.EncodeException;
 import javax.websocket.Encoder;
 import javax.websocket.EndpointConfig;
-import net.packet.WrappedPacket;
+import net.packet.abstr.WrappedPacket;
 
 
 /**

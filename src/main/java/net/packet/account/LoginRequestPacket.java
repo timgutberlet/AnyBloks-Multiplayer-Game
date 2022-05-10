@@ -1,4 +1,6 @@
-package net.packet;
+package net.packet.account;
+
+import net.packet.abstr.Packet;
 
 /**
  * Packet send by client to attempt Login

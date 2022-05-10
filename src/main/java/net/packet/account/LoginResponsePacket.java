@@ -1,4 +1,6 @@
-package net.packet;
+package net.packet.account;
+
+import net.packet.abstr.Packet;
 
 /**
  * Packet sent by server after receiving LoginRequestPacket If ErrorMessage is empty (="") the login
@@ -6,7 +8,7 @@ package net.packet;
  *
  * @author tbuscher
  */
-public class LoginResponsePacket extends Packet{
+public class LoginResponsePacket extends Packet {
 
   String errorMessage;
 

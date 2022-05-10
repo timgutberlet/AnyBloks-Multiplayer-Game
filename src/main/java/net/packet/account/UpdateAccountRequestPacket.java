@@ -1,4 +1,6 @@
-package net.packet;
+package net.packet.account;
+
+import net.packet.abstr.Packet;
 
 /**
  * Packet sent to server in case account is supposed to be changed

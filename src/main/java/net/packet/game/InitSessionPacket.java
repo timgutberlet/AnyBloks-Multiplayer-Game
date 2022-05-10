@@ -1,16 +1,16 @@
-package net.packet;
+package net.packet.game;
 
 /**
  * Packet telling server to create GameSession
  *
  * @author tbuscher
  */
-public class InitPacket {
+public class InitSessionPacket {
 
   /**
    * Constructor
    */
-  public InitPacket(){
+  public InitSessionPacket(){
 
   }
 

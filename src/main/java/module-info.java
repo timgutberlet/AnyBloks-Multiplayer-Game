@@ -18,10 +18,11 @@ module bloks3 {
     requires hk2.api;
     requires org.slf4j;
     requires javax.websocket.all;
+    requires org.eclipse.jetty.util;
 
     opens game.controller to javafx.fxml;
     opens game.core to javafx.fxml;
-    opens net.packet;
+    opens net.packet.abstr;
     opens game.model;
     opens game.model.board;
     opens game.model.field;
@@ -32,16 +33,21 @@ module bloks3 {
 
     exports game.core;
     exports net.transmission;
-    exports net.packet;
+    exports net.packet.abstr;
     exports game.model;
     exports game.model.board;
     exports game.model.field;
     exports game.model.player;
     exports game.model.chat;
     exports game.model.gamemodes;
-
-
-
-
+	  exports net.packet.chat;
+	  opens net.packet.chat;
+    exports net.packet.account;
+    opens net.packet.account;
+    //exports net.packet.abstr;
+    //opens net.packet.abstr;
+    exports net.packet.game;
+    opens net.packet.game;
+	exports net.tests;
 
 }

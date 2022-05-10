@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.websocket.DecodeException;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
-import net.packet.WrappedPacket;
+import net.packet.abstr.WrappedPacket;
 
 /**
  * Class to regenerate packets out of strings of encoded packets.

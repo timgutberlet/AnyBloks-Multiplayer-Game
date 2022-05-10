@@ -4,9 +4,9 @@ import java.net.URI;
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import net.packet.CreateAccountRequestPacket;
-import net.packet.PacketType;
-import net.packet.WrappedPacket;
+import net.packet.account.CreateAccountRequestPacket;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
 import net.server.HostServer;
 
 /**

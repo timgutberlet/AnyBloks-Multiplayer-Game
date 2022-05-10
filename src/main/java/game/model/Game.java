@@ -51,6 +51,10 @@ public class Game {
 
   }
 
+  public Player getCurrentPlayer(){
+    return this.gameState.getPlayerCurrent();
+  }
+
 
   public Board getBoard() {
     return board;

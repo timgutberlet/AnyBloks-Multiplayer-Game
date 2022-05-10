@@ -1,6 +1,6 @@
-package net.transmission;
+package net.tests;
 
-import static net.packet.PacketType.GAME_UPDATE_PACKET;
+import static net.packet.abstr.PacketType.GAME_UPDATE_PACKET;
 
 import game.model.Debug;
 import game.model.Game;
@@ -15,11 +15,10 @@ import javax.websocket.DeploymentException;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import net.packet.CreateAccountRequestPacket;
-import net.packet.GameUpdatePacket;
-import net.packet.PacketType;
-import net.packet.WrappedPacket;
+import net.packet.game.GameUpdatePacket;
+import net.packet.abstr.WrappedPacket;
 import net.server.HostServer;
+import net.transmission.EndpointClient;
 
 /**
  * Tests only

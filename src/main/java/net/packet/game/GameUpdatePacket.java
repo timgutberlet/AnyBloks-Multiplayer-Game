@@ -1,6 +1,7 @@
-package net.packet;
+package net.packet.game;
 
 import game.model.GameState;
+import net.packet.abstr.Packet;
 
 /**
  * Packet to send GameState and allow Players to determine they have to make a move
