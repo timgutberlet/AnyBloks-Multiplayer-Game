@@ -26,8 +26,8 @@ public abstract class AbstractGameController extends AnimationTimer {
   /**
    * Constructor of Abstract Game Controller, used to set stage, application, scene and inputhandler.
    * Also sets MinWidth and Min Height
-   * @param stage
-   * @param application
+   * @param stage Current Stage opened
+   * @param application Current Application of the App class used
    *
    * @author tgutberl
    */
@@ -70,6 +70,16 @@ public abstract class AbstractGameController extends AnimationTimer {
 
   public InputHandler getInputHandler() {
     return this.inputHandler;
+  }
+
+  /**
+   *
+   * @return returns current application
+   *
+   * @author tgutberl
+   */
+  public Application getApplication(){
+    return this.application;
   }
 
 

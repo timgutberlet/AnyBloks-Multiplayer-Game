@@ -75,8 +75,12 @@ public class MainMenuUiController extends AbstractUiController {
    * @author tgutberl
    */
   @FXML
-  public void quit() {
-    gameController.stop();
+  public void close() {
+    try {
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
   /**
    * Method to get get into the credits view
@@ -94,7 +98,6 @@ public class MainMenuUiController extends AbstractUiController {
   public void help() {
 
   }
-
 
   @Override
   public void onExit() {

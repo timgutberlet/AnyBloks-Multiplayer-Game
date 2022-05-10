@@ -21,18 +21,19 @@ public class App extends Application {
   }
 
   /**
-   * Method to stop the Application
+   * Method used to stop the Application
    *
    * @author tgutberl
    */
   @Override
   public void stop(){
-    controller.close();
     Config.saveProperty();
+    controller.close();
     try {
       super.stop();
     } catch (Exception e) {
       e.printStackTrace();
     }
+    System.exit(0);
   }
 }
