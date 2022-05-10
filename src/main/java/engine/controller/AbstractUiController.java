@@ -1,5 +1,6 @@
 package engine.controller;
 
+import game.config.Config;
 import javafx.scene.Group;
 import javafx.scene.SubScene;
 
@@ -12,7 +13,7 @@ public abstract class AbstractUiController {
   protected Group root = new Group();
 
   public AbstractUiController() {
-    subScene = new SubScene(root, 1280, 720);
+    subScene = new SubScene(root, Config.getIntValue("SCREEN_WIDTH"), Config.getIntValue("SCREEN_HEIGHT"));
   }
 
   public void attachToRoot(Group gameRoot) {

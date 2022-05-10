@@ -1,38 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.VBox?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-  xmlns:fx="http://javafx.com/fxml"
-  fx:controller="game.controller.SettingUiController"
-  prefHeight="400.0" prefWidth="600.0">
-  <Label alignment="BASELINE_LEFT" text="SETTINGS" textFill="WHITE"
-    GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="640.0"
+  stylesheets="@style.css" xmlns="http://javafx.com/javafx/18"
+  fx:controller="game.controller.SettingUiController">
+  <Button layoutX="14.0" layoutY="362.0" mnemonicParsing="false" onAction="#back" text="BACK"/>
+  <Button layoutX="501.0" layoutY="362.0" mnemonicParsing="false" onAction="#reset" text="RESET"/>
+  <Button layoutX="567.0" layoutY="362.0" mnemonicParsing="false" onAction="#save" text="SAVE"/>
+  <GridPane layoutX="198.0" layoutY="66.0" prefHeight="290.0" prefWidth="200.0">
+    <children>
+      <AnchorPane prefHeight="70.0" prefWidth="200.0">
+        <children>
+          <Button layoutX="57.0" layoutY="32.0" mnemonicParsing="false" onAction="#decreaseWidth"
+            text="-"/>
+          <Button layoutX="121.0" layoutY="32.0" mnemonicParsing="false" onAction="#increaseWidth"
+            text="+"/>
+          <Label layoutX="90.0" layoutY="37.0" text="1280" textFill="black" fx:id="windowWidth"/>
+          <Label layoutX="14.0" layoutY="6.0" text="Window Width (restart needed)"
+            textFill="black"/>
+        </children>
+      </AnchorPane>
+      <AnchorPane GridPane.rowIndex="1" prefHeight="70.0" prefWidth="200.0">
+        <children>
+          <Button layoutX="57.0" layoutY="32.0" mnemonicParsing="false" onAction="#decreaseHeight"
+            text="-"/>
+          <Button layoutX="121.0" layoutY="32.0" mnemonicParsing="false" onAction="#increaseHeight"
+            text="+"/>
+          <Label layoutX="90.0" layoutY="37.0" text="720" textFill="black" fx:id="windowHeight"/>
+          <Label layoutX="14.0" layoutY="6.0" text="Window Height (restart needed)"
+            textFill="black"/>
+        </children>
+      </AnchorPane>
+      <AnchorPane GridPane.rowIndex="2" prefHeight="84.0" prefWidth="200.0">
+        <children>
+          <ChoiceBox layoutX="25.0" layoutY="42.0" prefWidth="150.0"/>
+          <Label layoutX="78.0" layoutY="14.0" text="Theme"/>
+        </children>
+      </AnchorPane>
+      <AnchorPane GridPane.rowIndex="3" prefHeight="84.0" prefWidth="200.0">
+        <children>
+          <ChoiceBox layoutX="25.0" layoutY="42.0" prefWidth="150.0"/>
+          <Label layoutX="67.0" layoutY="14.0" text="Player Color"/>
+        </children>
+      </AnchorPane>
+    </children>
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+    </rowConstraints>
+  </GridPane>
+  <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" alignment="BASELINE_LEFT"
+    layoutX="187.0" layoutY="14.0"
+    text="SETTINGS" textFill="#ff8800">
     <font>
       <Font size="50.0"/>
     </font>
   </Label>
-  <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES"/>
-    </columnConstraints>
-    <rowConstraints>
-      <RowConstraints vgrow="SOMETIMES"/>
-      <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES"/>
-    </rowConstraints>
-    <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="30.0">
-        <Label text="THEME" textFill="black"/>
-    </VBox>
-
-
-
-
-
-
-  </GridPane>
 </AnchorPane>

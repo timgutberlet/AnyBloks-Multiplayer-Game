@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * Handles Config Properties, saving/loading from config.properties file
  *
- * @author timgutberlet
+ * @author tgutberl
  */
 public class Config {
 
@@ -66,6 +66,10 @@ public class Config {
     }
   }
 
+  public static Integer getIntValue(String name) {
+    return Integer.parseInt(getStringValue(name));
+  }
+
   /**
    * Saves Property to the config.properties File
    */
@@ -109,5 +113,45 @@ public class Config {
       loadStandardConfig();
       saveProperty();
     }
+  }
+
+  /**
+   * The Method is used to store Config Values
+   *
+   * @param key   Identifier
+   * @param value String value to store
+   */
+  public static void set(String key, String value) {
+    property.setProperty(key, value);
+  }
+
+  /**
+   * The Method is used to store Config Values
+   *
+   * @param key   Identifier
+   * @param value Int value to store
+   */
+  public static void set(String key, Integer value) {
+    property.setProperty(key, String.valueOf(value));
+  }
+
+  /**
+   * The Method is used to store Config Values
+   *
+   * @param key   Identifier
+   * @param value Double value to store
+   */
+  public static void set(String key, Double value) {
+    property.setProperty(key, String.valueOf(value));
+  }
+
+  /**
+   * The Method is used to store Config Values
+   *
+   * @param key   Identifier
+   * @param value Boolean value to store
+   */
+  public static void set(String key, Boolean value) {
+    property.setProperty(key, String.valueOf(value));
   }
 }

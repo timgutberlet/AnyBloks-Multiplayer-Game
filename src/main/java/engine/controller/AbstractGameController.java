@@ -1,8 +1,10 @@
 package engine.controller;
 
 import engine.handler.InputHandler;
+import game.config.Config;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.ConditionalFeature;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,7 +25,7 @@ public abstract class AbstractGameController extends AnimationTimer {
 
   public AbstractGameController(Stage stage, Application application) {
     gameRoot = new Group();
-    Scene scene = new Scene(gameRoot, 1920, 1080);
+    Scene scene = new Scene(gameRoot, Config.getIntValue("SCREEN_WIDTH"), Config.getIntValue("SCREEN_HEIGHT"));
     stage.setScene(scene);
     this.stage = stage;
     this.application = application;
