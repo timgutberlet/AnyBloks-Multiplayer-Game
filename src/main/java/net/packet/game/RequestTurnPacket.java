@@ -1,5 +1,6 @@
 package net.packet.game;
 
+import game.model.GameState;
 import net.packet.abstr.Packet;
 
 /**
@@ -11,13 +12,33 @@ import net.packet.abstr.Packet;
 public class RequestTurnPacket extends Packet {
 
 	final String username;
+	final GameState gameState;
 
 	/**
-	 * constructor for packet
-	 * @param username
+	 * empty constructor for jackson
+	 * @author tgeilen
 	 */
-	public RequestTurnPacket(String username){
-		this.username = username;
+	public RequestTurnPacket(){
+		this.username = null;
+		this.gameState = null;
 	}
 
+	/**
+	 * contructor for packet
+	 * @param username
+	 * @param gameState
+	 * @author tgeilen
+	 */
+	public RequestTurnPacket(String username, GameState gameState){
+		this.username = username;
+		this.gameState = gameState;
+	}
+
+	public GameState getGameState() {
+		return gameState;
+	}
+
+	public String getName() {
+		return username;
+	}
 }

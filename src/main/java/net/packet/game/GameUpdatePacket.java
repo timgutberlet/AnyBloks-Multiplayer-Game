@@ -10,17 +10,18 @@ import net.packet.abstr.Packet;
  */
 public class GameUpdatePacket extends Packet {
   private GameState gameState;
-  private String nextPlayersUsername;
+
 
   /**
    * Constructor
    *
    * @param gameState gs
-   * @param nextPlayersUsername npu
+
    */
-  public GameUpdatePacket(GameState gameState, String nextPlayersUsername){
+  public GameUpdatePacket(GameState gameState){
     this.gameState = gameState;
-    this.nextPlayersUsername = nextPlayersUsername;
+
+
   }
 
   /**
@@ -34,9 +35,7 @@ public class GameUpdatePacket extends Packet {
   /**
    * Getter
    */
-  public String getNextPlayersUsername() {
-    return nextPlayersUsername;
-  }
+
 
   /**
    * Getter
@@ -52,10 +51,4 @@ public class GameUpdatePacket extends Packet {
     this.gameState = gameState;
   }
 
-  /**
-   * Setter
-   */
-  public void setNextPlayersUsername(String nextPlayersUsername) {
-    this.nextPlayersUsername = nextPlayersUsername;
-  }
 }

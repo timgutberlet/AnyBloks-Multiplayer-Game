@@ -51,9 +51,13 @@ public class Chat  {
    * @author tgeilen
    */
   public void addMessage(Player player, String message) {
-    ChatMessage msg = new ChatMessage(player, message);
+    ChatMessage msg = new ChatMessage(player.getName(), message);
     chatMessages.add(msg);
     Debug.printMessage("[CHAT] " + player.getName() + ": "+  message);
+  }
+
+  public void addMessage(ChatMessage chatMessage){
+    chatMessages.add(chatMessage);
   }
 
   public ArrayList<ChatMessage> getChat() {
@@ -64,7 +68,7 @@ public class Chat  {
   public String toString() {
     String result = "";
     for (ChatMessage msg : this.chatMessages) {
-      result += msg.getPlayer().getName() + ": ";
+      result += msg.getUsername() + ": ";
       result += msg.getMessage() + "\n";
     }
     return result;

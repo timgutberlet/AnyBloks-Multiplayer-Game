@@ -1,8 +1,7 @@
 package game.model;
 
 import game.model.player.Player;
-import javax.websocket.Session;
-import net.server.ServerHandler;
+import net.server.InboundServerHandler;
 
 /**
  * this class runs on the server and controls the game
@@ -14,16 +13,16 @@ public class GameServer {
 
 	private GameSession gameSession;
 	private GameState gameState;
-	private ServerHandler serverHandler;
+	private InboundServerHandler inboundServerHandler;
 
 
 	public GameServer() {
 
 	}
 
-	public GameServer(GameSession gameSession, ServerHandler serverHandler) {
+	public GameServer(GameSession gameSession, InboundServerHandler inboundServerHandler) {
 		this.gameSession = gameSession;
-		this.serverHandler = serverHandler;
+		this.inboundServerHandler = inboundServerHandler;
 	}
 
 	public void updateGameState(GameState gameState) {

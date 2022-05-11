@@ -19,7 +19,8 @@ import javax.websocket.server.ServerEndpoint;
 import net.packet.account.LoginResponsePacket;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.server.ServerHandler;
+import net.server.InboundServerHandler;
+import net.server.OutboundServerHandler;
 
 
 /**
@@ -37,8 +38,9 @@ public class EndpointServer {
 //  private static final HashMap<String, Session> allSessions = (HashMap<String, Session>) Collections.synchronizedMap(
 //      new HashMap<String, Session>());
 
-  private ServerHandler serverHandler;
-  private GameSession gameSession;
+  private InboundServerHandler inboundServerHandler;
+  private OutboundServerHandler outboundServerHandler;
+  private static GameSession gameSession;
   private static HashMap<String,Session> username2Session = new HashMap<String, Session>();
 
   /**
@@ -53,7 +55,8 @@ public class EndpointServer {
     ses.setMaxTextMessageBufferSize(1024*1024*20);
 
     this.gameSession = new GameSession();
-    this.serverHandler = new ServerHandler(this,gameSession);
+    this.inboundServerHandler = new InboundServerHandler(this,gameSession);
+    this.outboundServerHandler = new OutboundServerHandler(this,gameSession);
 
   }
 
@@ -92,14 +95,13 @@ public class EndpointServer {
         if(this.gameSession == null) {
           this.gameSession = new GameSession();
         }
-        if(this.serverHandler == null){
-          this.serverHandler = new ServerHandler(this,gameSession);
+        if(this.inboundServerHandler == null){
+          this.inboundServerHandler = new InboundServerHandler(this,gameSession);
         }
 
       }
       case INIT_GAME_PACKET:{
-        this.serverHandler.startGame(packet);
-        Debug.printMessage(this,"Ich sollte nicht ausgeführt werden!");
+        this.inboundServerHandler.startGame(packet);
         break;
       }
       case CREATE_ACCOUNT_REQUEST_PACKET:
@@ -108,7 +110,7 @@ public class EndpointServer {
 
       case LOGIN_REQUEST_PACKET:
         Debug.printMessage(this," LOGIN_REQUEST_PACKET recieved");
-        String[] response = this.serverHandler.verifyLogin(packet, client);
+        String[] response = this.inboundServerHandler.verifyLogin(packet, client);
         if (response[0].equals("true")) {
           this.gameSession.addPlayer(new Player(response[1], PlayerType.REMOTE_PLAYER));
           //allSessions.put(response[1], client);
@@ -119,8 +121,8 @@ public class EndpointServer {
         break;
 
       case CHAT_MESSAGE_PACKET:
-
-        serverHandler.broadcastChatMessage(packet);
+        //immediately broadcast to all clients
+        outboundServerHandler.broadcastChatMessage(packet);
         break;
       case PLAYER_ORDER_PACKET:
         Debug.printMessage(this,"PLAYER_ORDER_PACKET recieved");
@@ -128,21 +130,22 @@ public class EndpointServer {
 //          clientEntry.getValue().getBasicRemote().sendObject(packet);
 //        }
         break;
-      case GAME_UPDATE_PACKET:
-        //TODO: this packet should never be received by server, only by client! Remove it
-//        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
-//          clientEntry.getValue().getBasicRemote().sendObject(packet);
-//        }
-        for (final Session session : sessions) {
-          session.getBasicRemote().sendObject(packet);
-        }
+      case TURN_PACKET:
+        inboundServerHandler.recieveTurn(client,packet);
         break;
+
+
       default:
         System.out.println("Received a packet of type: " + type);
 
     }
   }
 
+  /**
+   * function to easyily send a packet to a client based on username
+   * @param wrappedPacket
+   * @param username
+   */
   public void sendMessage(WrappedPacket wrappedPacket, String username){
     try {
       Session client = this.username2Session.get(username);
@@ -156,8 +159,47 @@ public class EndpointServer {
     }
   }
 
+  /**
+   * function to easily send a packet to client based on session
+   * @param wrappedPacket
+   * @param client
+   */
+  public void sendMessage(WrappedPacket wrappedPacket, Session client){
+    try {
+      client.getBasicRemote().sendObject(wrappedPacket);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (EncodeException e) {
+      e.printStackTrace();
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  public void broadcastMessage(WrappedPacket wrappedPacket){
+    Session client;
+    for(String username : this.getUsername2Session().keySet()){
+      client = this.getUsername2Session().get(username);
+      try {
+        client.getBasicRemote().sendObject(wrappedPacket);
+      } catch (IOException e) {
+        e.printStackTrace();
+      } catch (EncodeException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
   public void addUsernameSession(String username, Session client){
     this.username2Session.put(username,client);
+  }
+
+  public InboundServerHandler getInboundServerHandler() {
+    return inboundServerHandler;
+  }
+
+  public OutboundServerHandler getOutboundServerHandler() {
+    return outboundServerHandler;
   }
 
   public HashMap<String, Session> getUsername2Session() {

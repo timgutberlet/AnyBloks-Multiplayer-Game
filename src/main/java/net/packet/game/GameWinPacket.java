@@ -11,8 +11,15 @@ public class GameWinPacket extends Packet {
 
 	private final String username;
 
-	public GameWinPacket(Player player){
-		this.username = player.getName();
+	public GameWinPacket(){
+		this.username = null;
 	}
 
+	public GameWinPacket(String username){
+		this.username = username;
+	}
+
+	public String getUsername() {
+		return username;
+	}
 }

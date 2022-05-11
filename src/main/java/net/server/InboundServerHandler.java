@@ -2,17 +2,17 @@ package net.server;
 
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.gamemodes.GameMode;
+import game.model.GameState;
+import game.model.Turn;
 import game.model.player.Player;
-import java.util.HashMap;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
-import net.packet.chat.ChatMessagePacket;
-import net.packet.account.LoginRequestPacket;
-import net.packet.game.GameStartPacket;
-import net.packet.game.InitGamePacket;
-import net.packet.game.TurnPacket;
 import net.packet.abstr.WrappedPacket;
+import net.packet.account.LoginRequestPacket;
+import net.packet.game.IllegalTurnPacket;
+import net.packet.game.InitGamePacket;
+import net.packet.game.RequestTurnPacket;
+import net.packet.game.TurnPacket;
 import net.transmission.EndpointServer;
 
 /**
@@ -20,7 +20,7 @@ import net.transmission.EndpointServer;
  *
  * @author tbuscher
  */
-public class ServerHandler {
+public class InboundServerHandler {
 
   private EndpointServer server;
   private GameSession gameSession;
@@ -29,10 +29,11 @@ public class ServerHandler {
   /**
    * Constructor
    */
-  public ServerHandler(EndpointServer server,GameSession gameSession){
+  public InboundServerHandler(EndpointServer server,GameSession gameSession){
 
     this.server = server;
     this.gameSession = gameSession;
+    this.gameSession.setInboundServerHandler(this);
 
 
   }
@@ -67,53 +68,40 @@ public class ServerHandler {
     InitGamePacket initGamePacket = (InitGamePacket) wrappedPacket.getPacket();
     this.gameSession.startGame(initGamePacket.getGameMode());
 
-    GameStartPacket gameStartPacket = new GameStartPacket(initGamePacket.getGameMode());
-    WrappedPacket wrP = new WrappedPacket(PacketType.GAME_START_PACKET,gameStartPacket);
-
-    for(String username: this.server.getUsername2Session().keySet()){
-      this.server.sendMessage(wrP,username);
-    }
-
-
-
-
+    this.server.getOutboundServerHandler().broadcastGameStart(initGamePacket.getGameMode());
 
   }
-
-  public void broadcastChatMessage(WrappedPacket wrappedPacket){
-    Debug.printMessage(this, "ChatMessage recieved in Handler");
-    Debug.printMessage(this,"Number of Sessions: " + this.server.getUsername2Session().keySet().size());
-    for(String username: this.server.getUsername2Session().keySet()){
-      this.server.sendMessage(wrappedPacket,username);
-      Debug.printMessage(this, "ChatMessage sent to " + username);
-    }
-
-  }
-
 
   /**
    * requests a player to make a turn
    * @author tgeilen
    */
   public void requestTurn(Player player){
-
-    //Session client = this.username2Session.get(player.getName());
-
-
-  //TODO send RequestTurnPacket to client
+    GameState gameState = this.gameSession.getGame().getGameState();
+    RequestTurnPacket requestTurnPacket = new RequestTurnPacket(player.getName(), gameState);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.REQUEST_TURN_PACKET,requestTurnPacket);
+    this.server.sendMessage(wrappedPacket, player.getName());
 
   }
 
   /**
-   * recieve a turn by a player and forward it to game logic
+   * recieve a turn from a remote player and forward it to game logic
    * @author tgeilen
+   * @param packet
    */
+  public void recieveTurn(Session client, WrappedPacket packet){
+    TurnPacket turnPacket = (TurnPacket) packet.getPacket();
+    Turn turn = turnPacket.getTurn();
+    if(this.gameSession.getGame().checkTurn(turn)){
+      this.gameSession.getGame().makeMove(turn);
+    } else {
+      IllegalTurnPacket illegalTurnPacket = new IllegalTurnPacket();
+      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.ILLEGAL_TURN_PACKET,illegalTurnPacket);
+      this.server.sendMessage(wrappedPacket,client);
+    }
 
-  public void recieveTurn(WrappedPacket wrappedPacket){
-
-    TurnPacket turnPacket = (TurnPacket) wrappedPacket.getPacket();
-
-    this.gameSession.getGameServer();
   }
+
+
 
 }

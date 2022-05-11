@@ -1,5 +1,6 @@
 package net.packet.chat;
 
+import game.model.chat.ChatMessage;
 import java.io.Serializable;
 import net.packet.abstr.Packet;
 
@@ -16,15 +17,14 @@ public class ChatMessagePacket extends Packet {
   /**
    * Contains the text of the message.
    */
-  private final String text;
-  private final String sender;
+
+  private final ChatMessage chatMessage;
 
   /**
    * default constructor for jackson
    */
   public ChatMessagePacket(){
-  this.text = null;
-  this.sender = null;
+  this.chatMessage = null;
   }
   /**
    * Create new ChatMessagePacket.
@@ -33,23 +33,10 @@ public class ChatMessagePacket extends Packet {
    * @param username of sender
    */
   public ChatMessagePacket(String text, String username) {
-    this.text = text;
-    this.sender = username;
+    this.chatMessage = new ChatMessage(username,text);
   }
 
-  /**
-   * public getter for text of message.
-   *
-   * @return text of the message
-   */
-  public String getText() {
-    return this.text;
-  }
-
-  /**
-   * Getter
-   */
-  public String getSender() {
-    return sender;
+  public ChatMessage getChatMessage(){
+  return this.chatMessage;
   }
 }

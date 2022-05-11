@@ -53,8 +53,7 @@ public class testGameStateTransmission {
       game.makeMove();
       counter++;
       if(counter==2){
-        GameUpdatePacket gameUpdatePacket = new GameUpdatePacket(game.getGameState(),
-            game.getGameState().getPlayerCurrent().getName());
+        GameUpdatePacket gameUpdatePacket = new GameUpdatePacket(game.getGameState());
         WrappedPacket wrappedPacket = new WrappedPacket(GAME_UPDATE_PACKET, gameUpdatePacket);
 
         final WebSocketContainer container = ContainerProvider.getWebSocketContainer();

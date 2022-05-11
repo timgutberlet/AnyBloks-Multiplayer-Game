@@ -10,14 +10,14 @@ import java.util.Date;
  */
 public class ChatMessage {
 
-  private Player player;
+  private String username;
   private Timestamp time;
   private String message;
 
 
-  public ChatMessage(Player player, String message) {
+  public ChatMessage(String username, String message) {
 
-    this.player = player;
+    this.username = username;
 
     Date date = new Date();
     this.time = new Timestamp(date.getTime());
@@ -26,12 +26,12 @@ public class ChatMessage {
 
   }
 
-  public Player getPlayer() {
-    return player;
+  public String getUsername() {
+    return username;
   }
 
-  public void setPlayer(Player player) {
-    this.player = player;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public Timestamp getTime() {

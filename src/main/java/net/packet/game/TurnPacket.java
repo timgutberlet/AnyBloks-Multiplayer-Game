@@ -11,12 +11,24 @@ import net.packet.abstr.Packet;
  */
 public class TurnPacket extends Packet {
 
-	final String username;
-	final Turn turn;
+	final private String username;
+	final private Turn turn;
+
+	public TurnPacket(){
+		this.username = null;
+		this.turn = null;
+	}
 
 	public TurnPacket (String username, Turn turn){
 		this.username = username;
 		this.turn = turn;
 	}
 
+	public Turn getTurn() {
+		return turn;
+	}
+
+	public String getUsername() {
+		return username;
+	}
 }

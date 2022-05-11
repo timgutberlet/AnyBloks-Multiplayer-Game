@@ -29,6 +29,20 @@ public class Game {
 
   }
 
+  public Game(GameState gameState){
+
+  }
+
+  /**
+   * checks if a move is valid or not
+   * @author tgeilen
+   */
+
+  public Boolean checkTurn(Turn turn){
+    //TODO this function needs to implemented @tilman
+    return true;
+  }
+
 
   /**
    * function that calls the next move to be made
@@ -46,6 +60,16 @@ public class Game {
         this.gameSession.increaseScore(currentPlayer, turn.getValue());
         currentPlayer.talk();
       }
+    }
+  }
+
+  /**
+   * function used by the server to make a turn
+   * @author tgeilen
+   */
+  public void makeMove(Turn turn){
+    if (this.gameState.isStateRunning()){
+      this.gameState.playTurn(turn);
     }
   }
 
@@ -80,6 +104,10 @@ public class Game {
 
   public GameState getGameState() {
     return gameState;
+  }
+
+  public void updateGameState(GameState gameState){
+    this.gameState = gameState;
   }
 
   public void startGame() {

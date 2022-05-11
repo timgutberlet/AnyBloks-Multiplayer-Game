@@ -100,7 +100,7 @@ public class Player implements Serializable {
    * @param gameSession
    * @author tgeilen
    */
-  public void setSession(GameSession gameSession) {
+  public void setGameSession(GameSession gameSession) {
     this.gameSession = gameSession;
   }
 

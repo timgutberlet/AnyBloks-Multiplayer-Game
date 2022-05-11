@@ -1,11 +1,14 @@
 package game.model;
 
 import game.model.chat.Chat;
+import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.server.HostServer;
+import net.server.InboundServerHandler;
+import net.server.OutboundServerHandler;
 
 /**
  * a session is the central place taking care of players joining, starting a game, selecting
@@ -16,6 +19,8 @@ import net.server.HostServer;
 public class GameSession {
 
   private static HostServer hostServer = new HostServer();
+  private InboundServerHandler inboundServerHandler;
+  private OutboundServerHandler outboundServerHandler;
 
   private final Chat chat;
   private final ArrayList<Player> playerList;
@@ -78,7 +83,7 @@ public class GameSession {
    */
   public void addPlayer(Player player) {
     this.playerList.add(player);
-    player.setSession(this);
+    player.setGameSession(this);
   }
 
   /**
@@ -88,7 +93,7 @@ public class GameSession {
    */
   public void addHost(Player host) {
     this.playerList.add(host);
-    host.setSession(this);
+    host.setGameSession(this);
   }
 
 
@@ -121,6 +126,29 @@ public class GameSession {
 
   }
 
+  /**
+   * function to update GameState of current game
+   * @author tgeilen
+   */
+  public void updateGame(GameState gameState){
+    this.game.updateGameState(gameState);
+  }
+
+  /**
+   * functions that triggered when someone has won the game
+   * @author tgeilen
+   */
+public void endGame(String usernameWinner){
+  //TODO add logic
+}
+
+public void addChatMessage(ChatMessage chatMessage){
+  this.chat.addMessage(chatMessage);
+}
+
+  /**
+   * functions thats stops the current session by stopping the hostServer
+   */
   public void stopSession(){
     hostServer.stop();
   }
@@ -139,6 +167,14 @@ public class GameSession {
 
   public void setGame(Game game){
     this.game = game;
+  }
+
+  public void setInboundServerHandler(InboundServerHandler inboundServerHandler) {
+    this.inboundServerHandler = inboundServerHandler;
+  }
+
+  public void setOutboundServerHandler(OutboundServerHandler outboundServerHandler) {
+    this.outboundServerHandler = outboundServerHandler;
   }
 
   public GameServer getGameServer() {
