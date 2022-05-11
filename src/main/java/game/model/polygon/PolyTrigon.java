@@ -364,4 +364,21 @@ public class PolyTrigon extends Poly {
     }
     return res && color == poly.color;
   }
+
+  /**
+   * method that returns true if shape contains field with coordinates {i,j,isRight}
+   *
+   * @param i
+   * @param j
+   * @param isRight
+   * @author lbaudenb
+   */
+  public boolean containsField(int i, int j, int isRight) {
+    for (FieldTrigon ft : shape) {
+      if (ft.pos[0] == i && ft.pos[1] == j && ft.pos[2] == isRight) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

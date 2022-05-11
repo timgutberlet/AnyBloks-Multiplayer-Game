@@ -13,6 +13,7 @@ import game.view.BoardSquarePane;
 import game.view.BoardTrigonPane;
 import game.view.StackPane;
 import game.view.StackSquarePane;
+import game.view.StackTrigonPane;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
@@ -52,6 +53,7 @@ public class InGameUiController extends AbstractUiController {
     this.Gui = new HBox();
     playerPoints = new ArrayList<>();
 
+    super.root.getChildren().add(Gui);
     createBoard();
     setUpUi();
 
@@ -72,12 +74,12 @@ public class InGameUiController extends AbstractUiController {
         break;
     }
     Gui.getChildren().add((Node) boardPane);
-    super.root.getChildren().add(Gui);
   }
 
 
   private void setUpUi() {
     playerStacks = new VBox();
+
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
         ;
@@ -91,7 +93,11 @@ public class InGameUiController extends AbstractUiController {
         ;
         break;
       case "TRIGON":
-        break; // not implemented yet
+        for (Player p : this.gameSession.getPlayerList()) {
+          StackPane trigonStack = new StackTrigonPane(p, game.getGameState().getRemainingPolys(p));
+          playerStacks.getChildren().add(trigonStack);
+        }
+        break;
     }
 
     Gui.getChildren().add(playerStacks);
@@ -114,8 +120,22 @@ public class InGameUiController extends AbstractUiController {
   private void refreshUi() {
     playerStacks.getChildren().clear();
     for (Player p : game.getPlayers()) {
-      StackPane squareStack = new StackSquarePane(p, game.getGameState().getRemainingPolys(p));
-      playerStacks.getChildren().add(squareStack);
+      switch (game.getGamemode().getName()) {
+        case "JUNIOR":
+          ;
+        case "DUO":
+          ;
+        case "CLASSIC":
+          StackPane squareStack = new StackSquarePane(p, game.getGameState().getRemainingPolys(p));
+          playerStacks.getChildren().add(squareStack);
+          ;
+          break;
+        case "TRIGON":
+          StackPane trigonStack = new StackTrigonPane(p, game.getGameState().getRemainingPolys(p));
+          playerStacks.getChildren().add(trigonStack);
+          break;
+      }
+
     }
 
     /*Gui.getChildren().removeAll(playerPoints);
@@ -136,9 +156,9 @@ public class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
-    //refreshUi();
     this.game.makeMove();
     boardPane.repaint(game.getGameState().getBoard());
+    refreshUi();
 
   }
 

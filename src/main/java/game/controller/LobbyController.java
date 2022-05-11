@@ -146,7 +146,7 @@ public class LobbyController extends AbstractUiController {
       }
       Debug.printMessage(""+this.gameSession.getPlayerList().size());
     }
-    this.gameSession.addHost(new Player("You", PlayerType.REMOTE_PLAYER));
+    this.gameSession.addHost(new Player("You", PlayerType.AI_EASY));
     System.out.println(this.gameSession.getPlayerList().size());
     //players.add(new Player("You", PlayerType.AI_EASY));
 

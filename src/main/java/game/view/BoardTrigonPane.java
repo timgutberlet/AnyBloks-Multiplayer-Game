@@ -16,9 +16,9 @@ public class BoardTrigonPane extends Pane implements BoardPane {
   private final List<Polygon> triangles;
   private BoardTrigon boardTrigon;
 
-  private double size = 40;
-  private double xOfSet = Math.sin(Math.toRadians(30)) * size;
-  private double yOfSet = Math.sin(Math.toRadians(60)) * size;
+  private final double size = 40;
+  private final double xOfSet = Math.sin(Math.toRadians(30)) * size;
+  private final double yOfSet = Math.sin(Math.toRadians(60)) * size;
 
   public BoardTrigonPane(BoardTrigon boardTrigon) {
     this.boardTrigon = boardTrigon;
@@ -28,10 +28,10 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 
   private void setTriangleRight(int i, int j, Color color) {
     Polygon triangleRight = new Polygon();
-    triangleRight.getPoints().addAll(new Double[]{
+    triangleRight.getPoints().addAll(
         size + (j + i) * size - i * xOfSet, yOfSet + i * yOfSet, //right vertex
         xOfSet + (j + i) * size - i * xOfSet, 0.0 + i * yOfSet, // top vertex
-        0.0 + (j + i) * size - i * xOfSet, yOfSet + i * yOfSet}); // left vertex
+        0.0 + (j + i) * size - i * xOfSet, yOfSet + i * yOfSet); // left vertex
     triangleRight.setFill(color);
     triangleRight.setStroke(Color.BLACK);
     this.getChildren().add(triangleRight);
@@ -39,10 +39,10 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 
   private void setTriangleLeft(int i, int j, Color color) {
     Polygon triangleLeft = new Polygon();
-    triangleLeft.getPoints().addAll(new Double[]{
-        size + (j - 1 + i) * size - i * xOfSet, yOfSet + i * yOfSet,  // top vertex
+    triangleLeft.getPoints().addAll(
+        size + (j - 1 + i) * size - i * xOfSet, yOfSet + i * yOfSet, // top vertex
         size + xOfSet + (j - 1 + i) * size - i * xOfSet, 0.0 + i * yOfSet, // right vertex
-        xOfSet + (j - 1 + i) * size - i * xOfSet, 0.0 + i * yOfSet});  // left vertex
+        xOfSet + (j - 1 + i) * size - i * xOfSet, 0.0 + i * yOfSet);  // left vertex
     triangleLeft.setFill(color);
     triangleLeft.setStroke(Color.BLACK);
     this.getChildren().add(triangleLeft);
