@@ -11,7 +11,11 @@ public class InitGamePacket extends Packet {
 
 	private final GameMode gameMode;
 
-	public InitGamePacket(GameMode gameMode){
+	public InitGamePacket() {
+		this.gameMode = null;
+	}
+
+	public InitGamePacket(GameMode gameMode) {
 		this.gameMode = gameMode;
 	}
 

@@ -7,5 +7,5 @@ package game.model;
  */
 
 public enum Color {
-  WHITE, RED, BLUE, GREEN, YELLOW
+	WHITE, RED, BLUE, GREEN, YELLOW
 }

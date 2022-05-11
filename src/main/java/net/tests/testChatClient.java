@@ -30,7 +30,6 @@ import org.eclipse.jetty.util.log.Logger;
 public class testChatClient {
 
 
-
 	private static ChatMessagePacket chatMessagePacket;
 
 	public testChatClient() {
@@ -40,10 +39,9 @@ public class testChatClient {
 
 	public static void main(String[] args) {
 
-
-
 		org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(LocalDateTime.now().toString() + " Hello World", "user1");
+		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(
+				LocalDateTime.now().toString() + " Hello World", "user1");
 		//WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -51,18 +49,17 @@ public class testChatClient {
 
 		Session ses = null;
 
-
-
 		try {
 			ses = container.connectToServer(client, URI.create("ws://localhost:8081/packet"));
 
 			LoginRequestPacket loginRequestPacket = new LoginRequestPacket(LocalDateTime.now().toString(),
 					"1234");
 			Debug.printMessage("LoginRequestPacket has been sent to the server");
-			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,loginRequestPacket);
+			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
+					loginRequestPacket);
 			ses.getBasicRemote().sendObject(wrappedPacket);
 			int counter = 0;
-			while(counter < 20) {
+			while (counter < 20) {
 				TimeUnit.SECONDS.sleep(1);
 
 				wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);

@@ -16,20 +16,22 @@ public class RequestTurnPacket extends Packet {
 
 	/**
 	 * empty constructor for jackson
+	 *
 	 * @author tgeilen
 	 */
-	public RequestTurnPacket(){
+	public RequestTurnPacket() {
 		this.username = null;
 		this.gameState = null;
 	}
 
 	/**
 	 * contructor for packet
+	 *
 	 * @param username
 	 * @param gameState
 	 * @author tgeilen
 	 */
-	public RequestTurnPacket(String username, GameState gameState){
+	public RequestTurnPacket(String username, GameState gameState) {
 		this.username = username;
 		this.gameState = gameState;
 	}

@@ -6,8 +6,8 @@ package game.model.gamemodes;
  */
 public class GMClassic extends GameMode {
 
-  public GMClassic() {
-    super("CLASSIC", 4);
-  }
+	public GMClassic() {
+		super("CLASSIC", 4);
+	}
 
 }
