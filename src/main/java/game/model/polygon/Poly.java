@@ -94,7 +94,7 @@ public abstract class Poly implements Cloneable {
       case YELLOW:
         return javafx.scene.paint.Color.YELLOW;
       default:
-        return javafx.scene.paint.Color.WHITE;
+        return javafx.scene.paint.Color.TRANSPARENT;
     }
   }
 
