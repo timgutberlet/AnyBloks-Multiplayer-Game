@@ -9,46 +9,45 @@ import net.packet.abstr.Packet;
  * @author tbuscher
  */
 public class GameUpdatePacket extends Packet {
-  private GameState gameState;
+
+	private GameState gameState;
 
 
-  /**
-   * Constructor
-   *
-   * @param gameState gs
-
-   */
-  public GameUpdatePacket(GameState gameState){
-    this.gameState = gameState;
-
-
-  }
-
-  /**
-   * Constructor
-   */
-  public GameUpdatePacket(){
-
-  }
+	/**
+	 * Constructor
+	 *
+	 * @param gameState gs
+	 */
+	public GameUpdatePacket(GameState gameState) {
+		this.gameState = gameState;
 
 
-  /**
-   * Getter
-   */
+	}
+
+	/**
+	 * Constructor
+	 */
+	public GameUpdatePacket() {
+
+	}
+
+	/**
+	 * Getter
+	 */
 
 
-  /**
-   * Getter
-   */
-  public GameState getGameState() {
-    return gameState;
-  }
+	/**
+	 * Getter
+	 */
+	public GameState getGameState() {
+		return gameState;
+	}
 
-  /**
-   * Setter
-   */
-  public void setGameState(GameState gameState) {
-    this.gameState = gameState;
-  }
+	/**
+	 * Setter
+	 */
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
+	}
 
 }

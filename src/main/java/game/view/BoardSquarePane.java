@@ -14,50 +14,50 @@ import javafx.scene.shape.Rectangle;
  */
 public class BoardSquarePane extends GridPane implements BoardPane {
 
-  private final List<Rectangle> squares;
+	private final List<Rectangle> squares;
 
-  private BoardSquare boardSquare;
+	private BoardSquare boardSquare;
 
-  public BoardSquarePane(BoardSquare boardSquare) {
-    this.boardSquare = boardSquare;
-    squares = new ArrayList<>();
-    setBoard();
-    setStyle();
-  }
+	public BoardSquarePane(BoardSquare boardSquare) {
+		this.boardSquare = boardSquare;
+		squares = new ArrayList<>();
+		setBoard();
+		setStyle();
+	}
 
-  /**
-   * Method that draws a square at the coordinates {row,column}
-   *
-   * @param color
-   * @param row
-   * @param column
-   */
-  public void setSquare(Color color, int row, int column) {
-    Rectangle r = new Rectangle(30, 30);
-    r.setFill(color);
-    squares.add(r);
-    this.add(r, column, row);
-  }
+	/**
+	 * Method that draws a square at the coordinates {row,column}
+	 *
+	 * @param color
+	 * @param row
+	 * @param column
+	 */
+	public void setSquare(Color color, int row, int column) {
+		Rectangle r = new Rectangle(30, 30);
+		r.setFill(color);
+		squares.add(r);
+		this.add(r, column, row);
+	}
 
-  @Override
-  public void setBoard() {
-    for (int row = 0; row < boardSquare.SIZE; row++) {
-      for (int column = 0; column < boardSquare.SIZE; column++) {
-        int[] pos = {row, column};
-        setSquare(boardSquare.getJavaColor(pos), row, column);
-      }
-    }
-  }
+	@Override
+	public void setBoard() {
+		for (int row = 0; row < boardSquare.SIZE; row++) {
+			for (int column = 0; column < boardSquare.SIZE; column++) {
+				int[] pos = {row, column};
+				setSquare(boardSquare.getJavaColor(pos), row, column);
+			}
+		}
+	}
 
-  @Override
-  public void repaint(Board board) {
-    BoardSquare help = (BoardSquare) board;
-    for (FieldSquare fs : help.getBoard()) {
-      this.setSquare(fs.getJavaColor(), fs.getPos()[0], fs.getPos()[1]);
-    }
-  }
+	@Override
+	public void repaint(Board board) {
+		BoardSquare help = (BoardSquare) board;
+		for (FieldSquare fs : help.getBoard()) {
+			this.setSquare(fs.getJavaColor(), fs.getPos()[0], fs.getPos()[1]);
+		}
+	}
 
-  final void setStyle() {
-    this.setGridLinesVisible(true);
-  }
+	final void setStyle() {
+		this.setGridLinesVisible(true);
+	}
 }

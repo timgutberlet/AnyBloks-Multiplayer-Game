@@ -15,15 +15,15 @@ import javax.ws.rs.ApplicationPath;
 @ApplicationPath("/")
 public class ServerConfig extends ResourceConfig {
 
-  /**
-   * Config used for the server.
-   */
+	/**
+	 * Config used for the server.
+	 */
 
-  public ServerConfig() {
-    // activate the request filter
-    register(LoggingRequestFilter.class);    // make JSON usable
-    register(JacksonFeature.class);
+	public ServerConfig() {
+		// activate the request filter
+		register(LoggingRequestFilter.class);    // make JSON usable
+		register(JacksonFeature.class);
 
-  }
+	}
 
 }

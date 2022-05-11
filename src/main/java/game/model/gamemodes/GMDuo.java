@@ -7,9 +7,9 @@ package game.model.gamemodes;
  */
 public class GMDuo extends GameMode {
 
-  public GMDuo() {
-    super("DUO", 2);
-  }
+	public GMDuo() {
+		super("DUO", 2);
+	}
 
 
 }

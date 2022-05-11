@@ -8,6 +8,7 @@ import game.model.Color;
  */
 public abstract class Poly implements Cloneable {
 
+
   /**
    * number of single squares contained
    */

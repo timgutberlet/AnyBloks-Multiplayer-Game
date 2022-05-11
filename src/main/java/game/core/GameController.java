@@ -7,8 +7,8 @@ import javafx.stage.Stage;
 
 public class GameController extends AbstractGameController {
 
-  public GameController(Stage stage, Application application) {
-    super(stage, application);
-    super.setActiveUiController(new MainMenuUiController(this));
-  }
+	public GameController(Stage stage, Application application) {
+		super(stage, application);
+		super.setActiveUiController(new MainMenuUiController(this));
+	}
 }

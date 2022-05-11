@@ -10,45 +10,45 @@ import java.util.Date;
  */
 public class ChatMessage {
 
-  private String username;
-  private Timestamp time;
-  private String message;
+	private String username;
+	private Timestamp time;
+	private String message;
 
 
-  public ChatMessage(String username, String message) {
+	public ChatMessage(String username, String message) {
 
-    this.username = username;
+		this.username = username;
 
-    Date date = new Date();
-    this.time = new Timestamp(date.getTime());
+		Date date = new Date();
+		this.time = new Timestamp(date.getTime());
 
-    this.message = message;
+		this.message = message;
 
-  }
+	}
 
-  public String getUsername() {
-    return username;
-  }
+	public String getUsername() {
+		return username;
+	}
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public Timestamp getTime() {
-    return time;
-  }
+	public Timestamp getTime() {
+		return time;
+	}
 
-  public void setTime(Timestamp time) {
-    this.time = time;
-  }
+	public void setTime(Timestamp time) {
+		this.time = time;
+	}
 
-  public String getMessage() {
-    return message;
-  }
+	public String getMessage() {
+		return message;
+	}
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 }
 

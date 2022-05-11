@@ -11,11 +11,11 @@ public class GameWinPacket extends Packet {
 
 	private final String username;
 
-	public GameWinPacket(){
+	public GameWinPacket() {
 		this.username = null;
 	}
 
-	public GameWinPacket(String username){
+	public GameWinPacket(String username) {
 		this.username = username;
 	}
 

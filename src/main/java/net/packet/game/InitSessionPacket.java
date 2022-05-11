@@ -7,11 +7,11 @@ package net.packet.game;
  */
 public class InitSessionPacket {
 
-  /**
-   * Constructor
-   */
-  public InitSessionPacket(){
+	/**
+	 * Constructor
+	 */
+	public InitSessionPacket() {
 
-  }
+	}
 
 }

@@ -6,20 +6,20 @@ package game.model.gamemodes;
  */
 public class GameMode {
 
-  private final String name;
-  private final int neededPlayers;
+	private final String name;
+	private final int neededPlayers;
 
-  public GameMode(String name, int num) {
-    this.name = name;
-    this.neededPlayers = num;
+	public GameMode(String name, int num) {
+		this.name = name;
+		this.neededPlayers = num;
 
-  }
+	}
 
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public int getNeededPlayers() {
-    return neededPlayers;
-  }
+	public int getNeededPlayers() {
+		return neededPlayers;
+	}
 }

@@ -10,24 +10,24 @@ import net.packet.abstr.Packet;
  */
 public class LoginResponsePacket extends Packet {
 
-  String errorMessage;
+	String errorMessage;
 
-  /**
-   * Constructor, leave errorMessage = "" if no error occurred
-   *
-   * @param errorMessage
-   */
-  public LoginResponsePacket(String errorMessage) {
-    this.errorMessage = errorMessage;
-  }
+	/**
+	 * Constructor, leave errorMessage = "" if no error occurred
+	 *
+	 * @param errorMessage
+	 */
+	public LoginResponsePacket(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 
-  /**
-   * Getter
-   *
-   * @return errorMessage
-   */
-  public String getErrorMessage() {
-    return errorMessage;
-  }
+	/**
+	 * Getter
+	 *
+	 * @return errorMessage
+	 */
+	public String getErrorMessage() {
+		return errorMessage;
+	}
 
 }

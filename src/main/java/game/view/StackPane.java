@@ -10,13 +10,13 @@ import javafx.scene.layout.GridPane;
  */
 public abstract class StackPane extends GridPane {
 
-  private final int MAX_NB_POLYS = 8;
+	private final int MAX_NB_POLYS = 8;
 
-  private final Player player;
+	private final Player player;
 
-  public StackPane(Player player) {
-    this.player = player;
-  }
+	public StackPane(Player player) {
+		this.player = player;
+	}
 
-  public abstract void setUpStack(List<Poly> polys);
+	public abstract void setUpStack(List<Poly> polys);
 }
