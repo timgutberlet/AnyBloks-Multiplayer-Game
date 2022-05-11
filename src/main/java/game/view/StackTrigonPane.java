@@ -20,6 +20,12 @@ public class StackTrigonPane extends StackPane {
     setContent();
   }
 
+  /**
+   * Method that creates TrigonPolyPane objects, from a list of TrigonPoly objects, and stores them
+   * in a list
+   *
+   * @param polys
+   */
   @Override
   public void setUpStack(List<Poly> polys) {
     for (Poly p : polys) {
@@ -28,6 +34,9 @@ public class StackTrigonPane extends StackPane {
     }
   }
 
+  /**
+   * Method that fills the StackTrigonPane with TrigonPolyPane objects
+   */
   public void setContent() {
     int row = 0;
     int col = 0;

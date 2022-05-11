@@ -26,28 +26,48 @@ public class BoardTrigonPane extends Pane implements BoardPane {
     setBoard();
   }
 
+  /**
+   * Method that draws a triangle (right in the parallelogram) at the coordinates {i,j}
+   *
+   * @param i
+   * @param j
+   * @param color
+   */
   private void setTriangleRight(int i, int j, Color color) {
     Polygon triangleRight = new Polygon();
     triangleRight.getPoints().addAll(
-        size + (j + i) * size - i * xOfSet, yOfSet + i * yOfSet, //right vertex
-        xOfSet + (j + i) * size - i * xOfSet, 0.0 + i * yOfSet, // top vertex
-        0.0 + (j + i) * size - i * xOfSet, yOfSet + i * yOfSet); // left vertex
+        xOfSet + size + j * size + i * xOfSet, yOfSet + i * yOfSet, //right vertex
+        size + j * size + i * xOfSet, 0.0 + i * yOfSet, // top vertex
+        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet); // left vertex
     triangleRight.setFill(color);
     triangleRight.setStroke(Color.BLACK);
     this.getChildren().add(triangleRight);
   }
 
+  /**
+   * Method that draws a triangle (left in the parallelogram) at the coordinates {i,j}
+   *
+   * @param i
+   * @param j
+   * @param color
+   */
   private void setTriangleLeft(int i, int j, Color color) {
     Polygon triangleLeft = new Polygon();
     triangleLeft.getPoints().addAll(
-        size + (j - 1 + i) * size - i * xOfSet, yOfSet + i * yOfSet, // top vertex
-        size + xOfSet + (j - 1 + i) * size - i * xOfSet, 0.0 + i * yOfSet, // right vertex
-        xOfSet + (j - 1 + i) * size - i * xOfSet, 0.0 + i * yOfSet);  // left vertex
+        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex
+        size + j * size + i * xOfSet, 0.0 + i * yOfSet, // right vertex
+        0.0 + j * size + i * xOfSet, 0.0 + i * yOfSet);  // left vertex
     triangleLeft.setFill(color);
     triangleLeft.setStroke(Color.BLACK);
     this.getChildren().add(triangleLeft);
   }
 
+  /**
+   * Method that draws a triangle at the coordinates {i,j}
+   *
+   * @param i
+   * @param j
+   */
   private void setTriangle(int i, int j) {
     Color color;
     if (i + j == 8) {
@@ -66,7 +86,8 @@ public class BoardTrigonPane extends Pane implements BoardPane {
     }
   }
 
-  private void setBoard() {
+  @Override
+  public void setBoard() {
     for (int i = 0; i < 18; i++) {
       for (int j = 0; j < 18; j++) {
         setTriangle(i, j);

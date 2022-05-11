@@ -25,6 +25,13 @@ public class BoardSquarePane extends GridPane implements BoardPane {
     setStyle();
   }
 
+  /**
+   * Method that draws a square at the coordinates {row,column}
+   *
+   * @param color
+   * @param row
+   * @param column
+   */
   public void setSquare(Color color, int row, int column) {
     Rectangle r = new Rectangle(30, 30);
     r.setFill(color);
@@ -32,7 +39,8 @@ public class BoardSquarePane extends GridPane implements BoardPane {
     this.add(r, column, row);
   }
 
-  void setBoard() {
+  @Override
+  public void setBoard() {
     for (int row = 0; row < boardSquare.SIZE; row++) {
       for (int column = 0; column < boardSquare.SIZE; column++) {
         int[] pos = {row, column};

@@ -20,6 +20,13 @@ public class StackSquarePane extends StackPane {
     setContent();
   }
 
+  /**
+   * Method that creates SquarePolyPane objects, from a list of SquarePoly objects, and stores them
+   * in a list
+   *
+   * @param polys
+   */
+  @Override
   public void setUpStack(List<Poly> polys) {
     for (Poly p : polys) {
       SquarePolyPane polyPane = new SquarePolyPane((PolySquare) p);
@@ -27,6 +34,9 @@ public class StackSquarePane extends StackPane {
     }
   }
 
+  /**
+   * Method that fills the StackSquarePane with SquarePolyPane objects
+   */
   public void setContent() {
     int row = 0;
     int col = 0;

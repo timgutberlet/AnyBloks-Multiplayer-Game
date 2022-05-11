@@ -7,13 +7,13 @@ import javafx.scene.layout.Pane;
 /**
  * @author lbaudenb
  */
+
 public interface BoardPane {
 
   /**
-   * Method that is used to set up the BoardPane for the first time
+   * Method that sets up the BoardPane for the first time Method that updates the BoardPane
    */
-  private void setBoard() {
-  }
+  void setBoard();
 
   /**
    * Method that updates the BoardPane

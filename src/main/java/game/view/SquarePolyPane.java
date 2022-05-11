@@ -17,37 +17,33 @@ public class SquarePolyPane extends GridPane {
     setPoly();
   }
 
-  public void setSquare(int i, int j, game.model.Color color) {
+  /**
+   * Method that draws a square with a specific color at the coordinates i,j
+   *
+   * @param i
+   * @param j
+   * @param color
+   */
+  public void setSquare(int i, int j, Color color) {
     Rectangle r = new Rectangle(7, 7);
-    r.setFill(toColor(color));
+    r.setFill(color);
     this.add(r, i, j);
   }
 
+  /**
+   * Method that draws a poly This is done by a double for loop, which covers the maximum height as
+   * well as the maximum width of a square poly
+   */
   public void setPoly() {
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 5; j++) {
         if (poly.containsField(i, j)) {
-          setSquare(i, j, poly.getColor());
+          setSquare(i, j, poly.getJavaColor());
         } else {
-          setSquare(i, j, game.model.Color.WHITE);
+          setSquare(i, j, Color.TRANSPARENT);
         }
 
       }
-    }
-  }
-
-  public Color toColor(game.model.Color color) {
-    switch (color) {
-      case RED:
-        return Color.RED;
-      case BLUE:
-        return Color.BLUE;
-      case GREEN:
-        return Color.GREEN;
-      case YELLOW:
-        return Color.YELLOW;
-      default:
-        return Color.WHITE;
     }
   }
 }
