@@ -41,6 +41,15 @@ public class LobbyController extends AbstractUiController {
   private ObservableList<String> list;
 
   @FXML
+  private Label player1;
+
+  @FXML
+  private Label player2;
+
+  @FXML
+  private Label player3;
+
+  @FXML
   private ComboBox<String> gameModes;
 
   @FXML
@@ -203,32 +212,32 @@ public class LobbyController extends AbstractUiController {
 
   @FXML
   private void increaseDifficulty1() {
-    increaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1);
+    increaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1, player1);
   }
 
   @FXML
   private void increaseDifficulty2() {
-    increaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2);
+    increaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2, player2);
   }
 
   @FXML
   private void increaseDifficulty3() {
-    increaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3);
+    increaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3, player3);
   }
 
   @FXML
   private void decreaseDifficulty1() {
-    decreaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1);
+    decreaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1, player1);
   }
 
   @FXML
   private void decreaseDifficulty2() {
-    decreaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2);
+    decreaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2, player2);
   }
 
   @FXML
   private void decreaseDifficulty3() {
-    decreaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3);
+    decreaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3, player3);
   }
 
   @FXML
@@ -237,18 +246,21 @@ public class LobbyController extends AbstractUiController {
     gameModes.setItems(list);
   }
 
-  private void increaseAi(Label namePlayer, Label difficultyPlayer, String name) {
+  private void increaseAi(Label namePlayer, Label difficultyPlayer, String name, Label player) {
     if (namePlayer.getText().equals("-") || difficultyPlayer.getText().equals("-")) {
       namePlayer.setText(name);
       difficultyPlayer.setText("Easy");
+      player.setText("Easy");
     } else {
       switch (difficultyPlayer.getText()) {
         case "Easy":
           difficultyPlayer.setText("Middle");
+          player.setText("Middle");
           break;
         case "Middle":
           difficultyPlayer.setText("-");
           namePlayer.setText("-");
+          player.setText("None");
           ;
           break;
         /*case "Hard":
@@ -258,14 +270,16 @@ public class LobbyController extends AbstractUiController {
     }
   }
 
-  private void decreaseAi(Label namePlayer, Label difficultyPlayer, String name) {
+  private void decreaseAi(Label namePlayer, Label difficultyPlayer, String name, Label player) {
     switch (difficultyPlayer.getText()) {
       case "Easy":
         difficultyPlayer.setText("-");
         namePlayer.setText("-");
+        player.setText("None");
         break;
       case "Middle":
         difficultyPlayer.setText("Easy");
+        player.setText("Easy");
         break;
      /* case "Hard":
         difficultyPlayer.setText("Middle");*/
