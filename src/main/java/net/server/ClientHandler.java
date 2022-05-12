@@ -1,5 +1,6 @@
 package net.server;
 
+import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.gamemodes.GameMode;
@@ -51,12 +52,25 @@ public class ClientHandler {
 	public void makeTurn(WrappedPacket wrappedPacket) {
 		RequestTurnPacket requestTurnPacket = (RequestTurnPacket) wrappedPacket.getPacket();
 		GameState gameState = requestTurnPacket.getGameState();
+		String username = requestTurnPacket.getUsername();
 
-		if (this.player.getName().equals(requestTurnPacket.getName())) {
 
+		if(gameState == null){
+			Debug.printMessage(this ,"The received gamestate is NULL");
+		}
+
+		if(username == null){
+			Debug.printMessage(this ,"The received username is NULL");
+		}
+
+		this.client.getGameSession().updateGame(gameState);
+		Debug.printMessage(this,player.getUsername()+": It is " +requestTurnPacket.getUsername() + " turn");
+
+		if (this.player.getUsername().equals(requestTurnPacket.getUsername())) {
+			Debug.printMessage(this,player.getUsername()+": It is my turn...");
 			Turn turn = this.player.makeTurn(gameState);
-
-			TurnPacket turnPacket = new TurnPacket(player.getName(), turn);
+			Debug.printMessage(this,player.getUsername()+": I know what to do...");
+			TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
 			WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
 			this.client.sendToServer(wrPacket);
 			;

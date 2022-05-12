@@ -53,9 +53,9 @@ public class Chat {
 	 * @author tgeilen
 	 */
 	public void addMessage(Player player, String message) {
-		ChatMessage msg = new ChatMessage(player.getName(), message);
+		ChatMessage msg = new ChatMessage(player.getUsername(), message);
 		chatMessages.add(msg);
-		Debug.printMessage("[CHAT] " + player.getName() + ": " + message);
+		Debug.printMessage("[CHAT] " + player.getUsername() + ": " + message);
 	}
 
 	public void addMessage(ChatMessage chatMessage) {

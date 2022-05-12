@@ -1,5 +1,6 @@
 package game.model.player;
 
+import game.model.Debug;
 import game.model.GameState;
 import game.model.GameSession;
 import game.model.Turn;
@@ -8,12 +9,12 @@ import java.io.Serializable;
 /**
  * This class represents one player of the game.
  */
-public class Player implements Serializable {
+public class Player  implements Serializable {
 
 	/**
 	 * Name of the player.
 	 */
-	private String name;
+	private String username;
 
 	/**
 	 * Type of the player.
@@ -28,7 +29,7 @@ public class Player implements Serializable {
 	/**
 	 * current session of player
 	 */
-	private GameSession gameSession;
+	//private GameSession gameSession;
 
 	/**
 	 * tells wether player is played by AI or not
@@ -48,35 +49,41 @@ public class Player implements Serializable {
 	 * word list for automated chat messages
 	 */
 
+	private Boolean threadIsActive = false;
+
 	private String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?", "n00b",
 			"How can become as good as yoU?"};
+
+	//public EndpointClient endpointClient;
+	//public Session session;
 
 	/**
 	 * values of a player
 	 *
-	 * @param name name of the player
+	 * @param username name of the player
 	 * @param type type of the player
 	 * @author tiotto
 	 */
-	public Player(String name, PlayerType type) {
-		this.name = name;
+	public Player(String username, PlayerType type) {
+		this.username = username;
 		this.type = type;
 		this.score = 0;
 		this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
 				type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
 		this.isHost = false;
 
+
 	}
 
 	/**
 	 * values of a player
 	 *
-	 * @param name name of the player
+	 * @param username name of the player
 	 * @param type type of the player
 	 * @author tbuscher
 	 */
-	public Player(String name, PlayerType type, boolean isHost) {
-		this.name = name;
+	public Player(String username, PlayerType type, boolean isHost) {
+		this.username = username;
 		this.type = type;
 		this.score = 0;
 		this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
@@ -92,6 +99,19 @@ public class Player implements Serializable {
 
 	}
 
+	public void run(){
+		this.threadIsActive = true;
+		Debug.printMessage(this, this.username + " Thread has been started");
+		while(this.threadIsActive){
+
+		}
+	}
+
+
+
+	public void killThread(){
+		this.threadIsActive = false;
+	}
 
 	/**
 	 * join an existing session
@@ -100,7 +120,7 @@ public class Player implements Serializable {
 	 * @author tgeilen
 	 */
 	public void setGameSession(GameSession gameSession) {
-		this.gameSession = gameSession;
+		//this.gameSession = gameSession;
 	}
 
 
@@ -111,7 +131,7 @@ public class Player implements Serializable {
 	 * @author tgeilen
 	 */
 	public void addChatMessage(String msg) {
-		this.gameSession.getChat().addMessage(this, msg);
+		//this.gameSession.getChat().addMessage(this, msg);
 
 	}
 
@@ -141,20 +161,24 @@ public class Player implements Serializable {
 
 			String msg = this.wordlist[(int) Math.floor(Math.random() * this.wordlist.length)];
 
-			this.gameSession.getChat().addMessage(this, msg);
+			//this.gameSession.getChat().addMessage(this, msg);
 		}
 	}
+
+
+
+
 
 	public PlayerType getType() {
 		return type;
 	}
 
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 
 	public String toString() {
-		return name;
+		return username;
 	}
 
 	public int getOrderNum() {

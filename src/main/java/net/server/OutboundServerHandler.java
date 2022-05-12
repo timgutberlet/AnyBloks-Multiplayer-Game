@@ -39,6 +39,8 @@ public class OutboundServerHandler {
 		this.gameSession = gameSession;
 		this.gameSession.setOutboundServerHandler(this);
 
+		Debug.printMessage(this,"OutboundServerHandler created");
+
 	}
 
 	/**
@@ -48,12 +50,14 @@ public class OutboundServerHandler {
 	 * @author tgeilen
 	 */
 	public void requestTurn(String username) {
+		Debug.printMessage(this,username + " will be requested to make a turn");
 		GameState gameState = this.gameSession.getGame().getGameState();
 		RequestTurnPacket requestTurnPacket = new RequestTurnPacket(username, gameState);
 		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.REQUEST_TURN_PACKET,
 				requestTurnPacket);
 
 		this.server.sendMessage(wrappedPacket, username);
+		Debug.printMessage(this,"Requested turn from "+username);
 	}
 
 

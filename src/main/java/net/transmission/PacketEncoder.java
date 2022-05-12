@@ -1,5 +1,7 @@
 package net.transmission;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.websocket.EncodeException;
@@ -33,6 +35,7 @@ public class PacketEncoder implements Encoder.Text<WrappedPacket> {
 	 * @throws EncodeException is thrown
 	 */
 	public String encode(final WrappedPacket toEncode) throws EncodeException {
+		//objMapper.setVisibility(PropertyAccessor.ALL, Visibility.ANY);
 		try {
 			return objMapper.writeValueAsString(toEncode);
 		} catch (JsonProcessingException e) {

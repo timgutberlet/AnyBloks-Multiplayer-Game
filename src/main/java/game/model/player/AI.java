@@ -143,7 +143,7 @@ public class AI {
 		possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
 		for (Turn t : possibleMoves) { //for every possible turn are the future steps been calculated and then the best is chosen
 			int turnVal;
-			if (gameState.getPlayer().size()
+			if (gameState.getPlayerList().size()
 					== 2) { //with two players the real minimax algorithm can be used for the evaluation of the turn
 //        turnVal = minimax2Player(gameState.tryTurn(t),
 //            gameState.getNextColor(gameState.getColorFromPlayer(player)), 0, false,

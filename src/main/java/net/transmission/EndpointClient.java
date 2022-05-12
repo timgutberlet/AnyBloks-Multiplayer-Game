@@ -2,7 +2,6 @@ package net.transmission;
 
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.GameState;
 import game.model.player.Player;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
@@ -10,8 +9,6 @@ import javax.websocket.EncodeException;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import net.packet.chat.ChatMessagePacket;
-import net.packet.game.GameUpdatePacket;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.server.ClientHandler;
@@ -32,6 +29,15 @@ public class EndpointClient {
 	private GameSession gameSession;
 	private ClientHandler clientHandler;
 	private Player player;
+
+	public EndpointClient(Player player){
+		super();
+		this.player = player;
+	}
+
+	public EndpointClient(){
+
+	}
 
 
 	private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
@@ -56,15 +62,16 @@ public class EndpointClient {
 		this.server = ses;
 		this.clientHandler = new ClientHandler(this);
 		this.gameSession = new GameSession();
-		this.player = new Player();
-		this.player.setGameSession(this.gameSession);
+		//this.player.setGameSession(this.gameSession);
 		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
 		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
+
+
 	}
 
 	@OnMessage
 	public void onMessage(final WrappedPacket packet, Session ses) {
-		LOG.info("A packet has been sent here by the server, it is of the type: {} send by {}",
+		LOG.info(this.player.getUsername() + ": A packet has been sent here by the server, it is of the type: {} send by {}",
 				packet.getPacketType().toString(), ses.getId());
 		PacketType type = packet.getPacketType();
 		switch (type) {
@@ -80,6 +87,7 @@ public class EndpointClient {
 				break;
 
 			case REQUEST_TURN_PACKET:
+				Debug.printMessage(this,"REQUEST TURN RECIEVED");
 				this.clientHandler.makeTurn(packet);
 				break;
 

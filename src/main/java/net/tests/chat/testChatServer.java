@@ -1,4 +1,4 @@
-package net.tests;
+package net.tests.chat;
 
 import static net.packet.abstr.PacketType.GAME_UPDATE_PACKET;
 

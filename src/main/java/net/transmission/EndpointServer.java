@@ -55,6 +55,7 @@ public class EndpointServer {
 		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
 		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
 
+
 		this.gameSession = new GameSession();
 		this.inboundServerHandler = new InboundServerHandler(this, gameSession);
 		this.outboundServerHandler = new OutboundServerHandler(this, gameSession);
@@ -93,6 +94,7 @@ public class EndpointServer {
 
 		switch (type) {
 			case INIT_SESSION_PACKET: {
+
 				if (this.gameSession == null) {
 					this.gameSession = new GameSession();
 				}
@@ -148,6 +150,9 @@ public class EndpointServer {
 	 * @param username
 	 */
 	public void sendMessage(WrappedPacket wrappedPacket, String username) {
+
+		Debug.printMessage(this, this.getUsername2Session().keySet().toString());
+
 		try {
 			Session client = this.username2Session.get(username);
 			client.getBasicRemote().sendObject(wrappedPacket);
@@ -167,6 +172,9 @@ public class EndpointServer {
 	 * @param client
 	 */
 	public void sendMessage(WrappedPacket wrappedPacket, Session client) {
+
+		Debug.printMessage(this, this.getUsername2Session().keySet().toString());
+
 		try {
 			client.getBasicRemote().sendObject(wrappedPacket);
 		} catch (IOException e) {

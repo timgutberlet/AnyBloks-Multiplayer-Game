@@ -11,8 +11,8 @@ import net.packet.abstr.Packet;
  */
 public class RequestTurnPacket extends Packet {
 
-	final String username;
-	final GameState gameState;
+	String username;
+	GameState gameState;
 
 	/**
 	 * empty constructor for jackson
@@ -40,7 +40,7 @@ public class RequestTurnPacket extends Packet {
 		return gameState;
 	}
 
-	public String getName() {
+	public String getUsername() {
 		return username;
 	}
 }

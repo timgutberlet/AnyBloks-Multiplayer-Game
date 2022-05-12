@@ -44,10 +44,14 @@ module bloks3 {
 	  opens net.packet.chat;
     exports net.packet.account;
     opens net.packet.account;
+    opens net.server;
+    exports net.server;
+    opens net.transmission;
     //exports net.packet.abstr;
     //opens net.packet.abstr;
     exports net.packet.game;
     opens net.packet.game;
 	exports net.tests;
+	exports net.tests.chat;
 
 }
