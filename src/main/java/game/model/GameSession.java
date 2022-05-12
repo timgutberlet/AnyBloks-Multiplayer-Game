@@ -4,6 +4,7 @@ import game.model.chat.Chat;
 import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
+import game.model.player.PlayerType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import net.server.HostServer;
@@ -27,6 +28,8 @@ public class GameSession {
 	private Player hostPlayer;
 	private Game game;
 	private GameServer gameServer;
+
+	private Player localPlayer;
 
 	private HashMap<String, Integer> scoreboard = new HashMap<String, Integer>();
 
@@ -83,9 +86,18 @@ public class GameSession {
 	 */
 	public void addPlayer(Player player) {
 		this.playerList.add(player);
+		if(this.playerList.size() == 1){
+			this.localPlayer = player;
+		}
 		player.setGameSession(this);
 	}
-
+	/**
+	 * Function returning the local player
+	 * @author tgutberl
+	 */
+	public Player getLocalPlayer(){
+		return this.localPlayer;
+	}
 	/**
 	 * function to set the host of a session
 	 *

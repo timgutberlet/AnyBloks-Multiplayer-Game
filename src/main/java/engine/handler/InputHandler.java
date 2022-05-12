@@ -1,6 +1,7 @@
 package engine.handler;
 
 import engine.controller.AbstractGameController;
+import game.model.board.BoardSquare;
 import game.view.poly.SquarePolyPane;
 import java.util.HashSet;
 import java.util.Set;
@@ -48,6 +49,10 @@ public class InputHandler {
       node.setTranslateX(mouseEvent.getSceneX() - mouseAnchorX);
       node.setTranslateY(mouseEvent.getSceneY() - mouseAnchorY);
     });
+  }
+
+  public boolean isBoardClicked(BoardSquare boardSquare){
+    return boardSquarePressed.contains(boardSquare);
   }
 
   private void clearKeys() {

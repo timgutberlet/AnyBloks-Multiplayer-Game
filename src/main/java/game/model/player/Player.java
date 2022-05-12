@@ -56,9 +56,15 @@ public class Player implements Serializable {
   /**
    * word list for automated chat messages
    */
-
   private final String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?", "n00b",
       "How can become as good as yoU?"};
+
+  /**
+   * Check if AI Calc i currently running
+   */
+  private boolean aiCalcRunning;
+
+
 
   /**
    * values of a player
@@ -133,11 +139,16 @@ public class Player implements Serializable {
    */
   public Turn makeTurn(GameState gameState) {
     if (this.isAI) {
+      this.aiCalcRunning = true;
       return AI.calculateNextMove(gameState, this);
     } else {
+      this.aiCalcRunning = false;
+
       return null; //TODO add logic for non ai players
     }
-
+  }
+  public Boolean getAiCalcRunning(){
+    return this.aiCalcRunning;
   }
 
   /**
