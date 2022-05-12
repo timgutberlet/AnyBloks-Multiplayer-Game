@@ -4,9 +4,9 @@ import java.net.URI;
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import net.packet.account.CreateAccountRequestPacket;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.account.CreateAccountRequestPacket;
 import net.server.HostServer;
 
 /**
@@ -16,33 +16,33 @@ import net.server.HostServer;
  */
 public class UseServerCom {
 
-	static HostServer hostServer = new HostServer();
+  static HostServer hostServer = new HostServer();
 
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
-		try {
-			System.out.println("Got here Caller function");
+    try {
+      System.out.println("Got here Caller function");
 
-			hostServer.startWebsocket(8080);
-			System.out.println("Made it past start");
+      hostServer.startWebsocket(8080);
+      System.out.println("Made it past start");
 
-			final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-			EndpointClient client = new EndpointClient();
-			System.out.println("Gonna connect");
+      final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+      EndpointClient client = new EndpointClient();
+      System.out.println("Gonna connect");
 
-			Session ses = container.connectToServer(client, URI.create("ws://localhost:8080/packet"));
-			System.out.println("Past connection here");
+      Session ses = container.connectToServer(client, URI.create("ws://localhost:8080/packet"));
+      System.out.println("Past connection here");
 
-			WrappedPacket packet = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-					new CreateAccountRequestPacket("testuser", "unhashed"));
+      WrappedPacket packet = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+          new CreateAccountRequestPacket("testuser", "unhashed"));
 
-			ses.getBasicRemote().sendObject(packet);
-			ses.close();
-			hostServer.stop();
+      ses.getBasicRemote().sendObject(packet);
+      ses.close();
+      hostServer.stop();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-	}
+  }
 }

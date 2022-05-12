@@ -29,6 +29,11 @@ module bloks3 {
     opens game.model.player;
     opens game.model.chat;
     opens game.model.gamemodes;
+    opens net.packet.account;
+    opens net.packet.game;
+    opens net.packet.chat;
+
+
 
 
     exports game.core;
@@ -41,13 +46,10 @@ module bloks3 {
     exports game.model.chat;
     exports game.model.gamemodes;
 	  exports net.packet.chat;
-	  opens net.packet.chat;
     exports net.packet.account;
-    opens net.packet.account;
     //exports net.packet.abstr;
     //opens net.packet.abstr;
     exports net.packet.game;
-    opens net.packet.game;
-	exports net.tests;
+	  exports net.tests;
 
 }
