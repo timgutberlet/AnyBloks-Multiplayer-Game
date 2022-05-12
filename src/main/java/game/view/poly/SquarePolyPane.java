@@ -1,19 +1,18 @@
-package game.view;
+package game.view.poly;
 
-import game.model.polygon.PolySquare;
-import javafx.scene.layout.GridPane;
+import engine.component.ClassicField;
+import engine.handler.InputHandler;
+import game.model.polygon.Poly;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  * @author lbaudenb
  */
-public class SquarePolyPane extends GridPane {
 
-	private PolySquare poly;
+public class SquarePolyPane extends PolyPane {
 
-	public SquarePolyPane(PolySquare poly) {
-		this.poly = poly;
+	public SquarePolyPane(Poly poly, InputHandler inputHandler) {
+		super(poly, inputHandler);
 		setPoly();
 	}
 
@@ -25,9 +24,16 @@ public class SquarePolyPane extends GridPane {
 	 * @param color
 	 */
 	public void setSquare(int i, int j, Color color) {
-		Rectangle r = new Rectangle(7, 7);
-		r.setFill(color);
-		this.add(r, i, j);
+		ClassicField field = new ClassicField(i, j);
+		field.getPoints().addAll(
+				0 + j * size, 0 + i * size,
+				size + j * size, 0 + i * size,
+				size + j * size, size + i * size,
+				0 + j * size, size + i * size);
+		field.setFill(color);
+
+		fields.add(field);
+		this.getChildren().add(field);
 	}
 
 	/**
@@ -37,7 +43,7 @@ public class SquarePolyPane extends GridPane {
 	public void setPoly() {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
-				if (poly.containsField(i, j)) {
+				if (poly.containsField(new int[]{i, j})) {
 					setSquare(i, j, poly.getJavaColor());
 				} else {
 					setSquare(i, j, Color.TRANSPARENT);

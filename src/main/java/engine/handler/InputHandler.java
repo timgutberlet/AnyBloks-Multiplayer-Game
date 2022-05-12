@@ -1,14 +1,11 @@
 package engine.handler;
 
 import engine.controller.AbstractGameController;
-import game.controller.InGameUiController;
-import game.view.BoardSquarePane;
-import game.view.SquarePolyPane;
+import game.view.poly.SquarePolyPane;
 import java.util.HashSet;
 import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**

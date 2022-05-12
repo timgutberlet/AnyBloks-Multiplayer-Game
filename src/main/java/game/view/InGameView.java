@@ -1,8 +1,7 @@
 package game.view;
 
-import game.model.board.BoardSquare;
 import game.model.Game;
-import game.model.gamemodes.GMClassic;
+import game.view.board.BoardPane;
 import javafx.scene.Group;
 import javafx.scene.Node;
 

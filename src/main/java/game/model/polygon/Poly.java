@@ -60,6 +60,8 @@ public abstract class Poly implements Cloneable {
 
   public abstract boolean equalsReal(Object o);
 
+  public abstract boolean containsField(int[] pos);
+
   /**
    * checks if the equals test works for every rotation and mirror
    *
