@@ -1,5 +1,6 @@
 package game.view;
 
+import engine.handler.InputHandler;
 import game.model.board.Board;
 import game.model.board.BoardSquare;
 import game.model.field.FieldSquare;
@@ -18,7 +19,10 @@ public class BoardSquarePane extends GridPane implements BoardPane {
 
 	private BoardSquare boardSquare;
 
-	public BoardSquarePane(BoardSquare boardSquare) {
+	private InputHandler inputHandler;
+
+	public BoardSquarePane(BoardSquare boardSquare, InputHandler inputHandler) {
+		this.inputHandler = inputHandler;
 		this.boardSquare = boardSquare;
 		squares = new ArrayList<>();
 		setBoard();
@@ -37,6 +41,10 @@ public class BoardSquarePane extends GridPane implements BoardPane {
 		r.setFill(color);
 		squares.add(r);
 		this.add(r, column, row);
+		//inputHandler.registerPolyPressed(r);
+		inputHandler.registerBoardHovered(r);
+		inputHandler.registerBoardLeft(r);
+		inputHandler.registerBoardPressed(r);
 	}
 
 	@Override
@@ -45,6 +53,7 @@ public class BoardSquarePane extends GridPane implements BoardPane {
 			for (int column = 0; column < boardSquare.SIZE; column++) {
 				int[] pos = {row, column};
 				setSquare(boardSquare.getJavaColor(pos), row, column);
+
 			}
 		}
 	}

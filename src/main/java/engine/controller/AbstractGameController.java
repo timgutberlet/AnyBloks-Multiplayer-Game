@@ -4,7 +4,6 @@ import engine.handler.InputHandler;
 import game.config.Config;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.application.ConditionalFeature;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -38,7 +37,7 @@ public abstract class AbstractGameController extends AnimationTimer {
     this.stage = stage;
     this.application = application;
     lastNanoTime = System.nanoTime();
-    inputHandler = new InputHandler();
+    inputHandler = new InputHandler(this);
     stage.setMinWidth(Config.getIntValue("SCREEN_MINIMUM_WIDTH"));
     stage.setMinHeight(Config.getIntValue("SCREEN_MINIMUM_HEIGHT"));
     this.start();
