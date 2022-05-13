@@ -26,7 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class InGameUiController extends AbstractUiController {
+public abstract class InGameUiController extends AbstractUiController {
 
   private GameSession gameSession;
 
@@ -68,8 +68,6 @@ public class InGameUiController extends AbstractUiController {
     super.root.getChildren().add(Gui);
     createBoard();
     setUpUi();
-
-
   }
 
   public void createBoard() {
@@ -87,6 +85,8 @@ public class InGameUiController extends AbstractUiController {
     }
     Gui.getChildren().add(boardPane);
   }
+
+  private Player localPlayer;
 
 
   private void setUpUi() {
@@ -171,10 +171,10 @@ public class InGameUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
     //Die Folgenden zwei Befehle sollten für einen Reibungslosen Spielablauf optimiert werden
-    this.game.makeMove();
+    //this.game.makeMove();
     boardPane.repaint(game.getGameState().getBoard());
     refreshUi();
-    Player localPlayer = gameSession.getLocalPlayer();
+    localPlayer = gameSession.getLocalPlayer();
     aiCalcRunning = true;
     //Check if AI is calculating - only refresh Board then
     if(aiCalcRunning){

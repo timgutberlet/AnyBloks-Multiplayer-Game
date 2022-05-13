@@ -205,7 +205,7 @@ public class LobbyController extends AbstractUiController {
       Debug.printMessage("Hallo3");
       //game.startGame();
       gameController.setActiveUiController(
-          new InGameUiController(gameController, this.gameSession.getGame(), gameSession));
+          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
     }
 
   }

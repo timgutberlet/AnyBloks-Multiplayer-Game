@@ -83,6 +83,7 @@ public class GameSession {
 	 *
 	 * @param player
 	 * @author tgeilen
+	 * @author tgutberl
 	 */
 	public void addPlayer(Player player) {
 		this.playerList.add(player);

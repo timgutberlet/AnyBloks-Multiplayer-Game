@@ -1,5 +1,6 @@
 package game.view.board;
 
+import engine.component.Field;
 import engine.component.TrigonField;
 import engine.handler.InputHandler;
 import game.model.board.Board;
@@ -28,7 +29,7 @@ public class TrigonBoardPane extends BoardPane {
 	 * @param color
 	 */
 	private void setTriangleRight(int i, int j, Color color) {
-		TrigonField triangleRight = new TrigonField(i,j,1);
+		Field triangleRight = new TrigonField(i,j,1);
 		triangleRight.getPoints().addAll(
 				xOfSet + size + j * size + i * xOfSet, yOfSet + i * yOfSet, //right vertex
 				size + j * size + i * xOfSet, 0.0 + i * yOfSet, // top vertex
@@ -36,6 +37,7 @@ public class TrigonBoardPane extends BoardPane {
 		triangleRight.setFill(color);
 		triangleRight.setStroke(Color.BLACK);
 		this.getChildren().add(triangleRight);
+		inputHandler.registerField(triangleRight);
 	}
 
 	/**
@@ -46,7 +48,7 @@ public class TrigonBoardPane extends BoardPane {
 	 * @param color
 	 */
 	private void setTriangleLeft(int i, int j, Color color) {
-		TrigonField triangleLeft = new TrigonField(i,j,0);
+		Field triangleLeft = new TrigonField(i,j,0);
 		triangleLeft.getPoints().addAll(
 				xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex
 				size + j * size + i * xOfSet, 0.0 + i * yOfSet, // right vertex
@@ -54,6 +56,7 @@ public class TrigonBoardPane extends BoardPane {
 		triangleLeft.setFill(color);
 		triangleLeft.setStroke(Color.BLACK);
 		this.getChildren().add(triangleLeft);
+		inputHandler.registerField(triangleLeft);
 	}
 
 	/**
