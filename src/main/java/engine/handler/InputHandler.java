@@ -2,7 +2,7 @@ package engine.handler;
 
 import engine.component.Field;
 import engine.controller.AbstractGameController;
-import game.view.poly.SquarePolyPane;
+import game.view.poly.PolyPane;
 import java.util.HashSet;
 import java.util.Set;
 import javafx.scene.Node;
@@ -169,13 +169,15 @@ public class InputHandler {
     return fieldPressed.contains(field);
   }
 
-  public void registerPoly(SquarePolyPane polyPane) {
+  public void registerPoly(PolyPane polyPane) {
     polyPane.setOnMousePressed((e -> {
       System.out.println(
           "Poly Pressed: " + GridPane.getRowIndex(polyPane) + " " + GridPane.getColumnIndex(
               polyPane));
     }));
   }
+
+
 
 
 }

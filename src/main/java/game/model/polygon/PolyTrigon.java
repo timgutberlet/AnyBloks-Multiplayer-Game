@@ -379,4 +379,13 @@ public class PolyTrigon extends Poly {
 		}
 		return false;
 	}
+
+	public boolean containsField(int x, int y, int isRight) {
+		for (FieldTrigon ft : shape) {
+			if (ft.pos[0] == x && ft.pos[1] == y && ft.pos[2] == isRight) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

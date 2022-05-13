@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 /**
  * @author lbaudenb
  */
-public abstract class StackPane extends GridPane {
+public class StackPane extends GridPane {
 
   private final int MAX_NB_POLYS = 8;
 
@@ -26,7 +26,10 @@ public abstract class StackPane extends GridPane {
     setContent();
   }
 
-  public abstract void setUpStack(List<Poly> polys);
+  public void setUpStack(List<Poly> polys) {
+  }
+
+  ;
 
   /**
    * Method that fills the StackSquarePane with SquarePolyPane objects
@@ -36,6 +39,7 @@ public abstract class StackPane extends GridPane {
     int col = 0;
 
     for (PolyPane polyPane : polyPanes) {
+      inputHandler.registerPoly(polyPane);
       this.add(polyPane, col, row);
       col++;
       if (col % MAX_NB_POLYS == 0) {
@@ -43,6 +47,10 @@ public abstract class StackPane extends GridPane {
         col = 0;
       }
     }
+  }
+
+  public List<PolyPane> getPolyPanes() {
+    return this.polyPanes;
   }
 
 }

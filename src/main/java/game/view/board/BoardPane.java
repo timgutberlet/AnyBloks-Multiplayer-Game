@@ -40,8 +40,6 @@ public class BoardPane extends Pane {
 	public void setBoard() {
 	}
 
-	;
-
 	/**
 	 * Method that updates the BoardPane
 	 *
@@ -49,10 +47,14 @@ public class BoardPane extends Pane {
 	 */
 	public void repaint(Board board) {
 		this.board = board;
+		this.fields.clear();
+		this.getChildren().clear();
 		setBoard();
 	}
 
-	;
+	public double getSize() {
+		return this.size;
+	}
 
 }
 

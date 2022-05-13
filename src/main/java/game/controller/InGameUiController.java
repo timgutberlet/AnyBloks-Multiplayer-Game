@@ -5,9 +5,7 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.InputHandler;
 import game.model.Turn;
-import game.model.board.BoardSquare;
 import game.model.Game;
-import game.model.board.BoardTrigon;
 import game.model.player.Player;
 import game.model.GameSession;
 import game.model.chat.Chat;
@@ -15,6 +13,8 @@ import game.model.polygon.Poly;
 import game.view.board.BoardPane;
 import game.view.board.SquareBoardPane;
 import game.view.board.TrigonBoardPane;
+import game.view.poly.PolyPane;
+import game.view.stack.StackPane;
 import game.view.stack.StackSquarePane;
 import game.view.stack.StackTrigonPane;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class InGameUiController extends AbstractUiController {
@@ -39,6 +38,8 @@ public class InGameUiController extends AbstractUiController {
 
   private BoardPane boardPane;
 
+  private List<StackPane> stackPanes;
+
   private VBox playerStacks;
 
   private List<Label> playerPoints;
@@ -51,6 +52,7 @@ public class InGameUiController extends AbstractUiController {
 
   private boolean aiCalcRunning;
 
+  private int count = 0;
 
   public InGameUiController(AbstractGameController gameController, Game game, GameSession gameSession) {
     super(gameController);
@@ -61,6 +63,7 @@ public class InGameUiController extends AbstractUiController {
     this.gameController = gameController;
     this.Gui = new HBox();
     playerPoints = new ArrayList<>();
+    stackPanes = new ArrayList<>();
 
     super.root.getChildren().add(Gui);
     createBoard();
@@ -96,8 +99,10 @@ public class InGameUiController extends AbstractUiController {
         ;
       case "CLASSIC":
         for (Player p : this.gameSession.getPlayerList()) {
-          StackSquarePane squareStack = new StackSquarePane(p, inputHandler , game.getGameState().getRemainingPolys(p));
-          playerStacks.getChildren().add(squareStack);
+          StackPane stackPane = new StackSquarePane(p, inputHandler,
+              game.getGameState().getRemainingPolys(p));
+          stackPanes.add(stackPane);
+          playerStacks.getChildren().add(stackPane);
         }
         ;
         break;
@@ -181,8 +186,10 @@ public class InGameUiController extends AbstractUiController {
         System.out.println("Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
       }
     }
+
     if(game.getGameState().getPlayerCurrent().equals(localPlayer)){
       boolean action = false;
+
       //If localPlayer has selected a Poly, check if he also already click on the Board
       if(localPlayer.getSelectedPoly() != null){
 
