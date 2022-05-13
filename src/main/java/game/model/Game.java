@@ -133,7 +133,7 @@ public class Game {
 	public void startGame() {
 		Debug.printMessage(this, "Game has been started");
 		this.gameState.setStateRunning(true);
-		this.makeMove();
+		//this.makeMove();
 		//this.run();
 	}
 }

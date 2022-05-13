@@ -1,5 +1,6 @@
 package game.controller;
 
+import engine.component.Field;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.InputHandler;
@@ -164,6 +165,7 @@ public class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+    //Die Folgenden zwei Befehle sollten für einen Reibungslosen Spielablauf optimiert werden
     this.game.makeMove();
     boardPane.repaint(game.getGameState().getBoard());
     refreshUi();
@@ -174,6 +176,11 @@ public class InGameUiController extends AbstractUiController {
       updateBoard();
     }
     //Check if Player has Turn
+    for(Field field : boardPane.getFields()){
+      if(gameController.getInputHandler().isFieldPressed(field)){
+        System.out.println("Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
+      }
+    }
     if(game.getGameState().getPlayerCurrent().equals(localPlayer)){
       boolean action = false;
       //If localPlayer has selected a Poly, check if he also already click on the Board
@@ -186,11 +193,7 @@ public class InGameUiController extends AbstractUiController {
         ArrayList<Turn> possibleTurns = new ArrayList<Turn>();
         possibleTurns = game.getGameState().getBoard().getPossibleMoves(helpList, false);
         paintPossibleTurns(possibleTurns);
-        /* TODO implement check of any FieldTile if it is clicked
-        if(gameController.getInputHandler().isBoardClicked()){
-
-        }
-        */
+        //TODO implement check of any FieldTile if it is clicked
       }
     }
   }

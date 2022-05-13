@@ -12,12 +12,14 @@ public class StandardConfig {
 	 * Config File is not used or outdated
 	 */
 	public static final String[][] standardConfig = new String[][]{
-			{"VERSION", "6"},
+			{"VERSION", "7"},
 			{"SCREEN_WIDTH", "1280"},
 			{"SCREEN_HEIGHT", "720"},
 			{"SCREEN_MINIMUM_WIDTH", "1280"},
 			{"SCREEN_MINIMUM_HEIGHT", "720"},
 			{"THEME", "Standard"},
+			{"MAXIMUM_FPS", "60"},
+			{"SHOW_FPS", "true"},
 	};
 
 	private StandardConfig() {

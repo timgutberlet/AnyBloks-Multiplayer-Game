@@ -34,10 +34,7 @@ public class SquareBoardPane extends BoardPane {
 
 		fields.add(field);
 		this.getChildren().add(field);
-		//inputHandler.registerPolyPressed(r);
-		//inputHandler.registerBoardHovered(r);
-		//inputHandler.registerBoardLeft(r);
-		//inputHandler.registerBoardPressed(r);
+		inputHandler.registerField(field);
 	}
 
 	@Override

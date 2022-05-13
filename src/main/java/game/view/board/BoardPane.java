@@ -28,7 +28,12 @@ public class BoardPane extends Pane {
 		fields = new ArrayList<>();
 		setBoard();
 	}
-
+	/**
+	 * Method that returns all field Elements of the Board
+	 */
+	public List<Field> getFields(){
+		return  this.fields;
+	}
 	/**
 	 * Method that sets up the BoardPane for the first time Method that updates the BoardPane
 	 */
