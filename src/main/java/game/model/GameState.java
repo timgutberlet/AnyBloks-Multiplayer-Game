@@ -97,8 +97,8 @@ public class GameState implements Serializable, Cloneable {
 		this.playerList = gameSession.getPlayerList();
 		this.running = false;
 		this.started = false;
-
 		init();
+
 	}
 
 	/**
@@ -175,6 +175,7 @@ public class GameState implements Serializable, Cloneable {
 					break;
 				}
 			}
+			//Debug.printMessage(this,"Remaing polys calculated and added to GameState");
 			remainingPolys.add(polyOfPlayer);
 
 		}
@@ -192,9 +193,19 @@ public class GameState implements Serializable, Cloneable {
 	 * @return remaining polys for a specific player
 	 */
 	public ArrayList<Poly> getRemainingPolys(Player p) {
-		//Debug.printMessage("GET REMAINING POLYS: " + this.session.getPlayerList().size());
+
+		Debug.printMessage(this,"Size fo remainingPolys arrayList:");
+		Debug.printMessage(this, "Entries: "+remainingPolys.size());
+		for(ArrayList<Poly> arr : this.remainingPolys){
+			Debug.printMessage(this,"Polys: "+arr.size());
+		}
+
+
+		//Debug.printMessage(this,"GET REMAINING POLYS: " + this.playerList.size());
 		for (Player player: this.playerList){
+		//	Debug.printMessage(this,"Comparing " + p.getUsername() +" to " + player.getUsername());
 			if(p.getUsername().equals(player.getUsername())){
+		//		Debug.printMessage(this,"Getting remaining polys for " + player.getUsername());
 				return remainingPolys.get(this.playerList.indexOf(player));
 			}
 		}
@@ -280,8 +291,8 @@ public class GameState implements Serializable, Cloneable {
 		for (Player p : playerList) {
 			Debug.printMessage(
 					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-							+ " möglichkeiten Steine zu legen");
-			//Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
+							+ " Möglichkeiten Steine zu legen");
+			Debug.printMessage(this,"Remaining Polys for __" + p.getUsername() + "__ : " + this.getRemainingPolys(p).size());
 			if (getRemainingPolys(p).size() > 0 && (
 					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
 							> 0)) {
@@ -292,12 +303,13 @@ public class GameState implements Serializable, Cloneable {
 	}
 
 	public boolean checkEnd(Turn turn) {
+
 		boolean end = true;
 		for (Player p : playerList) {
 			Debug.printMessage(
 					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
 							+ " möglichkeiten Steine zu legen");
-			//Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
+			Debug.printMessage(this,"(TURN) Remaining Polys for : " + p.getUsername() + " : " + this.getRemainingPolys(p).size());
 			if (getRemainingPolys(p).size() > 0 && (
 					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
 							> 0)) {
@@ -405,12 +417,20 @@ public class GameState implements Serializable, Cloneable {
 	@Override
 	public String toString() {
 
-		String result = "Hallo";
+		String result = "PlayerList: \n";
 
 		for (Player p : this.playerList) {
 			result += p.getUsername() + "\n";
 		}
 
+		/*
+		result += "\nSize fo remainingPolys arrayList:\n";
+		result += "Entries: "+remainingPolys.size() +"\n";
+		for(ArrayList<Poly> arr : this.remainingPolys){
+			result += "		Polys: "+arr.size() + "\n";
+		}
+		*
+		 */
 		return result;
 	}
     /*
@@ -425,18 +445,18 @@ public class GameState implements Serializable, Cloneable {
   }
 */
 
-/*  private static String twoDigit(int i){
+  private static String twoDigit(int i){
     if (i < 10){
       return "0" + i;
     }
     return Integer.toString(i);
   }
-
+/*
   public String getHistory(){ // table over all played poly sizes for every player
     StringBuffer res = new StringBuffer();
     for (int i = 1; i < getRound(); i++){
       res.append("" + twoDigit(i));
-      for (int j = 0; j < player.size(); j++){
+      for (int j = 0; j < playerList.size(); j++){
         Turn t = history.get(j).get(i-1);
         int size = 0;
         if (t != null){
@@ -447,11 +467,11 @@ public class GameState implements Serializable, Cloneable {
       res.append("\n");
     }
     res.append("--");
-    for (Player p : player){
+    for (Player p : playerList){
       res.append("----");
     }
     res.append("\n  ");
-    for (int i = 0; i < player.size(); i++){
+    for (int i = 0; i < playerList.size(); i++){
       int sum = 0;
       for (Turn t : history.get(i)){
         if (t == null){
@@ -463,5 +483,26 @@ public class GameState implements Serializable, Cloneable {
     }
     return res.toString();
   }*/
+
+	public GameMode getGameMode() {
+		return gameMode;
+	}
+
+	public ArrayList<ArrayList<Poly>> getRemainingPolys() {
+		return remainingPolys;
+	}
+
+	public ArrayList<ArrayList<Turn>> getHistory() {
+		return history;
+	}
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public int getTurn() {
+		return turn;
+	}
+
 }
 

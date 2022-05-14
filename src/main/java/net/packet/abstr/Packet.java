@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
+import net.packet.game.GameWinPacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.InitSessionPacket;
 import net.packet.game.PlayerOrderPacket;
@@ -15,6 +16,7 @@ import net.packet.account.LoginResponsePacket;
 import net.packet.account.UpdateAccountRequestPacket;
 import net.packet.chat.ChatMessagePacket;
 import net.packet.game.RequestTurnPacket;
+import net.packet.game.TurnPacket;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -32,6 +34,8 @@ import net.packet.game.RequestTurnPacket;
 		@JsonSubTypes.Type(value = InitGamePacket.class, name = "InitGamePacket"),
 		@JsonSubTypes.Type(value = GameStartPacket.class, name = "GameStartPacket"),
 		@JsonSubTypes.Type(value = RequestTurnPacket.class, name = "RequestTurnPacket"),
+		@JsonSubTypes.Type(value = TurnPacket.class, name = "TurnPacket"),
+		@JsonSubTypes.Type(value = GameWinPacket.class, name = "GameWinPacket"),
 
 		@JsonSubTypes.Type(value = UpdateAccountRequestPacket.class, name = "UpdateAccountRequestPacket")}
 )

@@ -33,6 +33,9 @@ public class EndpointClient {
 	public EndpointClient(Player player){
 		super();
 		this.player = player;
+		this.gameSession = new GameSession();
+		this.player.setGameSession(this.gameSession);
+		this.clientHandler = new ClientHandler(this);
 	}
 
 	public EndpointClient(){
@@ -60,8 +63,8 @@ public class EndpointClient {
    Debug.printMessage(this,"CREATE_ACCOUNT_REQUEST sent to " + ses.getId());
 */
 		this.server = ses;
-		this.clientHandler = new ClientHandler(this);
-		this.gameSession = new GameSession();
+		//this.clientHandler = new ClientHandler(this);
+		//this.gameSession = new GameSession();
 		//this.player.setGameSession(this.gameSession);
 		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
 		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
@@ -115,6 +118,7 @@ public class EndpointClient {
 	 * @author tgeilen
 	 */
 	public void sendToServer(WrappedPacket wrappedPacket) {
+		Debug.printMessage(this, "I am sending something to the server...");
 		try {
 			this.server.getBasicRemote().sendObject(wrappedPacket);
 		} catch (IOException e) {
@@ -122,6 +126,7 @@ public class EndpointClient {
 		} catch (EncodeException e) {
 			e.printStackTrace();
 		}
+		Debug.printMessage(this, "I have sent something to the server...");
 	}
 
 	public GameSession getGameSession() {

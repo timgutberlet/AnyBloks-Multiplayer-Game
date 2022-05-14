@@ -1,6 +1,7 @@
 package game.model.player;
 
 import game.model.Color;
+import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.board.Board;
@@ -76,7 +77,10 @@ public class AI {
 	 */
 	public static Turn calculateNextEasyMove(Board board, ArrayList<Poly> remainingPolys,
 			boolean isFirstRound) {
+		Debug.printMessage(remainingPolys.size() + " remaining Polys when calculating the next move");
+		Debug.printMessage(board.toString());
 		ArrayList<Turn> possibleMoves = board.getPossibleMoves(remainingPolys, isFirstRound);
+		Debug.printMessage(possibleMoves.size() + " possible moves when calculating the next move");
 		possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
 		int rand = 0;
 		for (int i = 0; i < possibleMoves.size(); i++) {
@@ -86,6 +90,7 @@ public class AI {
 			}
 		}
 		if (possibleMoves.size() == 0) {
+			Debug.printMessage( "I think there are no possible moves...");
 			return null;
 		} else {
 			return possibleMoves.get(rand);

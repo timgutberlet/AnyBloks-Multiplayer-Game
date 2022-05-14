@@ -134,7 +134,9 @@ public class GameSession {
 	public Game startGame(GameMode gameMode) {
 
 		this.game = new Game(this, gameMode);
+		Debug.printMessage(this,"Game created at client");
 		this.game.startGame();
+		Debug.printMessage(this,"Game started at client");
 
 		return this.game;
 	}
@@ -147,7 +149,7 @@ public class GameSession {
 	public Game startGameServer(GameMode gameMode) {
 
 		//while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
-		while (this.getPlayerList().size()<4){ //TODO make dependdenc on gamemode
+		while (this.getPlayerList().size()<gameMode.getNeededPlayers()){ //TODO make dependdenc on gamemode
 			this.addBot(PlayerType.AI_EASY);
 		}
 
@@ -232,6 +234,8 @@ public class GameSession {
 			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
 					loginRequestPacket);
 			session.getBasicRemote().sendObject(wrappedPacket);
+
+
 
 		} catch (DeploymentException e) {
 			e.printStackTrace();

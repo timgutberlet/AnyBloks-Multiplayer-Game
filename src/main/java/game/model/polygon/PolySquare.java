@@ -126,6 +126,14 @@ public class PolySquare extends Poly {
 	public ArrayList<FieldSquare> shape;
 
 	/**
+	 * empty constructor for jackson
+	 */
+
+	public PolySquare(){
+
+	}
+
+	/**
 	 * Initializes the default values of a polygon
 	 *
 	 * @param shape shape of the polygon

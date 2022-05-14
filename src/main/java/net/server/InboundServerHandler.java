@@ -75,7 +75,7 @@ public class InboundServerHandler {
 
 		InitGamePacket initGamePacket = (InitGamePacket) wrappedPacket.getPacket();
 
-		this.server.getOutboundServerHandler().broadcastGameStart(initGamePacket.getGameMode());
+		//this.server.getOutboundServerHandler().broadcastGameStart(initGamePacket.getGameMode());
 
 		this.gameSession.startGameServer(initGamePacket.getGameMode());
 
@@ -83,20 +83,6 @@ public class InboundServerHandler {
 
 	}
 
-	/**
-	 * requests a player to make a turn
-	 *
-	 * @author tgeilen
-	 */
-	public void requestTurn(Player player) {
-		GameState gameState = this.gameSession.getGame().getGameState();
-		RequestTurnPacket requestTurnPacket = new RequestTurnPacket(player.getUsername(), gameState);
-		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.REQUEST_TURN_PACKET,
-				requestTurnPacket);
-		this.server.sendMessage(wrappedPacket, player.getUsername());
-		Debug.printMessage(this,"Requested turn from " + player.getUsername());
-
-	}
 
 	/**
 	 * recieve a turn from a remote player and forward it to game logic
@@ -109,6 +95,7 @@ public class InboundServerHandler {
 		TurnPacket turnPacket = (TurnPacket) packet.getPacket();
 		Turn turn = turnPacket.getTurn();
 		if (this.gameSession.getGame().checkTurn(turn)) {
+			Debug.printMessage(this, "The recieved turn is legal and will be played");
 			this.gameSession.getGame().makeMove(turn);
 		} else {
 			IllegalTurnPacket illegalTurnPacket = new IllegalTurnPacket();

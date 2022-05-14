@@ -1,6 +1,7 @@
 package net.server;
 
 import game.model.Debug;
+import game.model.GameSession;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.gamemodes.GameMode;
@@ -25,10 +26,12 @@ public class ClientHandler {
 
   private final EndpointClient client;
   private final Player player;
+	private final GameSession gameSession;
 
   public ClientHandler(EndpointClient client) {
     this.client = client;
     this.player = this.client.getPlayer();
+		this.gameSession = new GameSession();
   }
 
   /**
@@ -69,7 +72,11 @@ public class ClientHandler {
 		if (this.player.getUsername().equals(requestTurnPacket.getUsername())) {
 			Debug.printMessage(this,player.getUsername()+": It is my turn...");
 			Turn turn = this.player.makeTurn(gameState);
-			Debug.printMessage(this,player.getUsername()+": I know what to do...");
+			if(turn == null){
+				Debug.printMessage(this, "I don't know what to do!!!");
+			} else {
+				Debug.printMessage(this, player.getUsername() + ": I know what to do...");
+			}
 			TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
 			WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
 			this.client.sendToServer(wrPacket);

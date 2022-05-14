@@ -21,6 +21,8 @@ import net.packet.abstr.WrappedPacket;
 import net.packet.account.LoginResponsePacket;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -34,6 +36,7 @@ import net.server.OutboundServerHandler;
 public class EndpointServer {
 
   private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
+  private static final Logger LOG = LoggerFactory.getLogger(EndpointServer.class);
 
   // Creating HashSet for all Sessions
 //  private static final HashMap<String, Session> allSessions = (HashMap<String, Session>) Collections.synchronizedMap(
@@ -83,6 +86,8 @@ public class EndpointServer {
 //  public void onMessage(final WrappedPacket packet) throws IOException, EncodeException {
   public void onMessage(final WrappedPacket packet, final Session client)
       throws IOException, EncodeException {
+    LOG.info("A packet has been sent here by a client, it is of the type: {} send by {}",
+        packet.getPacketType().toString(), client.getId());
     PacketType type = packet.getPacketType();
     // Todo: remove
     Debug.printMessage(this, type.name());

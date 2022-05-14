@@ -1,11 +1,20 @@
 package game.model.polygon;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import game.model.Color;
 
 /**
  * @author tiotto
  * @date 23.03.2022
  */
+
+@JsonTypeInfo( use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+    @Type(value = PolySquare.class, name = "PolySquare"),
+    @Type(value = PolyTrigon.class, name = "PolyTrigon"),
+})
 public abstract class Poly implements Cloneable {
 
 
@@ -25,6 +34,13 @@ public abstract class Poly implements Cloneable {
    * states if the polygon was mirrored compared to the initial position
    */
   public boolean isMirrored;
+
+  /**
+   * empty constructor for jackson
+   */
+  public Poly(){
+
+  }
 
   public Poly(Color color) {
     this.color = color;

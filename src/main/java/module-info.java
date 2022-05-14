@@ -49,6 +49,7 @@ module bloks3 {
     exports game.model.gamemodes;
 	  exports net.packet.chat;
     exports net.packet.account;
+    exports game.model.polygon;
     //opens net.packet.account;
     opens net.server;
     exports net.server;

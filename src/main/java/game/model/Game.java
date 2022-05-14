@@ -30,6 +30,8 @@ public class Game {
 		this.players = gameSession.getPlayerList();
 		this.gameState = new GameState(this.gameSession, gamemode);
 
+		Debug.printMessage(this, "Game at client created");
+
 	}
 
 	public Game(GameSession gameSession, GameMode gamemode, Boolean isServer) {
@@ -39,6 +41,7 @@ public class Game {
 		this.players = gameSession.getPlayerList();
 		this.gameState = new GameState(this.gameSession, gamemode);
 		this.isServer = isServer;
+		Debug.printMessage(this, "Game on server created");
 
 	}
 
@@ -86,17 +89,33 @@ public class Game {
 	 * @author tgeilen
 	 */
 	public void makeMove(Turn turn) {
+		//Debug.printMessage(this,this.board.toString());
 		Player currentPlayer = this.gameState.getPlayerCurrent();
 		if (this.gameState.isStateRunning()) {
+
 			this.gameState.playTurn(turn);
+			Debug.printMessage(this, "The turn has been played");
+
+			this.gameSession.getOutboundServerHandler().broadcastGameUpdate();
+			Debug.printMessage(this, "All players have been informed about the made turn");
 		}
+
 		if (!this.gameState.checkEnd()) {
+			Debug.printMessage(this, "The Game is still running and the next player will be"
+					+ "asked to make a turn");
+
 			Player nextPlayer = this.gameState.getPlayerCurrent();
+			//Debug.printMessage(this, "Sending a GameUpdate to all players");
+			//this.gameSession.getOutboundServerHandler().broadcastGameUpdate();
+			Debug.printMessage(this, "Requesting " + nextPlayer.getUsername() + " to make a turn");
+
 			this.gameSession.getOutboundServerHandler().requestTurn(nextPlayer.getUsername());
 		} else {
+			this.getGameState().setStateEnding("true");
+			Debug.printMessage(this, "The game is over and all players will be informed");
 			this.gameSession.getOutboundServerHandler().broadcastGameWin(currentPlayer.getUsername());
 		}
-		this.gameSession.getOutboundServerHandler().broadcastGameUpdate();
+
 
 
 	}
@@ -148,7 +167,10 @@ public class Game {
 		Debug.printMessage(this, "Game has been started");
 		this.gameState.setStateRunning(true);
 
+
+
 		if(this.isServer) {
+			this.gameSession.outboundServerHandler.broadcastGameStart(this.gamemode);
 			Debug.printMessage(this, "Game has been started on server");
 			if (this.gameState == null) {
 				Debug.printMessage(this, "EMPTY GAMESTATE AAAAAA");

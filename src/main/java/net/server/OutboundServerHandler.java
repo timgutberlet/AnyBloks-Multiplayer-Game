@@ -45,6 +45,7 @@ public class OutboundServerHandler {
 	public void requestTurn(String username) {
 		Debug.printMessage(this,username + " will be requested to make a turn");
 		GameState gameState = this.gameSession.getGame().getGameState();
+		Debug.printMessage(this,gameState.toString());
 		RequestTurnPacket requestTurnPacket = new RequestTurnPacket(username, gameState);
 		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.REQUEST_TURN_PACKET,
 				requestTurnPacket);
