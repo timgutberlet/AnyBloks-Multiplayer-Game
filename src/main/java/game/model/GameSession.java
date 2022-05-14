@@ -108,6 +108,14 @@ public class GameSession {
     player.setGameSession(this);
   }
 
+	/**
+	 * setter for localPlayer
+	 */
+
+	public void setLocalPlayer(Player localPlayer) {
+		this.localPlayer = localPlayer;
+	}
+
   /**
    * Function returning the local player
    *

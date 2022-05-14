@@ -30,13 +30,14 @@ public class EndpointClient {
   private ClientHandler clientHandler;
   private Player player;
 
-  public EndpointClient(Player player) {
-    super();
-    this.player = player;
-    this.gameSession = new GameSession();
-    this.player.setGameSession(this.gameSession);
-    this.clientHandler = new ClientHandler(this);
-  }
+	public EndpointClient(Player player){
+		super();
+		this.player = player;
+		this.gameSession = new GameSession();
+		this.gameSession.setLocalPlayer(player);
+		this.player.setGameSession(this.gameSession);
+		this.clientHandler = new ClientHandler(this);
+	}
 
   public EndpointClient() {
 
