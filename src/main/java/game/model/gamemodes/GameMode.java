@@ -6,8 +6,12 @@ package game.model.gamemodes;
  */
 public class GameMode {
 
-	private final String name;
-	private final int neededPlayers;
+	private String name;
+	private int neededPlayers;
+
+	public GameMode(){
+
+	}
 
 	public GameMode(String name, int num) {
 		this.name = name;

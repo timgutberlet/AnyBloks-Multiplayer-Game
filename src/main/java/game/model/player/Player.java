@@ -1,5 +1,7 @@
 package game.model.player;
 
+import game.model.Debug;
+import game.model.GameState;
 import game.model.GameSession;
 import game.model.GameState;
 import game.model.Turn;
@@ -9,184 +11,181 @@ import java.io.Serializable;
 /**
  * This class represents one player of the game.
  */
-public class Player implements Serializable {
+public class Player  implements Serializable {
 
-  /**
-   * Name of the player.
-   */
-  private String name;
+	/**
+	 * Name of the player.
+	 */
+	private String username;
 
-  /**
-   * Poly the Player has Selected in the UI
-   */
-  private Poly selectedPoly;
-  /**
-   * Boolean saying if the player has active turn or not
-   */
-  private boolean hasTurn;
-  /**
-   * Type of the player.
-   */
-  private PlayerType type;
+	/**
+	 * Type of the player.
+	 */
+	private PlayerType type;
 
-  /**
-   * Current score of the player.
-   */
-  private int score;
+	/**
+	 * Current score of the player.
+	 */
+	private int score;
 
-  /**
-   * current session of player
-   */
-  private GameSession gameSession;
+	/**
+	 * current session of player
+	 */
+	//private GameSession gameSession;
 
-  /**
-   * tells wether player is played by AI or not
-   */
-  private Boolean isAI;
+	/**
+	 * tells wether player is played by AI or not
+	 */
+	private Boolean isAI;
 
-  /**
-   * tells whether player is the host of a session
-   */
-  private Boolean isHost;
+	/**
+	 * tells whether player is the host of a session
+	 */
+	private Boolean isHost;
 
-  /**
-   * number in range (0,3) stating the order of the player
-   */
-  private int orderNum;
-  /**
-   * word list for automated chat messages
-   */
-  private final String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?", "n00b",
-      "How can become as good as yoU?"};
+	/**
+	 * number in range (0,3) stating the order of the player
+	 */
+	private int orderNum;
+	/**
+	 * word list for automated chat messages
+	 */
 
-  /**
-   * Check if AI Calc i currently running
-   */
-  private boolean aiCalcRunning;
+	private Boolean threadIsActive = false;
 
+	private String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?", "n00b",
+			"How can become as good as yoU?"};
 
+	//public EndpointClient endpointClient;
+	//public Session session;
 
-  /**
-   * values of a player
-   *
-   * @param name name of the player
-   * @param type type of the player
-   * @author tiotto
-   */
-  public Player(String name, PlayerType type) {
-    this.name = name;
-    this.type = type;
-    this.score = 0;
-    this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE)
-        || type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
-    this.isHost = false;
-
-  }
-
-  /**
-   * values of a player
-   *
-   * @param name name of the player
-   * @param type type of the player
-   * @author tbuscher
-   */
-  public Player(String name, PlayerType type, boolean isHost) {
-    this.name = name;
-    this.type = type;
-    this.score = 0;
-    this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE)
-        || type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
-    this.isHost = isHost;
-  }
-
-  /**
-   * empty constructor for jackson
-   */
-
-  public Player() {
-
-  }
+	/**
+	 * values of a player
+	 *
+	 * @param username name of the player
+	 * @param type type of the player
+	 * @author tiotto
+	 */
+	public Player(String username, PlayerType type) {
+		this.username = username;
+		this.type = type;
+		this.score = 0;
+		this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
+				type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
+		this.isHost = false;
 
 
-  /**
-   * join an existing session
-   *
-   * @param gameSession
-   * @author tgeilen
-   */
-  public void setGameSession(GameSession gameSession) {
-    this.gameSession = gameSession;
-  }
+	}
+
+	/**
+	 * values of a player
+	 *
+	 * @param username name of the player
+	 * @param type type of the player
+	 * @author tbuscher
+	 */
+	public Player(String username, PlayerType type, boolean isHost) {
+		this.username = username;
+		this.type = type;
+		this.score = 0;
+		this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
+				type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
+		this.isHost = isHost;
+	}
+
+	/**
+	 * empty constructor for jackson
+	 */
+
+	public Player() {
+
+	}
+
+	public void run(){
+		this.threadIsActive = true;
+		Debug.printMessage(this, this.username + " Thread has been started");
+		while(this.threadIsActive){
+
+		}
+	}
 
 
-  /**
-   * add message to chat
-   *
-   * @param msg
-   * @author tgeilen
-   */
-  public void addChatMessage(String msg) {
-    this.gameSession.getChat().addMessage(this, msg);
 
-  }
+	public void killThread(){
+		this.threadIsActive = false;
+	}
 
-  /**
-   * function used to return the next turn of a player
-   *
-   * @param gameState
-   * @return
-   * @author tgeilen
-   */
-  public Turn makeTurn(GameState gameState) {
-    if (this.isAI) {
-      this.aiCalcRunning = true;
-      return AI.calculateNextMove(gameState, this);
-    } else {
-      this.aiCalcRunning = false;
+	/**
+	 * join an existing session
+	 *
+	 * @param gameSession
+	 * @author tgeilen
+	 */
+	public void setGameSession(GameSession gameSession) {
+		//this.gameSession = gameSession;
+	}
 
-      return null; //TODO add logic for non ai players
-    }
-  }
-  public Boolean getAiCalcRunning(){
-    return this.aiCalcRunning;
-  }
 
-  /**
-   * function that adds a random chat message from the given wordlist
-   *
-   * @author tgeilen
-   */
-  public void talk() {
-    if (Math.floor(Math.random() * 100) % 2 == 0) {
+	/**
+	 * add message to chat
+	 *
+	 * @param msg
+	 * @author tgeilen
+	 */
+	public void addChatMessage(String msg) {
+		//this.gameSession.getChat().addMessage(this, msg);
 
-      String msg = this.wordlist[(int) Math.floor(Math.random() * this.wordlist.length)];
+	}
 
-      this.gameSession.getChat().addMessage(this, msg);
-    }
-  }
+	/**
+	 * function used to return the next turn of a player
+	 *
+	 * @param gameState
+	 * @return
+	 * @author tgeilen
+	 */
+	public Turn makeTurn(GameState gameState) {
+		if (this.isAI) {
+			return AI.calculateNextMove(gameState, this);
+		} else {
+			return null; //TODO add logic for non ai players
+		}
 
-  public PlayerType getType() {
-    return type;
-  }
+	}
 
-  public String getName() {
-    return name;
-  }
+	/**
+	 * function that adds a random chat message from the given wordlist
+	 *
+	 * @author tgeilen
+	 */
+	public void talk() {
+		if (Math.floor(Math.random() * 100) % 2 == 0) {
 
-  public String toString() {
-    return name;
-  }
+			String msg = this.wordlist[(int) Math.floor(Math.random() * this.wordlist.length)];
 
-  public int getOrderNum() {
-    return this.orderNum;
-  }
+			//this.gameSession.getChat().addMessage(this, msg);
+		}
+	}
 
-  public Poly getSelectedPoly(){
-    return this.selectedPoly;
-  }
 
-  public void setSelectedPoly(Poly selectedPoly){
-    this.selectedPoly = selectedPoly;
-  }
 
+
+
+	public PlayerType getType() {
+		return type;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String toString() {
+		return username;
+	}
+
+	public int getOrderNum() {
+		return this.orderNum;
+	}
+
+	;
 }

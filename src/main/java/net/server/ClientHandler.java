@@ -1,5 +1,6 @@
 package net.server;
 
+import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.gamemodes.GameMode;
@@ -42,25 +43,39 @@ public class ClientHandler {
     this.client.getGameSession().startGame(gamemode);
   }
 
-  /**
-   * function that calls the client to make a turn and sends it to serve.
-   *
-   * @param wrappedPacket
-   * @author tgeilen
-   */
-  public void makeTurn(WrappedPacket wrappedPacket) {
-    RequestTurnPacket requestTurnPacket = (RequestTurnPacket) wrappedPacket.getPacket();
-    GameState gameState = requestTurnPacket.getGameState();
+	/**
+	 * function that calls the client to make a turn and sends it to serve
+	 *
+	 * @param wrappedPacket
+	 * @author tgeilen
+	 */
+	public void makeTurn(WrappedPacket wrappedPacket) {
+		RequestTurnPacket requestTurnPacket = (RequestTurnPacket) wrappedPacket.getPacket();
+		GameState gameState = requestTurnPacket.getGameState();
+		String username = requestTurnPacket.getUsername();
 
-    if (this.player.getName().equals(requestTurnPacket.getName())) {
 
-      Turn turn = this.player.makeTurn(gameState);
+		if(gameState == null){
+			Debug.printMessage(this ,"The received gamestate is NULL");
+		}
 
-      TurnPacket turnPacket = new TurnPacket(player.getName(), turn);
-      WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
-      this.client.sendToServer(wrPacket);
-    }
-  }
+		if(username == null){
+			Debug.printMessage(this ,"The received username is NULL");
+		}
+
+		this.client.getGameSession().updateGame(gameState);
+		Debug.printMessage(this,player.getUsername()+": It is " +requestTurnPacket.getUsername() + " turn");
+
+		if (this.player.getUsername().equals(requestTurnPacket.getUsername())) {
+			Debug.printMessage(this,player.getUsername()+": It is my turn...");
+			Turn turn = this.player.makeTurn(gameState);
+			Debug.printMessage(this,player.getUsername()+": I know what to do...");
+			TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
+			WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
+			this.client.sendToServer(wrPacket);
+			;
+		}
+	}
 
   /**
    * updates the gameState for the local client.

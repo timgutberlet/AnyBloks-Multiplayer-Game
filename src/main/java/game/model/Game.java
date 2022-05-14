@@ -5,6 +5,7 @@ import game.model.board.BoardSquare;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * a game is started in a Session by the host and dies when someone wins
@@ -19,6 +20,8 @@ public class Game {
 	private GameMode gamemode;
 	private ArrayList<Player> players;
 
+	private Boolean isServer = false;
+
 
 	public Game(GameSession gameSession, GameMode gamemode) {
 		this.gameSession = gameSession;
@@ -26,6 +29,16 @@ public class Game {
 		this.gamemode = gamemode;
 		this.players = gameSession.getPlayerList();
 		this.gameState = new GameState(this.gameSession, gamemode);
+
+	}
+
+	public Game(GameSession gameSession, GameMode gamemode, Boolean isServer) {
+		this.gameSession = gameSession;
+		this.board = new BoardSquare(gamemode);
+		this.gamemode = gamemode;
+		this.players = gameSession.getPlayerList();
+		this.gameState = new GameState(this.gameSession, gamemode);
+		this.isServer = isServer;
 
 	}
 
@@ -56,7 +69,7 @@ public class Game {
 		if (this.gameState.isStateRunning()) {
 
 			Player currentPlayer = this.gameState.getPlayerCurrent();
-			Debug.printMessage("[GAMECONSOLE] " + currentPlayer.getName() + " is now the active player");
+			Debug.printMessage("[GAMECONSOLE] " + currentPlayer.getUsername() + " is now the active player");
 
 			Turn turn = currentPlayer.makeTurn(this.gameState);
 			if (this.gameState.playTurn(turn)) {
@@ -79,9 +92,9 @@ public class Game {
 		}
 		if (!this.gameState.checkEnd()) {
 			Player nextPlayer = this.gameState.getPlayerCurrent();
-			this.gameSession.getOutboundServerHandler().requestTurn(nextPlayer.getName());
+			this.gameSession.getOutboundServerHandler().requestTurn(nextPlayer.getUsername());
 		} else {
-			this.gameSession.getOutboundServerHandler().broadcastGameWin(currentPlayer.getName());
+			this.gameSession.getOutboundServerHandler().broadcastGameWin(currentPlayer.getUsername());
 		}
 		this.gameSession.getOutboundServerHandler().broadcastGameUpdate();
 
@@ -131,8 +144,26 @@ public class Game {
 	 * @author tgeilen
 	 */
 	public void startGame() {
+		Player firstPlayer = null;
 		Debug.printMessage(this, "Game has been started");
 		this.gameState.setStateRunning(true);
+
+		if(this.isServer) {
+			Debug.printMessage(this, "Game has been started on server");
+			if (this.gameState == null) {
+				Debug.printMessage(this, "EMPTY GAMESTATE AAAAAA");
+			} else {
+				Debug.printMessage(this, "AAAAA GAMESTATE NOT NULL");
+			}
+			firstPlayer = this.gameState.getPlayerCurrent();
+			Debug.printMessage(this, "Name of first player :"+firstPlayer.getUsername());
+			try {
+				TimeUnit.SECONDS.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			this.gameSession.getOutboundServerHandler().requestTurn(firstPlayer.getUsername());
+		}
 		//this.makeMove();
 		//this.run();
 	}

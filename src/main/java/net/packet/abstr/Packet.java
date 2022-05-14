@@ -3,15 +3,18 @@ package net.packet.abstr;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import net.packet.game.GameStartPacket;
+import net.packet.game.GameUpdatePacket;
+import net.packet.game.InitGamePacket;
+import net.packet.game.InitSessionPacket;
+import net.packet.game.PlayerOrderPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.CreateAccountResponsePacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.account.LoginResponsePacket;
 import net.packet.account.UpdateAccountRequestPacket;
 import net.packet.chat.ChatMessagePacket;
-import net.packet.game.GameUpdatePacket;
-import net.packet.game.InitSessionPacket;
-import net.packet.game.PlayerOrderPacket;
+import net.packet.game.RequestTurnPacket;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -26,7 +29,11 @@ import net.packet.game.PlayerOrderPacket;
     @JsonSubTypes.Type(value = LoginResponsePacket.class, name = "LoginResponsePacket"),
     @JsonSubTypes.Type(value = PlayerOrderPacket.class, name = "PlayerOrderPacket"),
 
-    @JsonSubTypes.Type(value = UpdateAccountRequestPacket.class, name = "UpdateAccountRequestPacket")}
+		@JsonSubTypes.Type(value = InitGamePacket.class, name = "InitGamePacket"),
+		@JsonSubTypes.Type(value = GameStartPacket.class, name = "GameStartPacket"),
+		@JsonSubTypes.Type(value = RequestTurnPacket.class, name = "RequestTurnPacket"),
+
+		@JsonSubTypes.Type(value = UpdateAccountRequestPacket.class, name = "UpdateAccountRequestPacket")}
 )
 
 /**

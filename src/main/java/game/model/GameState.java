@@ -30,7 +30,7 @@ public class GameState implements Serializable, Cloneable {
 	/**
 	 * The session of this GameState
 	 */
-	private GameSession gameSession;
+	//private GameSession gameSession;
 
 	/**
 	 * used game mode
@@ -50,7 +50,7 @@ public class GameState implements Serializable, Cloneable {
 	/**
 	 * list of every participating player
 	 */
-	private ArrayList<Player> player;
+	private ArrayList<Player> playerList;
 	/**
 	 * round number
 	 */
@@ -93,8 +93,8 @@ public class GameState implements Serializable, Cloneable {
 		}
 		this.round = 1;
 		this.turn = 0;
-		this.gameSession = gameSession;
-		this.player = this.gameSession.getPlayerList();
+		//this.gameSession = gameSession;
+		this.playerList = gameSession.getPlayerList();
 		this.running = false;
 		this.started = false;
 
@@ -102,29 +102,28 @@ public class GameState implements Serializable, Cloneable {
 	}
 
 	/**
-	 * Constructor to copy a GameState
+	 * Constructor to copy a GameState (only used in this.clone())
 	 *
 	 * @param gameMode       gameMode
 	 * @param board          board
 	 * @param remainingPolys remainingPolys
-	 * @param player         player
+	 * @param playerList         player
 	 * @param round          round
 	 * @param turn           turn
 	 * @param running        running
 	 * @param started        started
 	 * @param stateEnding    stateEnding
 	 */
-	public GameState(GameSession gameSession, GameMode gameMode, Board board,
+	public GameState(GameMode gameMode, Board board,
 			ArrayList<ArrayList<Poly>> remainingPolys,
-			ArrayList<Player> player, int round, int turn, boolean running, boolean started,
+			ArrayList<Player> playerList, int round, int turn, boolean running, boolean started,
 			String stateEnding, ArrayList<ArrayList<Turn>> history) {
 		this.gameMode = gameMode;
 		this.board = board;
-		this.gameSession = gameSession;
 		for (ArrayList<Poly> polys : remainingPolys) {
 			this.remainingPolys.add(polys);
 		}
-		this.player = player;
+		this.playerList = playerList;
 		this.round = round;
 		this.turn = turn;
 		this.running = running;
@@ -146,7 +145,7 @@ public class GameState implements Serializable, Cloneable {
 	 * initalises the polys for all players depending on the selected gamemode
 	 */
 	private void init() {
-		for (Player p : this.player) {
+		for (Player p : this.playerList) {
 			ArrayList<Poly> polyOfPlayer = new ArrayList<>();
 			history.add(new ArrayList<>());
 
@@ -194,31 +193,36 @@ public class GameState implements Serializable, Cloneable {
 	 */
 	public ArrayList<Poly> getRemainingPolys(Player p) {
 		//Debug.printMessage("GET REMAINING POLYS: " + this.session.getPlayerList().size());
-		return remainingPolys.get(this.gameSession.getPlayerList().indexOf(p));
+		for (Player player: this.playerList){
+			if(p.getUsername().equals(player.getUsername())){
+				return remainingPolys.get(this.playerList.indexOf(player));
+			}
+		}
+		return null;
 	}
 
 	public Player getPlayerCurrent() {
-		if (getPlayer().size() > 0) {
-			return getPlayer().get(this.turn % this.player.size());
+		if (getPlayerList().size() > 0) {
+			return getPlayerList().get(this.turn % this.playerList.size());
 		} else {
 			return null;
 		}
 	}
 
-	public ArrayList<Player> getPlayer() {
-		return player;
+	public ArrayList<Player> getPlayerList() {
+		return playerList;
 	}
 
 	public Player getPlayerFromColor(Color c) {
 		switch (c) {
 			case RED:
-				return getPlayer().get(0);
+				return getPlayerList().get(0);
 			case BLUE:
-				return getPlayer().get(1);
+				return getPlayerList().get(1);
 			case GREEN:
-				return getPlayer().get(2);
+				return getPlayerList().get(2);
 			case YELLOW:
-				return getPlayer().get(3);
+				return getPlayerList().get(3);
 			default:
 				try {
 					throw new Exception("Wrong Player Color");
@@ -230,13 +234,13 @@ public class GameState implements Serializable, Cloneable {
 	}
 
 	public Color getColorFromPlayer(Player p) {
-		return Color.values()[getPlayer().indexOf(p) + 1];
+		return Color.values()[getPlayerList().indexOf(p) + 1];
 	}
 
 
 	public void incTurn() {
 		this.turn = turn + 1;
-		this.round = turn / player.size() + 1;
+		this.round = turn / playerList.size() + 1;
 	}
 
 	public int getRound() {
@@ -273,13 +277,13 @@ public class GameState implements Serializable, Cloneable {
 
 	public boolean checkEnd() {
 		boolean end = true;
-		for (Player p : player) {
+		for (Player p : playerList) {
 			Debug.printMessage(
-					board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size()
+					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
 							+ " möglichkeiten Steine zu legen");
 			//Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
 			if (getRemainingPolys(p).size() > 0 && (
-					board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size()
+					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
 							> 0)) {
 				end = false;
 			}
@@ -289,17 +293,19 @@ public class GameState implements Serializable, Cloneable {
 
 	public boolean checkEnd(Turn turn) {
 		boolean end = true;
-		for (Player p : player) {
+		for (Player p : playerList) {
 			Debug.printMessage(
-					board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size()
+					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
 							+ " möglichkeiten Steine zu legen");
 			//Debug.printMessage(gameState.getRemainingPolys(p).toString() + "Size: " + gameState.getRemainingPolys(p).size());
 			if (getRemainingPolys(p).size() > 0 && (
-					board.getPossibleMoves(remainingPolys.get(player.indexOf(p)), isFirstRound()).size()
+					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
 							> 0)) {
 				end = false;
 			}
 		}
+
+
 		if (end) {
 			setStateEnding("Spiel Vorbei");
 			setStateRunning(false);
@@ -307,16 +313,16 @@ public class GameState implements Serializable, Cloneable {
 
 			int bestScore = 0;
 			Debug.printMessage("Scores:");
-			for (Player p : player) {
-				Debug.printMessage(p.getName() + ": " + board.getScoreOfColor(getColorFromPlayer(p)) + " ("
+			for (Player p : playerList) {
+				Debug.printMessage(p.getUsername() + ": " + board.getScoreOfColor(getColorFromPlayer(p)) + " ("
 						+ getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
 				bestScore = Math.max(bestScore, board.getScoreOfColor(getColorFromPlayer(p)));
 			}
 			Debug.printMessage("Winner: ");
-			for (Player p : player) {
+			for (Player p : playerList) {
 				if (board.getScoreOfColor(getColorFromPlayer(p)) == bestScore) {
 					Debug.printMessage(
-							p.getName() + " (" + getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
+							p.getUsername() + " (" + getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
 				}
 			}
 
@@ -340,7 +346,7 @@ public class GameState implements Serializable, Cloneable {
 		}
 		incTurn();
 
-		history.get(this.turn % player.size()).add(turn);
+		history.get(this.turn % playerList.size()).add(turn);
 		return res;
 	}
 
@@ -356,7 +362,7 @@ public class GameState implements Serializable, Cloneable {
 			remainingPolysCopy.add(polysCopy);
 		}
 		ArrayList<Player> playerCopy = new ArrayList<>();
-		for (Player p : player) {
+		for (Player p : playerList) {
 			playerCopy.add(p);
 		}
 		ArrayList<ArrayList<Turn>> historyCopy = new ArrayList<>();
@@ -371,7 +377,7 @@ public class GameState implements Serializable, Cloneable {
 			}
 			historyCopy.add(turnsCopy);
 		}
-		return new GameState(this.gameSession, this.gameMode, boardCopy, remainingPolysCopy, playerCopy,
+		return new GameState(this.gameMode, boardCopy, remainingPolysCopy, playerCopy,
 				round, turn,
 				running, started, stateEnding, historyCopy);
 	}
@@ -401,8 +407,8 @@ public class GameState implements Serializable, Cloneable {
 
 		String result = "Hallo";
 
-		for (Player p : this.player) {
-			result += p.getName() + "\n";
+		for (Player p : this.playerList) {
+			result += p.getUsername() + "\n";
 		}
 
 		return result;

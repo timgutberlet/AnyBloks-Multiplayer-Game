@@ -5,11 +5,22 @@ import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
+import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+import javax.websocket.ContainerProvider;
+import javax.websocket.DeploymentException;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
+import net.packet.account.LoginRequestPacket;
 import net.server.HostServer;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
+import net.transmission.EndpointClient;
 
 /**
  * a session is the central place taking care of players joining, starting a game, selecting
@@ -20,8 +31,8 @@ import net.server.OutboundServerHandler;
 public class GameSession {
 
 	private static HostServer hostServer = new HostServer();
-	private InboundServerHandler inboundServerHandler;
-	private OutboundServerHandler outboundServerHandler;
+	public InboundServerHandler inboundServerHandler;
+	public OutboundServerHandler outboundServerHandler;
 
 	private final Chat chat;
 	private final ArrayList<Player> playerList;
@@ -29,7 +40,7 @@ public class GameSession {
 	private Game game;
 	private GameServer gameServer;
 
-	private Player localPlayer;
+	private int numOfBots = 0;
 
 	private HashMap<String, Integer> scoreboard = new HashMap<String, Integer>();
 
@@ -45,7 +56,7 @@ public class GameSession {
 		this.chat.run();
 
 		this.playerList = new ArrayList<Player>();
-		//this.host = player;
+		this.hostPlayer = player;
 		//this.addPlayer(this.host);
 
 		try {
@@ -68,6 +79,8 @@ public class GameSession {
 		this.chat.run();
 
 		this.playerList = new ArrayList<Player>();
+
+		Debug.printMessage(this,"GameSession started");
 
 		try {
 			//hostServer.startWebsocket(8080);
@@ -117,10 +130,39 @@ public class GameSession {
 	 * @author tgeilen
 	 */
 	public Game startGame(GameMode gameMode) {
+
 		this.game = new Game(this, gameMode);
 		this.game.startGame();
+
 		return this.game;
 	}
+
+	/**
+	 * creates and starts a new Game on the server
+	 *
+	 * @author tgeilen
+	 */
+	public Game startGameServer(GameMode gameMode) {
+
+		//while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
+		while (this.getPlayerList().size()<4){ //TODO make dependdenc on gamemode
+			this.addBot(PlayerType.AI_EASY);
+		}
+
+		try {
+			Debug.printMessage(this,"Waiting for clients to establish connection");
+			TimeUnit.SECONDS.sleep(10);
+			Debug.printMessage(this,"Starting a new game");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		this.game = new Game(this, gameMode,true);
+		this.game.startGame();
+
+		return this.game;
+	}
+
 
 
 	/**
@@ -131,12 +173,12 @@ public class GameSession {
 	 * @author tgeilen
 	 */
 	public void increaseScore(Player player, int value) {
-		Integer currentScore = this.scoreboard.get(player.getName());
+		Integer currentScore = this.scoreboard.get(player.getUsername());
 
 		if (currentScore != null) {
-			this.scoreboard.put(player.getName(), currentScore + value);
+			this.scoreboard.put(player.getUsername(), currentScore + value);
 		} else {
-			this.scoreboard.put(player.getName(), value);
+			this.scoreboard.put(player.getUsername(), value);
 		}
 
 	}
@@ -161,6 +203,42 @@ public class GameSession {
 
 	public void addChatMessage(ChatMessage chatMessage) {
 		this.chat.addMessage(chatMessage);
+	}
+
+	public void addBot(PlayerType playerType){
+		this.numOfBots++;
+		Player bot = new Player("Bot " + this.numOfBots,playerType);
+		//bot.start();
+		this.addToSession(bot);
+		this.getPlayerList().add(bot);
+		Debug.printMessage(this,"Bot "+this.numOfBots + " added to session");
+
+	}
+
+	public void addToSession(Player player) {
+		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+		EndpointClient endpointClient = new EndpointClient(player);
+		Session session = null;
+
+		try {
+			session = container.connectToServer(endpointClient, URI.create("ws://localhost:8081/packet"));
+
+			//Login
+			LoginRequestPacket loginRequestPacket = new LoginRequestPacket(player.getUsername(),
+					"1234");
+			Debug.printMessage("LoginRequestPacket has been sent to the server");
+			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
+					loginRequestPacket);
+			session.getBasicRemote().sendObject(wrappedPacket);
+
+		} catch (DeploymentException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -206,6 +284,8 @@ public class GameSession {
 		return gameServer;
 	}
 
+
+
 	/**
 	 * function that helps to output the most relevant information of a session
 	 *
@@ -218,7 +298,7 @@ public class GameSession {
 
 		for (Player p : this.playerList) {
 			str +=
-					p.getName() + "  |  " + p.getType() + "  |  " + this.scoreboard.get(p.getName()) + "\n";
+					p.getUsername() + "  |  " + p.getType() + "  |  " + this.scoreboard.get(p.getUsername()) + "\n";
 		}
 
 		return str;
