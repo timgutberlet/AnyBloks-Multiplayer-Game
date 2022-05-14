@@ -10,6 +10,7 @@ import game.model.player.Player;
 import game.model.GameSession;
 import game.model.chat.Chat;
 import game.model.polygon.Poly;
+import game.view.DragablePolyPane;
 import game.view.board.BoardPane;
 import game.view.board.SquareBoardPane;
 import game.view.board.TrigonBoardPane;
@@ -20,7 +21,6 @@ import game.view.stack.StackTrigonPane;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -40,7 +40,12 @@ public abstract class InGameUiController extends AbstractUiController {
 
   private List<StackPane> stackPanes;
 
-  private VBox playerStacks;
+  private StackPane stackLocal;
+
+  private DragablePolyPane dragablePolyPane;
+
+  private VBox stacks;
+
 
   private List<Label> playerPoints;
 
@@ -90,7 +95,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
 
   private void setUpUi() {
-    playerStacks = new VBox();
+    stacks = new VBox();
 
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
@@ -102,19 +107,19 @@ public abstract class InGameUiController extends AbstractUiController {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
               game.getGameState().getRemainingPolys(p));
           stackPanes.add(stackPane);
-          playerStacks.getChildren().add(stackPane);
+          stacks.getChildren().add(stackPane);
         }
         ;
         break;
       case "TRIGON":
         for (Player p : this.gameSession.getPlayerList()) {
           StackTrigonPane trigonStack = new StackTrigonPane(p, inputHandler, game.getGameState().getRemainingPolys(p));
-          playerStacks.getChildren().add(trigonStack);
+          stacks.getChildren().add(trigonStack);
         }
         break;
     }
 
-    Gui.getChildren().add(playerStacks);
+    Gui.getChildren().add(stacks);
 
     for (Player p : this.gameSession.getPlayerList()) {
       Label label = new Label("0");
@@ -132,23 +137,29 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void refreshUi() {
-    playerStacks.getChildren().clear();
-    for (Player p : game.getPlayers()) {
-      switch (game.getGamemode().getName()) {
-        case "JUNIOR":
-          ;
-        case "DUO":
-          ;
-        case "CLASSIC":
-          StackSquarePane squareStack = new StackSquarePane(p, inputHandler, game.getGameState().getRemainingPolys(p));
-          playerStacks.getChildren().add(squareStack);
-          ;
-          break;
-        case "TRIGON":
-          StackTrigonPane trigonStack = new StackTrigonPane(p, inputHandler, game.getGameState().getRemainingPolys(p));
-          playerStacks.getChildren().add(trigonStack);
-          break;
-      }
+    stackPanes.clear();
+    stacks.getChildren().clear();
+    switch (game.getGamemode().getName()) {
+      case "JUNIOR":
+        ;
+      case "DUO":
+        ;
+      case "CLASSIC":
+        for (Player p : game.getPlayers()) {
+          StackPane squareStack = new StackSquarePane(p, inputHandler,
+              game.getGameState().getRemainingPolys(p));
+          stackPanes.add(squareStack);
+          stacks.getChildren().add(squareStack);
+        }
+        break;
+      case "TRIGON":
+        for (Player p : game.getPlayers()) {
+          StackTrigonPane trigonStack = new StackTrigonPane(p, inputHandler,
+              game.getGameState().getRemainingPolys(p));
+          stacks.getChildren().add(trigonStack);
+        }
+        break;
+    }
 
     }
 
@@ -158,7 +169,6 @@ public abstract class InGameUiController extends AbstractUiController {
       playerPoints.add(label);
     }
     Gui.getChildren().addAll(playerPoints);*/
-  }
 
   /**
    * function that updates the screen and calls the next move to be made
@@ -187,11 +197,19 @@ public abstract class InGameUiController extends AbstractUiController {
       }
     }
 
-    if(game.getGameState().getPlayerCurrent().equals(localPlayer)){
+    if(game.getGameState().getPlayerCurrent().equals(localPlayer)) {
       boolean action = false;
 
+      for (PolyPane polyPane : stackPanes.get(localPlayer.getOrderNum()).getPolyPanes()) {
+        if (inputHandler.isPolyClicked(polyPane) && localPlayer.getSelectedPoly() == null) {
+          localPlayer.setSelectedPoly(polyPane.getPoly());
+          dragablePolyPane = new DragablePolyPane(polyPane, boardPane.getSize(), inputHandler);
+          Gui.getChildren().add(dragablePolyPane);
+        }
+      }
+
       //If localPlayer has selected a Poly, check if he also already click on the Board
-      if(localPlayer.getSelectedPoly() != null){
+      if (localPlayer.getSelectedPoly() != null) {
 
         //create helpArraylist containing the selectedPoly to check the possible Moves
         ArrayList<Poly> helpList = new ArrayList<>();

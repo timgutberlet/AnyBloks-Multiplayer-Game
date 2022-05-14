@@ -32,15 +32,17 @@ public class PolyPane extends Pane {
     return this.poly;
   }
 
-  public void setSize(double Size) {
+  public void resize(double size) {
     this.size = size;
+    this.getChildren().clear();
+    setPoly();
   }
 
   public List<Field> getFields() {
     return fields;
   }
 
-  public void resetPane() {
+  public void reset() {
     Rectangle r = new Rectangle(0, 0, this.getWidth(), this.getHeight());
     r.setFill(Color.WHITE);
     this.getChildren().add(r);

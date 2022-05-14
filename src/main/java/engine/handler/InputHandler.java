@@ -2,6 +2,7 @@ package engine.handler;
 
 import engine.component.Field;
 import engine.controller.AbstractGameController;
+import game.model.polygon.Poly;
 import game.view.poly.PolyPane;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,10 +20,12 @@ public class InputHandler {
   private final Set<Field> fieldPressedSaved;
   private final Set<Field> fieldHoveredSaved;
   private final Set<Field> fieldReleasedSaved;
+  private final Set<PolyPane> polyClickedSaved;
   private final Set<Field> fieldClicked;
   private final Set<Field> fieldPressed;
   private final Set<Field> fieldHovered;
   private final Set<Field> fieldReleased;
+  private final Set<PolyPane> polyClicked;
   private double mouseAnchorX;
   private double mouseAnchorY;
   private AbstractGameController gameController;
@@ -39,6 +42,8 @@ public class InputHandler {
     fieldPressed = new HashSet<>();
     fieldHovered = new HashSet<>();
     fieldReleased = new HashSet<>();
+    polyClickedSaved = new HashSet<>();
+    polyClicked = new HashSet<>();
   }
 
   /**
@@ -75,16 +80,20 @@ public class InputHandler {
     fieldPressed.clear();
     fieldHovered.clear();
     fieldReleased.clear();
+    //Clear StackInputs
+    polyClicked.clear();
     //Assign Cached Values
     fieldClicked.addAll(fieldClickedSaved);
     fieldPressed.addAll(fieldPressedSaved);
     fieldHovered.addAll(fieldHoveredSaved);
     fieldReleased.addAll(fieldReleasedSaved);
+    polyClicked.addAll(polyClickedSaved);
     //Clear cached values
     fieldClickedSaved.clear();
     fieldPressedSaved.clear();
     fieldHoveredSaved.clear();
     fieldReleasedSaved.clear();
+    polyClickedSaved.clear();
 
     blockInput=false;
   }
@@ -129,14 +138,31 @@ public class InputHandler {
     });
 
     field.setOnMouseExited(event -> {
-      if(blockInput){
+      if (blockInput) {
         if (fieldHoveredSaved.contains(field)) {
           fieldHoveredSaved.remove(field);
         }
-      }else{
+      } else {
         fieldHovered.remove(field);
       }
     });
+  }
+
+  /**
+   * Add event handler to object poly pane
+   *
+   * @param polyPane
+   */
+  public void registerPoly(PolyPane polyPane) {
+    for (Field field : polyPane.getFields()) {
+      field.setOnMousePressed(event -> {
+        if (blockInput) {
+          polyClickedSaved.add(polyPane);
+        } else {
+          polyClicked.add(polyPane);
+        }
+      });
+    }
   }
 
   /**
@@ -169,14 +195,21 @@ public class InputHandler {
     return fieldPressed.contains(field);
   }
 
-  public void registerPoly(PolyPane polyPane) {
-    polyPane.setOnMousePressed((e -> {
-      System.out.println(
-          "Poly Pressed: " + GridPane.getRowIndex(polyPane) + " " + GridPane.getColumnIndex(
-              polyPane));
-    }));
+  /**
+   * The following  Method returns, if a poly pane object has been register in the mouse event
+   * handler
+   *
+   * @param polyPane0
+   * @return
+   */
+  public boolean isPolyClicked(PolyPane polyPane0) {
+    for (PolyPane polyPane1 : polyClicked) {
+      if (polyPane1.getPoly().equals(polyPane0.getPoly())) {
+        return true;
+      }
+    }
+    return false;
   }
-
 
 
 
