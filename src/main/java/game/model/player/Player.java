@@ -51,6 +51,21 @@ public class Player  implements Serializable {
 	 * word list for automated chat messages
 	 */
 
+	/**
+	 * Check if AI Calc is currently running
+	 */
+	private boolean aiCalcRunning;
+
+	/**
+	 * Poly the Player has Selected in the UI
+	 */
+	private Poly selectedPoly;
+	/**
+	 * Boolean saying if the player has active turn or not
+	 */
+	private boolean hasTurn;
+
+
 	private Boolean threadIsActive = false;
 
 	private String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?", "n00b",
@@ -146,11 +161,26 @@ public class Player  implements Serializable {
 	 */
 	public Turn makeTurn(GameState gameState) {
 		if (this.isAI) {
+			this.aiCalcRunning = true;
 			return AI.calculateNextMove(gameState, this);
 		} else {
+			this.aiCalcRunning = false;
+
 			return null; //TODO add logic for non ai players
 		}
+	}
 
+
+	public Boolean getAiCalcRunning(){
+		return this.aiCalcRunning;
+	}
+
+	public Poly getSelectedPoly(){
+		return this.selectedPoly;
+	}
+
+	public void setSelectedPoly(Poly selectedPoly){
+		this.selectedPoly = selectedPoly;
 	}
 
 	/**
@@ -166,10 +196,6 @@ public class Player  implements Serializable {
 			//this.gameSession.getChat().addMessage(this, msg);
 		}
 	}
-
-
-
-
 
 	public PlayerType getType() {
 		return type;

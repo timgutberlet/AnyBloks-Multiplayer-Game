@@ -1,5 +1,6 @@
 package net.server;
 
+import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
 import game.model.gamemodes.GameMode;

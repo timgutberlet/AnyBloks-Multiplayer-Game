@@ -42,6 +42,8 @@ public class GameSession {
 
 	private int numOfBots = 0;
 
+	private Player localPlayer;
+
 	private HashMap<String, Integer> scoreboard = new HashMap<String, Integer>();
 
 	/**
