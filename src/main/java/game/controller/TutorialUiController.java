@@ -19,8 +19,8 @@ public class TutorialUiController extends InGameUiController {
   private int turn;
 
   public TutorialUiController(AbstractGameController gameController,
-      GameSession gameSession) {
-    super(gameController, gameSession.getGame(), gameSession);
+      GameSession gameSession, ThreadHelp threadHelp) {
+    super(gameController, gameSession.getGame(), gameSession, threadHelp);
     hints = new ArrayList<>();
   }
 }

@@ -10,7 +10,7 @@ import game.model.GameSession;
 public class LocalGameUiController extends InGameUiController {
 
   public LocalGameUiController(AbstractGameController gameController,
-      Game game, GameSession gameSession) {
-    super(gameController, game, gameSession);
+      Game game, GameSession gameSession, ThreadHelp threadHelp) {
+    super(gameController, game, gameSession, threadHelp);
   }
 }

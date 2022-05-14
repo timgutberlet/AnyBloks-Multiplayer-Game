@@ -85,7 +85,8 @@ public class MainMenuUiController extends AbstractUiController {
     gameSession.addPlayer(opponentAiPlayer);
     gameSession.setGame(new Game(gameSession, gameMode));
     gameSession.startGame(gameMode);
-    gameController.setActiveUiController(new TutorialUiController(gameController, gameSession));
+    ThreadHelp threadHelp = new ThreadHelp(gameSession);
+    gameController.setActiveUiController(new TutorialUiController(gameController, gameSession, threadHelp));
   }
 
   /**

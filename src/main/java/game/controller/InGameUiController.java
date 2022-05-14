@@ -60,7 +60,7 @@ public abstract class InGameUiController extends AbstractUiController {
   private final int count = 0;
 
   public InGameUiController(AbstractGameController gameController, Game game,
-      GameSession gameSession) {
+      GameSession gameSession, ThreadHelp threadHelp) {
     super(gameController);
     this.inputHandler = gameController.getInputHandler();
     this.gameSession = gameSession;
@@ -70,7 +70,7 @@ public abstract class InGameUiController extends AbstractUiController {
     this.Gui = new HBox();
     playerPoints = new ArrayList<>();
     stackPanes = new ArrayList<>();
-
+    threadHelp.start();
     super.root.getChildren().add(Gui);
     createBoard();
     setUpUi();
