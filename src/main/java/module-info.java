@@ -19,8 +19,10 @@ module bloks3 {
     requires org.slf4j;
     requires javax.websocket.all;
     requires org.eclipse.jetty.util;
+  requires org.apache.commons.codec;
+  requires sqlite.jdbc;
 
-    opens game.controller to javafx.fxml;
+  opens game.controller to javafx.fxml;
     opens game.core to javafx.fxml;
     opens net.packet.abstr;
     opens game.model;

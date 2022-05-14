@@ -1,7 +1,7 @@
 package net;
 
-import static net.server.HashingHandler.checkPassword;
-import static net.server.HashingHandler.hashPassword;
+import static net.server.PBKDF2HashingHandler.checkPassword;
+import static net.server.PBKDF2HashingHandler.hashPassword;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author tbuscher
  */
-public class HashingTest {
+public class PBKDF2HashingTest {
 
   @BeforeAll
   public static void beforeAll() {

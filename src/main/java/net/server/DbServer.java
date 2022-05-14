@@ -1,6 +1,5 @@
 package net.server;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -86,12 +85,9 @@ public class DbServer extends DbHandler {
     try {
       // Players table
       Statement players = con.createStatement();
-      players.execute("CREATE TABLE IF NOT EXISTS players("
-          + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-          + "username TEXT NOT NULL UNIQUE ,"
-          + "passwordHash TEXT NOT NULL,"
-          + "disconnects INTEGER NOT NULL DEFAULT 0,"
-          + ");");
+      players.execute(
+          "CREATE TABLE IF NOT EXISTS players (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+              + " username TEXT UNIQUE, passwordHash TEXT NOT NULL)");
       players.close();
 
     } catch (SQLException e) {
@@ -103,16 +99,16 @@ public class DbServer extends DbHandler {
   /**
    * put a new account into the Db.
    *
-   * @param username     to be inserted.
-   * @param passwordHash to be inserted.
+   * @param usernameInsert     username to be inserted.
+   * @param passwordHashInsert passwordHash to be inserted.
    */
-  public synchronized void newAccount(String username, String passwordHash) {
+  public synchronized void newAccount(String usernameInsert, String passwordHashInsert) {
     try {
-      PreparedStatement statement = con.prepareStatement(
-          "INSERT INTO players (username, password) " + "VALUES (?, ?)");
-      statement.setString(1, username);
-      statement.setString(2, passwordHash);
-      statement.execute();
+      Statement newAccount = con.createStatement();
+      newAccount.execute(
+          "INSERT INTO players (username, passwordHash) VALUES('" + usernameInsert + "' ,'"
+              + passwordHashInsert + "')");
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -121,20 +117,16 @@ public class DbServer extends DbHandler {
   public synchronized String getUserPasswordHash(String username) {
     String passwordHash;
     try {
-      PreparedStatement statement = con.prepareStatement(
-          "SELECT passwordHash FROM players "
-              + "WHERE players.username = ?");
-      statement.setString(1, username);
-      ResultSet rs = statement.executeQuery();
-      passwordHash = rs.getString("password");
-    } catch (SQLException e){
+      Statement getPw = con.createStatement();
+      ResultSet rs = getPw.executeQuery(
+          "SELECT passwordHash FROM players WHERE players.username = '" + username + "';");
+      passwordHash = rs.getString("passwordHash");
+    } catch (SQLException e) {
       e.printStackTrace();
       return null;
     }
     return passwordHash;
   }
-
-
 
 
 }

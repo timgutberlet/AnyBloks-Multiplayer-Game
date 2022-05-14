@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-//import org.xerial.sqlite-jdbc;
 
 /**
  * Abstract class to allow connection to SQLite DB
@@ -57,7 +56,6 @@ public abstract class DbHandler {
    */
 
   protected boolean connect(String location) {
-    System.out.println("Piep");
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
@@ -66,8 +64,6 @@ public abstract class DbHandler {
     }
     //if driver exists, try to connect
     try {
-      System.out.println("Connecting early");
-
       con = DriverManager.getConnection("jdbc:sqlite:" + location);
     } catch (SQLException e) {
       e.printStackTrace();

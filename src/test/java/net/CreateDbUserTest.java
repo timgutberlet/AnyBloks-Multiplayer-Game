@@ -22,7 +22,7 @@ public class CreateDbUserTest {
   @Test
   public void testDbUserCreation() throws Exception {
   DbServer dbServer = DbServer.getInstance();
-  System.out.println("Got here");
+  dbServer.resetDb();
   dbServer.newAccount("testuser", "123456");
   String passwordHash = dbServer.getUserPasswordHash("testuser");
 
