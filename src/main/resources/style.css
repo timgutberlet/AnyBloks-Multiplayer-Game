@@ -1,4 +1,4 @@
-.button{
+.button {
   -fx-alignment: BASELINE_CENTER;
   -fx-text-fill: #FFFFFF;
   -fx-background-color: #FF9569;
@@ -6,9 +6,11 @@
   -fx-background-insets: 0;
   -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
 }
+
 .button:hover {
   -fx-background-color: #000000;
 }
+
 .button:pressed {
   -fx-background-color: #FF9569;
 }

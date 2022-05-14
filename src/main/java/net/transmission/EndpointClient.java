@@ -25,36 +25,36 @@ import org.slf4j.LoggerFactory;
 
 public class EndpointClient {
 
-	private Session server;
-	private GameSession gameSession;
-	private ClientHandler clientHandler;
-	private Player player;
+  private Session server;
+  private GameSession gameSession;
+  private ClientHandler clientHandler;
+  private Player player;
 
-	public EndpointClient(Player player){
-		super();
-		this.player = player;
-		this.gameSession = new GameSession();
-		this.player.setGameSession(this.gameSession);
-		this.clientHandler = new ClientHandler(this);
-	}
+  public EndpointClient(Player player) {
+    super();
+    this.player = player;
+    this.gameSession = new GameSession();
+    this.player.setGameSession(this.gameSession);
+    this.clientHandler = new ClientHandler(this);
+  }
 
-	public EndpointClient(){
+  public EndpointClient() {
 
-	}
+  }
 
 
-	private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
+  private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
 
-	/**
-	 * Method used to connect to server. TODO : evaluate createAccount / Login
-	 *
-	 * @param ses Session in use
-	 * @throws IOException     is thrown
-	 * @throws EncodeException is thrown
-	 */
-	@OnOpen
-	public void onOpen(final Session ses)
-			throws IOException, EncodeException {
+  /**
+   * Method used to connect to server. TODO : evaluate createAccount / Login
+   *
+   * @param ses Session in use
+   * @throws IOException     is thrown
+   * @throws EncodeException is thrown
+   */
+  @OnOpen
+  public void onOpen(final Session ses)
+      throws IOException, EncodeException {
 //        ses.getBasicRemote().sendObject(new CreateAccountRequestPacket("testuser", "testPW"));
 
 /*
@@ -62,80 +62,81 @@ public class EndpointClient {
       new CreateAccountRequestPacket("testuser", "testPW")));
    Debug.printMessage(this,"CREATE_ACCOUNT_REQUEST sent to " + ses.getId());
 */
-		this.server = ses;
-		//this.clientHandler = new ClientHandler(this);
-		//this.gameSession = new GameSession();
-		//this.player.setGameSession(this.gameSession);
-		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
-		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
+    this.server = ses;
+    //this.clientHandler = new ClientHandler(this);
+    //this.gameSession = new GameSession();
+    //this.player.setGameSession(this.gameSession);
+    ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
+    ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
 
 
-	}
+  }
 
-	@OnMessage
-	public void onMessage(final WrappedPacket packet, Session ses) {
-		LOG.info(this.player.getUsername() + ": A packet has been sent here by the server, it is of the type: {} send by {}",
-				packet.getPacketType().toString(), ses.getId());
-		PacketType type = packet.getPacketType();
-		switch (type) {
-			case PLAYER_ORDER_PACKET:
-				break;
+  @OnMessage
+  public void onMessage(final WrappedPacket packet, Session ses) {
+    LOG.info(this.player.getUsername()
+            + ": A packet has been sent here by the server, it is of the type: {} send by {}",
+        packet.getPacketType().toString(), ses.getId());
+    PacketType type = packet.getPacketType();
+    switch (type) {
+      case PLAYER_ORDER_PACKET:
+        break;
 
-			case CHAT_MESSAGE_PACKET:
-				this.clientHandler.saveChatMessage(packet);
-				break;
+      case CHAT_MESSAGE_PACKET:
+        this.clientHandler.saveChatMessage(packet);
+        break;
 
-			case GAME_START_PACKET:
-				this.clientHandler.startGame(packet);
-				break;
+      case GAME_START_PACKET:
+        this.clientHandler.startGame(packet);
+        break;
 
-			case REQUEST_TURN_PACKET:
-				Debug.printMessage(this,"REQUEST TURN RECIEVED");
-				this.clientHandler.makeTurn(packet);
-				break;
+      case REQUEST_TURN_PACKET:
+        Debug.printMessage(this, "REQUEST TURN RECIEVED");
+        this.clientHandler.makeTurn(packet);
+        break;
 
-			case GAME_UPDATE_PACKET:
-				this.clientHandler.updateGame(packet);
-				break;
+      case GAME_UPDATE_PACKET:
+        this.clientHandler.updateGame(packet);
+        break;
 
-			case GAME_WIN_PACKET:
-				this.clientHandler.endGame(packet);
-				break;
+      case GAME_WIN_PACKET:
+        this.clientHandler.endGame(packet);
+        break;
 
-			case ILLEGAL_TURN_PACKET:
-				this.clientHandler.makeTurn(packet);
-				break;
+      case ILLEGAL_TURN_PACKET:
+        this.clientHandler.makeTurn(packet);
+        break;
 
-			//
-		}
+      //
+    }
 
-	}
+  }
 
-	/**
-	 * function to easily send packets to server
-	 *
-	 * @param wrappedPacket
-	 * @author tgeilen
-	 */
-	public void sendToServer(WrappedPacket wrappedPacket) {
-		Debug.printMessage(this, "I am sending something to the server...");
-		try {
-			this.server.getBasicRemote().sendObject(wrappedPacket);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (EncodeException e) {
-			e.printStackTrace();
-		}
-		Debug.printMessage(this, "I have sent something to the server...");
-	}
+  /**
+   * function to easily send packets to server
+   *
+   * @param wrappedPacket
+   * @author tgeilen
+   */
+  public void sendToServer(WrappedPacket wrappedPacket) {
+    Debug.printMessage(this, "I am sending something to the server...");
+    try {
+      this.server.getBasicRemote().sendObject(wrappedPacket);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (EncodeException e) {
+      e.printStackTrace();
+    }
+    Debug.printMessage(this, "I have sent something to the server...");
+  }
 
-	public GameSession getGameSession() {
-		return gameSession;
-	}
+  public GameSession getGameSession() {
+    return gameSession;
+  }
 
-	public Player getPlayer() {
-		return player;
-	}
+  public Player getPlayer() {
+    return player;
+  }
 }
 
 

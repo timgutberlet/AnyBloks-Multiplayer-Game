@@ -12,12 +12,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
+  minHeight="-Infinity"
   minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css"
   xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="game.controller.LobbyController"
   fx:id="lobbyPane">
   <children>
-    <SplitPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+    <SplitPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
       dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0"
       prefWidth="160.0">
       <items>
@@ -46,7 +48,8 @@
                     </Button>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="CENTER" prefHeight="100.0"
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="CENTER"
+                  prefHeight="100.0"
                   prefWidth="200.0" spacing="50.0">
                   <children>
                     <Label text="-" fx:id="namePlayer1">
@@ -61,7 +64,8 @@
                     </Label>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER" prefHeight="100.0"
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER"
+                  prefHeight="100.0"
                   prefWidth="200.0" spacing="50.0">
                   <children>
                     <Label text="-" fx:id="namePlayer2">
@@ -116,7 +120,8 @@
                     </Button>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" alignment="CENTER" prefHeight="100.0"
+                <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" alignment="CENTER"
+                  prefHeight="100.0"
                   prefWidth="200.0" spacing="50.0">
                   <children>
                     <Label text="-" fx:id="namePlayer3">
@@ -131,7 +136,8 @@
                     </Label>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
+                <HBox GridPane.columnIndex="1" alignment="CENTER" prefHeight="100.0"
+                  prefWidth="200.0"
                   spacing="50.0">
                   <children>
                     <Label text="You" fx:id="nameHostPlayer">
@@ -171,10 +177,12 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+            <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0"
               AnchorPane.topAnchor="0.0" layoutX="172.0" layoutY="13.0">
               <children>
-                <Button GridPane.columnIndex="1" mnemonicParsing="false" onAction="#play" prefWidth="200.0"
+                <Button GridPane.columnIndex="1" mnemonicParsing="false" onAction="#play"
+                  prefWidth="200.0"
                   text="Play">
                   <font>
                     <Font size="40.0"/>

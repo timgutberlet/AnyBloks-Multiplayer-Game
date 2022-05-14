@@ -1,6 +1,5 @@
 package net.packet.game;
 
-import game.model.player.Player;
 import net.packet.abstr.Packet;
 
 /**
@@ -9,17 +8,17 @@ import net.packet.abstr.Packet;
  */
 public class GameWinPacket extends Packet {
 
-	private final String username;
+  private final String username;
 
-	public GameWinPacket() {
-		this.username = null;
-	}
+  public GameWinPacket() {
+    this.username = null;
+  }
 
-	public GameWinPacket(String username) {
-		this.username = username;
-	}
+  public GameWinPacket(String username) {
+    this.username = username;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public String getUsername() {
+    return username;
+  }
 }

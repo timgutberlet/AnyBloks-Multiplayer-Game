@@ -9,9 +9,9 @@ import javafx.scene.layout.Pane;
  */
 public class DragablePolyPane extends Pane {
 
-  private PolyPane polyPane;
-  private double size;
-  private InputHandler inputHandler;
+  private final PolyPane polyPane;
+  private final double size;
+  private final InputHandler inputHandler;
 
   public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler) {
     this.polyPane = polyPane;

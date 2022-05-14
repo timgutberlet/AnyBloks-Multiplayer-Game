@@ -9,9 +9,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;"
+  maxHeight="-Infinity" maxWidth="-Infinity"
   minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
-  stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="game.controller.MainMenuUiController"
+  stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.2-ea"
+  fx:controller="game.controller.MainMenuUiController"
   fx:id="menuPane">
   <children>
     <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
@@ -30,7 +32,8 @@
                     <Font size="25.0"/>
                   </font>
                 </Button>
-                <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#close" prefHeight="50.0"
+                <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#close"
+                  prefHeight="50.0"
                   prefWidth="110.0" text="QUIT">
                   <font>
                     <Font size="25.0"/>
@@ -88,7 +91,8 @@
               prefHeight="85.5" vgrow="SOMETIMES"/>
           </rowConstraints>
         </GridPane>
-        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" alignment="CENTER" graphicTextGap="20.0"
+        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" alignment="CENTER"
+          graphicTextGap="20.0"
           text="BLOKS">
           <font>
             <Font size="50.0"/>

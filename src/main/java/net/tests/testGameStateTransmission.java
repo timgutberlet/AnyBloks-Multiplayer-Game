@@ -15,8 +15,8 @@ import javax.websocket.DeploymentException;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import net.packet.game.GameUpdatePacket;
 import net.packet.abstr.WrappedPacket;
+import net.packet.game.GameUpdatePacket;
 import net.server.HostServer;
 import net.transmission.EndpointClient;
 
@@ -27,57 +27,57 @@ import net.transmission.EndpointClient;
  */
 public class testGameStateTransmission {
 
-	static HostServer hostServer = new HostServer();
+  static HostServer hostServer = new HostServer();
 
 
-	public static void main(String[] args) {
-		try {
+  public static void main(String[] args) {
+    try {
 
-			hostServer.startWebsocket(8081);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		int counter = 0;
-		GameSession gameSession = new GameSession();
+      hostServer.startWebsocket(8081);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    int counter = 0;
+    GameSession gameSession = new GameSession();
 
-		gameSession.addPlayer(new Player("BOT1", PlayerType.AI_EASY));
-		gameSession.addPlayer(new Player("BOT2", PlayerType.AI_EASY));
-		gameSession.addPlayer(new Player("BOT3", PlayerType.AI_EASY));
-		gameSession.addPlayer(new Player("BOT4", PlayerType.AI_EASY));
+    gameSession.addPlayer(new Player("BOT1", PlayerType.AI_EASY));
+    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_EASY));
+    gameSession.addPlayer(new Player("BOT3", PlayerType.AI_EASY));
+    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_EASY));
 
-		Game game = gameSession.startGame(new GMClassic());
+    Game game = gameSession.startGame(new GMClassic());
 
-		while (game.getGameState().isStateRunning()) {
-			Debug.printMessage(gameSession.toString());
-			game.makeMove();
-			counter++;
-			if (counter == 2) {
-				GameUpdatePacket gameUpdatePacket = new GameUpdatePacket(game.getGameState());
-				WrappedPacket wrappedPacket = new WrappedPacket(GAME_UPDATE_PACKET, gameUpdatePacket);
+    while (game.getGameState().isStateRunning()) {
+      Debug.printMessage(gameSession.toString());
+      game.makeMove();
+      counter++;
+      if (counter == 2) {
+        GameUpdatePacket gameUpdatePacket = new GameUpdatePacket(game.getGameState());
+        WrappedPacket wrappedPacket = new WrappedPacket(GAME_UPDATE_PACKET, gameUpdatePacket);
 
-				final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-				EndpointClient client = new EndpointClient();
+        final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+        EndpointClient client = new EndpointClient();
 
-				Session ses = null;
-				try {
-					ses = container.connectToServer(client, URI.create("ws://localhost:8080/packet"));
+        Session ses = null;
+        try {
+          ses = container.connectToServer(client, URI.create("ws://localhost:8080/packet"));
 
-					ses.getBasicRemote().sendObject(wrappedPacket);
-					ses.close();
-				} catch (DeploymentException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (EncodeException e) {
-					e.printStackTrace();
-				}
-			}
-
-
-		}
-
-		gameSession.stopSession();
+          ses.getBasicRemote().sendObject(wrappedPacket);
+          ses.close();
+        } catch (DeploymentException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        } catch (EncodeException e) {
+          e.printStackTrace();
+        }
+      }
 
 
-	}
+    }
+
+    gameSession.stopSession();
+
+
+  }
 }

@@ -1,7 +1,5 @@
 package engine.component;
 
-import game.model.polygon.Poly;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -9,8 +7,8 @@ import javafx.scene.shape.Polygon;
  */
 public abstract class Field extends Polygon {
 
-  private int x;
-  private int y;
+  private final int x;
+  private final int y;
 
   public Field(int x, int y) {
     this.x = x;

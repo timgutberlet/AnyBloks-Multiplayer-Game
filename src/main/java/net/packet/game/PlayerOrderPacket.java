@@ -10,25 +10,25 @@ import net.packet.abstr.Packet;
  */
 public class PlayerOrderPacket extends Packet {
 
-	HashMap<String, Integer> playerOrder;
+  HashMap<String, Integer> playerOrder;
 
-	public PlayerOrderPacket() {
-	}
+  public PlayerOrderPacket() {
+  }
 
-	/**
-	 * Constructor
-	 *
-	 * @param playerOrder
-	 */
-	public PlayerOrderPacket(HashMap<String, Integer> playerOrder) {
-		this.playerOrder = playerOrder;
-	}
+  /**
+   * Constructor
+   *
+   * @param playerOrder
+   */
+  public PlayerOrderPacket(HashMap<String, Integer> playerOrder) {
+    this.playerOrder = playerOrder;
+  }
 
 
-	/**
-	 * Getter
-	 */
-	public HashMap<String, Integer> getPlayerOrder() {
-		return playerOrder;
-	}
+  /**
+   * Getter
+   */
+  public HashMap<String, Integer> getPlayerOrder() {
+    return playerOrder;
+  }
 }

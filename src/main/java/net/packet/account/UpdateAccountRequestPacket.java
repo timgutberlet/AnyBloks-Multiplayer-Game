@@ -16,9 +16,9 @@ public class UpdateAccountRequestPacket extends Packet {
   /**
    * Constructor.
    *
-   * @param delete flag to signal user wants to delete account
+   * @param delete       flag to signal user wants to delete account
    * @param passwordHash of account
-   * @param username of account
+   * @param username     of account
    */
   public UpdateAccountRequestPacket(boolean delete, String passwordHash, String username) {
     this.delete = delete;

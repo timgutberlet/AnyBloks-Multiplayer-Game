@@ -100,7 +100,6 @@ public abstract class DbHandler {
    * create db file.
    *
    * @param forceReset to force rebuild.
-
    */
   protected abstract boolean setupDb(boolean forceReset);
 

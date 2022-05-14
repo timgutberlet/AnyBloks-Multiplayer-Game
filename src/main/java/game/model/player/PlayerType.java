@@ -7,5 +7,5 @@ package game.model.player;
  */
 
 public enum PlayerType {
-	HOST_PLAYER, REMOTE_PLAYER, AI_RANDOM, AI_EASY, AI_MIDDLE, AI_HARD
+  HOST_PLAYER, REMOTE_PLAYER, AI_RANDOM, AI_EASY, AI_MIDDLE, AI_HARD
 }

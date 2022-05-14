@@ -4,14 +4,14 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ErrorMessageHandler;
 import game.model.Debug;
-import game.model.player.Player;
-import game.model.player.PlayerType;
 import game.model.GameSession;
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
 import game.model.gamemodes.GMJunior;
 import game.model.gamemodes.GMTrigon;
 import game.model.gamemodes.GameMode;
+import game.model.player.Player;
+import game.model.player.PlayerType;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
@@ -35,7 +35,7 @@ public class LobbyController extends AbstractUiController {
   private final String nameAiPlayer2 = "Anna";
   private final String nameAiPlayer3 = "Tom";
 
-  private GameSession gameSession;
+  private final GameSession gameSession;
 
   private GameMode gameMode;
   private ObservableList<String> list;
@@ -75,8 +75,8 @@ public class LobbyController extends AbstractUiController {
 
   /**
    * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize
-   * @param gameController Gamecontroller Object currently used
    *
+   * @param gameController Gamecontroller Object currently used
    * @author tgutberl
    */
   public LobbyController(AbstractGameController gameController) {
@@ -121,7 +121,7 @@ public class LobbyController extends AbstractUiController {
           this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_HARD));
           //players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
       }
-      Debug.printMessage(""+this.gameSession.getPlayerList().size());
+      Debug.printMessage("" + this.gameSession.getPlayerList().size());
     }
     if (!namePlayer2.equals("-")) {
       switch (difficultyPlayer2.getText()) {
@@ -137,7 +137,7 @@ public class LobbyController extends AbstractUiController {
           this.gameSession.addPlayer(new Player(nameAiPlayer2, PlayerType.AI_HARD));
           //players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
       }
-      Debug.printMessage(""+this.gameSession.getPlayerList().size());
+      Debug.printMessage("" + this.gameSession.getPlayerList().size());
     }
     if (!namePlayer3.equals("-")) {
       switch (difficultyPlayer3.getText()) {
@@ -153,7 +153,7 @@ public class LobbyController extends AbstractUiController {
           this.gameSession.addPlayer(new Player(nameAiPlayer3, PlayerType.AI_HARD));
           //players.add(new Player(nameAiPlayer3, PlayerType.AI_HARD));
       }
-      Debug.printMessage(""+this.gameSession.getPlayerList().size());
+      Debug.printMessage("" + this.gameSession.getPlayerList().size());
     }
     //this.gameSession.addHost(new Player("You", PlayerType.AI_EASY));
     System.out.println(this.gameSession.getPlayerList().size());
@@ -261,7 +261,6 @@ public class LobbyController extends AbstractUiController {
           difficultyPlayer.setText("-");
           namePlayer.setText("-");
           player.setText("None");
-          ;
           break;
         /*case "Hard":
           difficultyPlayer.setText("-");

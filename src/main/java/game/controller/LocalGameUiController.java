@@ -7,7 +7,7 @@ import game.model.GameSession;
 /**
  * @author tgutberl
  */
-public class LocalGameUiController extends InGameUiController{
+public class LocalGameUiController extends InGameUiController {
 
   public LocalGameUiController(AbstractGameController gameController,
       Game game, GameSession gameSession) {

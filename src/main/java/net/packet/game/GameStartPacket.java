@@ -1,6 +1,5 @@
 package net.packet.game;
 
-import game.model.GameState;
 import game.model.gamemodes.GameMode;
 import net.packet.abstr.Packet;
 
@@ -10,18 +9,18 @@ import net.packet.abstr.Packet;
  */
 public class GameStartPacket extends Packet {
 
-	private final GameMode gameMode;
+  private final GameMode gameMode;
 
-	public GameStartPacket() {
-		this.gameMode = null;
-	}
+  public GameStartPacket() {
+    this.gameMode = null;
+  }
 
-	public GameStartPacket(GameMode gameMode) {
-		this.gameMode = gameMode;
+  public GameStartPacket(GameMode gameMode) {
+    this.gameMode = gameMode;
 
-	}
+  }
 
-	public GameMode getGameMode() {
-		return gameMode;
-	}
+  public GameMode getGameMode() {
+    return gameMode;
+  }
 }

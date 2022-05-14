@@ -19,8 +19,8 @@ public abstract class AbstractUiController implements Initializable, Updating {
   protected Group root = new Group();
 
   /**
-   * @author tgutberl
    * @param gameController most recent Gamecontroller
+   * @author tgutberl
    */
   public AbstractUiController(AbstractGameController gameController) {
     subScene = new SubScene(root, Config.getIntValue("SCREEN_WIDTH"),
@@ -48,13 +48,13 @@ public abstract class AbstractUiController implements Initializable, Updating {
 
   /**
    * Method for Auto Updating Width and Heigth of fxml File
-   * @param anchorPane Anchorpane Object used as Wrapper in the fxml File for each Menu
-   * @param stage Stage currently used
    *
+   * @param anchorPane Anchorpane Object used as Wrapper in the fxml File for each Menu
+   * @param stage      Stage currently used
    * @author tgutberl
    */
   @FXML
-  public void updateSize(AnchorPane anchorPane, Stage stage){
+  public void updateSize(AnchorPane anchorPane, Stage stage) {
     anchorPane.setPrefHeight(stage.getHeight());
     anchorPane.setPrefWidth(stage.getWidth());
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {

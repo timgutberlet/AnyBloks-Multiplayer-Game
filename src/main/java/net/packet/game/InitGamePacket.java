@@ -9,17 +9,17 @@ import net.packet.abstr.Packet;
  */
 public class InitGamePacket extends Packet {
 
-	private final GameMode gameMode;
+  private final GameMode gameMode;
 
-	public InitGamePacket() {
-		this.gameMode = null;
-	}
+  public InitGamePacket() {
+    this.gameMode = null;
+  }
 
-	public InitGamePacket(GameMode gameMode) {
-		this.gameMode = gameMode;
-	}
+  public InitGamePacket(GameMode gameMode) {
+    this.gameMode = gameMode;
+  }
 
-	public GameMode getGameMode() {
-		return gameMode;
-	}
+  public GameMode getGameMode() {
+    return gameMode;
+  }
 }

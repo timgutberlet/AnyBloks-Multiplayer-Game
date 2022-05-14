@@ -4,11 +4,11 @@ import engine.component.Field;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.InputHandler;
-import game.model.Turn;
 import game.model.Game;
-import game.model.player.Player;
 import game.model.GameSession;
+import game.model.Turn;
 import game.model.chat.Chat;
+import game.model.player.Player;
 import game.model.polygon.Poly;
 import game.view.DragablePolyPane;
 import game.view.board.BoardPane;
@@ -28,17 +28,17 @@ import javafx.scene.layout.VBox;
 
 public abstract class InGameUiController extends AbstractUiController {
 
-  private GameSession gameSession;
+  private final GameSession gameSession;
 
-  private Game game;
+  private final Game game;
 
-  private Chat chat;
+  private final Chat chat;
 
-  private AbstractGameController gameController;
+  private final AbstractGameController gameController;
 
   private BoardPane boardPane;
 
-  private List<StackPane> stackPanes;
+  private final List<StackPane> stackPanes;
 
   private StackPane stackLocal;
 
@@ -47,19 +47,20 @@ public abstract class InGameUiController extends AbstractUiController {
   private VBox stacks;
 
 
-  private List<Label> playerPoints;
+  private final List<Label> playerPoints;
 
-  private HBox Gui;
+  private final HBox Gui;
 
   private Button quitButton;
 
-  private InputHandler inputHandler;
+  private final InputHandler inputHandler;
 
   private boolean aiCalcRunning;
 
-  private int count = 0;
+  private final int count = 0;
 
-  public InGameUiController(AbstractGameController gameController, Game game, GameSession gameSession) {
+  public InGameUiController(AbstractGameController gameController, Game game,
+      GameSession gameSession) {
     super(gameController);
     this.inputHandler = gameController.getInputHandler();
     this.gameSession = gameSession;
@@ -78,9 +79,7 @@ public abstract class InGameUiController extends AbstractUiController {
   public void createBoard() {
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
-        ;
       case "DUO":
-        ;
       case "CLASSIC":
         boardPane = new SquareBoardPane(game.getGameState().getBoard(), inputHandler);
         break;
@@ -99,9 +98,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
-        ;
       case "DUO":
-        ;
       case "CLASSIC":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
@@ -109,11 +106,11 @@ public abstract class InGameUiController extends AbstractUiController {
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
-        ;
         break;
       case "TRIGON":
         for (Player p : this.gameSession.getPlayerList()) {
-          StackTrigonPane trigonStack = new StackTrigonPane(p, inputHandler, game.getGameState().getRemainingPolys(p));
+          StackTrigonPane trigonStack = new StackTrigonPane(p, inputHandler,
+              game.getGameState().getRemainingPolys(p));
           stacks.getChildren().add(trigonStack);
         }
         break;
@@ -141,9 +138,7 @@ public abstract class InGameUiController extends AbstractUiController {
     stacks.getChildren().clear();
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
-        ;
       case "DUO":
-        ;
       case "CLASSIC":
         for (Player p : game.getPlayers()) {
           StackPane squareStack = new StackSquarePane(p, inputHandler,
@@ -161,7 +156,7 @@ public abstract class InGameUiController extends AbstractUiController {
         break;
     }
 
-    }
+  }
 
     /*Gui.getChildren().removeAll(playerPoints);
     for(Player p : game.getPlayers()){
@@ -172,10 +167,11 @@ public abstract class InGameUiController extends AbstractUiController {
 
   /**
    * function that updates the screen and calls the next move to be made
+   *
    * @param gameController
    * @param deltaTime
-   *
-   * @author //TODO hier die klasse hat jemand anders geschrieben. ich habe nur paar changes gemacht. echter autor am besten noch dazu schreiben
+   * @author //TODO hier die klasse hat jemand anders geschrieben. ich habe nur paar changes
+   * gemacht. echter autor am besten noch dazu schreiben
    * @author tgeilen
    */
   @Override
@@ -187,17 +183,18 @@ public abstract class InGameUiController extends AbstractUiController {
     localPlayer = gameSession.getLocalPlayer();
     aiCalcRunning = true;
     //Check if AI is calculating - only refresh Board then
-    if(aiCalcRunning){
+    if (aiCalcRunning) {
       updateBoard();
     }
     //Check if Player has Turn
-    for(Field field : boardPane.getFields()){
-      if(gameController.getInputHandler().isFieldPressed(field)){
-        System.out.println("Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
+    for (Field field : boardPane.getFields()) {
+      if (gameController.getInputHandler().isFieldPressed(field)) {
+        System.out.println(
+            "Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
       }
     }
 
-    if(game.getGameState().getPlayerCurrent().equals(localPlayer)) {
+    if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
       boolean action = false;
 
       for (PolyPane polyPane : stackPanes.get(localPlayer.getOrderNum()).getPolyPanes()) {
@@ -223,17 +220,17 @@ public abstract class InGameUiController extends AbstractUiController {
     }
   }
 
-  public void paintPossibleTurns(ArrayList<Turn> possibleTurns){
-    for(Turn turn : possibleTurns){
+  public void paintPossibleTurns(ArrayList<Turn> possibleTurns) {
+    for (Turn turn : possibleTurns) {
       //TODO Implement paint all possible Turns in Board
     }
   }
 
-  public void updateBoard(){
+  public void updateBoard() {
     //TODO
   }
 
-  protected void gameEnd(){
+  protected void gameEnd() {
     //TODO
   }
 
@@ -246,6 +243,7 @@ public abstract class InGameUiController extends AbstractUiController {
   public void onExit() {
 
   }
+
   /**
    * Init Method given by Abstract Class
    *
@@ -258,8 +256,8 @@ public abstract class InGameUiController extends AbstractUiController {
 
   /**
    * Method used to update the current frame
-   * @param gameController GameController of game
    *
+   * @param gameController GameController of game
    * @author tgutberl
    */
   @Override

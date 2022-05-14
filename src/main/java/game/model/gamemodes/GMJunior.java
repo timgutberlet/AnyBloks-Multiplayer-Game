@@ -6,8 +6,8 @@ package game.model.gamemodes;
  */
 public class GMJunior extends GameMode {
 
-	public GMJunior() {
-		super("JUNIOR", 2);
-	}
+  public GMJunior() {
+    super("JUNIOR", 2);
+  }
 
 }

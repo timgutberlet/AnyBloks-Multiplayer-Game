@@ -8,7 +8,7 @@ import net.packet.abstr.Packet;
  */
 public class IllegalTurnPacket extends Packet {
 
-	public IllegalTurnPacket() {
-	}
+  public IllegalTurnPacket() {
+  }
 
 }

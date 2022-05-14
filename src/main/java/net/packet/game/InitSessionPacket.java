@@ -9,11 +9,11 @@ import net.packet.abstr.Packet;
  */
 public class InitSessionPacket extends Packet {
 
-	/**
-	 * Constructor
-	 */
-	public InitSessionPacket() {
+  /**
+   * Constructor
+   */
+  public InitSessionPacket() {
 
-	}
+  }
 
 }

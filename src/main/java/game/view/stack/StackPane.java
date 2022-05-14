@@ -29,8 +29,6 @@ public class StackPane extends GridPane {
   public void setUpStack(List<Poly> polys) {
   }
 
-  ;
-
   /**
    * Method that fills the StackSquarePane with SquarePolyPane objects
    */

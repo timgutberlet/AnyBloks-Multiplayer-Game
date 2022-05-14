@@ -26,12 +26,12 @@ public class ClientHandler {
 
   private final EndpointClient client;
   private final Player player;
-	private final GameSession gameSession;
+  private final GameSession gameSession;
 
   public ClientHandler(EndpointClient client) {
     this.client = client;
     this.player = this.client.getPlayer();
-		this.gameSession = new GameSession();
+    this.gameSession = new GameSession();
   }
 
   /**
@@ -46,43 +46,42 @@ public class ClientHandler {
     this.client.getGameSession().startGame(gamemode);
   }
 
-	/**
-	 * function that calls the client to make a turn and sends it to serve
-	 *
-	 * @param wrappedPacket
-	 * @author tgeilen
-	 */
-	public void makeTurn(WrappedPacket wrappedPacket) {
-		RequestTurnPacket requestTurnPacket = (RequestTurnPacket) wrappedPacket.getPacket();
-		GameState gameState = requestTurnPacket.getGameState();
-		String username = requestTurnPacket.getUsername();
+  /**
+   * function that calls the client to make a turn and sends it to serve
+   *
+   * @param wrappedPacket
+   * @author tgeilen
+   */
+  public void makeTurn(WrappedPacket wrappedPacket) {
+    RequestTurnPacket requestTurnPacket = (RequestTurnPacket) wrappedPacket.getPacket();
+    GameState gameState = requestTurnPacket.getGameState();
+    String username = requestTurnPacket.getUsername();
 
+    if (gameState == null) {
+      Debug.printMessage(this, "The received gamestate is NULL");
+    }
 
-		if(gameState == null){
-			Debug.printMessage(this ,"The received gamestate is NULL");
-		}
+    if (username == null) {
+      Debug.printMessage(this, "The received username is NULL");
+    }
 
-		if(username == null){
-			Debug.printMessage(this ,"The received username is NULL");
-		}
+    this.client.getGameSession().updateGame(gameState);
+    Debug.printMessage(this,
+        player.getUsername() + ": It is " + requestTurnPacket.getUsername() + " turn");
 
-		this.client.getGameSession().updateGame(gameState);
-		Debug.printMessage(this,player.getUsername()+": It is " +requestTurnPacket.getUsername() + " turn");
-
-		if (this.player.getUsername().equals(requestTurnPacket.getUsername())) {
-			Debug.printMessage(this,player.getUsername()+": It is my turn...");
-			Turn turn = this.player.makeTurn(gameState);
-			if(turn == null){
-				Debug.printMessage(this, "I don't know what to do!!!");
-			} else {
-				Debug.printMessage(this, player.getUsername() + ": I know what to do...");
-			}
-			TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
-			WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
-			this.client.sendToServer(wrPacket);
-			;
-		}
-	}
+    if (this.player.getUsername().equals(requestTurnPacket.getUsername())) {
+      Debug.printMessage(this, player.getUsername() + ": It is my turn...");
+      Turn turn = this.player.makeTurn(gameState);
+      if (turn == null) {
+        Debug.printMessage(this, "I don't know what to do!!!");
+      } else {
+        Debug.printMessage(this, player.getUsername() + ": I know what to do...");
+      }
+      TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
+      WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
+      this.client.sendToServer(wrPacket);
+    }
+  }
 
   /**
    * updates the gameState for the local client.

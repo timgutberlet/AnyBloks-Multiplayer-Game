@@ -6,9 +6,9 @@ package game.model.gamemodes;
  */
 public class GMTrigon extends GameMode {
 
-	public GMTrigon() {
-		super("TRIGON", 4);
-	}
+  public GMTrigon() {
+    super("TRIGON", 4);
+  }
 
 
 }

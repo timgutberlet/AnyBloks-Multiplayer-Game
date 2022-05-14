@@ -9,9 +9,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
+  minHeight="-Infinity"
   minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css"
-  xmlns="http://javafx.com/javafx/17-0.2-ea" fx:controller="game.controller.SettingUiController" fx:id="settingsPane">
+  xmlns="http://javafx.com/javafx/17-0.2-ea" fx:controller="game.controller.SettingUiController"
+  fx:id="settingsPane">
   <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
     AnchorPane.topAnchor="0.0">
     <children>
@@ -20,13 +22,15 @@
         <children>
           <GridPane GridPane.rowIndex="1" prefHeight="112.0" prefWidth="1280.0">
             <children>
-              <Button GridPane.columnIndex="1" mnemonicParsing="false" onAction="#save" prefHeight="60.0"
+              <Button GridPane.columnIndex="1" mnemonicParsing="false" onAction="#save"
+                prefHeight="60.0"
                 prefWidth="150.0" text="SAVE">
                 <font>
                   <Font size="25.0"/>
                 </font>
               </Button>
-              <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#back" prefHeight="60.0"
+              <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#back"
+                prefHeight="60.0"
                 prefWidth="150.0" text="BACK">
                 <font>
                   <Font size="25.0"/>
@@ -58,7 +62,8 @@
                 <children>
                   <GridPane GridPane.rowIndex="1" alignment="CENTER">
                     <children>
-                      <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#increaseWidth"
+                      <Button GridPane.columnIndex="2" mnemonicParsing="false"
+                        onAction="#increaseWidth"
                         text="+">
                         <font>
                           <Font size="25.0"/>
@@ -113,7 +118,8 @@
                           <Font size="25.0"/>
                         </font>
                       </Button>
-                      <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#increaseHeight"
+                      <Button GridPane.columnIndex="2" mnemonicParsing="false"
+                        onAction="#increaseHeight"
                         text="+">
                         <font>
                           <Font size="25.0"/>
@@ -215,9 +221,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                 </rowConstraints>
               </GridPane>
-              <VBox GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" alignment="CENTER"
+              <VBox GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER"
+                alignment="CENTER"
                 prefHeight="200.0" prefWidth="100.0" spacing="10.0"/>
-              <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER" prefHeight="200.0"
+              <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER"
+                prefHeight="200.0"
                 prefWidth="100.0" spacing="10.0"/>
             </children>
             <columnConstraints>

@@ -22,406 +22,409 @@ import java.util.ArrayList;
 
 public class GameState implements Serializable, Cloneable {
 
-	/**
-	 * Required for serializable objects.
-	 */
-	private static final long serialVersionUID = 1L;
+  /**
+   * Required for serializable objects.
+   */
+  private static final long serialVersionUID = 1L;
 
-	/**
-	 * The session of this GameState
-	 */
-	//private GameSession gameSession;
+  /**
+   * The session of this GameState
+   */
+  //private GameSession gameSession;
 
-	/**
-	 * used game mode
-	 */
-	private GameMode gameMode;
+  /**
+   * used game mode
+   */
+  private GameMode gameMode;
 
-	/**
-	 * game board
-	 */
-	private Board board;
+  /**
+   * game board
+   */
+  private Board board;
 
-	/**
-	 * list of arrays of the remaining polys of each player (every player has the same index in player
-	 * as their remaining polys)
-	 */
-	private ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
-	/**
-	 * list of every participating player
-	 */
-	private ArrayList<Player> playerList;
-	/**
-	 * round number
-	 */
-	private int round;
-	/**
-	 * turn number
-	 */
-	private int turn;
-	/**
-	 *
-	 */
-	private ArrayList<ArrayList<Turn>> history = new ArrayList<>();
-	/**
-	 * states if the game is currently running
-	 */
-	private boolean running;
+  /**
+   * list of arrays of the remaining polys of each player (every player has the same index in player
+   * as their remaining polys)
+   */
+  private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
+  /**
+   * list of every participating player
+   */
+  private ArrayList<Player> playerList;
+  /**
+   * round number
+   */
+  private int round;
+  /**
+   * turn number
+   */
+  private int turn;
+  /**
+   *
+   */
+  private final ArrayList<ArrayList<Turn>> history = new ArrayList<>();
+  /**
+   * states if the game is currently running
+   */
+  private boolean running;
 
-	/**
-	 * states if the game has already started
-	 */
-	private boolean started;
+  /**
+   * states if the game has already started
+   */
+  private boolean started;
 
-	/**
-	 * The reason why the game ended.
-	 */
-	private String stateEnding;
+  /**
+   * The reason why the game ended.
+   */
+  private String stateEnding;
 
-	/**
-	 * initializing of all default parameters
-	 *
-	 * @param gameMode gives the game mode for the current game
-	 * @author tiotto
-	 */
-	public GameState(GameSession gameSession, GameMode gameMode) {
-		this.gameMode = gameMode;
-		if (gameMode.getName().equals("TRIGON")) {
-			board = new BoardTrigon();
-		} else {
-			board = new BoardSquare(gameMode);
-		}
-		this.round = 1;
-		this.turn = 0;
-		//this.gameSession = gameSession;
-		this.playerList = gameSession.getPlayerList();
-		this.running = false;
-		this.started = false;
-		init();
+  /**
+   * initializing of all default parameters
+   *
+   * @param gameMode gives the game mode for the current game
+   * @author tiotto
+   */
+  public GameState(GameSession gameSession, GameMode gameMode) {
+    this.gameMode = gameMode;
+    if (gameMode.getName().equals("TRIGON")) {
+      board = new BoardTrigon();
+    } else {
+      board = new BoardSquare(gameMode);
+    }
+    this.round = 1;
+    this.turn = 0;
+    //this.gameSession = gameSession;
+    this.playerList = gameSession.getPlayerList();
+    this.running = false;
+    this.started = false;
+    init();
 
-	}
+  }
 
-	/**
-	 * Constructor to copy a GameState (only used in this.clone())
-	 *
-	 * @param gameMode       gameMode
-	 * @param board          board
-	 * @param remainingPolys remainingPolys
-	 * @param playerList         player
-	 * @param round          round
-	 * @param turn           turn
-	 * @param running        running
-	 * @param started        started
-	 * @param stateEnding    stateEnding
-	 */
-	public GameState(GameMode gameMode, Board board,
-			ArrayList<ArrayList<Poly>> remainingPolys,
-			ArrayList<Player> playerList, int round, int turn, boolean running, boolean started,
-			String stateEnding, ArrayList<ArrayList<Turn>> history) {
-		this.gameMode = gameMode;
-		this.board = board;
-		for (ArrayList<Poly> polys : remainingPolys) {
-			this.remainingPolys.add(polys);
-		}
-		this.playerList = playerList;
-		this.round = round;
-		this.turn = turn;
-		this.running = running;
-		this.started = started;
-		this.stateEnding = stateEnding;
-		for (ArrayList<Turn> turns : history) {
-			this.history.add(turns);
-		}
-	}
+  /**
+   * Constructor to copy a GameState (only used in this.clone())
+   *
+   * @param gameMode       gameMode
+   * @param board          board
+   * @param remainingPolys remainingPolys
+   * @param playerList     player
+   * @param round          round
+   * @param turn           turn
+   * @param running        running
+   * @param started        started
+   * @param stateEnding    stateEnding
+   */
+  public GameState(GameMode gameMode, Board board,
+      ArrayList<ArrayList<Poly>> remainingPolys,
+      ArrayList<Player> playerList, int round, int turn, boolean running, boolean started,
+      String stateEnding, ArrayList<ArrayList<Turn>> history) {
+    this.gameMode = gameMode;
+    this.board = board;
+    for (ArrayList<Poly> polys : remainingPolys) {
+      this.remainingPolys.add(polys);
+    }
+    this.playerList = playerList;
+    this.round = round;
+    this.turn = turn;
+    this.running = running;
+    this.started = started;
+    this.stateEnding = stateEnding;
+    for (ArrayList<Turn> turns : history) {
+      this.history.add(turns);
+    }
+  }
 
-	/**
-	 * empty constructor for jackson
-	 */
-	public GameState() {
+  /**
+   * empty constructor for jackson
+   */
+  public GameState() {
 
-	}
+  }
 
-	/**
-	 * initalises the polys for all players depending on the selected gamemode
-	 */
-	private void init() {
-		for (Player p : this.playerList) {
-			ArrayList<Poly> polyOfPlayer = new ArrayList<>();
-			history.add(new ArrayList<>());
+  /**
+   * initalises the polys for all players depending on the selected gamemode
+   */
+  private void init() {
+    for (Player p : this.playerList) {
+      ArrayList<Poly> polyOfPlayer = new ArrayList<>();
+      history.add(new ArrayList<>());
 
-			switch (this.gameMode.getName()) { //remaining polys for every gamemode
-				case "CLASSIC": {
-					for (ArrayList<FieldSquare> shape : PolySquare.shapeListClassic) {
-						polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
-					}
-					break;
-				}
-				case "DUO": {
-					for (ArrayList<FieldSquare> shape : PolySquare.shapeListDuo) {
-						polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
-					}
-					break;
-				}
-				case "JUNIOR": {
-					for (ArrayList<FieldSquare> shape : PolySquare.shapeListJunior) {
-						polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
-					}
-					break;
-				}
-				case "TRIGON": {
-					for (ArrayList<FieldTrigon> shape : PolyTrigon.shapeListTrigon) {
-						polyOfPlayer.add(new PolyTrigon(shape, getColorFromPlayer(p)));
-					}
-					break;
-				}
-			}
-			//Debug.printMessage(this,"Remaing polys calculated and added to GameState");
-			remainingPolys.add(polyOfPlayer);
+      switch (this.gameMode.getName()) { //remaining polys for every gamemode
+        case "CLASSIC": {
+          for (ArrayList<FieldSquare> shape : PolySquare.shapeListClassic) {
+            polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+        case "DUO": {
+          for (ArrayList<FieldSquare> shape : PolySquare.shapeListDuo) {
+            polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+        case "JUNIOR": {
+          for (ArrayList<FieldSquare> shape : PolySquare.shapeListJunior) {
+            polyOfPlayer.add(new PolySquare(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+        case "TRIGON": {
+          for (ArrayList<FieldTrigon> shape : PolyTrigon.shapeListTrigon) {
+            polyOfPlayer.add(new PolyTrigon(shape, getColorFromPlayer(p)));
+          }
+          break;
+        }
+      }
+      //Debug.printMessage(this,"Remaing polys calculated and added to GameState");
+      remainingPolys.add(polyOfPlayer);
 
-		}
-	}
-
-
-	public Board getBoard() {
-		return board;
-	}
-
-	/**
-	 * returns the remaining polys for a specific player
-	 *
-	 * @param p player for whom the remaining parts are required
-	 * @return remaining polys for a specific player
-	 */
-	public ArrayList<Poly> getRemainingPolys(Player p) {
-
-		Debug.printMessage(this,"Size fo remainingPolys arrayList:");
-		Debug.printMessage(this, "Entries: "+remainingPolys.size());
-		for(ArrayList<Poly> arr : this.remainingPolys){
-			Debug.printMessage(this,"Polys: "+arr.size());
-		}
+    }
+  }
 
 
-		//Debug.printMessage(this,"GET REMAINING POLYS: " + this.playerList.size());
-		for (Player player: this.playerList){
-		//	Debug.printMessage(this,"Comparing " + p.getUsername() +" to " + player.getUsername());
-			if(p.getUsername().equals(player.getUsername())){
-		//		Debug.printMessage(this,"Getting remaining polys for " + player.getUsername());
-				return remainingPolys.get(this.playerList.indexOf(player));
-			}
-		}
-		return null;
-	}
+  public Board getBoard() {
+    return board;
+  }
 
-	public Player getPlayerCurrent() {
-		if (getPlayerList().size() > 0) {
-			return getPlayerList().get(this.turn % this.playerList.size());
-		} else {
-			return null;
-		}
-	}
+  /**
+   * returns the remaining polys for a specific player
+   *
+   * @param p player for whom the remaining parts are required
+   * @return remaining polys for a specific player
+   */
+  public ArrayList<Poly> getRemainingPolys(Player p) {
 
-	public ArrayList<Player> getPlayerList() {
-		return playerList;
-	}
+    Debug.printMessage(this, "Size fo remainingPolys arrayList:");
+    Debug.printMessage(this, "Entries: " + remainingPolys.size());
+    for (ArrayList<Poly> arr : this.remainingPolys) {
+      Debug.printMessage(this, "Polys: " + arr.size());
+    }
 
-	public Player getPlayerFromColor(Color c) {
-		switch (c) {
-			case RED:
-				return getPlayerList().get(0);
-			case BLUE:
-				return getPlayerList().get(1);
-			case GREEN:
-				return getPlayerList().get(2);
-			case YELLOW:
-				return getPlayerList().get(3);
-			default:
-				try {
-					throw new Exception("Wrong Player Color");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-		}
-	}
+    //Debug.printMessage(this,"GET REMAINING POLYS: " + this.playerList.size());
+    for (Player player : this.playerList) {
+      //	Debug.printMessage(this,"Comparing " + p.getUsername() +" to " + player.getUsername());
+      if (p.getUsername().equals(player.getUsername())) {
+        //		Debug.printMessage(this,"Getting remaining polys for " + player.getUsername());
+        return remainingPolys.get(this.playerList.indexOf(player));
+      }
+    }
+    return null;
+  }
 
-	public Color getColorFromPlayer(Player p) {
-		return Color.values()[getPlayerList().indexOf(p) + 1];
-	}
+  public Player getPlayerCurrent() {
+    if (getPlayerList().size() > 0) {
+      return getPlayerList().get(this.turn % this.playerList.size());
+    } else {
+      return null;
+    }
+  }
 
+  public ArrayList<Player> getPlayerList() {
+    return playerList;
+  }
 
-	public void incTurn() {
-		this.turn = turn + 1;
-		this.round = turn / playerList.size() + 1;
-	}
+  public Player getPlayerFromColor(Color c) {
+    switch (c) {
+      case RED:
+        return getPlayerList().get(0);
+      case BLUE:
+        return getPlayerList().get(1);
+      case GREEN:
+        return getPlayerList().get(2);
+      case YELLOW:
+        return getPlayerList().get(3);
+      default:
+        try {
+          throw new Exception("Wrong Player Color");
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+        return null;
+    }
+  }
 
-	public int getRound() {
-		return round;
-	}
-
-	public boolean isFirstRound() {
-		return (round == 1);
-	}
-
-	public boolean isStateRunning() {
-		return running;
-	}
-
-	public void setStateRunning(boolean running) {
-		this.running = running;
-		if (running) {
-			started = true;
-		}
-	}
-
-	public String getStateEnding() {
-		return stateEnding;
-	}
-
-	public void setStateEnding(String stateEnding) {
-		this.setStateRunning(false);
-		this.stateEnding = stateEnding;
-	}
-
-	public boolean isStarted() {
-		return started;
-	}
-
-	public boolean checkEnd() {
-		boolean end = true;
-		for (Player p : playerList) {
-			Debug.printMessage(
-					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-							+ " Möglichkeiten Steine zu legen");
-			Debug.printMessage(this,"Remaining Polys for __" + p.getUsername() + "__ : " + this.getRemainingPolys(p).size());
-			if (getRemainingPolys(p).size() > 0 && (
-					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-							> 0)) {
-				end = false;
-			}
-		}
-		return end;
-	}
-
-	public boolean checkEnd(Turn turn) {
-
-		boolean end = true;
-		for (Player p : playerList) {
-			Debug.printMessage(
-					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-							+ " möglichkeiten Steine zu legen");
-			Debug.printMessage(this,"(TURN) Remaining Polys for : " + p.getUsername() + " : " + this.getRemainingPolys(p).size());
-			if (getRemainingPolys(p).size() > 0 && (
-					board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-							> 0)) {
-				end = false;
-			}
-		}
+  public Color getColorFromPlayer(Player p) {
+    return Color.values()[getPlayerList().indexOf(p) + 1];
+  }
 
 
-		if (end) {
-			setStateEnding("Spiel Vorbei");
-			setStateRunning(false);
-			Debug.printMessage("Spiel Vorbei");
+  public void incTurn() {
+    this.turn = turn + 1;
+    this.round = turn / playerList.size() + 1;
+  }
 
-			int bestScore = 0;
-			Debug.printMessage("Scores:");
-			for (Player p : playerList) {
-				Debug.printMessage(p.getUsername() + ": " + board.getScoreOfColor(getColorFromPlayer(p)) + " ("
-						+ getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
-				bestScore = Math.max(bestScore, board.getScoreOfColor(getColorFromPlayer(p)));
-			}
-			Debug.printMessage("Winner: ");
-			for (Player p : playerList) {
-				if (board.getScoreOfColor(getColorFromPlayer(p)) == bestScore) {
-					Debug.printMessage(
-							p.getUsername() + " (" + getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
-				}
-			}
+  public int getRound() {
+    return round;
+  }
 
-			return true;
-		}
-		return false;
-	}
+  public boolean isFirstRound() {
+    return (round == 1);
+  }
 
-	public boolean playTurn(Turn turn) {
-		if (checkEnd(turn)) {
-			return false;
-		}
-		boolean res = board.playTurn(turn, isFirstRound()); //play turn
-		if (res) { // remove played poly from remaining polys
-			for (Poly p : getRemainingPolys(getPlayerFromColor(turn.getColor()))) {
-				if (p.equals(turn.getPoly())) {
-					getRemainingPolys(getPlayerFromColor(turn.getColor())).remove(p);
-					break;
-				}
-			}
-		}
-		incTurn();
+  public boolean isStateRunning() {
+    return running;
+  }
 
-		history.get(this.turn % playerList.size()).add(turn);
-		return res;
-	}
+  public void setStateRunning(boolean running) {
+    this.running = running;
+    if (running) {
+      started = true;
+    }
+  }
 
-	@Override
-	public GameState clone() {
-		Board boardCopy = this.board.clone();
-		ArrayList<ArrayList<Poly>> remainingPolysCopy = new ArrayList<>();
-		for (ArrayList<Poly> polys : this.remainingPolys) {
-			ArrayList<Poly> polysCopy = new ArrayList<>();
-			for (Poly p : polys) {
-				polysCopy.add(p.clone());
-			}
-			remainingPolysCopy.add(polysCopy);
-		}
-		ArrayList<Player> playerCopy = new ArrayList<>();
-		for (Player p : playerList) {
-			playerCopy.add(p);
-		}
-		ArrayList<ArrayList<Turn>> historyCopy = new ArrayList<>();
-		for (ArrayList<Turn> turns : this.history) {
-			ArrayList<Turn> turnsCopy = new ArrayList<>();
-			for (Turn t : turns) {
-				if (t == null) {
-					turnsCopy.add(null);
-				} else {
-					turnsCopy.add(t.clone());
-				}
-			}
-			historyCopy.add(turnsCopy);
-		}
-		return new GameState(this.gameMode, boardCopy, remainingPolysCopy, playerCopy,
-				round, turn,
-				running, started, stateEnding, historyCopy);
-	}
+  public String getStateEnding() {
+    return stateEnding;
+  }
 
-	public GameState tryTurn(Turn turn) {
-		if (turn == null) {
-			return this.clone();
-		}
-		GameState gameStateCopy = this.clone();
-		gameStateCopy.getBoard().playTurn(turn, gameStateCopy.isFirstRound());
-		return gameStateCopy;
-	}
+  public void setStateEnding(String stateEnding) {
+    this.setStateRunning(false);
+    this.stateEnding = stateEnding;
+  }
 
-	public Color getNextColor(Color c) {
-		switch (c) {
-			case RED:
-				return Color.BLUE;
-			case BLUE:
-				return Color.RED;
-			default:
-				return Color.BLUE;
-		}
-	}
+  public boolean isStarted() {
+    return started;
+  }
 
-	@Override
-	public String toString() {
+  public boolean checkEnd() {
+    boolean end = true;
+    for (Player p : playerList) {
+      Debug.printMessage(
+          board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
+              + " Möglichkeiten Steine zu legen");
+      Debug.printMessage(this,
+          "Remaining Polys for __" + p.getUsername() + "__ : " + this.getRemainingPolys(p).size());
+      if (getRemainingPolys(p).size() > 0 && (
+          board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
+              > 0)) {
+        end = false;
+      }
+    }
+    return end;
+  }
 
-		String result = "PlayerList: \n";
+  public boolean checkEnd(Turn turn) {
 
-		for (Player p : this.playerList) {
-			result += p.getUsername() + "\n";
-		}
+    boolean end = true;
+    for (Player p : playerList) {
+      Debug.printMessage(
+          board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
+              + " möglichkeiten Steine zu legen");
+      Debug.printMessage(this,
+          "(TURN) Remaining Polys for : " + p.getUsername() + " : " + this.getRemainingPolys(p)
+              .size());
+      if (getRemainingPolys(p).size() > 0 && (
+          board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
+              > 0)) {
+        end = false;
+      }
+    }
+
+    if (end) {
+      setStateEnding("Spiel Vorbei");
+      setStateRunning(false);
+      Debug.printMessage("Spiel Vorbei");
+
+      int bestScore = 0;
+      Debug.printMessage("Scores:");
+      for (Player p : playerList) {
+        Debug.printMessage(
+            p.getUsername() + ": " + board.getScoreOfColor(getColorFromPlayer(p)) + " ("
+                + getColorFromPlayer(p).toString() + " | " + p.getType() + ")");
+        bestScore = Math.max(bestScore, board.getScoreOfColor(getColorFromPlayer(p)));
+      }
+      Debug.printMessage("Winner: ");
+      for (Player p : playerList) {
+        if (board.getScoreOfColor(getColorFromPlayer(p)) == bestScore) {
+          Debug.printMessage(
+              p.getUsername() + " (" + getColorFromPlayer(p).toString() + " | " + p.getType()
+                  + ")");
+        }
+      }
+
+      return true;
+    }
+    return false;
+  }
+
+  public boolean playTurn(Turn turn) {
+    if (checkEnd(turn)) {
+      return false;
+    }
+    boolean res = board.playTurn(turn, isFirstRound()); //play turn
+    if (res) { // remove played poly from remaining polys
+      for (Poly p : getRemainingPolys(getPlayerFromColor(turn.getColor()))) {
+        if (p.equals(turn.getPoly())) {
+          getRemainingPolys(getPlayerFromColor(turn.getColor())).remove(p);
+          break;
+        }
+      }
+    }
+    incTurn();
+
+    history.get(this.turn % playerList.size()).add(turn);
+    return res;
+  }
+
+  @Override
+  public GameState clone() {
+    Board boardCopy = this.board.clone();
+    ArrayList<ArrayList<Poly>> remainingPolysCopy = new ArrayList<>();
+    for (ArrayList<Poly> polys : this.remainingPolys) {
+      ArrayList<Poly> polysCopy = new ArrayList<>();
+      for (Poly p : polys) {
+        polysCopy.add(p.clone());
+      }
+      remainingPolysCopy.add(polysCopy);
+    }
+    ArrayList<Player> playerCopy = new ArrayList<>();
+    for (Player p : playerList) {
+      playerCopy.add(p);
+    }
+    ArrayList<ArrayList<Turn>> historyCopy = new ArrayList<>();
+    for (ArrayList<Turn> turns : this.history) {
+      ArrayList<Turn> turnsCopy = new ArrayList<>();
+      for (Turn t : turns) {
+        if (t == null) {
+          turnsCopy.add(null);
+        } else {
+          turnsCopy.add(t.clone());
+        }
+      }
+      historyCopy.add(turnsCopy);
+    }
+    return new GameState(this.gameMode, boardCopy, remainingPolysCopy, playerCopy,
+        round, turn,
+        running, started, stateEnding, historyCopy);
+  }
+
+  public GameState tryTurn(Turn turn) {
+    if (turn == null) {
+      return this.clone();
+    }
+    GameState gameStateCopy = this.clone();
+    gameStateCopy.getBoard().playTurn(turn, gameStateCopy.isFirstRound());
+    return gameStateCopy;
+  }
+
+  public Color getNextColor(Color c) {
+    switch (c) {
+      case RED:
+        return Color.BLUE;
+      case BLUE:
+        return Color.RED;
+      default:
+        return Color.BLUE;
+    }
+  }
+
+  @Override
+  public String toString() {
+
+    String result = "PlayerList: \n";
+
+    for (Player p : this.playerList) {
+      result += p.getUsername() + "\n";
+    }
 
 		/*
 		result += "\nSize fo remainingPolys arrayList:\n";
@@ -431,8 +434,8 @@ public class GameState implements Serializable, Cloneable {
 		}
 		*
 		 */
-		return result;
-	}
+    return result;
+  }
     /*
     return "GameState{" +
         "\n player=" + player +
@@ -445,8 +448,8 @@ public class GameState implements Serializable, Cloneable {
   }
 */
 
-  private static String twoDigit(int i){
-    if (i < 10){
+  private static String twoDigit(int i) {
+    if (i < 10) {
       return "0" + i;
     }
     return Integer.toString(i);
@@ -484,25 +487,25 @@ public class GameState implements Serializable, Cloneable {
     return res.toString();
   }*/
 
-	public GameMode getGameMode() {
-		return gameMode;
-	}
+  public GameMode getGameMode() {
+    return gameMode;
+  }
 
-	public ArrayList<ArrayList<Poly>> getRemainingPolys() {
-		return remainingPolys;
-	}
+  public ArrayList<ArrayList<Poly>> getRemainingPolys() {
+    return remainingPolys;
+  }
 
-	public ArrayList<ArrayList<Turn>> getHistory() {
-		return history;
-	}
+  public ArrayList<ArrayList<Turn>> getHistory() {
+    return history;
+  }
 
-	public boolean isRunning() {
-		return running;
-	}
+  public boolean isRunning() {
+    return running;
+  }
 
-	public int getTurn() {
-		return turn;
-	}
+  public int getTurn() {
+    return turn;
+  }
 
 }
 

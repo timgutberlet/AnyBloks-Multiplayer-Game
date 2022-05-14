@@ -2,12 +2,10 @@ package engine.handler;
 
 import engine.component.Field;
 import engine.controller.AbstractGameController;
-import game.model.polygon.Poly;
 import game.view.poly.PolyPane;
 import java.util.HashSet;
 import java.util.Set;
 import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
 
 /**
  * This class enables elements to be draggable
@@ -28,7 +26,7 @@ public class InputHandler {
   private final Set<PolyPane> polyClicked;
   private double mouseAnchorX;
   private double mouseAnchorY;
-  private AbstractGameController gameController;
+  private final AbstractGameController gameController;
   private boolean blockInput;
 
 
@@ -95,7 +93,7 @@ public class InputHandler {
     fieldReleasedSaved.clear();
     polyClickedSaved.clear();
 
-    blockInput=false;
+    blockInput = false;
   }
 
 
@@ -114,34 +112,32 @@ public class InputHandler {
    */
   public void registerField(Field field) {
     field.setOnMouseClicked(event -> {
-      if(blockInput){
+      if (blockInput) {
         fieldClickedSaved.add(field);
-      }else{
+      } else {
         fieldClicked.add(field);
       }
     });
 
     field.setOnMousePressed((event -> {
-      if(blockInput){
+      if (blockInput) {
         fieldPressedSaved.add(field);
-      }else{
+      } else {
         fieldPressed.add(field);
       }
     }));
 
     field.setOnMouseEntered(event -> {
-      if(blockInput){
+      if (blockInput) {
         fieldHoveredSaved.add(field);
-      }else{
+      } else {
         fieldHovered.add(field);
       }
     });
 
     field.setOnMouseExited(event -> {
       if (blockInput) {
-        if (fieldHoveredSaved.contains(field)) {
-          fieldHoveredSaved.remove(field);
-        }
+        fieldHoveredSaved.remove(field);
       } else {
         fieldHovered.remove(field);
       }
@@ -210,7 +206,6 @@ public class InputHandler {
     }
     return false;
   }
-
 
 
 }

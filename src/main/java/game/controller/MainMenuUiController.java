@@ -2,12 +2,8 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
-import game.config.Config;
-import game.core.App;
 import game.model.Game;
 import game.model.GameSession;
-import game.model.GameState;
-import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMTutorial;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
@@ -17,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
 /**
  * @author lbaudenb
@@ -25,6 +20,7 @@ import javafx.scene.layout.VBox;
  */
 
 public class MainMenuUiController extends AbstractUiController {
+
   @FXML
   AnchorPane menuPane;
 
@@ -38,8 +34,8 @@ public class MainMenuUiController extends AbstractUiController {
 
   /**
    * Method to initialize the FXML
-   * @param root Group Object
    *
+   * @param root Group Object
    * @author tgutberl
    */
   public void init(Group root) {
@@ -53,24 +49,30 @@ public class MainMenuUiController extends AbstractUiController {
       e.printStackTrace();
     }
   }
+
   /**
    * Method to Start LocalControler - to get into LobbyUi
+   *
    * @author tgutberl
    */
   @FXML
   public void local() {
     gameController.setActiveUiController(new LobbyController(gameController));
   }
+
   /**
    * Method to Start LobbyController - to get into LobbyUi
+   *
    * @author lbaudenb
    */
   @FXML
   public void lobby() {
     gameController.setActiveUiController(new LobbyController(gameController));
   }
+
   /**
    * Method to Start Tutuorial
+   *
    * @author tgutberl
    */
   @FXML
@@ -85,16 +87,20 @@ public class MainMenuUiController extends AbstractUiController {
     gameSession.startGame(gameMode);
     gameController.setActiveUiController(new TutorialUiController(gameController, gameSession));
   }
+
   /**
    * Method to get into SettingController - to get into SettingUI
+   *
    * @author tgutberl
    */
   @FXML
   public void setting() {
     gameController.setActiveUiController(new SettingUiController(gameController));
   }
+
   /**
    * Method to get Quit Menu - to End the Program
+   *
    * @author tgutberl
    */
   @FXML
@@ -105,16 +111,20 @@ public class MainMenuUiController extends AbstractUiController {
       e.printStackTrace();
     }
   }
+
   /**
    * Method to get get into the credits view
+   *
    * @author tgutberl
    */
   @FXML
   public void credits() {
 
   }
+
   /**
    * Method to get get into the help view
+   *
    * @author tgutberl
    */
   @FXML
@@ -131,8 +141,9 @@ public class MainMenuUiController extends AbstractUiController {
   public void update(AbstractGameController gameController) {
 
   }
+
   @FXML
-  public void initialize(){
+  public void initialize() {
     updateSize(menuPane, gameController.getStage());
   }
 }

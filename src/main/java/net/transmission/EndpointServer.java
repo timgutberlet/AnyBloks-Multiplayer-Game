@@ -42,7 +42,7 @@ public class EndpointServer {
 //  private static final HashMap<String, Session> allSessions = (HashMap<String, Session>) Collections.synchronizedMap(
 //      new HashMap<String, Session>());
   private static GameSession gameSession;
-  private static HashMap<String, Session> username2Session = new HashMap<String, Session>();
+  private static final HashMap<String, Session> username2Session = new HashMap<String, Session>();
   private InboundServerHandler inboundServerHandler;
   private OutboundServerHandler outboundServerHandler;
 
@@ -57,7 +57,7 @@ public class EndpointServer {
     ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
     ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
 
-    this.gameSession = new GameSession();
+    gameSession = new GameSession();
     this.inboundServerHandler = new InboundServerHandler(this, gameSession);
     this.outboundServerHandler = new OutboundServerHandler(this, gameSession);
 
@@ -96,8 +96,8 @@ public class EndpointServer {
     switch (type) {
       case INIT_SESSION_PACKET: {
 
-        if (this.gameSession == null) {
-          this.gameSession = new GameSession();
+        if (gameSession == null) {
+          gameSession = new GameSession();
         }
         if (this.inboundServerHandler == null) {
           this.inboundServerHandler = new InboundServerHandler(this, gameSession);
@@ -116,7 +116,7 @@ public class EndpointServer {
         Debug.printMessage(this, " LOGIN_REQUEST_PACKET recieved");
         String[] response = this.inboundServerHandler.verifyLogin(packet, client);
         if (response[0].equals("true")) {
-          this.gameSession.addPlayer(new Player(response[1], PlayerType.REMOTE_PLAYER));
+          gameSession.addPlayer(new Player(response[1], PlayerType.REMOTE_PLAYER));
           //allSessions.put(response[1], client);
         } else {
           client.getBasicRemote().sendObject(
@@ -155,7 +155,7 @@ public class EndpointServer {
     Debug.printMessage(this, this.getUsername2Session().keySet().toString());
 
     try {
-      Session client = this.username2Session.get(username);
+      Session client = username2Session.get(username);
       client.getBasicRemote().sendObject(wrappedPacket);
     } catch (IOException e) {
       e.printStackTrace();
@@ -202,7 +202,7 @@ public class EndpointServer {
   }
 
   public void addUsernameSession(String username, Session client) {
-    this.username2Session.put(username, client);
+    username2Session.put(username, client);
   }
 
   public InboundServerHandler getInboundServerHandler() {

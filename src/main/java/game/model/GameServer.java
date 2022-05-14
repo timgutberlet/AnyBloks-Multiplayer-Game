@@ -11,37 +11,35 @@ import net.server.InboundServerHandler;
  */
 public class GameServer {
 
-	private GameSession gameSession;
-	private GameState gameState;
-	private InboundServerHandler inboundServerHandler;
+  private GameSession gameSession;
+  private GameState gameState;
+  private InboundServerHandler inboundServerHandler;
 
 
-	public GameServer() {
+  public GameServer() {
 
-	}
+  }
 
-	public GameServer(GameSession gameSession, InboundServerHandler inboundServerHandler) {
-		this.gameSession = gameSession;
-		this.inboundServerHandler = inboundServerHandler;
-	}
+  public GameServer(GameSession gameSession, InboundServerHandler inboundServerHandler) {
+    this.gameSession = gameSession;
+    this.inboundServerHandler = inboundServerHandler;
+  }
 
-	public void updateGameState(GameState gameState) {
-		this.gameState = gameState;
-	}
+  public void updateGameState(GameState gameState) {
+    this.gameState = gameState;
+  }
 
-	public Player getCurrentPlayer() {
-		return this.gameState.getPlayerCurrent();
-	}
+  public Player getCurrentPlayer() {
+    return this.gameState.getPlayerCurrent();
+  }
 
-	public boolean playTurn(Turn turn) {
-		return this.gameState.playTurn(turn);
-	}
-
-
+  public boolean playTurn(Turn turn) {
+    return this.gameState.playTurn(turn);
+  }
 
 
-	public void playGame() {
+  public void playGame() {
 
-	}
+  }
 
 }

@@ -5,7 +5,7 @@ package engine.component;
  */
 public class TrigonField extends Field {
 
-  private int isRight;
+  private final int isRight;
 
   public TrigonField(int x, int y, int isRight) {
     super(x, y);

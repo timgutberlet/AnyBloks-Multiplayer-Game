@@ -10,7 +10,7 @@ import game.model.Color;
  * @date 23.03.2022
  */
 
-@JsonTypeInfo( use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
     @Type(value = PolySquare.class, name = "PolySquare"),
     @Type(value = PolyTrigon.class, name = "PolyTrigon"),
@@ -38,7 +38,7 @@ public abstract class Poly implements Cloneable {
   /**
    * empty constructor for jackson
    */
-  public Poly(){
+  public Poly() {
 
   }
 
