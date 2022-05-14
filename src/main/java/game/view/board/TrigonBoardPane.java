@@ -1,29 +1,24 @@
-package game.view;
+package game.view.board;
 
+import engine.component.Field;
+import engine.component.TrigonField;
+import engine.handler.InputHandler;
 import game.model.board.Board;
-import game.model.board.BoardTrigon;
+import game.view.board.BoardPane;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 /**
  * @author lbaudenb
  */
-public class BoardTrigonPane extends Pane implements BoardPane {
+public class TrigonBoardPane extends BoardPane {
 
-	private final List<Polygon> triangles;
-	private BoardTrigon boardTrigon;
-
-	private final double size = 40;
 	private final double xOfSet = Math.sin(Math.toRadians(30)) * size;
 	private final double yOfSet = Math.sin(Math.toRadians(60)) * size;
 
-	public BoardTrigonPane(BoardTrigon boardTrigon) {
-		this.boardTrigon = boardTrigon;
-		triangles = new ArrayList<>();
-		setBoard();
+	public TrigonBoardPane(Board board, InputHandler inputHandler) {
+		super(board, inputHandler);
 	}
 
 	/**
@@ -34,7 +29,7 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 	 * @param color
 	 */
 	private void setTriangleRight(int i, int j, Color color) {
-		Polygon triangleRight = new Polygon();
+		Field triangleRight = new TrigonField(i,j,1);
 		triangleRight.getPoints().addAll(
 				xOfSet + size + j * size + i * xOfSet, yOfSet + i * yOfSet, //right vertex
 				size + j * size + i * xOfSet, 0.0 + i * yOfSet, // top vertex
@@ -42,6 +37,7 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 		triangleRight.setFill(color);
 		triangleRight.setStroke(Color.BLACK);
 		this.getChildren().add(triangleRight);
+		inputHandler.registerField(triangleRight);
 	}
 
 	/**
@@ -52,7 +48,7 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 	 * @param color
 	 */
 	private void setTriangleLeft(int i, int j, Color color) {
-		Polygon triangleLeft = new Polygon();
+		Field triangleLeft = new TrigonField(i,j,0);
 		triangleLeft.getPoints().addAll(
 				xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex
 				size + j * size + i * xOfSet, 0.0 + i * yOfSet, // right vertex
@@ -60,6 +56,7 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 		triangleLeft.setFill(color);
 		triangleLeft.setStroke(Color.BLACK);
 		this.getChildren().add(triangleLeft);
+		inputHandler.registerField(triangleLeft);
 	}
 
 	/**
@@ -70,22 +67,26 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 	 */
 	private void setTriangle(int i, int j) {
 		Color color;
+		int[] pos;
 		if (i + j == 8) {
-			color = boardTrigon.getJavaColor(i, j, 1);
+			pos = new int[]{i, j, 1};
+			color = board.getJavaColor(pos);
 			setTriangleRight(i, j, color);
 		}
 		if (i + j == 26) {
-			color = boardTrigon.getJavaColor(i, j, 0);
+			pos = new int[]{i, j, 0};
+			color = board.getJavaColor(pos);
 			setTriangleLeft(i, j, color);
 		}
 		if (i + j > 8 && i + j < 26) {
-			color = boardTrigon.getJavaColor(i, j, 1);
+			pos = new int[]{i, j, 1};
+			color = board.getJavaColor(pos);
 			setTriangleRight(i, j, color);
-			color = boardTrigon.getJavaColor(i, j, 0);
+			pos = new int[]{i, j, 0};
+			color = board.getJavaColor(pos);
 			setTriangleLeft(i, j, color);
 		}
 	}
-
 	@Override
 	public void setBoard() {
 		for (int i = 0; i < 18; i++) {
@@ -93,11 +94,5 @@ public class BoardTrigonPane extends Pane implements BoardPane {
 				setTriangle(i, j);
 			}
 		}
-	}
-
-	@Override
-	public void repaint(Board board) {
-		boardTrigon = (BoardTrigon) board;
-		setBoard();
 	}
 }

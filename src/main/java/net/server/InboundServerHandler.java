@@ -16,7 +16,7 @@ import net.packet.game.TurnPacket;
 import net.transmission.EndpointServer;
 
 /**
- * Provides functions to ServerEndpoint
+ * Provides functions to ServerEndpoint.
  *
  * @author tbuscher
  */

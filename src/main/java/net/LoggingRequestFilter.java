@@ -14,22 +14,22 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggingRequestFilter implements ContainerRequestFilter {
 
-	private static final Logger LOG = LoggerFactory.getLogger(LoggingRequestFilter.class);
+  private static final Logger LOG = LoggerFactory.getLogger(LoggingRequestFilter.class);
 
-	/**
-	 * Filter request. Throws exception.
-	 *
-	 * @param containerRequestContext {@link ContainerRequestFilter}
-	 */
-	@Override
-	public void filter(ContainerRequestContext containerRequestContext) throws IOException {
-		// e.g. get headers
-		MultivaluedMap<String, String> headers = containerRequestContext.getHeaders();
+  /**
+   * Filter request. Throws exception.
+   *
+   * @param containerRequestContext {@link ContainerRequestFilter}
+   */
+  @Override
+  public void filter(ContainerRequestContext containerRequestContext) {
+    // e.g. get headers
+    MultivaluedMap<String, String> headers = containerRequestContext.getHeaders();
 
-		String userAgent = headers.getFirst("User-Agent");
+    String userAgent = headers.getFirst("User-Agent");
 
-		if (LOG.isInfoEnabled()) {
-			LOG.info("Request from client '{}'", userAgent);
-		}
-	}
+    if (LOG.isInfoEnabled()) {
+      LOG.info("Request from client '{}'", userAgent);
+    }
+  }
 }

@@ -16,9 +16,9 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import net.packet.account.LoginResponsePacket;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.account.LoginResponsePacket;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
 
@@ -30,12 +30,12 @@ import net.server.OutboundServerHandler;
  */
 
 @ServerEndpoint(value = "/packet", encoders = {PacketEncoder.class}, decoders = {
-		PacketDecoder.class})
+    PacketDecoder.class})
 public class EndpointServer {
 
-	private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
+  private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
 
-	// Creating HashSet for all Sessions
+  // Creating HashSet for all Sessions
 //  private static final HashMap<String, Session> allSessions = (HashMap<String, Session>) Collections.synchronizedMap(
 //      new HashMap<String, Session>());
 

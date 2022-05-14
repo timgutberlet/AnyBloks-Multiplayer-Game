@@ -96,12 +96,22 @@ public class GameSession {
 	 *
 	 * @param player
 	 * @author tgeilen
+	 * @author tgutberl
 	 */
 	public void addPlayer(Player player) {
 		this.playerList.add(player);
+		if(this.playerList.size() == 1){
+			this.localPlayer = player;
+		}
 		player.setGameSession(this);
 	}
-
+	/**
+	 * Function returning the local player
+	 * @author tgutberl
+	 */
+	public Player getLocalPlayer(){
+		return this.localPlayer;
+	}
 	/**
 	 * function to set the host of a session
 	 *

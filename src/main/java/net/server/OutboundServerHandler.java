@@ -1,26 +1,18 @@
 package net.server;
 
-import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
-import game.model.Turn;
 import game.model.gamemodes.GameMode;
-import game.model.player.Player;
-import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.LoginRequestPacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
-import net.packet.game.IllegalTurnPacket;
-import net.packet.game.InitGamePacket;
 import net.packet.game.RequestTurnPacket;
-import net.packet.game.TurnPacket;
 import net.transmission.EndpointServer;
 
 /**
- * Provides functions to ServerEndpoint
+ * Provides functions to ServerEndpoint.
  *
  * @author tgeilen
  */

@@ -368,14 +368,21 @@ public class PolyTrigon extends Poly {
 	/**
 	 * method that returns true if shape contains field with coordinates {i,j,isRight}
 	 *
-	 * @param i
-	 * @param j
-	 * @param isRight
+	 * @param pos
 	 * @author lbaudenb
 	 */
-	public boolean containsField(int i, int j, int isRight) {
+	public boolean containsField(int[] pos) {
 		for (FieldTrigon ft : shape) {
-			if (ft.pos[0] == i && ft.pos[1] == j && ft.pos[2] == isRight) {
+			if (ft.pos[0] == pos[0] && ft.pos[1] == pos[1] && ft.pos[2] == pos[2]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean containsField(int x, int y, int isRight) {
+		for (FieldTrigon ft : shape) {
+			if (ft.pos[0] == x && ft.pos[1] == y && ft.pos[2] == isRight) {
 				return true;
 			}
 		}

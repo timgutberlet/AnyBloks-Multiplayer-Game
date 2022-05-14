@@ -70,6 +70,8 @@ public class Config {
 		return Integer.parseInt(getStringValue(name));
 	}
 
+	public static Boolean getBooleanValue(String name){ return Boolean.parseBoolean(getStringValue(name));}
+
 	/**
 	 * Saves Property to the config.properties File
 	 */

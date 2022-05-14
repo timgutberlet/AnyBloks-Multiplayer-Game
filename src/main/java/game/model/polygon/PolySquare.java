@@ -311,6 +311,22 @@ public class PolySquare extends Poly {
 		return res && color == poly.color;
 	}
 
+	/**
+	 * method that returns true if shape contains field with coordinates {i,j}
+	 *
+	 * @param pos
+	 * @author lbaudenb
+	 */
+	@Override
+	public boolean containsField(int[] pos) {
+		for (FieldSquare fs : shape) {
+			if (fs.pos[0] == pos[0] && fs.pos[1] == pos[1]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean containsField(int x, int y) {
 		for (FieldSquare fs : shape) {
 			if (fs.pos[0] == x && fs.pos[1] == y) {

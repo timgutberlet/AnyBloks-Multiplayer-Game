@@ -4,6 +4,14 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
 import game.core.App;
+import game.model.Game;
+import game.model.GameSession;
+import game.model.GameState;
+import game.model.gamemodes.GMClassic;
+import game.model.gamemodes.GMTutorial;
+import game.model.gamemodes.GameMode;
+import game.model.player.Player;
+import game.model.player.PlayerType;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,7 +75,15 @@ public class MainMenuUiController extends AbstractUiController {
    */
   @FXML
   public void tutorial() {
-
+    GameSession gameSession = new GameSession();
+    GameMode gameMode = new GMTutorial();
+    Player player = new Player("You", PlayerType.HOST_PLAYER);
+    Player opponentAiPlayer = new Player("Opponent(Ai)", PlayerType.AI_EASY);
+    gameSession.addPlayer(player);
+    gameSession.addPlayer(opponentAiPlayer);
+    gameSession.setGame(new Game(gameSession, gameMode));
+    gameSession.startGame(gameMode);
+    gameController.setActiveUiController(new TutorialUiController(gameController, gameSession));
   }
   /**
    * Method to get into SettingController - to get into SettingUI

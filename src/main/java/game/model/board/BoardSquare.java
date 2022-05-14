@@ -7,7 +7,7 @@ import game.model.polygon.Poly;
 import game.model.polygon.PolySquare;
 import game.model.Turn;
 import game.model.gamemodes.GameMode;
-import game.view.BoardSquarePane;
+import game.view.board.SquareBoardPane;
 import game.view.InGameView;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -368,8 +368,8 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 	 */
 	public void updateBoard(InGameView view) {
 		for (FieldSquare fs : board) {
-			BoardSquarePane help = (BoardSquarePane) view.getBoardPane();
-			help.setSquare(fs.getJavaColor(), fs.getPos()[0], fs.getPos()[1]);
+			SquareBoardPane help = (SquareBoardPane) view.getBoardPane();
+			help.setSquare(fs.getPos()[0], fs.getPos()[1], fs.getJavaColor());
 		}
 	}
 

@@ -1,6 +1,5 @@
 package net.transmission;
 
-import game.model.Debug;
 import game.model.GameSession;
 import game.model.player.Player;
 import java.io.IOException;
