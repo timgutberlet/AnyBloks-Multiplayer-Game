@@ -40,7 +40,7 @@ public class PolyPane extends Pane {
     return fields;
   }
 
-  public void resetPolyPane() {
+  public void resetPane() {
     Rectangle r = new Rectangle(0, 0, this.getWidth(), this.getHeight());
     r.setFill(Color.WHITE);
     this.getChildren().add(r);

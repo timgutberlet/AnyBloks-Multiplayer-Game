@@ -1,6 +1,7 @@
 package game.view.board;
 
 import engine.component.ClassicField;
+import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
 import game.model.board.Board;
 import javafx.scene.paint.Color;
@@ -42,7 +43,7 @@ public class SquareBoardPane extends BoardPane {
 		for (int i = 0; i < board.SIZE; i++) {
 			for (int j = 0; j < board.SIZE; j++) {
 				int[] pos = {i, j};
-				setSquare(i, j, board.getJavaColor(pos));
+				setSquare(i, j, ColorHandler.getJavaColor(board.getColor(pos)));
 			}
 		}
 	}

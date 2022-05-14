@@ -34,26 +34,6 @@ public abstract class Field {
   }
 
   /**
-   * method, that gives back the javafx color of the field
-   *
-   * @return javafx color, that the field has
-   */
-  public javafx.scene.paint.Color getJavaColor() {
-    switch (this.color) {
-      case RED:
-        return javafx.scene.paint.Color.RED;
-      case BLUE:
-        return javafx.scene.paint.Color.BLUE;
-      case GREEN:
-        return javafx.scene.paint.Color.GREEN;
-      case YELLOW:
-        return javafx.scene.paint.Color.YELLOW;
-      default:
-        return javafx.scene.paint.Color.TRANSPARENT;
-    }
-  }
-
-  /**
    * if the field is already occupied
    *
    * @return boolean, if the field is already occupied

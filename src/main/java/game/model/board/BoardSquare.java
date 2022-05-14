@@ -1,5 +1,6 @@
 package game.model.board;
 
+import engine.handler.ColorHandler;
 import game.model.Color;
 import game.model.field.Field;
 import game.model.field.FieldSquare;
@@ -100,15 +101,6 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 		}
 		System.out.println("" + x + "," + y);
 		return null;
-	}
-
-	@Override
-	public javafx.scene.paint.Color getJavaColor(int[] pos) {
-		return getJavaColor(pos[0], pos[1]);
-	}
-
-	public javafx.scene.paint.Color getJavaColor(int x, int y) {
-		return getField(x, y).getJavaColor();
 	}
 
 	@Override
@@ -369,7 +361,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 	public void updateBoard(InGameView view) {
 		for (FieldSquare fs : board) {
 			SquareBoardPane help = (SquareBoardPane) view.getBoardPane();
-			help.setSquare(fs.getPos()[0], fs.getPos()[1], fs.getJavaColor());
+			help.setSquare(fs.getPos()[0], fs.getPos()[1], ColorHandler.getJavaColor(fs.getColor()));
 		}
 	}
 

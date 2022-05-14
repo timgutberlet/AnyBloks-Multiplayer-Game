@@ -40,8 +40,6 @@ public abstract class Board {
 
 	public abstract boolean isOnTheBoard(int[] pos);
 
-	public abstract javafx.scene.paint.Color getJavaColor(int[] pos);
-
 	public abstract boolean isColorDirectNeighbor(int[] pos, Color c);
 
 	public abstract boolean isColorIndirectNeighbor(int[] pos, Color c);

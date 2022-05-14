@@ -96,15 +96,6 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 	}
 
 	@Override
-	public javafx.scene.paint.Color getJavaColor(int[] pos) {
-		return getJavaColor(pos[0], pos[1], pos[2]);
-	}
-
-	public javafx.scene.paint.Color getJavaColor(int x, int y, int isRight) {
-		return getField(x, y, isRight).getJavaColor();
-	}
-
-	@Override
 	public boolean isColorDirectNeighbor(int[] pos, Color c) {
 		return isColorDirectNeighbor(pos[0], pos[1], pos[2], c);
 	}

@@ -2,6 +2,7 @@ package game.view.board;
 
 import engine.component.Field;
 import engine.component.TrigonField;
+import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
 import game.model.board.Board;
 import game.view.board.BoardPane;
@@ -70,20 +71,20 @@ public class TrigonBoardPane extends BoardPane {
 		int[] pos;
 		if (i + j == 8) {
 			pos = new int[]{i, j, 1};
-			color = board.getJavaColor(pos);
+			color = ColorHandler.getJavaColor(board.getColor(pos));
 			setTriangleRight(i, j, color);
 		}
 		if (i + j == 26) {
 			pos = new int[]{i, j, 0};
-			color = board.getJavaColor(pos);
+			color = ColorHandler.getJavaColor(board.getColor(pos));
 			setTriangleLeft(i, j, color);
 		}
 		if (i + j > 8 && i + j < 26) {
 			pos = new int[]{i, j, 1};
-			color = board.getJavaColor(pos);
+			color = ColorHandler.getJavaColor(board.getColor(pos));
 			setTriangleRight(i, j, color);
 			pos = new int[]{i, j, 0};
-			color = board.getJavaColor(pos);
+			color = ColorHandler.getJavaColor(board.getColor(pos));
 			setTriangleLeft(i, j, color);
 		}
 	}
