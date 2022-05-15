@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javax.print.DocFlavor.INPUT_STREAM;
+import javafx.scene.shape.Shape;
 
 /**
  * @author lbaudenb
@@ -27,6 +27,10 @@ public class DragablePolyPane extends Pane {
   private Button mirror;
 
   private Circle innerCircle;
+  private Circle outsideCircle;
+
+  double circleX;
+  double circleY;
 
 
   public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler) {
@@ -64,51 +68,80 @@ public class DragablePolyPane extends Pane {
   }
 
   public void build() {
-    innerCircle = new Circle();
-    double innerCircleX = 2.5 * size + size;
-    double innerCircleY = 2.5 * size + size;
-    innerCircle.setCenterX(innerCircleX);
-    innerCircle.setCenterY(innerCircleY);
-    innerCircle.setRadius(innerCircleX);
-    innerCircle.setFill(Color.GRAY);
 
-    double polyX = polyPane.getSize() * (polyPane.getPoly().getWidth() / 2.0);
-    double polyY = polyPane.getSize() * (polyPane.getPoly().getHeight() / 2.0);
-    double xOfSet = innerCircleX - polyX;
-    double yOfSet = innerCircleY - polyY;
+    circleX = 2.5 * size + size;
+    circleY = 2.5 * size + size;
+
+    outsideCircle = new Circle();
+    outsideCircle.setCenterX(circleX);
+    outsideCircle.setCenterY(circleY);
+    outsideCircle.setRadius(2.5 * size + size);
+
+    innerCircle = new Circle();
+    innerCircle.setCenterX(circleX);
+    innerCircle.setCenterY(circleY);
+    innerCircle.setRadius(2.5 * size);
+    innerCircle.setFill(Color.GRAY);
+    innerCircle.setOpacity(0.5);
+
+    Shape donut = Shape.subtract(outsideCircle, innerCircle);
+    donut.setFill(Color.GRAY);
+
     polyPane.setSize(size);
+    double polyX = polyPane.getSize() * (polyPane.getPoly().getHeight() / 2.0);
+    double polyY = polyPane.getSize() * (polyPane.getPoly().getWidth() / 2.0);
+    double xOfSet = circleX - polyX;
+    double yOfSet = circleY - polyY;
     polyPane.relocate(xOfSet, yOfSet);
 
+    this.getChildren().add(donut);
     this.getChildren().add(innerCircle);
     this.getChildren().add(polyPane);
 
   }
 
   public void buttons() {
-    mirror = new Button("Mirror");
-    rotateRight = new Button("Right");
-    rotateLeft = new Button("Left");
+    mirror = new Button("M");
+    mirror.setPrefWidth(size);
+    mirror.setPrefHeight(size);
+    rotateRight = new Button("R");
+    rotateRight.setPrefWidth(size);
+    rotateRight.setPrefHeight(size);
+    rotateLeft = new Button("L");
+    rotateLeft.setPrefWidth(size);
+    rotateLeft.setPrefHeight(size);
+
     mirror.setOnMouseClicked(e -> {
       polyPane.getPoly().mirror();
-      build();
+      rerender();
     });
     rotateRight.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateRight();
-      build();
+      rerender();
     });
     rotateLeft.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateLeft();
-      build();
+      rerender();
     });
-    /*this.setTop(mirror);
-    this.setRight(rotateRight);
-    this.setLeft(rotateLeft);*/
+
+    mirror.relocate(circleX - size * 0.5, 0);
+    rotateLeft.relocate(0, circleX - size * 0.5);
+    rotateRight.relocate(2 * circleX - size, circleY - size * 0.5);
+    this.getChildren().add(mirror);
+    this.getChildren().add(rotateLeft);
+    this.getChildren().add(rotateRight);
   }
 
   public void setPoly(PolyPane polyPane) {
     this.polyPane = polyPane;
     this.getChildren().clear();
+    rerender();
+  }
+
+  public void rerender() {
+    this.getChildren().clear();
     build();
+    buttons();
   }
 
 }

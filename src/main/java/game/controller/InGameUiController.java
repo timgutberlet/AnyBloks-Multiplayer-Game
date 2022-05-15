@@ -206,17 +206,17 @@ public abstract class InGameUiController extends AbstractUiController {
 
       if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
         boolean action = false;
-        System.out.println("Current player is loclaplayer");
-        localPlayer.setSelectedPoly(null);
+        System.out.println("Current player is local player");
 
         for (PolyPane polyPane : stackPanes.get(0).getPolyPanes()) {
           if (inputHandler.isPolyClicked(polyPane)) {
-            if (localPlayer.getSelectedPoly() == null) {
+            if (dragablePolyPane == null) {
               dragablePolyPane = new DragablePolyPane(polyPane, boardPane.getSize(), inputHandler);
               right.getChildren().add(dragablePolyPane);
             } else {
               dragablePolyPane.setPoly(polyPane);
             }
+
             localPlayer.setSelectedPoly(polyPane.getPoly());
           }
         }

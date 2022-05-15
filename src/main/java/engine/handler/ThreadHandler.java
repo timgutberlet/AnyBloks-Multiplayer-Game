@@ -9,6 +9,7 @@ import game.model.GameSession;
  * Sollte im folgenden dann noch durch weitere Threadhandler erweiter werden, bitte aber lassen, bis eine Funktionierende Version mit Server steht
  */
 public class ThreadHandler extends Thread{
+
   private GameSession gameSession;
 
   public ThreadHandler(GameSession gameSession){
