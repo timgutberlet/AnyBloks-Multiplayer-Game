@@ -1,5 +1,6 @@
 package net.packet.game;
 
+import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.board.Board;
@@ -21,11 +22,11 @@ public class GameUpdatePacket extends Packet {
   public Board board;
   public ArrayList<ArrayList<Poly>> remainingPolys;
   public ArrayList<Player> playerList;
-  int round;
-  int turn;
+  public int round;
+  public int turn;
   public ArrayList<ArrayList<Turn>> history;
-  boolean running;
-  boolean started;
+  public boolean running;
+  public boolean started;
   public String stateEnding;
 
   /**
@@ -74,14 +75,30 @@ public class GameUpdatePacket extends Packet {
   public GameState getGameState() {
 
     ArrayList<ArrayList<Poly>> remPoly = this.remainingPolys;
-    ArrayList<ArrayList<Turn>> hist = this.history;
+    ArrayList<ArrayList<Turn>> hist = new ArrayList<ArrayList<Turn>>();
+    for(ArrayList<Turn> turns : this.history){
+      hist.add(turns);
+    }
+
+    int rnd = this.round;
+
+    Debug.printMessage(this,this.gameMode.toString());
+    //Debug.printMessage(this,this.board.toString());
+    Debug.printMessage(this, "Rem poly size: " +remPoly.size());
+    Debug.printMessage(this,"Playerlist: " + this.playerList.toString());
+    Debug.printMessage(this, "Round: "+ rnd);
+    Debug.printMessage(this, "Turn: "+ this.turn);
+    Debug.printMessage(this, "Running: " + (this.running?"true":"false"));
+    Debug.printMessage(this, "Started: " + this.started);
+    Debug.printMessage(this, "StateEnding: "+ this.stateEnding);
+    Debug.printMessage(this, "Hist size" + this.history.size());
 
     return new GameState(
         this.gameMode,
         this.board,
         remPoly,
         this.playerList,
-        this.round,
+        rnd,
         this.turn,
         this.running,
         this.started,

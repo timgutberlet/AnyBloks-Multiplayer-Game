@@ -25,11 +25,11 @@ public class RequestTurnPacket extends Packet {
   public Board board;
   public ArrayList<ArrayList<Poly>> remainingPolys;
   public ArrayList<Player> playerList;
-  int round;
-  int turn;
+  public int round;
+  public int turn;
   public ArrayList<ArrayList<Turn>> history;
-  boolean running;
-  boolean started;
+  public boolean running;
+  public boolean started;
   public String stateEnding;
 
 

@@ -35,7 +35,7 @@ public class ClientHandler {
   }
 
   /**
-   * functions that starts a game on the client side.
+   * function that starts a game on the client side.
    *
    * @param wrappedPacket
    * @author tgeilen
@@ -43,7 +43,9 @@ public class ClientHandler {
   public void startGame(WrappedPacket wrappedPacket) {
     GameStartPacket gameStartPacket = (GameStartPacket) wrappedPacket.getPacket();
     GameMode gamemode = gameStartPacket.getGameMode();
+    GameState gameState = gameStartPacket.getGameState();
     this.client.getGameSession().startGame(gamemode);
+    this.client.getGameSession().updateGame(gameState);
   }
 
   /**
@@ -71,6 +73,8 @@ public class ClientHandler {
 
     if (this.player.getUsername().equals(requestTurnPacket.getUsername())) {
       Debug.printMessage(this, player.getUsername() + ": It is my turn...");
+      Debug.printMessage(this,"Runde: " + gameState.getRound());
+      Debug.printMessage(this,gameState.isFirstRound()?"FIRST ROUND!!!":"___NOT___ FIRST ROUND");
       Turn turn = this.player.makeTurn(gameState);
       if (turn == null) {
         Debug.printMessage(this, "I don't know what to do!!!");

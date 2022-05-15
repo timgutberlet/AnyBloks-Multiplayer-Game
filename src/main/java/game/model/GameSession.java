@@ -34,11 +34,12 @@ public class GameSession {
   public InboundServerHandler inboundServerHandler;
   public OutboundServerHandler outboundServerHandler;
 
-  private final Chat chat;
-  private final ArrayList<Player> playerList;
+  private Chat chat;
+  private ArrayList<Player> playerList;
   private Player hostPlayer;
   private Game game;
   private GameServer gameServer;
+
 
   private int numOfBots = 0;
 
@@ -168,7 +169,7 @@ public class GameSession {
 
     try {
       Debug.printMessage(this, "Waiting for clients to establish connection");
-      TimeUnit.SECONDS.sleep(10);
+      TimeUnit.SECONDS.sleep(5);
       Debug.printMessage(this, "Starting a new game");
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -206,6 +207,7 @@ public class GameSession {
    */
   public void updateGame(GameState gameState) {
     this.game.updateGameState(gameState);
+    this.playerList = gameState.getPlayerList();
   }
 
   /**
@@ -300,6 +302,7 @@ public class GameSession {
   public GameServer getGameServer() {
     return gameServer;
   }
+
 
 
   /**

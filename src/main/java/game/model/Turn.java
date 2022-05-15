@@ -1,5 +1,6 @@
 package game.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.polygon.Poly;
 import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
@@ -7,126 +8,157 @@ import game.model.polygon.PolyTrigon;
 /**
  * this class represents a move of a player in one turn
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Turn {
 
-  /**
-   * represents the poly
-   */
-  Poly poly;
+	/**
+	 * represents the poly
+	 */
+	Poly poly;
 
-  /**
-   * represents the move in the form {column, row, rotation, mirrored}
-   */
-  int[] turn;
+	/**
+	 * represents the move in the form {column, row, rotation, mirrored}
+	 */
+	int[] turn;
 
-  /**
-   * represents the number of squares, which could be the start point for other players, which could
-   * be blocked by this poly and turn
-   */
-  int numberBlockedSquares = 0;
+	/**
+	 * represents the number of squares, which could be the start point for other players, which could
+	 * be blocked by this poly and turn
+	 */
+	int numberBlockedSquares = 0;
 
-  /**
-   * represents the number of new rows or columns, which can be discovered by this turn
-   */
-  int roomDiscovery = 0;
+	/**
+	 * represents the number of new rows or columns, which can be discovered by this turn
+	 */
+	int roomDiscovery = 0;
 
-  /**
-   * initializing the values
-   *
-   * @param poly represents the poly
-   * @param turn represents the move in form an integer array {column, row, rotation, mirrored}
-   * @author tiotto
-   */
-  public Turn(Poly poly, int[] turn) {
-    this.poly = poly;
-    this.turn = turn;
-  }
+	/**
+	 * initializing the values
+	 *
+	 * @param poly represents the poly
+	 * @param turn represents the move in form an integer array {column, row, rotation, mirrored}
+	 * @author tiotto
+	 */
+	public Turn(Poly poly, int[] turn) {
+		this.poly = poly;
+		this.turn = turn;
+	}
 
-  public int getValue() {
-    return this.poly.getSize();
-  }
+	/**
+	 * empty constructor for jackson
+	 *
+	 * @return
+	 */
 
-  public PolySquare getPolySquare() {
-    return (PolySquare) poly;
-  }
+	public Turn() {
 
-  public PolyTrigon getPolyTrigon() {
-    return (PolyTrigon) poly;
-  }
+	}
 
-  public Poly getPoly() {
-    return poly;
-  }
+	public int getValue() {
+		return this.poly.getSize();
+	}
 
-  public Color getColor() {
-    return poly.getColor();
-  }
+	public PolySquare getPolySquare() {
+		return (PolySquare) poly;
+	}
 
-  public int[] getTurn() {
-    return this.turn;
-  }
+	public PolyTrigon getPolyTrigon() {
+		if (poly.getClass().getName().equals("PolyTrigon")) {
+			return (PolyTrigon) poly;
+		} else {
+			return null;
+		}
+	}
 
-  public int getNumberBlockedSquares() {
-    return numberBlockedSquares;
-  }
+	public Poly getPoly() {
+		return poly;
+	}
 
-  public void setNumberBlockedSquares(int numberBlockedSquares) {
-    this.numberBlockedSquares = numberBlockedSquares;
-  }
+	public Color getColor() {
+		return poly.getColor();
+	}
 
-  public int getColumn() {
-    return turn[0];
-  }
+	public int[] getTurn() {
+		return this.turn;
+	}
 
-  public int getX() {
-    return turn[0];
-  }
+	public int getNumberBlockedSquares() {
+		return numberBlockedSquares;
+	}
 
-  public int getRow() {
-    return turn[1];
-  }
+	public void setNumberBlockedSquares(int numberBlockedSquares) {
+		this.numberBlockedSquares = numberBlockedSquares;
+	}
 
-  public int getY() {
-    return turn[1];
-  }
+	public int getColumn() {
+		return turn[0];
+	}
 
-  public int getIsRight() {
-    return turn[2];
-  }
+	public int getX() {
+		return turn[0];
+	}
 
-  public int getRoomDiscovery() {
-    return roomDiscovery;
-  }
+	public int getRow() {
+		return turn[1];
+	}
 
-  public void setRoomDiscovery(int roomDiscovery) {
-    this.roomDiscovery = roomDiscovery;
-  }
+	public int getY() {
+		return turn[1];
+	}
 
-  public int getRotation() {
-    return turn[2];
-  }
+	public int getIsRight() {
+		return turn[2];
+	}
 
-  public boolean getMirrored() {
-    return turn[3] == 1;
-  }
+	public int getRoomDiscovery() {
+		return roomDiscovery;
+	}
 
-  public String toString() {
-    StringBuffer res = new StringBuffer(poly.toString());
-    if (poly.getClass().getName().equals("game.model.polygon.PolyTrigon")) {
-      res.append("\n" + "x : " + getX());
-      res.append("\n" + "y : " + getY());
-      res.append("\n" + "isRight : " + getIsRight());
-    } else {
-      res.append("\n" + "column : " + getColumn());
-      res.append("\n" + "row : " + getRow());
-    }
-    return res.toString();
+	public void setRoomDiscovery(int roomDiscovery) {
+		this.roomDiscovery = roomDiscovery;
+	}
 
-  }
+	public int getRotation() {
+		return turn[2];
+	}
 
-  public Turn clone() {
-    return new Turn(this.poly.clone(), turn);
-  }
+	public boolean getMirrored() {
+		return turn[3] == 1;
+	}
 
+	public String toString() {
+		StringBuffer res = new StringBuffer(poly.toString());
+		if (poly.getClass().getName().equals("game.model.polygon.PolyTrigon")) {
+			res.append("\n" + "x : " + getX());
+			res.append("\n" + "y : " + getY());
+			res.append("\n" + "isRight : " + getIsRight());
+		} else {
+			res.append("\n" + "column : " + getColumn());
+			res.append("\n" + "row : " + getRow());
+		}
+		return res.toString();
+
+	}
+
+	public Turn clone() {
+		return new Turn(this.poly.clone(), turn);
+	}
+
+	/**
+	 * setter.
+	 *
+	 * @param poly Polygon
+	 */
+	public void setPoly(Poly poly) {
+		this.poly = poly;
+	}
+
+	/**
+	 * setter.
+	 *
+	 * @param turn Turn
+	 */
+	public void setTurn(int[] turn) {
+		this.turn = turn;
+	}
 }

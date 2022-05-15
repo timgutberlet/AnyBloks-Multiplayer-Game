@@ -20,7 +20,7 @@ public class testGameServer {
       org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       Debug.printMessage("[testChatServer] Server is running");
-      TimeUnit.SECONDS.sleep(3);
+      //TimeUnit.SECONDS.sleep(3);
     } catch (Exception e) {
       e.printStackTrace();
     }

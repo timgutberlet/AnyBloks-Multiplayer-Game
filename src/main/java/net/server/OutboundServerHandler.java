@@ -61,8 +61,8 @@ public class OutboundServerHandler {
    * @param gameMode
    * @tgeilen
    */
-  public void broadcastGameStart(GameMode gameMode) {
-    GameStartPacket gameStartPacket = new GameStartPacket(gameMode);
+  public void broadcastGameStart(GameState gameState) {
+    GameStartPacket gameStartPacket = new GameStartPacket(gameState);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_START_PACKET, gameStartPacket);
 
     this.server.broadcastMessage(wrappedPacket);

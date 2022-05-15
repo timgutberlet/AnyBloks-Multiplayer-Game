@@ -492,6 +492,15 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
    */
 
+  public ArrayList<FieldSquare> getStartFields() {
+    return startFields;
+  }
+
+  @Override
+  public int getSize() {
+    return super.getSize();
+  }
+
   public String toString() {
     StringBuffer res = new StringBuffer();
     res.append(super.toString() + "\n");

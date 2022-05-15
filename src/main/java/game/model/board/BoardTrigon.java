@@ -440,6 +440,11 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     }
     return res;
   }
+
+
+  public ArrayList<FieldTrigon> getStartFields() {
+    return startFields;
+  }
 }
 
 

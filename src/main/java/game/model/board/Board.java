@@ -62,6 +62,8 @@ public abstract class Board {
 
   public abstract void updateBoard(InGameView view);
 
+  //public abstract ArrayList<Field> getStartFields();
+
   @Override
   public String toString() {
     StringBuffer res = new StringBuffer();
