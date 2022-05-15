@@ -71,7 +71,7 @@ public abstract class InGameUiController extends AbstractUiController {
     this.pane = new BorderPane();
     playerPoints = new ArrayList<>();
     stackPanes = new ArrayList<>();
-    //threadHelp.start();
+    threadHelp.start();
     super.root.getChildren().add(pane);
     createBoard();
     setUpUi();
