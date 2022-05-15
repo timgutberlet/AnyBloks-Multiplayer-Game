@@ -1,5 +1,6 @@
 package game.model.polygon;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.Color;
 import game.model.field.FieldSquare;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.Arrays;
  * @author tiotto
  * @author tgutberl
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PolySquare extends Poly {
 
   public static ArrayList<ArrayList<FieldSquare>> shapeListClassic = new ArrayList<>();

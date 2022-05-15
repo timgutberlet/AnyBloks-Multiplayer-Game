@@ -36,7 +36,7 @@ public class testGameClient {
 
   public static void main(String[] args) {
 
-    org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+    //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
     ChatMessagePacket chatMessagePacket = new ChatMessagePacket(
         LocalDateTime.now() + " Hello World", "user1");
     //WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
