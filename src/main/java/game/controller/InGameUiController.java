@@ -24,30 +24,40 @@ import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public abstract class InGameUiController extends AbstractUiController {
 
   private final GameSession gameSession;
-
   private final Game game;
-
   private final Chat chat;
-
   private final AbstractGameController gameController;
-  private final List<StackPane> stackPanes;
-  private final List<Label> playerPoints;
-  private final HBox Gui;
   private final InputHandler inputHandler;
-  private final int count = 0;
-  private BoardPane boardPane;
+
+  private final BorderPane pane;
+
+  private final List<StackPane> stackPanes;
   private StackPane stackLocal;
-  private DragablePolyPane dragablePolyPane;
   private VBox stacks;
+  private VBox right;
+  private DragablePolyPane dragablePolyPane;
+
+  private BoardPane boardPane;
+
+  private final List<Label> playerPoints;
+  private final int count = 0;
+
+
   private Button quitButton;
+  private HBox buttonBox;
   private boolean aiCalcRunning;
   private Player localPlayer;
+
+  Stage stage;
 
   public InGameUiController(AbstractGameController gameController, Game game,
       GameSession gameSession, ThreadHandler threadHelp) {
@@ -57,11 +67,12 @@ public abstract class InGameUiController extends AbstractUiController {
     this.game = gameSession.getGame();
     this.chat = gameSession.getChat();
     this.gameController = gameController;
-    this.Gui = new HBox();
+    this.stage = gameController.getStage();
+    this.pane = new BorderPane();
     playerPoints = new ArrayList<>();
     stackPanes = new ArrayList<>();
-    threadHelp.start();
-    super.root.getChildren().add(Gui);
+    //threadHelp.start();
+    super.root.getChildren().add(pane);
     createBoard();
     setUpUi();
   }
@@ -71,49 +82,53 @@ public abstract class InGameUiController extends AbstractUiController {
       case "JUNIOR":
       case "DUO":
       case "CLASSIC":
-        boardPane = new SquareBoardPane(game.getGameState().getBoard(), inputHandler);
+        boardPane = new SquareBoardPane(game.getGameState().getBoard(), inputHandler,
+            stage.getWidth());
         break;
       case "TRIGON":
-        boardPane = new TrigonBoardPane(game.getGameState().getBoard(), inputHandler);
+        boardPane = new TrigonBoardPane(game.getGameState().getBoard(), inputHandler,
+            stage.getWidth());
         break;
     }
-    Gui.getChildren().add(boardPane);
+    pane.setCenter(boardPane);
   }
 
   private void setUpUi() {
+    right = new VBox();
     stacks = new VBox();
-
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
       case "CLASSIC":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p));
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
         break;
       case "TRIGON":
         for (Player p : this.gameSession.getPlayerList()) {
-          StackTrigonPane trigonStack = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p));
-          stacks.getChildren().add(trigonStack);
+          StackPane stackPane = new StackTrigonPane(p, inputHandler,
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
+          stacks.getChildren().add(stackPane);
         }
         break;
     }
+    right.getChildren().add(stacks);
+    pane.setRight(right);
 
-    Gui.getChildren().add(stacks);
-
-    for (Player p : this.gameSession.getPlayerList()) {
+   /* for (Player p : this.gameSession.getPlayerList()) {
       Label label = new Label("0");
       playerPoints.add(label);
     }
-    //Gui.getChildren().addAll(playerPoints);
+    Gui.getChildren().addAll(playerPoints);*/
 
+    buttonBox = new HBox();
     quitButton = new Button("Quit");
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
-    Gui.getChildren().add(quitButton);
+    buttonBox.getChildren().add(quitButton);
+    pane.setBottom(buttonBox);
   }
 
   private void handleQuitButtonClicked() {
@@ -128,17 +143,17 @@ public abstract class InGameUiController extends AbstractUiController {
       case "DUO":
       case "CLASSIC":
         for (Player p : game.getPlayers()) {
-          StackPane squareStack = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p));
-          stackPanes.add(squareStack);
-          stacks.getChildren().add(squareStack);
+          StackPane stackPane = new StackSquarePane(p, inputHandler,
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
+          stackPanes.add(stackPane);
+          stacks.getChildren().add(stackPane);
         }
         break;
       case "TRIGON":
         for (Player p : game.getPlayers()) {
-          StackTrigonPane trigonStack = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p));
-          stacks.getChildren().add(trigonStack);
+          StackTrigonPane stackPane = new StackTrigonPane(p, inputHandler,
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
+          stacks.getChildren().add(stackPane);
         }
         break;
     }
@@ -165,7 +180,14 @@ public abstract class InGameUiController extends AbstractUiController {
   public void update(AbstractGameController gameController, double deltaTime) {
     //Die Folgenden zwei Befehle sollten für einen Reibungslosen Spielablauf optimiert werden
     //this.game.makeMove();
-    boardPane.repaint(game.getGameState().getBoard());
+    //boardPane.repaint(game.getGameState().getBoard());
+    //noinspection LanguageDetectionInspection
+
+    //makes board resizable
+    stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+      boardPane.resize(stage.getWidth());
+    });
+
     refreshUi();
     localPlayer = gameSession.getLocalPlayer();
     System.out.println("Localplayer : " + localPlayer.getType());
@@ -186,13 +208,19 @@ public abstract class InGameUiController extends AbstractUiController {
         boolean action = false;
         System.out.println("Current player is loclaplayer");
         localPlayer.setSelectedPoly(null);
-        for (PolyPane polyPane : stackPanes.get(localPlayer.getOrderNum()).getPolyPanes()) {
-          if (inputHandler.isPolyClicked(polyPane) && localPlayer.getSelectedPoly() == null) {
+
+        for (PolyPane polyPane : stackPanes.get(0).getPolyPanes()) {
+          if (inputHandler.isPolyClicked(polyPane)) {
+            if (localPlayer.getSelectedPoly() == null) {
+              dragablePolyPane = new DragablePolyPane(polyPane, boardPane.getSize(), inputHandler);
+              right.getChildren().add(dragablePolyPane);
+            } else {
+              dragablePolyPane.setPoly(polyPane);
+            }
             localPlayer.setSelectedPoly(polyPane.getPoly());
-            dragablePolyPane = new DragablePolyPane(polyPane, boardPane.getSize(), inputHandler);
-            Gui.getChildren().add(dragablePolyPane);
           }
         }
+
         if (this.dragablePolyPane != null) {
           for (Field field : boardPane.getFields()) {
             if (dragablePolyPane.intersects(field.getBoundsInParent())) {

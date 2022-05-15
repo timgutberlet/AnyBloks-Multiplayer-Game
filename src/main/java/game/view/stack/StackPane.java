@@ -19,9 +19,12 @@ public class StackPane extends GridPane {
 
   protected InputHandler inputHandler;
 
-  public StackPane(Player player, InputHandler inputHandler, List<Poly> polys) {
-    this.inputHandler = inputHandler;
+  protected double width;
+
+  public StackPane(Player player, InputHandler inputHandler, List<Poly> polys, double width) {
     polyPanes = new ArrayList<>();
+    this.inputHandler = inputHandler;
+    this.width = width;
     setUpStack(polys);
     setContent();
   }
@@ -47,8 +50,15 @@ public class StackPane extends GridPane {
     }
   }
 
+  public void resize(double width) {
+    for (PolyPane polyPane : polyPanes) {
+      polyPane.resize(width);
+    }
+  }
+
   public List<PolyPane> getPolyPanes() {
     return this.polyPanes;
   }
 
 }
+

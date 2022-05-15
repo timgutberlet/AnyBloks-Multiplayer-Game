@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class StackSquarePane extends StackPane {
 
-  public StackSquarePane(Player player, InputHandler inputHandler, List<Poly> polys) {
-    super(player, inputHandler, polys);
+  public StackSquarePane(Player player, InputHandler inputHandler, List<Poly> polys, double width) {
+    super(player, inputHandler, polys, width);
   }
 
   /**
@@ -25,7 +25,7 @@ public class StackSquarePane extends StackPane {
   @Override
   public void setUpStack(List<Poly> polys) {
     for (Poly p : polys) {
-      PolyPane polyPane = new SquarePolyPane(p, inputHandler);
+      PolyPane polyPane = new SquarePolyPane(p, inputHandler, width);
       polyPanes.add(polyPane);
     }
   }

@@ -15,8 +15,8 @@ public class TrigonBoardPane extends BoardPane {
   private final double xOfSet = Math.sin(Math.toRadians(30)) * size;
   private final double yOfSet = Math.sin(Math.toRadians(60)) * size;
 
-  public TrigonBoardPane(Board board, InputHandler inputHandler) {
-    super(board, inputHandler);
+  public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
+    super(board, inputHandler, width);
   }
 
   /**

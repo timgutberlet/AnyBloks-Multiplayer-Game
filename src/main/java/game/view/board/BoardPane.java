@@ -13,18 +13,19 @@ import javafx.scene.layout.Pane;
 
 public class BoardPane extends Pane {
 
-  protected final List<Field> fields;
-
   protected Board board;
 
-  protected final double size = 40;
+  protected final List<Field> fields;
+
+  protected double size;
 
   protected InputHandler inputHandler;
 
-  public BoardPane(Board board, InputHandler inputHandler) {
+  public BoardPane(Board board, InputHandler inputHandler, double width) {
     this.board = board;
-    this.inputHandler = inputHandler;
     fields = new ArrayList<>();
+    this.inputHandler = inputHandler;
+    size = (0.4 * width) / board.getSize();
     setBoard();
   }
 
@@ -55,6 +56,13 @@ public class BoardPane extends Pane {
 
   public double getSize() {
     return this.size;
+  }
+
+  public void resize(double width) {
+    this.size = (0.4 * width) / board.getSize();
+    this.fields.clear();
+    this.getChildren().clear();
+    setBoard();
   }
 
 }

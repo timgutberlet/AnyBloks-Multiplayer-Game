@@ -27,8 +27,8 @@ public class TrigonPolyPane extends PolyPane {
    */
   private final double yOfSet;
 
-  public TrigonPolyPane(Poly poly, InputHandler inputHandler) {
-    super(poly, inputHandler);
+  public TrigonPolyPane(Poly poly, InputHandler inputHandler, double width) {
+    super(poly, inputHandler, width);
     xOfSet = Math.sin(Math.toRadians(30)) * size;
     yOfSet = Math.sin(Math.toRadians(60)) * size;
     setPoly();

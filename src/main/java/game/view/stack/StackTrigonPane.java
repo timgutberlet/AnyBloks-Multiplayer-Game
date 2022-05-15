@@ -13,8 +13,8 @@ import java.util.List;
 public class StackTrigonPane extends StackPane {
 
 
-  public StackTrigonPane(Player player, InputHandler inputHandler, List<Poly> polys) {
-    super(player, inputHandler, polys);
+  public StackTrigonPane(Player player, InputHandler inputHandler, List<Poly> polys, double width) {
+    super(player, inputHandler, polys, width);
   }
 
   /**
@@ -26,7 +26,7 @@ public class StackTrigonPane extends StackPane {
   @Override
   public void setUpStack(List<Poly> polys) {
     for (Poly p : polys) {
-      PolyPane polyPane = new TrigonPolyPane(p, inputHandler);
+      PolyPane polyPane = new TrigonPolyPane(p, inputHandler, width);
       polyPanes.add(polyPane);
     }
   }

@@ -12,8 +12,8 @@ import javafx.scene.paint.Color;
 
 public class SquarePolyPane extends PolyPane {
 
-  public SquarePolyPane(Poly poly, InputHandler inputHandler) {
-    super(poly, inputHandler);
+  public SquarePolyPane(Poly poly, InputHandler inputHandler, double width) {
+    super(poly, inputHandler, width);
     setPoly();
   }
 
@@ -54,3 +54,4 @@ public class SquarePolyPane extends PolyPane {
     }
   }
 }
+

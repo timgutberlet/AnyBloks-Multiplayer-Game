@@ -1,6 +1,7 @@
 package game.model.polygon;
 
 import game.model.Color;
+import game.model.field.FieldSquare;
 import game.model.field.FieldTrigon;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -371,6 +372,7 @@ public class PolyTrigon extends Poly {
    * @param pos
    * @author lbaudenb
    */
+  @Override
   public boolean containsField(int[] pos) {
     for (FieldTrigon ft : shape) {
       if (ft.pos[0] == pos[0] && ft.pos[1] == pos[1] && ft.pos[2] == pos[2]) {
@@ -378,6 +380,28 @@ public class PolyTrigon extends Poly {
       }
     }
     return false;
+  }
+
+  @Override
+  public int getHeight() {
+    int res = 0;
+    for (FieldTrigon fs : shape) {
+      if (fs.getPos()[1] > res) {
+        res = fs.getPos()[1];
+      }
+    }
+    return res + 1;
+  }
+
+  @Override
+  public int getWidth() {
+    int res = 0;
+    for (FieldTrigon fs : shape) {
+      if (fs.getPos()[0] > res) {
+        res = fs.getPos()[0];
+      }
+    }
+    return res + 1;
   }
 
   public boolean containsField(int x, int y, int isRight) {

@@ -172,7 +172,7 @@ public class PolySquare extends Poly {
     return true;
   }
 
-  private int getHeight() {
+  public int getHeight() {
     int res = 0;
     for (FieldSquare fs : shape) {
       if (fs.getPos()[1] > res) {
@@ -182,7 +182,7 @@ public class PolySquare extends Poly {
     return res + 1;
   }
 
-  private int getWidth() {
+  public int getWidth() {
     int res = 0;
     for (FieldSquare fs : shape) {
       if (fs.getPos()[0] > res) {

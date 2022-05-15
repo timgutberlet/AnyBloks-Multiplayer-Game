@@ -4,6 +4,7 @@ import engine.component.ClassicField;
 import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
 import game.model.board.Board;
+import game.view.board.BoardPane;
 import javafx.scene.paint.Color;
 
 /**
@@ -11,8 +12,8 @@ import javafx.scene.paint.Color;
  */
 public class SquareBoardPane extends BoardPane {
 
-  public SquareBoardPane(Board board, InputHandler inputHandler) {
-    super(board, inputHandler);
+  public SquareBoardPane(Board board, InputHandler inputHandler, double width) {
+    super(board, inputHandler, width);
   }
 
   /**
@@ -48,3 +49,4 @@ public class SquareBoardPane extends BoardPane {
     }
   }
 }
+

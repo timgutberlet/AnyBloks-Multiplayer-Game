@@ -17,12 +17,13 @@ public class PolyPane extends Pane {
   protected Poly poly;
   protected List<Field> fields;
   protected InputHandler inputHandler;
-  protected double size = 10;
+  protected double size;
 
-  public PolyPane(Poly poly, InputHandler inputHandler) {
+  public PolyPane(Poly poly, InputHandler inputHandler, double width) {
     this.poly = poly;
     fields = new ArrayList<>();
     this.inputHandler = inputHandler;
+    this.size = width * 0.0128;
   }
 
   public void setPoly() {
@@ -32,8 +33,20 @@ public class PolyPane extends Pane {
     return this.poly;
   }
 
-  public void resize(double size) {
+  public double getSize() {
+    return this.size;
+  }
+
+  public void setSize(double size) {
     this.size = size;
+    this.fields.clear();
+    this.getChildren().clear();
+    setPoly();
+  }
+
+  public void resize(double width) {
+    this.size = width * 0.0128;
+    this.fields.clear();
     this.getChildren().clear();
     setPoly();
   }
