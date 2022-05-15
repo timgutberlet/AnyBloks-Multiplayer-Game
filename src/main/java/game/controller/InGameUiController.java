@@ -230,6 +230,7 @@ public abstract class InGameUiController extends AbstractUiController {
         }
 
         //If localPlayer has selected a Poly, check if he also already click on the Board
+        /*
         if (localPlayer.getSelectedPoly() != null) {
           localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
           System.out.println("Localplayer Selected Poly");
@@ -243,6 +244,7 @@ public abstract class InGameUiController extends AbstractUiController {
           paintPossibleTurns(possibleTurns);
           //TODO implement check of any FieldTile if it is clicked
         }
+        */
       }
     }
   }
