@@ -4,6 +4,7 @@ import engine.component.Field;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.InputHandler;
+import engine.handler.ThreadHandler;
 import game.model.Game;
 import game.model.GameSession;
 import game.model.Turn;
@@ -35,32 +36,21 @@ public abstract class InGameUiController extends AbstractUiController {
   private final Chat chat;
 
   private final AbstractGameController gameController;
-
-  private BoardPane boardPane;
-
   private final List<StackPane> stackPanes;
-
-  private StackPane stackLocal;
-
-  private DragablePolyPane dragablePolyPane;
-
-  private VBox stacks;
-
-
   private final List<Label> playerPoints;
-
   private final HBox Gui;
-
-  private Button quitButton;
-
   private final InputHandler inputHandler;
-
-  private boolean aiCalcRunning;
-
   private final int count = 0;
+  private BoardPane boardPane;
+  private StackPane stackLocal;
+  private DragablePolyPane dragablePolyPane;
+  private VBox stacks;
+  private Button quitButton;
+  private boolean aiCalcRunning;
+  private Player localPlayer;
 
   public InGameUiController(AbstractGameController gameController, Game game,
-      GameSession gameSession, ThreadHelp threadHelp) {
+      GameSession gameSession, ThreadHandler threadHelp) {
     super(gameController);
     this.inputHandler = gameController.getInputHandler();
     this.gameSession = gameSession;
@@ -89,9 +79,6 @@ public abstract class InGameUiController extends AbstractUiController {
     }
     Gui.getChildren().add(boardPane);
   }
-
-  private Player localPlayer;
-
 
   private void setUpUi() {
     stacks = new VBox();
@@ -181,41 +168,53 @@ public abstract class InGameUiController extends AbstractUiController {
     boardPane.repaint(game.getGameState().getBoard());
     refreshUi();
     localPlayer = gameSession.getLocalPlayer();
-    aiCalcRunning = true;
+    System.out.println("Localplayer : " + localPlayer.getType());
+    aiCalcRunning = localPlayer.getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
       updateBoard();
-    }
-    //Check if Player has Turn
-    for (Field field : boardPane.getFields()) {
-      if (gameController.getInputHandler().isFieldPressed(field)) {
-        System.out.println(
-            "Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
-      }
-    }
-
-    if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
-      boolean action = false;
-
-      for (PolyPane polyPane : stackPanes.get(localPlayer.getOrderNum()).getPolyPanes()) {
-        if (inputHandler.isPolyClicked(polyPane) && localPlayer.getSelectedPoly() == null) {
-          localPlayer.setSelectedPoly(polyPane.getPoly());
-          dragablePolyPane = new DragablePolyPane(polyPane, boardPane.getSize(), inputHandler);
-          Gui.getChildren().add(dragablePolyPane);
+    } else {
+      //Check if Player has Turn
+      for (Field field : boardPane.getFields()) {
+        if (gameController.getInputHandler().isFieldPressed(field)) {
+          System.out.println(
+              "Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
         }
       }
 
-      //If localPlayer has selected a Poly, check if he also already click on the Board
-      if (localPlayer.getSelectedPoly() != null) {
+      if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
+        boolean action = false;
+        System.out.println("Current player is loclaplayer");
+        localPlayer.setSelectedPoly(null);
+        for (PolyPane polyPane : stackPanes.get(localPlayer.getOrderNum()).getPolyPanes()) {
+          if (inputHandler.isPolyClicked(polyPane) && localPlayer.getSelectedPoly() == null) {
+            localPlayer.setSelectedPoly(polyPane.getPoly());
+            dragablePolyPane = new DragablePolyPane(polyPane, boardPane.getSize(), inputHandler);
+            Gui.getChildren().add(dragablePolyPane);
+          }
+        }
+        if (this.dragablePolyPane != null) {
+          for (Field field : boardPane.getFields()) {
+            if (dragablePolyPane.intersects(field.getBoundsInParent())) {
+              System.out.println(field.getX() + " " + field.getY() + " Intersection on this field");
+            }
+          }
+        }
 
-        //create helpArraylist containing the selectedPoly to check the possible Moves
-        ArrayList<Poly> helpList = new ArrayList<>();
-        helpList.add(localPlayer.getSelectedPoly());
+        //If localPlayer has selected a Poly, check if he also already click on the Board
+        if (localPlayer.getSelectedPoly() != null) {
+          localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
+          System.out.println("Localplayer Selected Poly");
+          //create helpArraylist containing the selectedPoly to check the possible Moves
+          ArrayList<Poly> helpList = new ArrayList<>();
+          helpList.add(localPlayer.getSelectedPoly());
 
-        ArrayList<Turn> possibleTurns = new ArrayList<Turn>();
-        possibleTurns = game.getGameState().getBoard().getPossibleMoves(helpList, false);
-        paintPossibleTurns(possibleTurns);
-        //TODO implement check of any FieldTile if it is clicked
+          ArrayList<Turn> possibleTurns = new ArrayList<Turn>();
+          possibleTurns = game.getGameState().getBoard().getPossibleMoves(helpList, false);
+          localPlayer.setSelectedTurn(possibleTurns.get(0));
+          paintPossibleTurns(possibleTurns);
+          //TODO implement check of any FieldTile if it is clicked
+        }
       }
     }
   }

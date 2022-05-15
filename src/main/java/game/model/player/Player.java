@@ -6,6 +6,7 @@ import game.model.GameState;
 import game.model.Turn;
 import game.model.polygon.Poly;
 import java.io.Serializable;
+import java.security.cert.CertificateExpiredException;
 
 /**
  * This class represents one player of the game.
@@ -64,6 +65,10 @@ public class Player implements Serializable {
    */
   private boolean hasTurn;
 
+  private Turn selectedTurn;
+
+  private Turn setTurn;
+
 
   private Boolean threadIsActive = false;
 
@@ -88,6 +93,7 @@ public class Player implements Serializable {
     this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
         type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
     this.isHost = false;
+    this.selectedTurn = null;
 
 
   }
@@ -164,11 +170,24 @@ public class Player implements Serializable {
       return AI.calculateNextMove(gameState, this);
     } else {
       this.aiCalcRunning = false;
-
-      return null; //TODO add logic for non ai players
+      while (this.selectedTurn == null){
+        try {
+          Thread.sleep(50);
+          System.out.println("Waiting for PlayerInput");
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+      System.out.println("Turn Selected");
+      Turn returnTurn = this.setTurn;
+      this.selectedTurn = null;
+      this.aiCalcRunning = true;
+      return returnTurn; //TODO add logic for non ai players
     }
   }
-
+  public void setSelectedTurn(Turn turn){
+    this.selectedTurn = turn;
+  }
 
   public Boolean getAiCalcRunning() {
     return this.aiCalcRunning;

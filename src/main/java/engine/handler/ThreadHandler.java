@@ -1,4 +1,4 @@
-package game.controller;
+package engine.handler;
 
 import game.model.GameSession;
 
@@ -8,10 +8,10 @@ import game.model.GameSession;
  *
  * Sollte im folgenden dann noch durch weitere Threadhandler erweiter werden, bitte aber lassen, bis eine Funktionierende Version mit Server steht
  */
-public class ThreadHelp extends Thread{
+public class ThreadHandler extends Thread{
   private GameSession gameSession;
 
-  public ThreadHelp(GameSession gameSession){
+  public ThreadHandler(GameSession gameSession){
     this.gameSession = gameSession;
   }
   @Override

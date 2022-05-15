@@ -1,6 +1,7 @@
 package game.controller;
 
 import engine.controller.AbstractGameController;
+import engine.handler.ThreadHandler;
 import game.model.Game;
 import game.model.GameSession;
 
@@ -10,7 +11,7 @@ import game.model.GameSession;
 public class LocalGameUiController extends InGameUiController {
 
   public LocalGameUiController(AbstractGameController gameController,
-      Game game, GameSession gameSession, ThreadHelp threadHelp) {
+      Game game, GameSession gameSession, ThreadHandler threadHelp) {
     super(gameController, game, gameSession, threadHelp);
   }
 }

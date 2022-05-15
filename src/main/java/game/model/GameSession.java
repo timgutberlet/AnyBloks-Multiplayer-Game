@@ -60,6 +60,7 @@ public class GameSession {
     this.playerList = new ArrayList<Player>();
     this.hostPlayer = player;
     this.addPlayer(this.hostPlayer);
+    this.localPlayer = this.hostPlayer;
 
     try {
       hostServer.startWebsocket(8080);

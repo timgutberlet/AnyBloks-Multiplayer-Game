@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ErrorMessageHandler;
+import engine.handler.ThreadHandler;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.gamemodes.GMClassic;
@@ -204,7 +205,7 @@ public class LobbyController extends AbstractUiController {
       this.gameSession.startGame(this.gameMode);
       Debug.printMessage("Hallo3");
       //game.startGame();
-      ThreadHelp threadHelp = new ThreadHelp(gameSession);
+      ThreadHandler threadHelp = new ThreadHandler(gameSession);
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
     }

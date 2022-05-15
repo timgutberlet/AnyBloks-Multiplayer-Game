@@ -57,5 +57,6 @@ module bloks3 {
   //opens net.packet.game;
   exports net.tests;
   exports net.tests.chat;
+  opens engine.handler to javafx.fxml;
 
 }
