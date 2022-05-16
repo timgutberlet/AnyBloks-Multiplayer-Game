@@ -1,10 +1,10 @@
 package game.view.board;
 
+import engine.component.CheckField;
 import engine.component.ClassicField;
 import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
 import game.model.board.Board;
-import game.view.board.BoardPane;
 import javafx.scene.paint.Color;
 
 /**
@@ -26,6 +26,18 @@ public class SquareBoardPane extends BoardPane {
    * @param j
    */
   public void setSquare(int i, int j, Color color) {
+
+    CheckField checkField = new CheckField(i, j);
+    double sizeHelp = size * 0.4;
+    double move = size/2 - sizeHelp/2;
+    checkField.getPoints().addAll(0 + j * size + move, 0 + i * size + move,
+        sizeHelp + j * size + move, 0 + i * size + move,
+        sizeHelp + j * size + move, sizeHelp + i * size + move,
+        0 + j * size + move, sizeHelp + i * size + move);
+    checkField.setFill(color);
+    checkFields.add(checkField);
+    this.getChildren().add(checkField);
+
 
     ClassicField field = new ClassicField(i, j);
     field.getPoints().addAll(

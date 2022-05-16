@@ -1,8 +1,10 @@
 package game.view;
 
+import engine.component.Field;
 import engine.handler.InputHandler;
 import game.model.polygon.Poly;
 import game.view.poly.PolyPane;
+import java.util.List;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -19,8 +21,6 @@ public class DragablePolyPane extends Pane {
   protected final double size;
   protected final InputHandler inputHandler;
 
-  private boolean mirrored;
-  private int rotation;
 
   protected Button rotateRight;
   protected Button rotateLeft;
@@ -28,6 +28,8 @@ public class DragablePolyPane extends Pane {
 
   protected Circle innerCircle;
   protected Circle outsideCircle;
+
+  protected Color innerCircleColor;
 
   protected double circleX;
   protected double circleY;
@@ -37,9 +39,7 @@ public class DragablePolyPane extends Pane {
     this.polyPane = polyPane;
     this.size = size;
     this.inputHandler = inputHandler;
-
-    this.mirrored = false;
-    this.rotation = 0;
+    this.innerCircleColor = Color.GRAY;
 
     inputHandler.makeDraggable(this);
 
@@ -47,25 +47,26 @@ public class DragablePolyPane extends Pane {
     buttons();
   }
 
-  //Check if a Polypane Object intersects with the given Bounds object
-  public boolean intersects(Bounds bounds){
-    return this.polyPane.getBoundsInParent().intersects(bounds);
+  public void inncerCircleSetColor(){
+    this.innerCircleColor = Color.YELLOW;
+  }
+  public void inncerCircleResetColor(){
+    this.innerCircleColor = Color.GRAY;
   }
 
-  public PolyPane getPolyPane(){
-    return polyPane;
+  public Field showLocation(){
+    return this.polyPane.getFields().get(0);
+  }
+
+  public List<Field> getField(){
+    return this.polyPane.getFields();
   }
 
   public Poly getPoly(){
     return polyPane.getPoly();
   }
-
-  public boolean getMirrored(){
-    return this.mirrored;
-  }
-
-  public int getRotation(){
-    return this.rotation;
+  public Field getCheckPolyField(){
+    return this.polyPane.getCheckPolyField();
   }
 
   public void build() {

@@ -124,8 +124,6 @@ public class testGameClient {
         counter++;
       }
       //ses.close();
-    } catch (DeploymentException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     } catch (Exception e) {

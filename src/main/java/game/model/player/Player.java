@@ -171,22 +171,19 @@ public class Player implements Serializable {
       return AI.calculateNextMove(gameState, this);
     } else {
       this.aiCalcRunning = false;
-      /*
       while (this.selectedTurn == null){
         try {
-          Thread.sleep(50);
+          Thread.sleep(10);
           System.out.println("Waiting for PlayerInput");
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }
       System.out.println("Turn Selected");
-      Turn returnTurn = this.setTurn;
+      Turn returnTurn = this.selectedTurn;
       this.selectedTurn = null;
       this.aiCalcRunning = true;
-      *
-       */
-      return null; //TODO add logic for non ai players
+      return returnTurn; //TODO add logic for non ai players
     }
   }
   public void setSelectedTurn(Turn turn){

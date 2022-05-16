@@ -17,6 +17,8 @@ public class BoardPane extends Pane {
 
   protected final List<Field> fields;
 
+  protected final List<Field> checkFields;
+
   protected double size;
 
   protected InputHandler inputHandler;
@@ -24,6 +26,7 @@ public class BoardPane extends Pane {
   public BoardPane(Board board, InputHandler inputHandler, double width) {
     this.board = board;
     fields = new ArrayList<>();
+    checkFields = new ArrayList<>();
     this.inputHandler = inputHandler;
   }
 
@@ -32,6 +35,10 @@ public class BoardPane extends Pane {
    */
   public List<Field> getFields() {
     return this.fields;
+  }
+
+  public List<Field> getCheckFields(){
+    return this.checkFields;
   }
 
   /**

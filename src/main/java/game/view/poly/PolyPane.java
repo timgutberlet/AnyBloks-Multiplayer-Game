@@ -16,6 +16,7 @@ public class PolyPane extends Pane {
 
   protected Poly poly;
   protected List<Field> fields;
+  protected Field checkPolyField;
   protected InputHandler inputHandler;
   protected double size;
 
@@ -31,6 +32,10 @@ public class PolyPane extends Pane {
 
   public Poly getPoly() {
     return this.poly;
+  }
+
+  public Field getCheckPolyField(){
+    return this.checkPolyField;
   }
 
   public double getSize() {

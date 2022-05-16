@@ -2,10 +2,16 @@ package engine.handler;
 
 import engine.component.Field;
 import engine.controller.AbstractGameController;
+import game.view.DragablePolyPane;
 import game.view.poly.PolyPane;
+import java.security.Key;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 /**
  * This class enables elements to be draggable
@@ -14,6 +20,10 @@ import javafx.scene.Node;
  */
 public class InputHandler {
 
+  private final Set<KeyCode> keysPressed;
+  private final Set<KeyCode> keysPressedSaved;
+  private final Set<KeyCode> keysReleased;
+  private final Set<KeyCode> keysReleasedSaved;
   private final Set<Field> fieldClickedSaved;
   private final Set<Field> fieldPressedSaved;
   private final Set<Field> fieldHoveredSaved;
@@ -28,6 +38,8 @@ public class InputHandler {
   private double mouseAnchorY;
   private final AbstractGameController gameController;
   private boolean blockInput;
+  private final Set<DragablePolyPane> fieldDragged;
+
 
 
   public InputHandler(AbstractGameController gameController) {
@@ -36,12 +48,19 @@ public class InputHandler {
     fieldPressedSaved = new HashSet<>();
     fieldHoveredSaved = new HashSet<>();
     fieldReleasedSaved = new HashSet<>();
+    fieldDragged = new HashSet<>();
     fieldClicked = new HashSet<>();
     fieldPressed = new HashSet<>();
     fieldHovered = new HashSet<>();
     fieldReleased = new HashSet<>();
     polyClickedSaved = new HashSet<>();
     polyClicked = new HashSet<>();
+    keysPressed = new HashSet<>();
+    keysPressedSaved = new HashSet<>();
+    keysReleased = new HashSet<>();
+    keysReleasedSaved = new HashSet<>();
+
+    registerKeys(gameController.getStage().getScene());
   }
 
   /**
@@ -62,6 +81,32 @@ public class InputHandler {
     });
   }
 
+  public void registerKeys(Scene scene){
+    scene.setOnKeyPressed(event ->{
+        if (blockInput) {
+          keysPressedSaved.add(event.getCode());
+        } else {
+          keysPressed.add(event.getCode());
+        }
+    });
+    scene.setOnKeyReleased(event -> {
+      if(blockInput){
+        keysPressedSaved.add(event.getCode());
+      }else {
+        keysPressed.add(event.getCode());
+      }
+    });
+  }
+
+  public boolean isKeyPressed(KeyCode keyCode){
+    return this.keysPressed.contains(keyCode);
+  }
+  public boolean isKeyReleased(KeyCode keyCode){
+    return this.keysReleased.contains(keyCode);
+  }
+
+
+
   /**
    * Method to be called before a Frame
    */
@@ -78,6 +123,9 @@ public class InputHandler {
     fieldPressed.clear();
     fieldHovered.clear();
     fieldReleased.clear();
+    //Clear Keys
+    keysPressed.clear();
+    keysReleased.clear();
     //Clear StackInputs
     polyClicked.clear();
     //Assign Cached Values
@@ -86,13 +134,16 @@ public class InputHandler {
     fieldHovered.addAll(fieldHoveredSaved);
     fieldReleased.addAll(fieldReleasedSaved);
     polyClicked.addAll(polyClickedSaved);
+    keysPressed.addAll(keysPressedSaved);
+    keysReleased.addAll(keysReleasedSaved);
     //Clear cached values
     fieldClickedSaved.clear();
     fieldPressedSaved.clear();
     fieldHoveredSaved.clear();
     fieldReleasedSaved.clear();
     polyClickedSaved.clear();
-
+    keysReleasedSaved.clear();
+    keysPressedSaved.clear();
     blockInput = false;
   }
 

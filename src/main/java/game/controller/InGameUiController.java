@@ -10,7 +10,6 @@ import game.model.GameSession;
 import game.model.Turn;
 import game.model.chat.Chat;
 import game.model.player.Player;
-import game.model.polygon.Poly;
 import game.view.DragablePolyPane;
 import game.view.DragableSuarePane;
 import game.view.DragableTrigonPane;
@@ -23,11 +22,12 @@ import game.view.stack.StackSquarePane;
 import game.view.stack.StackTrigonPane;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -39,27 +39,21 @@ public abstract class InGameUiController extends AbstractUiController {
   private final Chat chat;
   private final AbstractGameController gameController;
   private final InputHandler inputHandler;
-
   private final BorderPane pane;
-
   private final List<StackPane> stackPanes;
+  private final List<Label> playerPoints;
+  private final int count = 0;
+  Stage stage;
+  private Button testButton;
   private StackPane stackLocal;
   private VBox stacks;
   private VBox right;
   private DragablePolyPane dragablePolyPane;
-
   private BoardPane boardPane;
-
-  private final List<Label> playerPoints;
-  private final int count = 0;
-
-
   private Button quitButton;
   private HBox buttonBox;
   private boolean aiCalcRunning;
   private Player localPlayer;
-
-  Stage stage;
 
   public InGameUiController(AbstractGameController gameController, Game game,
       GameSession gameSession, ThreadHandler threadHelp) {
@@ -129,9 +123,12 @@ public abstract class InGameUiController extends AbstractUiController {
 
     buttonBox = new HBox();
     quitButton = new Button("Quit");
+    testButton = new Button("Test");
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
     buttonBox.getChildren().add(quitButton);
+    buttonBox.getChildren().add(testButton);
     pane.setBottom(buttonBox);
+    inputHandler.makeDraggable(testButton);
   }
 
   private void handleQuitButtonClicked() {
@@ -184,9 +181,9 @@ public abstract class InGameUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
     //Die Folgenden zwei Befehle sollten für einen Reibungslosen Spielablauf optimiert werden
-    //this.game.makeMove();
-    //boardPane.repaint(game.getGameState().getBoard());
+    boardPane.repaint(game.getGameState().getBoard());
     //noinspection LanguageDetectionInspection
+    //Test
 
     //makes board resizable
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
@@ -200,7 +197,7 @@ public abstract class InGameUiController extends AbstractUiController {
     aiCalcRunning = localPlayer.getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
-      updateBoard();
+
     } else {
       //Check if Player has Turn
       for (Field field : boardPane.getFields()) {
@@ -236,13 +233,33 @@ public abstract class InGameUiController extends AbstractUiController {
             localPlayer.setSelectedPoly(polyPane.getPoly());
           }
         }
-
         if (this.dragablePolyPane != null) {
-          for (Field field : boardPane.getFields()) {
-            if (dragablePolyPane.intersects(field.getBoundsInParent())) {
-              System.out.println(field.getX() + " " + field.getY() + " Intersection on this field");
+          boolean currentIntersection = false;
+          Bounds polyBounds = dragablePolyPane.getCheckPolyField()
+              .localToScene(dragablePolyPane.getCheckPolyField().getBoundsInLocal());
+          for (Field field : boardPane.getCheckFields()) {
+            Bounds boardBounds = field.localToScene(field.getBoundsInParent());
+            if (polyBounds.intersects(boardBounds)) {
+              //Add is Poly Possible
+              int [] pos = {field.getX(), field.getY()};
+              if(game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(), game.getGameState().isFirstRound())){
+                dragablePolyPane.inncerCircleSetColor();
+                currentIntersection = true;
+                dragablePolyPane.rerender();
+                if(inputHandler.isKeyPressed(KeyCode.ENTER)){
+                  Turn turn = new Turn(dragablePolyPane.getPoly(), new int[] {field.getX(), field.getY()});
+                  localPlayer.setSelectedTurn(turn);
+                  refreshUi();
+                }
+              }
             }
+            ;
           }
+          if (!currentIntersection) {
+            dragablePolyPane.inncerCircleResetColor();
+            dragablePolyPane.rerender();
+          }
+
         }
 
         //If localPlayer has selected a Poly, check if he also already click on the Board
@@ -262,16 +279,6 @@ public abstract class InGameUiController extends AbstractUiController {
         }*/
       }
     }
-  }
-
-  public void paintPossibleTurns(ArrayList<Turn> possibleTurns) {
-    for (Turn turn : possibleTurns) {
-      //TODO Implement paint all possible Turns in Board
-    }
-  }
-
-  public void updateBoard() {
-    //TODO
   }
 
   protected void gameEnd() {
