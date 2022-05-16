@@ -102,18 +102,52 @@ public class DbServer extends DbHandler {
    * @param usernameInsert     username to be inserted.
    * @param passwordHashInsert passwordHash to be inserted.
    */
-  public synchronized void newAccount(String usernameInsert, String passwordHashInsert) {
+  public synchronized boolean newAccount(String usernameInsert, String passwordHashInsert) {
+    boolean success = false;
     try {
       Statement newAccount = con.createStatement();
-      newAccount.execute(
+      success = newAccount.execute(
           "INSERT INTO players (username, passwordHash) VALUES('" + usernameInsert + "' ,'"
               + passwordHashInsert + "')");
 
     } catch (SQLException e) {
+      success = false;
       e.printStackTrace();
     }
+    return success;
   }
 
+
+  /**
+   * Checks whether or not a username is already present in the database
+   *
+   * @param username to check
+   * @return true if there is an account / false if the username is unused
+   */
+  public synchronized boolean doesUsernameExist(String username) {
+    boolean doesExist = true;
+    ResultSet resultSet = null;
+    try {
+      Statement getUsers = con.createStatement();
+      resultSet = getUsers.executeQuery(
+          "SELECT * FROM players WHERE username = '" + username + "')");
+
+      if (resultSet.getFetchSize() != 0) {
+        doesExist = false;
+
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return doesExist;
+  }
+
+  /**
+   * Fetch the passwordHash of a certain user.
+   *
+   * @param username of interest
+   * @return passwordHash saved
+   */
   public synchronized String getUserPasswordHash(String username) {
     String passwordHash;
     try {

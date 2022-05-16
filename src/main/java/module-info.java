@@ -49,7 +49,6 @@ module bloks3 {
   exports net.packet.chat;
   exports net.packet.account;
   exports game.model.polygon;
-  exports net.packet;
   //opens net.packet.account;
   opens net.server;
   exports net.server;
@@ -61,5 +60,6 @@ module bloks3 {
   exports net.tests;
   exports net.tests.chat;
   opens engine.handler to javafx.fxml;
+  exports net.packet;
 
 }

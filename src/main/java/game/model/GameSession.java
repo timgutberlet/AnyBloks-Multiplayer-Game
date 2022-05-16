@@ -55,6 +55,8 @@ public class GameSession {
 
 	private final HashMap<String, Integer> scoreboard = new HashMap<String, Integer>();
 
+	private HashMap<String, Integer> gameSessionScoreboard = new HashMap<>();
+
 	/**
 	 * a Session is created by a Player in the MainMenu
 	 *
@@ -177,7 +179,7 @@ public class GameSession {
 		GameMode gameMode = this.gameList.pop();
 
 		while (this.getPlayerList().size()
-				<gameMode.getNeededPlayers()-1) { //TODO make dependdenc on gamemode
+				<gameMode.getNeededPlayers()-1) {
 			this.addBot(PlayerType.AI_EASY);
 		}
 
@@ -273,6 +275,22 @@ public class GameSession {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * Updates the scoreBoard of the lobby after a game has ended.
+	 */
+	public void updateGameSessionScoreboard(){
+
+		GameState gameState = this.getGame().getGameState();
+		for(Player p : this.getPlayerList()){
+			int oldScore = this.gameSessionScoreboard.get(p.getUsername());
+			Color c = gameState.getColorFromPlayer(p);
+			int score = gameState.getBoard().getScoreOfColor(c);
+			int updatedScore = oldScore + score;
+			this.gameSessionScoreboard.put(p.getUsername(), updatedScore);
+		}
+		String gameMode = gameState.getGameMode().getName();
 	}
 
 
@@ -373,7 +391,7 @@ public class GameSession {
 	}
 
 	/**
-	 * function that helps to output the most relevant information of a session
+	 * function that helps to output the most relevant information of a session.
 	 *
 	 * @return
 	 * @author tgeilen

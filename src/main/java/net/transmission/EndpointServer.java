@@ -114,6 +114,8 @@ public class EndpointServer {
       }
       case CREATE_ACCOUNT_REQUEST_PACKET:
         Debug.printMessage(this, "Received Create Account REQUEST PACKET ");
+        String answer = this.inboundServerHandler.createAccount(packet);
+        this.outboundServerHandler.accountRequestResponse(client, answer);
         break;
 
       case LOGIN_REQUEST_PACKET:
