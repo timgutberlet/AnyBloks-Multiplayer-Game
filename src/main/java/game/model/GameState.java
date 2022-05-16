@@ -145,7 +145,9 @@ public class GameState implements Serializable, Cloneable {
    * initalises the polys for all players depending on the selected gamemode
    */
   private void init() {
+    Debug.printMessage(this, "THE CURRENT PLAYER LIST SIZE IS " + this.playerList.size());
     for (Player p : this.playerList) {
+      Debug.printMessage(this, "Playername: "+p.getUsername());
       ArrayList<Poly> polyOfPlayer = new ArrayList<>();
       history.add(new ArrayList<>());
 

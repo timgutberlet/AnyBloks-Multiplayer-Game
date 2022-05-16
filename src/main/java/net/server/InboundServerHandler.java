@@ -4,6 +4,8 @@ import game.model.Debug;
 import game.model.GameSession;
 import game.model.Turn;
 import game.model.gamemodes.GameMode;
+import game.model.player.Player;
+import game.model.player.PlayerType;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.websocket.Session;
@@ -63,10 +65,30 @@ public class InboundServerHandler {
 
 		Debug.printMessage(this, username + " " + passwordHash);
 
+		//check if username has been connected before
+		if (this.server.getUsername2Session().keySet().contains(username)) {
+			Debug.printMessage(this, "I SHOULD NOT BE HERE DURING STARTUP PHASE");
+			//find existing player with the username
+			for (Player player : gameSession.getPlayerList()) {
+				if (player.getUsername().equals(username)) {
+					//only override if player is of type AI
+					if (player.isAI()) {
+						Debug.printMessage(this,"THE REMOTE SESSION WILL BE REPLACE BY AN AI");
+						this.server.getUsername2Session().put(username, session);
+					}
+				}
+			}
+		} else {
+			// handle a new player by adding to gamesession and in the dictionary
+			Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!" );
+			gameSession.addPlayer(new Player(username, PlayerType.REMOTE_PLAYER));
+			this.server.getUsername2Session().put(username, session);
+		}
+
 		//TODO add logic with database here
 		String[] toReturn = {"true", username};
 
-		this.server.addUsernameSession(username, session);
+		//this.server.addUsernameSession(username, session);
 		Debug.printMessage(this,
 				"New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
 		return toReturn;
@@ -98,6 +120,8 @@ public class InboundServerHandler {
 		Debug.printMessage(this, "Recieved turn");
 		TurnPacket turnPacket = (TurnPacket) packet.getPacket();
 		Turn turn = turnPacket.getTurn();
+
+		CheckConnectionThread.turnRecieved = true;
 
 		if (gameSession.getGame().checkTurn(turn)) {
 			Debug.printMessage(this, "The recieved turn is legal and will be played");

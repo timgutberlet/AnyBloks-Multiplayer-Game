@@ -108,6 +108,9 @@ public class EndpointClient {
         this.clientHandler.makeTurn(packet);
         break;
 
+      case CHECK_CONNECTION_PACKET:
+        break;
+
       //
     }
 

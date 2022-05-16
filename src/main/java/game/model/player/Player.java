@@ -234,4 +234,15 @@ public class Player implements Serializable {
     return this.orderNum;
   }
 
+  public void setAI(Boolean AI) {
+    isAI = AI;
+  }
+
+  public Boolean isAI() {
+    return isAI;
+  }
+
+  public void setType(PlayerType type) {
+    this.type = type;
+  }
 }

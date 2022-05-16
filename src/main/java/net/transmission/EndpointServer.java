@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -70,7 +71,9 @@ public class EndpointServer {
    */
   @OnClose
   public void onClose(final Session ses) {
+    System.out.println("THIS SESSION WAS CLOSED BY THE SERVER TOBI");
     sessions.remove(ses);
+
   }
 
   /**
@@ -104,6 +107,7 @@ public class EndpointServer {
         }
 
       }
+      break;
       case INIT_GAME_PACKET: {
         this.inboundServerHandler.startGame(packet);
         break;
@@ -116,8 +120,14 @@ public class EndpointServer {
         Debug.printMessage(this, " LOGIN_REQUEST_PACKET recieved");
         String[] response = this.inboundServerHandler.verifyLogin(packet, client);
         if (response[0].equals("true")) {
-          gameSession.addPlayer(new Player(response[1], PlayerType.REMOTE_PLAYER));
-          //allSessions.put(response[1], client);
+          //checks whether a remote accoutn will be overwritten by local remote ai
+          if(!this.getUsername2Session().keySet().contains(response[1])) {
+            //add a new player to the gamesession
+            //gameSession.addPlayer(new Player(response[1], PlayerType.REMOTE_PLAYER));
+          }
+
+          //this.getUsername2Session().put(response[1],client);
+
         } else {
           client.getBasicRemote().sendObject(
               new LoginResponsePacket("Credentials could not be verified"));
@@ -197,6 +207,8 @@ public class EndpointServer {
         e.printStackTrace();
       } catch (EncodeException e) {
         e.printStackTrace();
+      } catch (Exception e){
+        e.printStackTrace();
       }
     }
   }
@@ -215,5 +227,11 @@ public class EndpointServer {
 
   public HashMap<String, Session> getUsername2Session() {
     return username2Session;
+  }
+
+  @OnError
+  public void onError(Session ses, Throwable t){
+    System.out.println("HI FROM CRASH");
+    t.printStackTrace();
   }
 }

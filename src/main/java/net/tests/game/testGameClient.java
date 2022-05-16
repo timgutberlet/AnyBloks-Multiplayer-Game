@@ -51,7 +51,12 @@ public class testGameClient {
     Session ses = null;
 
     try {
-      ses = container.connectToServer(client, URI.create("ws://localhost:8081/packet"));
+      //play on local machine
+      //ses = container.connectToServer(client, URI.create("ws://localhost:8081/packet"));
+
+      //play on remote machine (get IP via testInetAdress)
+      ses = container.connectToServer(client, URI.create("ws://134.155.206.121:8081/packet"));
+
 
       //Init session
       InitSessionPacket initSessionPacket = new InitSessionPacket();

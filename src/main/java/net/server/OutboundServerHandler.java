@@ -5,6 +5,7 @@ import game.model.GameSession;
 import game.model.GameState;
 import game.model.gamemodes.GameMode;
 import java.util.concurrent.TimeUnit;
+import net.packet.CheckConnectionPacket;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.game.GameStartPacket;
@@ -53,6 +54,9 @@ public class OutboundServerHandler {
 
     this.server.sendMessage(wrappedPacket, username);
     Debug.printMessage(this, "Requested turn from " + username);
+
+    CheckConnectionThread checkConnectionThread = new CheckConnectionThread(gameSession,username,this.server);
+    checkConnectionThread.start();
   }
 
 
@@ -104,13 +108,6 @@ public class OutboundServerHandler {
     }
 
     if(gameSession.getGameList().size()>0) {
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
       Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
       gameSession.startGameServer();
     }
