@@ -60,31 +60,33 @@ public class testGameClient {
     try {
       //Create Config that adds a header with username + password
       //Thereby adhering to Basic Authentication
-      ClientEndpointConfig.Builder configBuilder = ClientEndpointConfig.Builder.create();
-      configBuilder.configurator(new Configurator(){
+      //ClientEndpointConfig.Builder configBuilder = ClientEndpointConfig.Builder.create();
+      //configBuilder.configurator(new Configurator(){
         /**
          * Method implementing the basic authentication
          *
          * @param headers to be sent with every packet
          */
-        public void beforeRequest(java.util.Map<String, List<String>> headers){
-          String username = "remotePlayer";
-          //TODO: get actual password + username
-          String passwordHash = "remoteSessionPassword";
-          String authString = Base64.getEncoder().encodeToString(("Basic " + username + ":" + passwordHash).getBytes());
-          List<String> authList = new ArrayList<String>();
-          authList.add(authString);
+      //public void beforeRequest(java.util.Map<String, List<String>> headers){
+      //    String username = "remotePlayer";
+      //    //TODO: get actual password + username
+      //    String passwordHash = "remoteSessionPassword";
+      //    String authString = Base64.getEncoder().encodeToString(("Basic " + username + ":" + passwordHash).getBytes());
+      //    List<String> authList = new ArrayList<String>();
+      //    authList.add(authString);
 
-          headers.put("Authentication", authList);
-        }
-      });
-      ClientEndpointConfig endpointClientConfig = configBuilder.build();
+      //    headers.put("Authentication", authList);
+       // }
+      //});
+      //ClientEndpointConfig endpointClientConfig = configBuilder.build();
 
-      ses = container.connectToServer(client, endpointClientConfig, URI.create("ws://134.155.206.121:8081/packet"));
+      //ses = container.connectToServer(client, endpointClientConfig, URI.create("ws://134.155.206.121:8081/packet"));
       //ses = container.connectToServer(client, URI.create("ws://localhost:8081/packet"));
 
       //play on remote machine (get IP via testInetAdress)
-      //ses = container.connectToServer(client, URI.create("ws://134.155.206.121:8081/packet"));
+
+      ses = container.connectToServer(client, URI.create("ws://134.155.206.121:8081/packet"));
+      //ses = container.connectToServer(client, URI.create("ws://134.155.205.170:8081/packet"));
 
 
       //Init session
@@ -95,7 +97,7 @@ public class testGameClient {
 
       //Login
       LoginRequestPacket loginRequestPacket = new LoginRequestPacket(localPlayer.getUsername(),
-          "1234");
+          "1234", localPlayer.getType());
       Debug.printMessage("LoginRequestPacket has been sent to the server");
       wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
           loginRequestPacket);

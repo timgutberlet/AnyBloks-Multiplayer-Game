@@ -258,7 +258,7 @@ public class GameSession {
 
 			//Login
 			LoginRequestPacket loginRequestPacket = new LoginRequestPacket(player.getUsername(),
-					"1234");
+					"1234", player.getType());
 			Debug.printMessage("LoginRequestPacket has been sent to the server");
 			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
 					loginRequestPacket);
@@ -292,7 +292,7 @@ public class GameSession {
 
 					//Login
 					LoginRequestPacket loginRequestPacket = new LoginRequestPacket(player.getUsername(),
-							"1234");
+							"1234", player.getType());
 					Debug.printMessage(
 							"LoginRequestPacket has been sent to the server to change remote player to AI");
 					WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,

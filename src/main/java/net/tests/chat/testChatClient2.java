@@ -1,6 +1,7 @@
 package net.tests.chat;
 
 import game.model.Debug;
+import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -47,7 +48,7 @@ public class testChatClient2 {
       ses = container.connectToServer(client, URI.create("ws://localhost:8081/packet"));
 
       LoginRequestPacket loginRequestPacket = new LoginRequestPacket(LocalDateTime.now().toString(),
-          "1234");
+          "1234", PlayerType.REMOTE_PLAYER);
       Debug.printMessage("LoginRequestPacket has been sent to the server");
       WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
           loginRequestPacket);

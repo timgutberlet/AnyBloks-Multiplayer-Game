@@ -75,6 +75,12 @@ public class InboundServerHandler {
 					if (player.isAI()) {
 						Debug.printMessage(this,"THE REMOTE SESSION WILL BE REPLACE BY AN AI");
 						this.server.getUsername2Session().put(username, session);
+
+						if(loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)){
+							player.setAI(false);
+							player.setType(loginPacket.getPlayerType());
+						}
+
 					}
 				}
 			}

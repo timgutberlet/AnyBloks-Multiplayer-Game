@@ -1,5 +1,6 @@
 package net.packet.account;
 
+import game.model.player.PlayerType;
 import net.packet.abstr.Packet;
 
 /**
@@ -11,6 +12,7 @@ public class LoginRequestPacket extends Packet {
 
   private String username;
   private String passwordHash;
+  private PlayerType playerType;
 
   /**
    * empty constructor for jackson.
@@ -27,9 +29,10 @@ public class LoginRequestPacket extends Packet {
    * @param username     of account
    * @param passwordHash user thinks belongs to account
    */
-  public LoginRequestPacket(String username, String passwordHash) {
+  public LoginRequestPacket(String username, String passwordHash, PlayerType playerType) {
     this.username = username;
     this.passwordHash = passwordHash;
+    this.playerType = playerType;
   }
 
   /**
@@ -48,5 +51,14 @@ public class LoginRequestPacket extends Packet {
    */
   public String getPasswordHash() {
     return passwordHash;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return
+   */
+  public PlayerType getPlayerType() {
+    return playerType;
   }
 }
