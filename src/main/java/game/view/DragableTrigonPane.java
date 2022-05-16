@@ -1,10 +1,9 @@
 package game.view;
 
 import engine.handler.InputHandler;
-import game.model.polygon.Poly;
+import game.model.field.FieldTrigon;
 import game.model.polygon.PolyTrigon;
 import game.view.poly.PolyPane;
-import game.view.poly.TrigonPolyPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -39,25 +38,28 @@ public class DragableTrigonPane extends DragablePolyPane {
 
     polyPane.setSize(size);
 
-    /*PolyTrigon poly = (PolyTrigon) polyPane.getPoly();
-    double polyX = 0;
-    double polyY = 0;
-    double xOfSet = Math.sin(Math.toRadians(30)) * size;
+    double polyX;
+    double polyY;
     double yOfSet = Math.sin(Math.toRadians(60)) * size;
-
-    int[] res = poly.getWidthArray();
-
-    switch (res[0]){
-      case 1 : polyX = size*0.5;break;
-      case 2 : polyX = (size + res[1] * xOfSet) * 0.5;break;
-      case 3 : polyX = 2*size;break;
-      case 4 : polyX = 2*size+ res[1] * xOfSet;break;
+    double x = 0;
+    double y = 0;
+    double right = 0;
+    for (FieldTrigon ft : ((PolyTrigon) polyPane.getPoly()).getShape()) {
+      x += ft.getPos()[0];
+      y += ft.getPos()[1];
+      right += ft.getPos()[2];
     }
-    polyY = poly.getWidth() * yOfSet * 0.5;
+    x /= polyPane.getPoly().getSize();
+    y /= polyPane.getPoly().getSize();
+    right /= polyPane.getPoly().getSize();
 
-    double shiftX = circleX-polyX;
-    double shiftY = circleY-polyY;
-    polyPane.relocate(shiftX,shiftY);*/
+    polyY = (x + 0.5) * yOfSet;
+    polyX = (y + 0.5 + 0.5 * x + 0.5 * right) * size;
+
+    double shiftX = circleX - polyX;
+    double shiftY = circleY - polyY;
+
+    polyPane.relocate(shiftX, shiftY);
 
     this.getChildren().add(innerCircle);
     this.getChildren().add(donut);
