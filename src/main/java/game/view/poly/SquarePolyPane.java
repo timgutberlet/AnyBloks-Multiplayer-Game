@@ -53,5 +53,12 @@ public class SquarePolyPane extends PolyPane {
       }
     }
   }
+
+  public void setSize(double size) {
+    this.size = size;
+    this.fields.clear();
+    this.getChildren().clear();
+    setPoly();
+  }
 }
 

@@ -38,10 +38,6 @@ public class PolyPane extends Pane {
   }
 
   public void setSize(double size) {
-    this.size = size;
-    this.fields.clear();
-    this.getChildren().clear();
-    setPoly();
   }
 
   public void resize(double width) {

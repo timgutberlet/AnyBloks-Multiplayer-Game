@@ -15,22 +15,22 @@ import javafx.scene.shape.Shape;
  */
 public class DragablePolyPane extends Pane {
 
-  private PolyPane polyPane;
-  private final double size;
-  private final InputHandler inputHandler;
+  protected PolyPane polyPane;
+  protected final double size;
+  protected final InputHandler inputHandler;
 
   private boolean mirrored;
   private int rotation;
 
-  private Button rotateRight;
-  private Button rotateLeft;
-  private Button mirror;
+  protected Button rotateRight;
+  protected Button rotateLeft;
+  protected Button mirror;
 
-  private Circle innerCircle;
-  private Circle outsideCircle;
+  protected Circle innerCircle;
+  protected Circle outsideCircle;
 
-  double circleX;
-  double circleY;
+  protected double circleX;
+  protected double circleY;
 
 
   public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler) {
@@ -42,6 +42,7 @@ public class DragablePolyPane extends Pane {
     this.rotation = 0;
 
     inputHandler.makeDraggable(this);
+
     build();
     buttons();
   }
@@ -68,36 +69,6 @@ public class DragablePolyPane extends Pane {
   }
 
   public void build() {
-
-    circleX = 2.5 * size + size;
-    circleY = 2.5 * size + size;
-
-    outsideCircle = new Circle();
-    outsideCircle.setCenterX(circleX);
-    outsideCircle.setCenterY(circleY);
-    outsideCircle.setRadius(2.5 * size + size);
-
-    innerCircle = new Circle();
-    innerCircle.setCenterX(circleX);
-    innerCircle.setCenterY(circleY);
-    innerCircle.setRadius(2.5 * size);
-    innerCircle.setFill(Color.GRAY);
-    innerCircle.setOpacity(0.5);
-
-    Shape donut = Shape.subtract(outsideCircle, innerCircle);
-    donut.setFill(Color.GRAY);
-
-    polyPane.setSize(size);
-    double polyX = polyPane.getSize() * (polyPane.getPoly().getHeight() / 2.0);
-    double polyY = polyPane.getSize() * (polyPane.getPoly().getWidth() / 2.0);
-    double xOfSet = circleX - polyX;
-    double yOfSet = circleY - polyY;
-    polyPane.relocate(xOfSet, yOfSet);
-
-    this.getChildren().add(donut);
-    this.getChildren().add(innerCircle);
-    this.getChildren().add(polyPane);
-
   }
 
   public void buttons() {

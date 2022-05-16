@@ -21,11 +21,11 @@ public class TrigonPolyPane extends PolyPane {
    * The attribute xOfSet is calculated from the attribute size, so that each angle of the
    * equilateral triangles is exactly 60 degrees
    */
-  private final double xOfSet;
+  private double xOfSet;
   /**
    * the attrubite yOfSet is the shift in y direction
    */
-  private final double yOfSet;
+  private double yOfSet;
 
   public TrigonPolyPane(Poly poly, InputHandler inputHandler, double width) {
     super(poly, inputHandler, width);
@@ -50,7 +50,7 @@ public class TrigonPolyPane extends PolyPane {
         xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet); // left vertex
     triangleRight.setFill(color);
     triangleRight.setStroke(Color.TRANSPARENT);
-    if (!color.equals(Color.TRANSPARENT)) {
+    if (true) {
       triangleRight.setStroke(Color.BLACK);
     }
     fields.add(triangleRight);
@@ -68,12 +68,12 @@ public class TrigonPolyPane extends PolyPane {
   private void setTriangleLeft(int i, int j, Color color) {
     TrigonField triangleLeft = new TrigonField(i, j, 0);
     triangleLeft.getPoints().addAll(
+        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex
         size + j * size + i * xOfSet, 0.0 + i * yOfSet, // right vertex
-        0.0 + j * size + i * xOfSet, 0.0 + i * yOfSet,  // left vertex
-        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet); // top vertex
+        0.0 + j * size + i * xOfSet, 0.0 + i * yOfSet);  // left vertex
     triangleLeft.setFill(color);
     triangleLeft.setStroke(Color.TRANSPARENT);
-    if (!color.equals(Color.TRANSPARENT)) {
+    if (true) {
       triangleLeft.setStroke(Color.BLACK);
     }
     fields.add(triangleLeft);
@@ -120,6 +120,15 @@ public class TrigonPolyPane extends PolyPane {
         }
       }
     }
+  }
+
+  public void setSize(double size) {
+    this.size = size;
+    xOfSet = Math.sin(Math.toRadians(30)) * size;
+    yOfSet = Math.sin(Math.toRadians(60)) * size;
+    this.fields.clear();
+    this.getChildren().clear();
+    setPoly();
   }
 }
 

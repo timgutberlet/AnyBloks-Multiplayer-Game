@@ -12,6 +12,8 @@ import game.model.chat.Chat;
 import game.model.player.Player;
 import game.model.polygon.Poly;
 import game.view.DragablePolyPane;
+import game.view.DragableSuarePane;
+import game.view.DragableTrigonPane;
 import game.view.board.BoardPane;
 import game.view.board.SquareBoardPane;
 import game.view.board.TrigonBoardPane;
@@ -102,7 +104,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "CLASSIC":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -110,7 +112,8 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+          stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
         break;
@@ -132,6 +135,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void handleQuitButtonClicked() {
+
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
@@ -144,7 +148,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "CLASSIC":
         for (Player p : game.getPlayers()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -152,7 +156,8 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : game.getPlayers()) {
           StackTrigonPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+          stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
         break;
@@ -189,6 +194,7 @@ public abstract class InGameUiController extends AbstractUiController {
     });
 
     refreshUi();
+
     localPlayer = gameSession.getLocalPlayer();
     System.out.println("Localplayer : " + localPlayer.getType());
     aiCalcRunning = localPlayer.getAiCalcRunning();
@@ -211,12 +217,22 @@ public abstract class InGameUiController extends AbstractUiController {
         for (PolyPane polyPane : stackPanes.get(0).getPolyPanes()) {
           if (inputHandler.isPolyClicked(polyPane)) {
             if (dragablePolyPane == null) {
-              dragablePolyPane = new DragablePolyPane(polyPane, boardPane.getSize(), inputHandler);
-              right.getChildren().add(dragablePolyPane);
+              switch (game.getGamemode().getName()) {
+                case "JUNIOR":
+                case "DUO":
+                case "CLASSIC":
+                  dragablePolyPane = new DragableSuarePane(polyPane, boardPane.getSize(),
+                      inputHandler);
+                  break;
+                case "TRIGON":
+                  dragablePolyPane = new DragableTrigonPane(polyPane, boardPane.getSize(),
+                      inputHandler);
+                  break;
+              }
+              pane.setLeft(dragablePolyPane);
             } else {
               dragablePolyPane.setPoly(polyPane);
             }
-
             localPlayer.setSelectedPoly(polyPane.getPoly());
           }
         }
@@ -231,7 +247,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
         //If localPlayer has selected a Poly, check if he also already click on the Board
         /*
-        if (localPlayer.getSelectedPoly() != null) {
+        /*if (localPlayer.getSelectedPoly() != null) {
           localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
           System.out.println("Localplayer Selected Poly");
           //create helpArraylist containing the selectedPoly to check the possible Moves
@@ -243,8 +259,7 @@ public abstract class InGameUiController extends AbstractUiController {
           localPlayer.setSelectedTurn(possibleTurns.get(0));
           paintPossibleTurns(possibleTurns);
           //TODO implement check of any FieldTile if it is clicked
-        }
-        */
+        }*/
       }
     }
   }

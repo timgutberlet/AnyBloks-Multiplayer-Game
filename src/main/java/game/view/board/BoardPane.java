@@ -25,8 +25,6 @@ public class BoardPane extends Pane {
     this.board = board;
     fields = new ArrayList<>();
     this.inputHandler = inputHandler;
-    size = (0.4 * width) / board.getSize();
-    setBoard();
   }
 
   /**

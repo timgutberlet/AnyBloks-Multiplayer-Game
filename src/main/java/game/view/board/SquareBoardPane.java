@@ -14,6 +14,8 @@ public class SquareBoardPane extends BoardPane {
 
   public SquareBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
+    super.size = (0.4 * width) / board.getSize();
+    setBoard();
   }
 
   /**
