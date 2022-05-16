@@ -299,6 +299,13 @@ public class GameSession {
 							loginRequestPacket);
 					session.getBasicRemote().sendObject(wrappedPacket);
 
+					Debug.printMessage(this,"Waiting for new AI to connect (with a fixed amount of time)");
+
+					TimeUnit.SECONDS.sleep(5);
+
+					this.outboundServerHandler.sendGameStart(player.getUsername(), this.game.getGameState());
+
+					this.outboundServerHandler.requestTurn(player.getUsername());
 
 				} catch (DeploymentException e) {
 					e.printStackTrace();

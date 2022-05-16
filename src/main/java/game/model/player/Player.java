@@ -167,12 +167,6 @@ public class Player implements Serializable {
    */
   public Turn makeTurn(GameState gameState) {
     if (this.isAI) {
-      Debug.printMessage("LEAAAAAAAAAAAAAAAAAAAAAAAAAAAAVVVVVVVVVVVVVEEEEEEEEEEE\n\n\n\\LEAVE\n");
-      try {
-        TimeUnit.SECONDS.sleep(20);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
       this.aiCalcRunning = true;
       return AI.calculateNextMove(gameState, this);
     } else {

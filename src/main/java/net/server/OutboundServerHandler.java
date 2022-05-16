@@ -61,6 +61,19 @@ public class OutboundServerHandler {
 
 
   /**
+   * send GAME_START_PACKET to all clients
+   *
+   * @param gameState
+   * @tgeilen
+   */
+  public void sendGameStart(String username, GameState gameState) {
+    GameStartPacket gameStartPacket = new GameStartPacket(gameState);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_START_PACKET, gameStartPacket);
+
+    this.server.sendMessage(wrappedPacket,username);
+  }
+
+  /**
    * broadcast GAME_START_PACKET to all clients
    *
    * @param gameState

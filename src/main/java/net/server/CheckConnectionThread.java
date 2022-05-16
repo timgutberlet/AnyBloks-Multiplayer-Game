@@ -59,12 +59,12 @@ public class CheckConnectionThread extends Thread {
 					this.checkConnectionPacket);
 
 			try {
-				Debug.printMessage(this,"Sending CheckConnection message to client");
+				Debug.printMessage(this,"_________Sending CheckConnection message to " + this.username + "_________");
 				this.session.getBasicRemote().sendObject(wrappedPacket);
 
 			} catch (Exception e) {
 				this.connectionCrashed = true;
-				Debug.printMessage(this, "THE SERVER LOST CONNECTION TO A CLIENT");
+				Debug.printMessage(this, "THE SERVER LOST CONNECTION TO " + this.username);
 				this.gameSession.changePlayer2AI(this.username);
 				e.printStackTrace();
 

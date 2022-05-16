@@ -41,6 +41,7 @@ public class ClientHandler {
    * @author tgeilen
    */
   public void startGame(WrappedPacket wrappedPacket) {
+    Debug.printMessage(this, "StartGamePacket recieved by a client");
     GameStartPacket gameStartPacket = (GameStartPacket) wrappedPacket.getPacket();
     GameMode gamemode = gameStartPacket.getGameMode();
     GameState gameState = gameStartPacket.getGameState();

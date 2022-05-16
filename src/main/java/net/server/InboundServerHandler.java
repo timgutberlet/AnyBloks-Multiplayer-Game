@@ -83,6 +83,7 @@ public class InboundServerHandler {
 			Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!" );
 			gameSession.addPlayer(new Player(username, PlayerType.REMOTE_PLAYER));
 			this.server.getUsername2Session().put(username, session);
+			Debug.printMessage(this,"Username2Session size: " + this.server.getUsername2Session().size());
 		}
 
 		//TODO add logic with database here
