@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -39,6 +41,8 @@ public class GameSession {
   private Player hostPlayer;
   private Game game;
   private GameServer gameServer;
+
+  private LinkedList<GameMode> gameList;
 
 
   private int numOfBots = 0;
@@ -159,9 +163,11 @@ public class GameSession {
    *
    * @author tgeilen
    */
-  public Game startGameServer(GameMode gameMode) {
+  public Game startGameServer() {
 
     //while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
+    GameMode gameMode = this.gameList.pop();
+
     while (this.getPlayerList().size()
         < gameMode.getNeededPlayers()) { //TODO make dependdenc on gamemode
       this.addBot(PlayerType.AI_EASY);
@@ -303,7 +309,13 @@ public class GameSession {
     return gameServer;
   }
 
+  public LinkedList<GameMode> getGameList() {
+    return gameList;
+  }
 
+  public void setGameList(LinkedList<GameMode> gameList) {
+    this.gameList = gameList;
+  }
 
   /**
    * function that helps to output the most relevant information of a session

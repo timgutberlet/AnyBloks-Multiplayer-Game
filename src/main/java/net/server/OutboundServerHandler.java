@@ -4,6 +4,7 @@ import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
 import game.model.gamemodes.GameMode;
+import java.util.concurrent.TimeUnit;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.game.GameStartPacket;
@@ -58,7 +59,7 @@ public class OutboundServerHandler {
   /**
    * broadcast GAME_START_PACKET to all clients
    *
-   * @param gameMode
+   * @param gameState
    * @tgeilen
    */
   public void broadcastGameStart(GameState gameState) {
@@ -95,11 +96,33 @@ public class OutboundServerHandler {
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_WIN_PACKET, gameWinPacket);
 
     this.server.broadcastMessage(wrappedPacket);
+
+    try {
+      TimeUnit.SECONDS.sleep(2);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    if(gameSession.getGameList().size()>0) {
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      gameSession.startGameServer();
+    }
+
   }
 
   public void broadcastChatMessage(WrappedPacket wrappedPacket) {
     this.server.broadcastMessage(wrappedPacket);
   }
+
+
+
 
 
 }

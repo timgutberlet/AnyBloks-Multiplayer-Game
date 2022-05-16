@@ -2,11 +2,14 @@ package net.tests.game;
 
 import game.model.Debug;
 import game.model.gamemodes.GMClassic;
+import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -66,7 +69,10 @@ public class testGameClient {
 
       TimeUnit.SECONDS.sleep(2);
       //Start game
-      InitGamePacket initGamePacket = new InitGamePacket(new GMClassic());
+      LinkedList<GameMode> gameModeLinkedList = new LinkedList<>();
+      gameModeLinkedList.add(new GMClassic());
+      gameModeLinkedList.add(new GMClassic());
+      InitGamePacket initGamePacket = new InitGamePacket(gameModeLinkedList);
       wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
       ses.getBasicRemote().sendObject(wrappedPacket);
       Debug.printMessage("InitGamePacket has been sent to the server");

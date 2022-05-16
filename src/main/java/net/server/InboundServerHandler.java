@@ -3,6 +3,9 @@ package net.server;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.Turn;
+import game.model.gamemodes.GameMode;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
@@ -75,7 +78,11 @@ public class InboundServerHandler {
 
 		//this.server.getOutboundServerHandler().broadcastGameStart(initGamePacket.getGameMode());
 
-		gameSession.startGameServer(initGamePacket.getGameMode());
+		LinkedList<GameMode> gameModes = initGamePacket.getGameMode();
+
+		gameSession.setGameList(gameModes);
+
+		gameSession.startGameServer();
 
 
 	}

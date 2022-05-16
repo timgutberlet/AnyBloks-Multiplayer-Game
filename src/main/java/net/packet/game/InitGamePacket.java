@@ -1,6 +1,8 @@
 package net.packet.game;
 
 import game.model.gamemodes.GameMode;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import net.packet.abstr.Packet;
 
 /**
@@ -9,17 +11,17 @@ import net.packet.abstr.Packet;
  */
 public class InitGamePacket extends Packet {
 
-  private final GameMode gameMode;
+  private final LinkedList<GameMode> gameMode;
 
   public InitGamePacket() {
     this.gameMode = null;
   }
 
-  public InitGamePacket(GameMode gameMode) {
+  public InitGamePacket(LinkedList<GameMode> gameMode) {
     this.gameMode = gameMode;
   }
 
-  public GameMode getGameMode() {
+  public LinkedList<GameMode> getGameMode() {
     return gameMode;
   }
 }
