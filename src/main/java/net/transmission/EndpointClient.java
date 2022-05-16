@@ -6,8 +6,9 @@ import game.model.player.Player;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.EncodeException;
+import javax.websocket.Endpoint;
+import javax.websocket.EndpointConfig;
 import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
@@ -23,39 +24,38 @@ import org.slf4j.LoggerFactory;
 
 @ClientEndpoint(encoders = {PacketEncoder.class}, decoders = {PacketDecoder.class})
 
-public class EndpointClient {
+public class EndpointClient extends Endpoint {
 
+  private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
   private Session server;
   private GameSession gameSession;
   private ClientHandler clientHandler;
   private Player player;
 
-	public EndpointClient(Player player){
-		super();
-		this.player = player;
-		this.gameSession = new GameSession();
-		this.gameSession.setLocalPlayer(player);
-		this.player.setGameSession(this.gameSession);
-		this.clientHandler = new ClientHandler(this);
-	}
+
+  public EndpointClient(Player player) {
+    super();
+    this.player = player;
+    this.gameSession = new GameSession();
+    this.gameSession.setLocalPlayer(player);
+    this.player.setGameSession(this.gameSession);
+    this.clientHandler = new ClientHandler(this);
+  }
 
   public EndpointClient() {
 
   }
 
 
-  private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
-
   /**
    * Method used to connect to server. TODO : evaluate createAccount / Login
    *
-   * @param ses Session in use
-   * @throws IOException     is thrown
-   * @throws EncodeException is thrown
+   * @param ses            Session in use
+   * @param endpointConfig that was used to create the endpoint
    */
-  @OnOpen
-  public void onOpen(final Session ses)
-      throws IOException, EncodeException {
+  @Override
+  public void onOpen(Session ses, EndpointConfig endpointConfig) {
+
 //        ses.getBasicRemote().sendObject(new CreateAccountRequestPacket("testuser", "testPW"));
 
 /*
@@ -89,6 +89,7 @@ public class EndpointClient {
 
       case GAME_START_PACKET:
         this.clientHandler.startGame(packet);
+        Debug.printMessage("GameStart called");
         break;
 
       case REQUEST_TURN_PACKET:
@@ -109,6 +110,7 @@ public class EndpointClient {
         break;
 
       case CHECK_CONNECTION_PACKET:
+        Debug.printMessage("CHECK CON RECEIVED");
         break;
 
       //

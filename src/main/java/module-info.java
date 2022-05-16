@@ -21,6 +21,7 @@ module bloks3 {
   requires org.eclipse.jetty.util;
   requires org.apache.commons.codec;
   requires sqlite.jdbc;
+  requires java.annotation;
 
   opens game.controller to javafx.fxml;
   opens game.core to javafx.fxml;

@@ -1,6 +1,7 @@
 package net.server;
 
 import javax.ws.rs.ApplicationPath;
+import net.AuthenticationFilter;
 import net.LoggingRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -18,9 +19,11 @@ public class ServerConfig extends ResourceConfig {
    */
 
   public ServerConfig() {
-    // activate the request filter
-    register(LoggingRequestFilter.class);    // make JSON usable
-    register(JacksonFeature.class);
+    // activate the request filters
+    register(AuthenticationFilter.class);
+    register(LoggingRequestFilter.class);
+    register(JacksonFeature.class);       // make JSON usable
+
 
   }
 

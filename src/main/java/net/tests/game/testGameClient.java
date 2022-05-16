@@ -1,5 +1,7 @@
 package net.tests.game;
 
+import static com.fasterxml.jackson.databind.type.LogicalType.Map;
+
 import game.model.Debug;
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GameMode;
@@ -9,8 +11,13 @@ import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import javax.websocket.ClientEndpointConfig;
+import javax.websocket.ClientEndpointConfig.Configurator;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
 import javax.websocket.Session;
@@ -51,11 +58,33 @@ public class testGameClient {
     Session ses = null;
 
     try {
-      //play on local machine
+      //Create Config that adds a header with username + password
+      //Thereby adhering to Basic Authentication
+      ClientEndpointConfig.Builder configBuilder = ClientEndpointConfig.Builder.create();
+      configBuilder.configurator(new Configurator(){
+        /**
+         * Method implementing the basic authentication
+         *
+         * @param headers to be sent with every packet
+         */
+        public void beforeRequest(java.util.Map<String, List<String>> headers){
+          String username = "remotePlayer";
+          //TODO: get actual password + username
+          String passwordHash = "remoteSessionPassword";
+          String authString = Base64.getEncoder().encodeToString(("Basic " + username + ":" + passwordHash).getBytes());
+          List<String> authList = new ArrayList<String>();
+          authList.add(authString);
+
+          headers.put("Authentication", authList);
+        }
+      });
+      ClientEndpointConfig endpointClientConfig = configBuilder.build();
+
+      ses = container.connectToServer(client, endpointClientConfig, URI.create("ws://134.155.206.121:8081/packet"));
       //ses = container.connectToServer(client, URI.create("ws://localhost:8081/packet"));
 
       //play on remote machine (get IP via testInetAdress)
-      ses = container.connectToServer(client, URI.create("ws://134.155.206.121:8081/packet"));
+      //ses = container.connectToServer(client, URI.create("ws://134.155.206.121:8081/packet"));
 
 
       //Init session

@@ -7,6 +7,7 @@ import game.model.Turn;
 import game.model.polygon.Poly;
 import java.io.Serializable;
 import java.security.cert.CertificateExpiredException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class represents one player of the game.
@@ -166,6 +167,12 @@ public class Player implements Serializable {
    */
   public Turn makeTurn(GameState gameState) {
     if (this.isAI) {
+      Debug.printMessage("LEAAAAAAAAAAAAAAAAAAAAAAAAAAAAVVVVVVVVVVVVVEEEEEEEEEEE\n\n\n\\LEAVE\n");
+      try {
+        TimeUnit.SECONDS.sleep(20);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       this.aiCalcRunning = true;
       return AI.calculateNextMove(gameState, this);
     } else {
