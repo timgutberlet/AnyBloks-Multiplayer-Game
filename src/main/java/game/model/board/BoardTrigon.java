@@ -1,5 +1,6 @@
 package game.model.board;
 
+import engine.component.TrigonField;
 import game.model.Color;
 import game.model.Debug;
 import game.model.Turn;
@@ -79,7 +80,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   public boolean isOnTheBoard(int x, int y, int isRight) {
     return x >= 0 && x < 18 && y >= 0 && y < 18 && (x + y > 8 && x + y < SIZE
-        || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0);
+        || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0) && (isRight == 0 || isRight == 1);
   }
 
   @Override
@@ -368,6 +369,45 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return res;
   }
 
+  // ======================================================================
+  // ========================= Get possible Moves ===================================
+  // ======================================================================
+
+public ArrayList<Turn> getPossibleMoves2(ArrayList<Poly> remainingPolys, boolean isFirstRound){
+    ArrayList<Turn> res = new ArrayList<>();
+    for (Poly p : remainingPolys){
+      Poly pClone = p.clone();
+      for (boolean mirrored : new boolean[] {true, false}){
+        A: for (int i = 0; i < 6; i++){
+          res.addAll(getMovesForPoly((PolyTrigon) p, isFirstRound));
+          p.rotateLeft();
+          if (p.equalsReal(pClone)){
+            continue A;
+          }
+        }
+        p.mirror();
+      }
+    }
+    return res;
+}
+
+public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
+    ArrayList<Turn> res = new ArrayList<>();
+    for (int[] pos : getPossibleFields(p.getColor(), isFirstRound)){
+      for(FieldTrigon ft : p.getShape()){
+        if(isPolyPossible(pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2],p, isFirstRound)){
+          res.add(new Turn(p.clone(), new int[] {pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2]}));
+        }
+      }
+    }
+    return res;
+}
+
+
+  // ======================================================================
+  // ========================= Other Stuff ===================================
+  // ======================================================================
+
   @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
     if (turn == null) {
@@ -439,6 +479,30 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     turn.setNumberBlockedSquares(num);
   }
 
+  public int occupiedWidth(Color c){
+    double maxWidth = -1;
+    double minWidth = SIZE;
+    for (FieldTrigon ft : board){
+      if(ft.getColor().equals(c)){
+        maxWidth = Math.max(maxWidth, ft.getPos()[0] + 0.5 * ft.getPos()[1] + 0.5 * ft.getPos()[2]);
+        minWidth = Math.max(maxWidth, ft.getPos()[0] + 0.5 * ft.getPos()[1] + 0.5 * ft.getPos()[2]);
+      }
+    }
+    return (int) Math.round(maxWidth-minWidth);
+  }
+
+  public int occupiedHeight(Color c){
+    int maxHeight = -1;
+    int minHeight = SIZE;
+    for (FieldTrigon ft : board){
+      if(ft.getColor().equals(c)){
+        maxHeight = Math.max(maxHeight, ft.getPos()[1]);
+        minHeight = Math.max(maxHeight, ft.getPos()[1]);
+      }
+    }
+    return maxHeight-minHeight;
+  }
+
   @Override
   public int getScoreOfColor(Color c) {
     int res = 0;
@@ -463,6 +527,18 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return res;
   }
 
+  public String toCode(){
+    StringBuffer res = new StringBuffer();
+    res.append("BoardTrigon bt = new BoardTrigon(new GMTrigon());\nbt.getBoard().clear();\n");
+    for (FieldTrigon ft : board){
+      res.append("bt.getBoard().add(" + ft.toCode() + "); ");
+    }
+    res.append("\nbt.getStartFields().clear;\n");
+    for (FieldTrigon ft : startFields){
+      res.append("bt.getStartFields().add(" + ft.toCode() + ");");
+    }
+    return res.toString();
+  }
 
   public ArrayList<FieldTrigon> getStartFields() {
     return startFields;

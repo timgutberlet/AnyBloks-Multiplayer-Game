@@ -74,10 +74,6 @@ public abstract class Poly implements Cloneable {
     return size;
   }
 
-  public abstract int getWidth();
-
-  public abstract int getHeight();
-
   public abstract boolean equalsReal(Object o);
 
   public abstract boolean containsField(int[] pos);
@@ -99,5 +95,11 @@ public abstract class Poly implements Cloneable {
     }
     return true;
   }
+
+  public abstract int getHeight();
+
+  public abstract int getWidth();
+
+  public abstract String toCode();
 
 }

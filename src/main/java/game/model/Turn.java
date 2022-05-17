@@ -161,4 +161,10 @@ public class Turn {
 	public void setTurn(int[] turn) {
 		this.turn = turn;
 	}
+
+	public String toCode(){
+		StringBuffer res = new StringBuffer(poly.toCode());
+		res.append("Turn t = new Turn(p, new int[] {"+ getX() + "," + getY() + ","+ getIsRight() + "});\n");
+		return res.toString();
+	}
 }

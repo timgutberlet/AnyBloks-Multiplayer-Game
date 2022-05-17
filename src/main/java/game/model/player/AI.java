@@ -22,6 +22,11 @@ public class AI {
   static int MAX = 1000;
   static int MIN = -1000;
 
+
+  static int[][] roundSections = new int[][] {{5, 20}, //Classic Gamemode
+      {2,16}, //Duo Gamemode
+      {2,16}, //Junior Gamemode
+      {6, 23}};   //Trigon Gamemode
   /**
    * calculated the next move for an AI Player depending on the set difficulty
    *
@@ -127,7 +132,7 @@ public class AI {
     if (possibleMoves.size() == 0) {
       return null;
     }
-    return possibleMoves.get(0);
+    return possibleMoves.get(rand);
   }
 
   /**
@@ -138,7 +143,21 @@ public class AI {
    * @return the next "best" move
    */
   public static Turn calculateNextHardMove(GameState gameState, Player player) {
-    long start = System.currentTimeMillis();
+    int gameModeNumber = 0;
+    switch(gameState.getGameMode().getName()){
+      case "CLASSIC": gameModeNumber = 0; break;
+      case "DUO": gameModeNumber = 1; break;
+      case "JUNIOR": gameModeNumber = 2; break;
+      case "TRIGON": gameModeNumber = 3; break;
+    }
+    if(gameState.getRound() < roundSections[gameModeNumber][0] + 1){
+      return calculateNextHardMoveRoomDiscovery(gameState, player);
+    } else if(gameState.getRound() < roundSections[gameModeNumber][1] + 1){
+      return calculateNextHardMoveAggressive(gameState, player);
+    } else {
+      return calculateNextHardMoveMCTS(gameState,player);
+    }
+/*    long start = System.currentTimeMillis();
     int bestVal = MIN;
     Turn bestTurn = null;
     int alpha = MIN;
@@ -171,8 +190,42 @@ public class AI {
     }
     long finish = System.currentTimeMillis();
     System.out.println("Time: " + (finish - start) + " ms");
-    return bestTurn;
+    return bestTurn;*/
   }
+
+  public static Turn calculateNextHardMoveRoomDiscovery(GameState gameState, Player player){
+      ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
+      for (Turn turn : possibleMoves) {
+        gameState.assignRoomDiscovery(turn);
+        gameState.getBoard().assignNumberBlockedFields(turn);
+      }
+      possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+      possibleMoves.sort((o1, o2) -> o2.getNumberBlockedSquares() - o1.getNumberBlockedSquares());
+      possibleMoves.sort((o1, o2) -> o2.getRoomDiscovery() - o1.getRoomDiscovery());
+      int rand = 0;
+      for (int i = 0; i < possibleMoves.size(); i++) {
+        if (possibleMoves.get(0).getRoomDiscovery() > possibleMoves.get(i)
+            .getRoomDiscovery()
+            || possibleMoves.get(0).getPoly().getSize() > possibleMoves.get(i).getPoly().getSize()) {
+          rand = (int) (Math.random() * i);
+          break;
+        }
+      }
+      if (possibleMoves.size() == 0) {
+        return null;
+      }
+      return possibleMoves.get(rand);
+  }
+
+  public static Turn calculateNextHardMoveAggressive(GameState gameState, Player player){
+    return calculateNextMiddleMove(gameState.getBoard(), gameState.getRemainingPolys(player),
+        gameState.isFirstRound());
+  }
+
+  public static Turn calculateNextHardMoveMCTS(GameState gameState, Player player){
+    return game.model.player.HardAI.MonteCarloTreeSearch.findNextMove(gameState);
+  }
+
 
   /**
    * calculated the next move with two players with a view in the future of h steps under the
@@ -350,5 +403,8 @@ public class AI {
   }
  */
 
+  public static void setRoundSections(int a, int[] value){
+    roundSections[a] = value;
+  }
 
 }

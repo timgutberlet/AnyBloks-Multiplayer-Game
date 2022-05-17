@@ -412,4 +412,13 @@ public class PolyTrigon extends Poly {
     }
     return false;
   }
+
+  public String toCode(){
+    StringBuffer res = new StringBuffer("ArrayList<FieldTrigon> shape = new ArrayList<>();\n");
+    for (FieldTrigon ft : shape){
+      res.append("shape.add(" + ft.toCode() + ");\n");
+    }
+    res.append("PolyTrigon p = new PolyTrigon(shape, Color.Blue);\n");
+    return res.toString();
+  }
 }

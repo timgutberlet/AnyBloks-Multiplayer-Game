@@ -77,12 +77,19 @@ public abstract class Board {
     return res.toString();
   }
 
+  public abstract String toCode();
+
   //AI Stuff
   public abstract void assignNumberBlockedFields(Turn turn);
 
   public abstract int getScoreOfColor(Color c);
 
   public abstract int getScoreOfColorMiniMax(Color c);
+
+  public abstract int occupiedWidth(Color c);
+
+  public abstract int occupiedHeight(Color c);
+
 }
 
 

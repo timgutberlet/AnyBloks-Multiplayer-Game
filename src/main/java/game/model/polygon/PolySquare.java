@@ -375,4 +375,13 @@ public class PolySquare extends Poly {
     }
     return res.toString();
   }
+
+  public String toCode(){
+    StringBuffer res = new StringBuffer("ArrayList<FieldSquare> shape = new ArrayList<>();\n");
+    for (FieldSquare fs : shape){
+      res.append("shape.add(" + fs.toCode() + ");\n");
+    }
+    res.append("PolySquare p = new PolySquare(shape, Color.Blue);\n");
+    return res.toString();
+  }
 }

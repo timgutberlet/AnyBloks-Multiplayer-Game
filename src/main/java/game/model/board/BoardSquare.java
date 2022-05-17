@@ -151,19 +151,19 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    */
   public boolean isColorIndirectNeighbor(int x, int y, Color color) {
     //left and over the square
-    if (y > 0 && x > 0 && getColor(x - 1, y - 1).equals(color)) {
+    if (isOnTheBoard(x-1, y-1) && getColor(x - 1, y - 1).equals(color)) {
       return true;
     }
     //right and over to the square
-    if (y > 0 && x + 1 < getSize() && getColor(x + 1, y - 1).equals(color)) {
+    if (isOnTheBoard(x+1, y-1) && getColor(x + 1, y - 1).equals(color)) {
       return true;
     }
     //left and under the square
-    if (x > 0 && y + 1 < getSize() && getColor(x - 1, y + 1).equals(color)) {
+    if (isOnTheBoard(x-1, y+1) && getColor(x - 1, y + 1).equals(color)) {
       return true;
     }
     //right and under to the square
-    return x + 1 < getSize() && y + 1 < getSize() && getColor(x + 1, y + 1).equals(color);
+    return isOnTheBoard(x+1,y+1) && getColor(x + 1, y + 1).equals(color);
   }
 
   @Override
@@ -261,25 +261,6 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     return res;
   }
 
-  /**
-   * Method that gives back a list of all possible moves of a list of remaining polygons
-   *
-   * @param remainingPolys list of remaining polys
-   * @param isFirstRound   boolean, if it is the first round
-   * @return returns a List with all the possible moves. This class contains position, rotation and
-   * if the polygon has to be mirrored.
-   */
-  @Override
-  public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound) {
-    ArrayList<Turn> res = new ArrayList<>();
-    for (Poly poly : remainingPolys) {
-      ArrayList<Turn> movesWithPoly = possibleFieldsAndShadesForPoly((PolySquare) poly,
-          isFirstRound);
-      res.addAll(movesWithPoly);
-    }
-    return res;
-  }
-
   @Override
   public ArrayList<Turn> getPolyShadesPossible(int[] pos, Poly poly, boolean isFirstRound) {
     return getPolyShadesPossible(pos[0], pos[1], (PolySquare) poly, isFirstRound);
@@ -338,6 +319,60 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     }
     return res;
   }
+
+  // ======================================================================
+  // =============== Get possible Moves ===================================
+  // ======================================================================
+
+  /**
+   * Method that gives back a list of all possible moves of a list of remaining polygons.
+   *
+   * @param remainingPolys list of remaining polys
+   * @param isFirstRound   boolean, if it is the first round
+   * @return returns a List with all the possible moves
+   */
+  @Override
+  public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound){
+    ArrayList<Turn> res = new ArrayList<>();
+    for (Poly p : remainingPolys){
+      Poly pClone = p.clone();
+      for (boolean mirrored : new boolean[] {true, false}){
+        A: for (int i = 0; i < 4; i++){
+          res.addAll(getMovesForPoly((PolySquare) p, isFirstRound));
+          p.rotateLeft();
+          if (p.equalsReal(pClone)){
+            continue A;
+          }
+        }
+        p.mirror();
+      }
+    }
+    return res;
+  }
+
+  /**
+   * Method gives back a list of all possible moves for one specific poly (without rotation or mirror)
+   *
+   * @param p considered poly
+   * @param isFirstRound   boolean, if it is the first round
+   * @return returns a List with all the possible moves for p
+   */
+  public ArrayList<Turn> getMovesForPoly(PolySquare p, boolean isFirstRound){
+    ArrayList<Turn> res = new ArrayList<>();
+    for (int[] pos : getPossibleFields(p.getColor(), isFirstRound)){
+      for(FieldSquare fs : p.getShape()){
+        if(isPolyPossible(pos[0] - fs.getPos()[0] + p.shape.get(0).getPos()[0], pos[1] - fs.getPos()[1] + p.shape.get(0).getPos()[1], p, isFirstRound)){
+          res.add(new Turn(p.clone(), new int[] {pos[0] - fs.getPos()[0]+ p.shape.get(0).getPos()[0], pos[1] - fs.getPos()[1] + p.shape.get(0).getPos()[1]}));
+        }
+      }
+    }
+    return res;
+  }
+
+
+  // ======================================================================
+  // ========================= Other Stuff ===================================
+  // ======================================================================
 
   @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
@@ -438,60 +473,43 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     }
     return res;
   }
-   /*
+
   /**
    * this method returns the maximum width a color has occupied measured from the starting edge
    *
    * @param c      Color, which is looked for
-   * @param b      viewed board
-   * @param startX 0 if the starting point is on the right side and b.getSize() if on the left side
    * @return maximum width
    */
-  /*
-  public static int occupiedWidth(Color c, BoardSquare b, int startX) {
-    int maxWidth = 0;
-    for (int i = 0; i < b.getSize(); i++) {
-      for (int j = 0; j < b.getSize(); j++) {
-        if (b.getBoard()[i][j].getColor().equals(c)) {
-          if (startX == 0) { //if starting point was on the right side
-            maxWidth = (maxWidth > i ? maxWidth : i);
-          } else { //if starting point was on the left side
-            maxWidth = (maxWidth > b.getSize() - i ? maxWidth : b.getSize() - i);
-          }
-        }
+  public int occupiedWidth(Color c) {
+    int maxWidth = -1;
+    int minWidth = getSize();
+    for (FieldSquare fs : board) {
+      if (fs.getColor().equals(c)) {
+        maxWidth = Math.max(maxWidth, fs.getPos()[0]);
+        minWidth = Math.min(minWidth, fs.getPos()[0]);
       }
     }
-    return maxWidth;
+    return maxWidth-minWidth;
   }
 
-   */
- /*
   /**
    * this method returns the maximum height a color has occupied measured from the starting edge
    *
    * @param c      Color, which is looked for
-   * @param b      viewed board
-   * @param startY 0 if the starting point is on the top and b.getSize() if on the bottom
-   * @return maximum width
+   * @return maximum height
    */
-  /*
-  public static int occupiedHeight(Color c, BoardSquare b, int startY) {
-    int maxHeight = 0;
-    for (int i = 0; i < b.getSize(); i++) {
-      for (int j = 0; j < b.getSize(); j++) {
-        if (b.getBoard()[i][j].getColor().equals(c)) {
-          if (startY == 0) { //if starting point was on the right side
-            maxHeight = (maxHeight > j ? maxHeight : j);
-          } else { //if starting point was on the left side
-            maxHeight = (maxHeight > b.getSize() - j ? maxHeight : b.getSize() - j);
-          }
-        }
+
+  public int occupiedHeight(Color c) {
+    int maxHeight = -1;
+    int minHeight = getSize();
+    for (FieldSquare fs : board) {
+      if (fs.getColor().equals(c)) {
+        maxHeight = Math.max(maxHeight, fs.getPos()[1]);
+        minHeight = Math.min(minHeight, fs.getPos()[1]);
       }
     }
-    return maxHeight;
+    return maxHeight-minHeight;
   }
-
-   */
 
   /*
   public void assignRoomDiscovery(Turn turn) {
@@ -531,6 +549,19 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       if (++i % SIZE == 0) {
         res.append("\n");
       }
+    }
+    return res.toString();
+  }
+
+  public String toCode(){
+    StringBuffer res = new StringBuffer();
+    res.append("BoardSquare bs = new BoardSquare();\n");
+    for (FieldSquare fs : board){
+      res.append("bs.getBoard().add(" + fs.toCode() + "); ");
+    }
+    res.append("\n");
+    for (FieldSquare fs : startFields){
+      res.append("bs.getStartFields().add(" + fs.toCode() + ");");
     }
     return res.toString();
   }

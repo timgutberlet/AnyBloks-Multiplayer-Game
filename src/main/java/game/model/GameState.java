@@ -73,6 +73,11 @@ public class GameState implements Serializable, Cloneable {
    */
   private boolean started;
 
+  /**
+   *
+   */
+  private ArrayList<Color> winners = new ArrayList<>();
+
   private boolean playTurn;
 
   /**
@@ -249,6 +254,10 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  public Color getColorCurrent(){
+    return getColorFromPlayer(getPlayerCurrent());
+  }
+
   public ArrayList<Player> getPlayerList() {
     return playerList;
   }
@@ -327,6 +336,17 @@ public class GameState implements Serializable, Cloneable {
           board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
               > 0)) {
         end = false;
+      }
+    }
+    if(end){
+      int bestScore = 0;
+      for (Player p : playerList) {
+        bestScore = Math.max(bestScore, board.getScoreOfColor(getColorFromPlayer(p)));
+      }
+      for (Player p : playerList) {
+        if (board.getScoreOfColor(getColorFromPlayer(p)) == bestScore) {
+          winners.add(getColorFromPlayer(p));
+        }
       }
     }
     return end;
@@ -543,6 +563,30 @@ public class GameState implements Serializable, Cloneable {
     return turn;
   }
 
+  public ArrayList<Color> getWinners(){
+    return winners;
+  }
 
+  public int[] getScores(){
+    int[] res = new int[4];
+    res[0] = board.getScoreOfColor(Color.RED);
+    res[1] = board.getScoreOfColor(Color.BLUE);
+    res[2] = board.getScoreOfColor(Color.GREEN);
+    res[3] = board.getScoreOfColor(Color.YELLOW);
+    return res;
+  }
+
+  public void assignRoomDiscovery(Turn t){
+    int heightBefore = board.occupiedHeight(t.getColor());
+    int widthBefore = board.occupiedWidth(t.getColor());
+    GameState after = tryTurn(t);
+    int heightAfter = after.getBoard().occupiedHeight(t.getColor());
+    int widthAfter = after.getBoard().occupiedWidth(t.getColor());
+    int roomDiscovery = (heightAfter-heightBefore) * (widthAfter-widthBefore);
+    if (roomDiscovery == 0){
+      roomDiscovery = Math.max((heightAfter-heightBefore),(widthAfter-widthBefore));
+    }
+    t.setRoomDiscovery(roomDiscovery);
+  }
 }
 

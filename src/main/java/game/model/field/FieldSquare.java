@@ -58,4 +58,8 @@ public class FieldSquare extends Field implements Cloneable {
     return new FieldSquare(this.pos[0], this.pos[1], this.color);
   }
 
+  public String toCode(){
+    return "new game.model.field.FieldSquare(" + pos[0] + "," + pos[1] +"," + "game.model.Color." + getColor() + ")";
+  }
+
 }
