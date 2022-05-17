@@ -11,4 +11,7 @@ public class TrigonField extends Field {
     super(x, y);
     this.isRight = isRight;
   }
+  public int getIsRight(){
+    return this.isRight;
+  }
 }

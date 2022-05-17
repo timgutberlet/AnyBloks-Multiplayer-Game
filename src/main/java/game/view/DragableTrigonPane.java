@@ -1,6 +1,7 @@
 package game.view;
 
 import engine.handler.InputHandler;
+import game.controller.InGameUiController;
 import game.model.field.FieldTrigon;
 import game.model.polygon.PolyTrigon;
 import game.view.poly.PolyPane;
@@ -13,8 +14,9 @@ import javafx.scene.shape.Shape;
  */
 public class DragableTrigonPane extends DragablePolyPane {
 
-  public DragableTrigonPane(PolyPane polyPane, double size, InputHandler inputHandler) {
-    super(polyPane, size, inputHandler);
+  public DragableTrigonPane(PolyPane polyPane, double size, InputHandler inputHandler,
+      InGameUiController inGameUiController) {
+    super(polyPane, size, inputHandler, inGameUiController);
   }
 
   public void build() {

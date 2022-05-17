@@ -28,7 +28,7 @@ public class SquareBoardPane extends BoardPane {
   public void setSquare(int i, int j, Color color) {
 
     CheckField checkField = new CheckField(i, j);
-    double sizeHelp = size * 0.4;
+    double sizeHelp = size * 0.5;
     double move = size/2 - sizeHelp/2;
     checkField.getPoints().addAll(0 + j * size + move, 0 + i * size + move,
         sizeHelp + j * size + move, 0 + i * size + move,

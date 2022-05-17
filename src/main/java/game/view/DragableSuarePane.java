@@ -1,6 +1,7 @@
 package game.view;
 
 import engine.handler.InputHandler;
+import game.controller.InGameUiController;
 import game.view.poly.PolyPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -11,8 +12,9 @@ import javafx.scene.shape.Shape;
  */
 public class DragableSuarePane extends DragablePolyPane {
 
-  public DragableSuarePane(PolyPane polyPane, double size, InputHandler inputHandler) {
-    super(polyPane, size, inputHandler);
+  public DragableSuarePane(PolyPane polyPane, double size, InputHandler inputHandler,
+      InGameUiController inGameUiController) {
+    super(polyPane, size, inputHandler, inGameUiController);
   }
 
 

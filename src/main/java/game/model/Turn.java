@@ -63,11 +63,7 @@ public class Turn {
 	}
 
 	public PolyTrigon getPolyTrigon() {
-		if (poly.getClass().getName().equals("PolyTrigon")) {
 			return (PolyTrigon) poly;
-		} else {
-			return null;
-		}
 	}
 
 	public Poly getPoly() {

@@ -2,6 +2,8 @@ package game.view;
 
 import engine.component.Field;
 import engine.handler.InputHandler;
+import game.controller.InGameUiController;
+import game.core.GameController;
 import game.model.polygon.Poly;
 import game.view.poly.PolyPane;
 import java.util.List;
@@ -20,11 +22,13 @@ public class DragablePolyPane extends Pane {
   protected PolyPane polyPane;
   protected final double size;
   protected final InputHandler inputHandler;
+  protected final InGameUiController inGameUiController;
 
 
   protected Button rotateRight;
   protected Button rotateLeft;
   protected Button mirror;
+  protected Button submit;
 
   protected Circle innerCircle;
   protected Shape donut;
@@ -35,11 +39,12 @@ public class DragablePolyPane extends Pane {
   protected double circleY;
 
 
-  public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler) {
+  public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler, InGameUiController inGameUiController) {
     this.polyPane = polyPane;
     this.size = size;
     this.inputHandler = inputHandler;
     this.innerCircleColor = Color.GRAY;
+    this.inGameUiController = inGameUiController;
 
     inputHandler.makeDraggable(this);
 
@@ -79,27 +84,38 @@ public class DragablePolyPane extends Pane {
     rotateLeft = new Button("L");
     rotateLeft.setPrefWidth(size);
     rotateLeft.setPrefHeight(size);
+    submit = new Button("P");
+    submit.setPrefWidth(size);
+    submit.setPrefHeight(size);
 
     mirror.setOnMouseClicked(e -> {
       polyPane.getPoly().mirror();
+      inGameUiController.paintPossibleFields(this);
       rerender();
     });
     rotateRight.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateRight();
+      inGameUiController.paintPossibleFields(this);
       rerender();
     });
     rotateLeft.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateLeft();
+      inGameUiController.paintPossibleFields(this);
       rerender();
+    });
+    submit.setOnMouseClicked(e -> {
+      inGameUiController.setSubmitRequested();
     });
 
     mirror.relocate(circleX - size * 0.5, 0);
     rotateLeft.relocate(0, circleX - size * 0.5);
     rotateRight.relocate(2 * circleX - size, circleY - size * 0.5);
+    submit.relocate(circleX-size * 0.5, 2* (circleY - size * 0.5));
 
     this.getChildren().add(mirror);
     this.getChildren().add(rotateLeft);
     this.getChildren().add(rotateRight);
+    this.getChildren().add(submit);
   }
 
   public void setPoly(PolyPane polyPane) {
@@ -117,6 +133,7 @@ public class DragablePolyPane extends Pane {
     mirror.toFront();
     rotateLeft.toFront();
     rotateRight.toFront();
+    submit.toFront();
   }
 
 }

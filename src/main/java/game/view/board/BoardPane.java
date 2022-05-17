@@ -39,8 +39,18 @@ public class BoardPane extends Pane {
   public void setCheckFieldColor(Paint color, int x, int y){
     this.checkFieldColor.put(""+x+y, color);
   }
+  public void setCheckFieldColor(Paint color, int x, int y, int isRight){
+    this.checkFieldColor.put(""+x+y+isRight, color);
+  }
   public void resetCheckFieldColor(int x, int y){
     this.checkFieldColor.remove(""+x+y);
+  }
+  public void resetCheckFieldColor(int x, int y, int isRight){
+    this.checkFieldColor.remove(""+x+y+isRight);
+  }
+
+  public void resetAllCheckFields(){
+    checkFieldColor = new HashMap<>();
   }
   /**
    * Method that returns all field Elements of the Board

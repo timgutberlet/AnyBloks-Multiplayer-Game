@@ -4,14 +4,12 @@ import engine.component.Field;
 import engine.controller.AbstractGameController;
 import game.view.DragablePolyPane;
 import game.view.poly.PolyPane;
-import java.security.Key;
 import java.util.HashSet;
-import java.util.Scanner;
+import java.util.List;
 import java.util.Set;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
-import javafx.stage.Stage;
 
 /**
  * This class enables elements to be draggable
@@ -34,12 +32,11 @@ public class InputHandler {
   private final Set<Field> fieldHovered;
   private final Set<Field> fieldReleased;
   private final Set<PolyPane> polyClicked;
+  private final AbstractGameController gameController;
+  private final Set<DragablePolyPane> fieldDragged;
   private double mouseAnchorX;
   private double mouseAnchorY;
-  private final AbstractGameController gameController;
   private boolean blockInput;
-  private final Set<DragablePolyPane> fieldDragged;
-
 
 
   public InputHandler(AbstractGameController gameController) {
@@ -81,30 +78,30 @@ public class InputHandler {
     });
   }
 
-  public void registerKeys(Scene scene){
-    scene.setOnKeyPressed(event ->{
-        if (blockInput) {
-          keysPressedSaved.add(event.getCode());
-        } else {
-          keysPressed.add(event.getCode());
-        }
+  public void registerKeys(Scene scene) {
+    scene.setOnKeyPressed(event -> {
+      if (blockInput) {
+        keysPressedSaved.add(event.getCode());
+      } else {
+        keysPressed.add(event.getCode());
+      }
     });
     scene.setOnKeyReleased(event -> {
-      if(blockInput){
+      if (blockInput) {
         keysPressedSaved.add(event.getCode());
-      }else {
+      } else {
         keysPressed.add(event.getCode());
       }
     });
   }
 
-  public boolean isKeyPressed(KeyCode keyCode){
+  public boolean isKeyPressed(KeyCode keyCode) {
     return this.keysPressed.contains(keyCode);
   }
-  public boolean isKeyReleased(KeyCode keyCode){
+
+  public boolean isKeyReleased(KeyCode keyCode) {
     return this.keysReleased.contains(keyCode);
   }
-
 
 
   /**
@@ -220,6 +217,23 @@ public class InputHandler {
    */
   public boolean isFieldClicked(Field field) {
     return fieldClicked.contains(field);
+  }
+
+  public boolean isFieldArrayClicked(List<Field> fieldArray) {
+    for (Field field : fieldArray) {
+      if (fieldClicked.contains(field)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  public boolean isFieldArrayPressed(List<Field> fieldArray) {
+    for (Field field : fieldArray) {
+      if (fieldPressed.contains(field)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
