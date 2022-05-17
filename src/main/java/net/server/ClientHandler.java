@@ -119,6 +119,7 @@ public class ClientHandler {
   public void saveChatMessage(WrappedPacket wrappedPacket) {
     ChatMessagePacket chatMessagePacket = (ChatMessagePacket) wrappedPacket.getPacket();
     this.client.getGameSession().addChatMessage(chatMessagePacket.getChatMessage());
+    Debug.printMessage(this,chatMessagePacket.getChatMessage().getMessage());
   }
 
   public void updatePlayerList(WrappedPacket wrappedPacket){

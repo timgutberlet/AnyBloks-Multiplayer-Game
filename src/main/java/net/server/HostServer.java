@@ -1,5 +1,6 @@
 package net.server;
 
+import java.net.Inet4Address;
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
 import net.transmission.EndpointServer;
@@ -33,7 +34,8 @@ public class HostServer {
    */
   public void startServer(int portNumber) throws Exception {
 
-    URI baseUri = UriBuilder.fromUri("http://localhost/").port(portNumber).build();
+    String IPAdress = Inet4Address.getLocalHost().getHostAddress();
+    URI baseUri = UriBuilder.fromUri("http://"+IPAdress+"/").port(portNumber).build();
     ServerConfig config = new ServerConfig();
 
     server = JettyHttpContainerFactory.createServer(baseUri, config);

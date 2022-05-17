@@ -64,21 +64,26 @@ public class InboundServerHandler {
 		String username = loginPacket.getUsername();
 		String passwordHash = loginPacket.getPasswordHash();
 		//Checking the credentials against the database
-
 		String dbPasswordHash = "";
 		boolean loginSuccess = false;
-		try {
-			DbServer dbServer = DbServer.getInstance();
-			if (!dbServer.doesUsernameExist(username)) {
-				loginSuccess = false;
-			} else {
-				dbPasswordHash = dbServer.getUserPasswordHash(username);
-				//Check whether stored passwordHash and sent passwordHash are equal
-				loginSuccess = dbPasswordHash.equals(passwordHash);
+		//only check with db if not a bot
+		if(loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)){
+			try {
+				DbServer dbServer = DbServer.getInstance();
+				if (!dbServer.doesUsernameExist(username)) {
+					loginSuccess = false;
+				} else {
+					dbPasswordHash = dbServer.getUserPasswordHash(username);
+					//Check whether stored passwordHash and sent passwordHash are equal
+					loginSuccess = dbPasswordHash.equals(passwordHash);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} else {
+			loginSuccess = true;
 		}
+
 		//TODO : IMPLEMENT LOGIN FAILURE
 
 		if (loginSuccess) {

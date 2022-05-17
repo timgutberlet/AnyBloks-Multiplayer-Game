@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.ContainerProvider;
@@ -18,8 +17,10 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.server.ClientHandler;
+import net.server.HashingHandler;
 import net.server.HostServer;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
@@ -39,7 +40,7 @@ public class GameSession {
 
 	public ClientHandler clientHandler;
 
-	private Chat chat;
+	private final Chat chat;
 	private ArrayList<Player> playerList;
 	private Player hostPlayer;
 	private Game game;
@@ -52,7 +53,7 @@ public class GameSession {
 
 	private Player localPlayer;
 
-	private final HashMap<String, Integer> scoreboard = new HashMap<String, Integer>();
+	private final HashMap<String, Integer> scoreboard = new HashMap<>();
 
 	public HashMap<String, Integer> gameSessionScoreboard = new HashMap<>();
 
@@ -69,7 +70,7 @@ public class GameSession {
 		this.chat = new Chat();
 		this.chat.run();
 
-		this.playerList = new ArrayList<Player>();
+		this.playerList = new ArrayList<>();
 		this.hostPlayer = player;
 		this.addPlayer(this.hostPlayer);
 		this.localPlayer = this.hostPlayer;
@@ -95,25 +96,18 @@ public class GameSession {
 		this.chat = new Chat();
 		this.chat.run();
 
-		this.playerList = new ArrayList<Player>();
+		this.playerList = new ArrayList<>();
 
 		this.defaultAI = PlayerType.AI_EASY;
 
 		Debug.printMessage(this, "GameSession started");
-
-		try {
-			//hostServer.startWebsocket(8080);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 	}
 
 	/**
 	 * a Player can join a Session from the MainMenu.
 	 *
-	 * @param player
+	 * @param player player
 	 * @author tgeilen
 	 * @author tgutberl
 	 */
@@ -128,7 +122,7 @@ public class GameSession {
 	/**
 	 * Setter for local player.
 	 *
-	 * @param localPlayer
+	 * @param localPlayer localPlayer
 	 */
 
 	public void setLocalPlayer(Player localPlayer) {
@@ -147,7 +141,7 @@ public class GameSession {
 	/**
 	 * function to set the host of a session.
 	 *
-	 * @param host
+	 * @param host host
 	 * @author tgeilen
 	 */
 	public void addHost(Player host) {
@@ -182,7 +176,7 @@ public class GameSession {
 		GameMode gameMode = this.gameList.pop();
 
 		while (this.getPlayerList().size()
-				<gameMode.getNeededPlayers()-1) {
+				< gameMode.getNeededPlayers() - 1) {
 			this.addBot(PlayerType.AI_EASY);
 		}
 
@@ -206,8 +200,8 @@ public class GameSession {
 	/**
 	 * add the value of the placed poly to the scoreboard.
 	 *
-	 * @param player
-	 * @param value
+	 * @param player player
+	 * @param value  score
 	 * @author tgeilen
 	 */
 	public void increaseScore(Player player, int value) {
@@ -243,7 +237,7 @@ public class GameSession {
 	/**
 	 * function to add chat message to the chat.
 	 *
-	 * @param chatMessage
+	 * @param chatMessage chatMessage
 	 */
 	public void addChatMessage(ChatMessage chatMessage) {
 		this.chat.addMessage(chatMessage);
@@ -253,7 +247,7 @@ public class GameSession {
 	/**
 	 * create a new bot player and add to this GameSession.
 	 *
-	 * @param playerType
+	 * @param playerType playerType
 	 */
 	public void addBot(PlayerType playerType) {
 		this.numOfBots++;
@@ -269,17 +263,16 @@ public class GameSession {
 	/**
 	 * create a new remote client and connect to server.
 	 *
-	 * @param player
+	 * @param player player
 	 */
 	public void addToSession(Player player) {
 
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 		EndpointClient endpointClient = new EndpointClient(player);
-		Session session = null;
+		Session session;
 
 		try {
 			session = container.connectToServer(endpointClient, URI.create("ws://localhost:8081/packet"));
-
 			//Login
 			LoginRequestPacket loginRequestPacket = new LoginRequestPacket(player.getUsername(),
 					"1234", player.getType());
@@ -302,12 +295,11 @@ public class GameSession {
 
 	/**
 	 * Updates the scoreBoard of the lobby after a game has ended.
-	 *
 	 */
-	public void updateGameSessionScoreboard(){
+	public void updateGameSessionScoreboard() {
 
 		GameState gameState = this.getGame().getGameState();
-		for(Player p : this.getPlayerList()){
+		for (Player p : this.getPlayerList()) {
 			int oldScore = this.gameSessionScoreboard.get(p.getUsername());
 			Color c = gameState.getColorFromPlayer(p);
 			int score = gameState.getBoard().getScoreOfColor(c);
@@ -320,7 +312,7 @@ public class GameSession {
 	/**
 	 * onnects a new AI Player with the same name as a player who lost connection.
 	 *
-	 * @param username
+	 * @param username username
 	 */
 	public void changePlayer2AI(String username) {
 		for (Player player : this.playerList) {
@@ -330,7 +322,7 @@ public class GameSession {
 
 				final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 				EndpointClient endpointClient = new EndpointClient(player);
-				Session session = null;
+				Session session;
 
 				try {
 					session = container.connectToServer(endpointClient,
@@ -345,7 +337,7 @@ public class GameSession {
 							loginRequestPacket);
 					session.getBasicRemote().sendObject(wrappedPacket);
 
-					Debug.printMessage(this,"Waiting for new AI to connect (with a fixed amount of time)");
+					Debug.printMessage(this, "Waiting for new AI to connect (with a fixed amount of time)");
 
 					TimeUnit.SECONDS.sleep(5);
 
@@ -377,7 +369,7 @@ public class GameSession {
 	/**
 	 * gets the chat of the current session.
 	 *
-	 * @return Chat
+	 * @return Chat chat
 	 */
 	public Chat getChat() {
 		return this.chat;
@@ -386,7 +378,7 @@ public class GameSession {
 	/**
 	 * gets the game of teh current gamesession.
 	 *
-	 * @return Game
+	 * @return Game chat
 	 */
 	public Game getGame() {
 		return this.game;
@@ -460,7 +452,7 @@ public class GameSession {
 	/**
 	 * returns the list of games that will be played in the tournament.
 	 *
-	 * @return
+	 * @return gameList
 	 */
 	public LinkedList<GameMode> getGameList() {
 		return gameList;
@@ -480,14 +472,14 @@ public class GameSession {
 	 *
 	 * @param playerList
 	 */
-	public void setPlayerList(ArrayList<Player> playerList){
+	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
 	}
 
 	/**
 	 * function that helps to output the most relevant information of a session.
 	 *
-	 * @return
+	 * @return String
 	 * @author tgeilen
 	 */
 	@Override

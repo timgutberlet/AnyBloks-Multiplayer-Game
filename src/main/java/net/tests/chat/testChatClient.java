@@ -1,6 +1,7 @@
 package net.tests.chat;
 
 import game.model.Debug;
+import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.URI;
@@ -34,20 +35,24 @@ public class testChatClient {
 
   public static void main(String[] args) {
 
+    Player player = new Player("user1",PlayerType.REMOTE_PLAYER);
+
     org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
     ChatMessagePacket chatMessagePacket = new ChatMessagePacket(
-        LocalDateTime.now() + " Hello World", "user1");
+        LocalDateTime.now() + " Hello World", player.getUsername());
     //WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 
-    final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-    EndpointClient client = new EndpointClient();
 
-    Session ses = null;
+
+    final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+    EndpointClient client = new EndpointClient(player);
+
+    Session ses;
 
     try {
       ses = container.connectToServer(client, URI.create("ws://localhost:8081/packet"));
 
-      LoginRequestPacket loginRequestPacket = new LoginRequestPacket(LocalDateTime.now().toString(),
+      LoginRequestPacket loginRequestPacket = new LoginRequestPacket(player.getUsername(),
           "1234", PlayerType.REMOTE_PLAYER);
       Debug.printMessage("LoginRequestPacket has been sent to the server");
       WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,

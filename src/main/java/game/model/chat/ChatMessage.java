@@ -25,6 +25,14 @@ public class ChatMessage {
 
   }
 
+  /**
+   * empty constructor jackson
+   *
+   */
+  public ChatMessage(){
+
+  }
+
   public String getUsername() {
     return username;
   }

@@ -13,6 +13,7 @@ import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
+import net.server.DbServer;
 import net.server.HostServer;
 import net.tests.NoLogging;
 import net.transmission.EndpointClient;
@@ -43,7 +44,14 @@ public class ConnectToServerTest {
 			e.printStackTrace();
 		}
 
-
+		//Clear out the database
+		DbServer dbServer = null;
+		try {
+			dbServer = DbServer.getInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		dbServer.resetDb();
 
 	}
 

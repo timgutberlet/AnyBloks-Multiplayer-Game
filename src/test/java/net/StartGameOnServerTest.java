@@ -21,10 +21,12 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.InitSessionPacket;
+import net.server.HashingHandler;
 import net.server.HostServer;
 import net.tests.NoLogging;
 import net.transmission.EndpointClient;
@@ -40,10 +42,11 @@ public class StartGameOnServerTest {
 
 	static HostServer hostServer = new HostServer();
 	static EndpointClient client;
+	static Player localPlayer;
 
 	@BeforeAll
 	public static void beforeAll() {
-
+		localPlayer = new Player("LocalPlayer", PlayerType.REMOTE_PLAYER);
 		//Starting the server
 		try {
 			org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
@@ -58,7 +61,7 @@ public class StartGameOnServerTest {
 		//Create and connect client
 		try {
 			final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-			Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
+
 			client = new EndpointClient(localPlayer);
 
 			Session session = null;
@@ -67,7 +70,6 @@ public class StartGameOnServerTest {
 
 			session = container.connectToServer(client, URI.create("ws://" + IPAdress + ":8081/packet"));
 
-			TimeUnit.SECONDS.sleep(1);
 
 		} catch (
 				UnknownHostException e) {
@@ -78,19 +80,34 @@ public class StartGameOnServerTest {
 		} catch (
 				IOException e) {
 			e.printStackTrace();
+		}
+
+		String passwordHash = HashingHandler.sha256encode("123456");
+		CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
+				localPlayer.getUsername(),
+				passwordHash);
+		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+				createAccReq);
+		//... and send it
+		client.sendToServer(wrappedPacket);
+
+		//Sleep so updates can be made in DB
+		try {
+			TimeUnit.MILLISECONDS.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		InitSessionPacket initSessionPacket = new InitSessionPacket();
-		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_SESSION_PACKET,initSessionPacket);
 
+		LoginRequestPacket loginRequestPacket = new LoginRequestPacket(localPlayer.getUsername(),
+				passwordHash, PlayerType.REMOTE_PLAYER);
+		wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET, loginRequestPacket);
 		client.sendToServer(wrappedPacket);
 
-		//send login request
-		LoginRequestPacket loginRequestPacket = new LoginRequestPacket("username","password",PlayerType.REMOTE_PLAYER);
-		wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,loginRequestPacket);
-		client.sendToServer(wrappedPacket);
-
+		try {
+			TimeUnit.SECONDS.sleep(2);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -117,6 +134,10 @@ public class StartGameOnServerTest {
 		;
 		ArrayList<Player> remotePlayerList =  client.getGameSession().getPlayerList();
 		assertEquals(gameMode.getNeededPlayers(),remotePlayerList.size());
+/*
+		ArrayList<Player> remotePlayerList =  EndpointServer.getGameSession().getPlayerList();
+		assertEquals(1,remotePlayerList.size());
+		*/
 
 	}
 
