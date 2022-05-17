@@ -1,8 +1,10 @@
 package net.server;
 
+import game.model.Debug;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.xml.transform.Result;
 
 /**
  * Enable actual usage of a sqlite Db.
@@ -82,14 +84,144 @@ public class DbServer extends DbHandler {
    * Init the Db so it can be used.
    */
   private synchronized void createTables() {
+    //Create all tables with one statement per table
+
     try {
-      // Players table
+      // Table for players
       Statement players = con.createStatement();
       players.execute(
           "CREATE TABLE IF NOT EXISTS players (id INTEGER PRIMARY KEY AUTOINCREMENT,"
               + " username TEXT UNIQUE, passwordHash TEXT NOT NULL)");
       players.close();
 
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      // Table for Games
+      Statement games = con.createStatement();
+      games.execute(
+          "CREATE TABLE IF NOT EXISTS games (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+              + " gamemode TEXT)");
+      games.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      // Table for Scores
+      Statement scores = con.createStatement();
+      scores.execute(
+          "CREATE TABLE IF NOT EXISTS scores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+              + " scoreValue INTEGER,"
+              + " players_username TEXT NOT NULL,"
+              + " games_id INTEGER NOT NULL)");
+      scores.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      // Table for gameSessionScores
+      Statement gameSessionScores = con.createStatement();
+      gameSessionScores.execute(
+          "CREATE TABLE IF NOT EXISTS gameSessionScore (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+              + "endtime datetime default current_timestamp)");
+      gameSessionScores.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      // Table for gameSessionScores2Game
+      Statement gameSessionScores = con.createStatement();
+      gameSessionScores.execute(
+          "CREATE TABLE IF NOT EXISTS gameSessionScores2Game (gameSessionScore_id INTEGER NOT NULL,"
+              + " games_id INTEGER  NOT NULL)");
+      gameSessionScores.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+
+  }
+
+  /**
+   * puts a game into the DB so that scores can be added (with the id of the game)
+   *
+   * @param gameMode of the played game
+   * @return id of inserted game as String
+   */
+  public synchronized String insertGame(String gameMode) {
+    int insertedId = 0;
+    try {
+      Statement insertGame = con.createStatement();
+      insertGame.executeUpdate(
+          "INSERT INTO games (gamemode) VALUES('" + gameMode + "')");
+      ResultSet rs = insertGame.getGeneratedKeys();
+      insertedId = rs.getInt(1);
+      insertGame.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return String.valueOf(insertedId);
+  }
+
+  /**
+   * Insert a score.
+   *
+   * @param gameId     to which the score belongs
+   * @param username   to which the score belongs
+   * @param scoreValue number of points scored
+   */
+  public synchronized void insertScore(String gameId, String username, int scoreValue) {
+    try {
+      Statement insertScore = con.createStatement();
+      insertScore.execute(
+          "INSERT INTO scores (players_username, scoreValue, games_id) VALUES('" + username + "','"
+              + scoreValue + "', '" + gameId + "')");
+      insertScore.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Insert a new GameSessionScore
+   *
+   * @return the id of the newly inserted GameSessionScore
+   */
+  public synchronized String insertGameSessionScore() {
+    int insertedId = 0;
+
+    try {
+      Statement insertGameSessionScore = con.createStatement();
+      insertGameSessionScore.executeUpdate(
+          "INSERT INTO GameSessionScore (endtime) VALUES ('')");
+      ResultSet rs = insertGameSessionScore.getGeneratedKeys();
+      insertedId = rs.getInt(1);
+      insertGameSessionScore.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return String.valueOf(insertedId);
+  }
+
+  /**
+   * Insert into the table GameSessionScore2Game after a GameSessionScore has been inserted
+   *
+   * @param gameSessionScoreId of gameSessionScore
+   * @param gameId             and the game that belongs to that sessionScore
+   */
+  public synchronized void insertGameSessionScore2Game(String gameSessionScoreId, String gameId) {
+    try {
+      Statement insertScore = con.createStatement();
+      insertScore.execute(
+          "INSERT INTO gameSessionScores2Game (gameSessionScore_id, games_id) VALUES('"
+              + Integer.parseInt(gameSessionScoreId) + "','"
+              + Integer.parseInt(gameId) + "')");
+      insertScore.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -131,7 +263,7 @@ public class DbServer extends DbHandler {
       ResultSet resultSet = getUsers.executeQuery(
           "SELECT* FROM players WHERE players.username = '" + username + "';");
       int count = 0;
-      if(resultSet.next()){
+      if (resultSet.next()) {
         count = Integer.parseInt(resultSet.getString(1));
       }
       //Since usernames are unique, if the username is set, it will appear exactly once
@@ -164,6 +296,28 @@ public class DbServer extends DbHandler {
       return null;
     }
     return passwordHash;
+  }
+
+
+  /**
+   * Returns an Array of Strings with Scores for users of a game.
+   *
+   * @param gameId id of game info is wanted for
+   * @return String Arr with scores & gamemodeInfo (at [0])
+   */
+  public synchronized void getGameScores(String gameId){
+    //TODO return a new datatyp with info about gameScores
+    String gameInfo = "";
+    Statement getGameInfo = null;
+    try {
+      getGameInfo = con.createStatement();
+      ResultSet rsGameInfo = getGameInfo.executeQuery("SELECT * FROM games WHERE id = '" + gameId + "'");
+      Debug.printMessage(rsGameInfo.getString("gamemode"));
+      rsGameInfo.close();
+      getGameInfo.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
 
 
