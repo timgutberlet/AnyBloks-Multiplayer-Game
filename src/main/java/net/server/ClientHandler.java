@@ -4,6 +4,7 @@ import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
 import game.model.Turn;
+import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import net.packet.abstr.PacketType;
@@ -118,13 +119,21 @@ public class ClientHandler {
    */
   public void saveChatMessage(WrappedPacket wrappedPacket) {
     ChatMessagePacket chatMessagePacket = (ChatMessagePacket) wrappedPacket.getPacket();
-    this.client.getGameSession().addChatMessage(chatMessagePacket.getChatMessage());
+    this.client.getGameSession().saveChatMessage(chatMessagePacket.getChatMessage());
     Debug.printMessage(this,chatMessagePacket.getChatMessage().getMessage());
   }
 
   public void updatePlayerList(WrappedPacket wrappedPacket){
     PlayerListPacket playerListPacket = (PlayerListPacket) wrappedPacket.getPacket();
     this.gameSession.setPlayerList(playerListPacket.getPlayerList());
+  }
+
+  public void broadcastChatMessage(ChatMessage chatMessage){
+
+    ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chatMessage);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
+
+    this.client.sendToServer(wrappedPacket);
   }
 
 }

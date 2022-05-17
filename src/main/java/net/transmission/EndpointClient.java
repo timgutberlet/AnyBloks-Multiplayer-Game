@@ -2,6 +2,7 @@ package net.transmission;
 
 import game.model.Debug;
 import game.model.GameSession;
+import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
@@ -13,6 +14,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.chat.ChatMessagePacket;
 import net.server.ClientHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -149,6 +151,8 @@ public class EndpointClient {
   public Player getPlayer() {
     return player;
   }
+
+
 }
 
 

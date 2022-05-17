@@ -27,11 +27,10 @@ public class ChatMessagePacket extends Packet {
   /**
    * Create new ChatMessagePacket.
    *
-   * @param text     text of the message
-   * @param username of sender
+   * @param chatMessage chatMessage to be send
    */
-  public ChatMessagePacket(String text, String username) {
-    this.chatMessage = new ChatMessage(username, text);
+  public ChatMessagePacket(ChatMessage chatMessage) {
+    this.chatMessage = chatMessage;
   }
 
   public ChatMessage getChatMessage() {

@@ -4,6 +4,7 @@ import game.model.Color;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
+import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountResponsePacket;
+import net.packet.chat.ChatMessagePacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
@@ -199,6 +201,8 @@ public class OutboundServerHandler {
   public void broadcastChatMessage(WrappedPacket wrappedPacket) {
     this.server.broadcastMessage(wrappedPacket);
   }
+
+
 
 
 }

@@ -25,10 +25,12 @@ import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.chat.ChatMessagePacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.InitSessionPacket;
+import net.server.HashingHandler;
 import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
@@ -48,15 +50,12 @@ public class testGameClient {
   public static void main(String[] args) {
 
     //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-    ChatMessagePacket chatMessagePacket = new ChatMessagePacket(
-        LocalDateTime.now() + " Hello World", "user1");
-    //WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
     Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
     EndpointClient client = new EndpointClient(localPlayer);
 
-    Session ses = null;
+    Session ses ;
 
     try {
       //Create Config that adds a header with username + password
@@ -100,6 +99,23 @@ public class testGameClient {
           initSessionPacket);
       ses.getBasicRemote().sendObject(wrappedPacket);
 
+      //Create Account
+      String passwordHash = HashingHandler.sha256encode("123456");
+      CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
+          localPlayer.getUsername(),
+          passwordHash);
+      wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+          createAccReq);
+      //... and send it
+      client.sendToServer(wrappedPacket);
+
+      //Sleep so updates can be made in DB
+      try {
+        TimeUnit.MILLISECONDS.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
       //Login
       LoginRequestPacket loginRequestPacket = new LoginRequestPacket(localPlayer.getUsername(),
           "1234", localPlayer.getType());
@@ -122,7 +138,7 @@ public class testGameClient {
       while (counter < 0) {
         TimeUnit.SECONDS.sleep(1);
 
-        wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
+        //wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 
         ses.getBasicRemote().sendObject(wrappedPacket);
         Debug.printMessage("Chat Message sent");

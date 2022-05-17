@@ -19,6 +19,7 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
+import net.packet.chat.ChatMessagePacket;
 import net.server.ClientHandler;
 import net.server.HashingHandler;
 import net.server.HostServer;
@@ -235,13 +236,26 @@ public class GameSession {
 	}
 
 	/**
-	 * function to add chat message to the chat.
+	 * function to add a new msg and broadcast to all players
 	 *
-	 * @param chatMessage chatMessage
+	 * @param msg message
 	 */
-	public void addChatMessage(ChatMessage chatMessage) {
-		this.chat.addMessage(chatMessage);
+	public void addChatMessage(String msg) {
 
+		ChatMessage chatMessage = new ChatMessage(this.localPlayer.getUsername(),msg);
+
+		this.clientHandler.broadcastChatMessage(chatMessage);
+
+	}
+
+	/**
+	 *
+	 * function to save a msg from remote in the local chat
+	 *
+	 */
+
+	public void saveChatMessage(ChatMessage chatMessage){
+		this.chat.addMessage(chatMessage);
 	}
 
 	/**
