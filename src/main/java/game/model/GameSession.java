@@ -55,7 +55,9 @@ public class GameSession {
 
 	private final HashMap<String, Integer> scoreboard = new HashMap<String, Integer>();
 
-	private HashMap<String, Integer> gameSessionScoreboard = new HashMap<>();
+	public HashMap<String, Integer> gameSessionScoreboard = new HashMap<>();
+
+	public static ArrayList<String> currentGameIds = new ArrayList<>();
 
 	/**
 	 * a Session is created by a Player in the MainMenu
@@ -362,6 +364,15 @@ public class GameSession {
 	public ArrayList<Player> getPlayerList() {
 		return this.playerList;
 	}
+
+	public HashMap<String, Integer> getScoreboard() {
+		return scoreboard;
+	}
+
+	/**
+	 * Getter.
+	 */
+
 
 	public void setGame(Game game) {
 		this.game = game;

@@ -1,10 +1,12 @@
 package net.server;
 
 import game.model.Debug;
+import game.model.GameScoreBoard;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.xml.transform.Result;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Enable actual usage of a sqlite Db.
@@ -89,9 +91,8 @@ public class DbServer extends DbHandler {
     try {
       // Table for players
       Statement players = con.createStatement();
-      players.execute(
-          "CREATE TABLE IF NOT EXISTS players (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-              + " username TEXT UNIQUE, passwordHash TEXT NOT NULL)");
+      players.execute("CREATE TABLE IF NOT EXISTS players (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+          + " username TEXT UNIQUE, passwordHash TEXT NOT NULL)");
       players.close();
 
     } catch (SQLException e) {
@@ -101,9 +102,8 @@ public class DbServer extends DbHandler {
     try {
       // Table for Games
       Statement games = con.createStatement();
-      games.execute(
-          "CREATE TABLE IF NOT EXISTS games (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-              + " gamemode TEXT)");
+      games.execute("CREATE TABLE IF NOT EXISTS games (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+          + " gamemode TEXT)");
       games.close();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -112,11 +112,9 @@ public class DbServer extends DbHandler {
     try {
       // Table for Scores
       Statement scores = con.createStatement();
-      scores.execute(
-          "CREATE TABLE IF NOT EXISTS scores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
-              + " scoreValue INTEGER,"
-              + " players_username TEXT NOT NULL,"
-              + " games_id INTEGER NOT NULL)");
+      scores.execute("CREATE TABLE IF NOT EXISTS scores (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+          + " scoreValue INTEGER," + " players_username TEXT NOT NULL,"
+          + " games_id INTEGER NOT NULL)");
       scores.close();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -157,8 +155,7 @@ public class DbServer extends DbHandler {
     int insertedId = 0;
     try {
       Statement insertGame = con.createStatement();
-      insertGame.executeUpdate(
-          "INSERT INTO games (gamemode) VALUES('" + gameMode + "')");
+      insertGame.executeUpdate("INSERT INTO games (gamemode) VALUES('" + gameMode + "')");
       ResultSet rs = insertGame.getGeneratedKeys();
       insertedId = rs.getInt(1);
       insertGame.close();
@@ -179,8 +176,8 @@ public class DbServer extends DbHandler {
     try {
       Statement insertScore = con.createStatement();
       insertScore.execute(
-          "INSERT INTO scores (players_username, scoreValue, games_id) VALUES('" + username + "','"
-              + scoreValue + "', '" + gameId + "')");
+          "INSERT INTO scores (players_username, scoreValue, games_id) VALUES('" + username + "',"
+              + scoreValue + ", '" + gameId + "')");
       insertScore.close();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -197,8 +194,7 @@ public class DbServer extends DbHandler {
 
     try {
       Statement insertGameSessionScore = con.createStatement();
-      insertGameSessionScore.executeUpdate(
-          "INSERT INTO GameSessionScore (endtime) VALUES ('')");
+      insertGameSessionScore.executeUpdate("INSERT INTO GameSessionScore (endtime) VALUES ('')");
       ResultSet rs = insertGameSessionScore.getGeneratedKeys();
       insertedId = rs.getInt(1);
       insertGameSessionScore.close();
@@ -219,8 +215,7 @@ public class DbServer extends DbHandler {
       Statement insertScore = con.createStatement();
       insertScore.execute(
           "INSERT INTO gameSessionScores2Game (gameSessionScore_id, games_id) VALUES('"
-              + Integer.parseInt(gameSessionScoreId) + "','"
-              + Integer.parseInt(gameId) + "')");
+              + Integer.parseInt(gameSessionScoreId) + "','" + Integer.parseInt(gameId) + "')");
       insertScore.close();
     } catch (SQLException e) {
       e.printStackTrace();
@@ -305,20 +300,53 @@ public class DbServer extends DbHandler {
    * @param gameId id of game info is wanted for
    * @return String Arr with scores & gamemodeInfo (at [0])
    */
-  public synchronized void getGameScores(String gameId){
-    //TODO return a new datatyp with info about gameScores
-    String gameInfo = "";
+  public synchronized GameScoreBoard getGameScores(String gameId) {
+    HashMap<String, Integer> scoreMap = new HashMap<>();
     Statement getGameInfo = null;
+    String gameMode = "";
     try {
+      //Get the gamemode of the game
       getGameInfo = con.createStatement();
-      ResultSet rsGameInfo = getGameInfo.executeQuery("SELECT * FROM games WHERE id = '" + gameId + "'");
-      Debug.printMessage(rsGameInfo.getString("gamemode"));
+      ResultSet rsGameInfo = getGameInfo.executeQuery(
+          "SELECT * FROM games WHERE id = '" + gameId + "'");
+      gameMode = rsGameInfo.getString("gamemode");
       rsGameInfo.close();
       getGameInfo.close();
+
+      //Get all scores that belong to the game
+      Statement getScores = con.createStatement();
+      ResultSet rsScores = getScores.executeQuery(
+          "SELECT * FROM scores WHERE games_id = '" + gameId + "'");
+      while (rsScores.next()) {
+        //And put all the fetched scores into the HashMap
+        scoreMap.put(rsScores.getString("players_username"), rsScores.getInt(2));
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    //Build a new scoreboard with the gamemode and the prepared Hashmap of usernames and scores
+    return new GameScoreBoard(gameMode, scoreMap);
   }
 
+  public ArrayList<GameScoreBoard> getGameSessionScores(String gameSessionScoreId) {
+    ArrayList<GameScoreBoard> gameScores = new ArrayList<>();
+    String gameId = "";
+    try {
+
+      //Get all games that belong to the gameSession
+      Statement getGameIds = con.createStatement();
+      ResultSet rsGames = getGameIds.executeQuery(
+          "SELECT * FROM GameSessionScores2Game WHERE gameSessionScore_id = '" + gameSessionScoreId
+              + "'");
+      while (rsGames.next()) {
+        //Fetch the Scoreboard for every game and save it to the ArrayList
+        gameId = String.valueOf(rsGames.getInt("games_id"));
+        gameScores.add(getGameScores(gameId));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return gameScores;
+  }
 
 }

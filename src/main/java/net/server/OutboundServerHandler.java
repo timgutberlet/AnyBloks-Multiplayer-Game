@@ -6,6 +6,8 @@ import game.model.GameSession;
 import game.model.GameState;
 import game.model.player.Player;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
@@ -130,6 +132,7 @@ public class OutboundServerHandler {
 
   /**
    * broadcast GAME_WIN_PACKET to all clients
+   * save the gameScore, and if a gameSession ends, connect all gameScores to it
    *
    * @param usernameWinner
    * @author tgeilen
@@ -139,15 +142,24 @@ public class OutboundServerHandler {
     GameWinPacket gameWinPacket = new GameWinPacket(usernameWinner);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_WIN_PACKET, gameWinPacket);
 
-    //TODO: Save to DB
-    //Remember inserted gameScoreID in GameSessionList
+    //Saving the result of the game to the DB
+    String gameId = "";
     GameState gameState = gameSession.getGame().getGameState();
-    for (Player p : gameSession.getPlayerList()) {
-      Color c = gameState.getColorFromPlayer(p);
-      int score = gameState.getBoard().getScoreOfColor(c);
-      String username = p.getUsername();
-    }
+    HashMap<String, Integer> scorebaord = gameSession.getScoreboard();
     String gameMode = gameState.getGameMode().getName();
+    try {
+      DbServer dbServer = DbServer.getInstance();
+      //Insert the game and save its gameId
+      gameId = dbServer.insertGame(gameMode);
+      //Add the scores of the different players
+      for(String username : scorebaord.keySet()){
+        dbServer.insertScore(gameId, username, scorebaord.get(username));
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    gameSession.currentGameIds.add(gameId);
+
     this.server.broadcastMessage(wrappedPacket);
 
     try {
@@ -161,8 +173,24 @@ public class OutboundServerHandler {
       gameSession.startGameServer();
     } else {
       //No more games in gameSession, so we return to the lobby
-      //TODO: SAVE TOURNAMENT SCORES TO DB
-      //Save ids of GameScores from List in GameSession into GameScore to TournamentScore
+
+      //Saving the scores of the gameSession
+      try {
+        DbServer dbServer = DbServer.getInstance();
+        //Creating a new gameSessionScore
+        String gameSessionScoreId = dbServer.insertGameSessionScore();
+
+        //Save ids of GameScores from List in GameSession into GameScore to GameSessionScore
+        for(int i = 0; i < gameSession.currentGameIds.size(); i++){
+          dbServer.insertGameSessionScore2Game(gameSessionScoreId, gameSession.currentGameIds.get(i));
+        }
+        //And remove the gameIds from it after they have been saved to GameSessionScore
+        gameSession.currentGameIds = new ArrayList<>();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
+
 
     }
 
