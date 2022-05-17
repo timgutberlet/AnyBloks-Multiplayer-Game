@@ -32,6 +32,14 @@ public class CreateAccountResponsePacket extends Packet {
   }
 
   /**
+   * Empty constructor for Jackson deserialization
+   */
+  public CreateAccountResponsePacket(){
+    this.accountCreated = false;
+    this.errorMessage = "";
+  }
+
+  /**
    * public getter for accountCreated.
    *
    * @return accountCreated

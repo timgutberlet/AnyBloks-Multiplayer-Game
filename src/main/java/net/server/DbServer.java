@@ -103,10 +103,10 @@ public class DbServer extends DbHandler {
    * @param passwordHashInsert passwordHash to be inserted.
    */
   public synchronized boolean newAccount(String usernameInsert, String passwordHashInsert) {
-    boolean success = false;
+    boolean success = true;
     try {
       Statement newAccount = con.createStatement();
-      success = newAccount.execute(
+      newAccount.execute(
           "INSERT INTO players (username, passwordHash) VALUES('" + usernameInsert + "' ,'"
               + passwordHashInsert + "')");
 
@@ -126,16 +126,18 @@ public class DbServer extends DbHandler {
    */
   public synchronized boolean doesUsernameExist(String username) {
     boolean doesExist = true;
-    ResultSet resultSet = null;
     try {
       Statement getUsers = con.createStatement();
-      resultSet = getUsers.executeQuery(
-          "SELECT * FROM players WHERE username = '" + username + "')");
-
-      if (resultSet.getFetchSize() != 0) {
-        doesExist = false;
-
+      ResultSet resultSet = getUsers.executeQuery(
+          "SELECT* FROM players WHERE players.username = '" + username + "';");
+      int count = 0;
+      if(resultSet.next()){
+        count = Integer.parseInt(resultSet.getString(1));
       }
+      //Since usernames are unique, if the username is set, it will appear exactly once
+      doesExist = count == 1;
+      resultSet.close();
+      getUsers.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -155,6 +157,8 @@ public class DbServer extends DbHandler {
       ResultSet rs = getPw.executeQuery(
           "SELECT passwordHash FROM players WHERE players.username = '" + username + "';");
       passwordHash = rs.getString("passwordHash");
+      rs.close();
+      getPw.close();
     } catch (SQLException e) {
       e.printStackTrace();
       return null;
