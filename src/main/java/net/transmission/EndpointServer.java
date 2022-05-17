@@ -231,6 +231,10 @@ public class EndpointServer {
     return username2Session;
   }
 
+  public static GameSession getGameSession() {
+    return gameSession;
+  }
+
   @OnError
   public void onError(Session ses, Throwable t){
     System.out.println("HI FROM CRASH");

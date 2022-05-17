@@ -1,6 +1,7 @@
 package net.tests.game;
 
 import game.model.Debug;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -10,12 +11,8 @@ import java.net.UnknownHostException;
  */
 public class testInetAdress {
 
-	public static void main(String[] args){
-		try {
-			Debug.printMessage( InetAddress.getLocalHost().toString());
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+	public static void main(String[] args) throws UnknownHostException {
+		Debug.printMessage( Inet4Address.getLocalHost().getHostAddress());
 	}
 
 }

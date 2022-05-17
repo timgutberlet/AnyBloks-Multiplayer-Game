@@ -183,6 +183,8 @@ public class GameSession {
 			this.addBot(PlayerType.AI_EASY);
 		}
 
+		Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
+
 		try {
 			Debug.printMessage(this, "Waiting for clients to establish connection");
 			TimeUnit.SECONDS.sleep(5);
@@ -245,12 +247,14 @@ public class GameSession {
 		Player bot = new Player("Bot " + this.numOfBots, playerType);
 		//bot.start();
 		this.addToSession(bot);
+
 		//this.getPlayerList().add(bot);
 		Debug.printMessage(this, "Bot " + this.numOfBots + " added to session");
 
 	}
 
 	public void addToSession(Player player) {
+
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 		EndpointClient endpointClient = new EndpointClient(player);
 		Session session = null;
@@ -274,6 +278,7 @@ public class GameSession {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 
 	}
 
@@ -388,6 +393,10 @@ public class GameSession {
 
 	public void setGameList(LinkedList<GameMode> gameList) {
 		this.gameList = gameList;
+	}
+
+	public void setPlayerList(ArrayList<Player> playerList){
+		this.playerList = playerList;
 	}
 
 	/**

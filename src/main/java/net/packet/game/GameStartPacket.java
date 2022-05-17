@@ -10,6 +10,7 @@ import game.model.player.Player;
 import game.model.polygon.Poly;
 import java.util.ArrayList;
 import net.packet.abstr.Packet;
+import net.transmission.EndpointClient;
 
 /**
  * @author tgeilen
@@ -55,6 +56,8 @@ public class GameStartPacket extends Packet {
 
   public GameState getGameState() {
 
+    ArrayList<Player> players = this.playerList;
+
     ArrayList<ArrayList<Poly>> remPoly = this.remainingPolys;
     ArrayList<ArrayList<Turn>> hist = new ArrayList<ArrayList<Turn>>();
     for(ArrayList<Turn> turns : this.history){
@@ -64,7 +67,7 @@ public class GameStartPacket extends Packet {
     Debug.printMessage(this,this.gameMode.getName());
     //Debug.printMessage(this,this.board.toString());
     Debug.printMessage(this, "Rem poly size: " +remPoly.size());
-    Debug.printMessage(this,"Playerlist: " + this.playerList.toString());
+    Debug.printMessage(this,"Playerlist: " + players.toString());
     Debug.printMessage(this, "Round: "+ this.round);
     Debug.printMessage(this, "Turn: "+ this.turn);
     Debug.printMessage(this, "Running: " + (this.running?"true":"false"));
@@ -77,7 +80,7 @@ public class GameStartPacket extends Packet {
         this.gameMode,
         this.board,
         remPoly,
-        this.playerList,
+        players,
         this.round,
         this.turn,
         this.running,

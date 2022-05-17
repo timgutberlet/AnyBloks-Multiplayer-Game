@@ -97,6 +97,8 @@ public class GameState implements Serializable, Cloneable {
     this.playerList = gameSession.getPlayerList();
     this.running = false;
     this.started = false;
+
+
     init();
 
   }
@@ -123,7 +125,8 @@ public class GameState implements Serializable, Cloneable {
     for (ArrayList<Poly> polys : remainingPolys) {
       this.remainingPolys.add(polys);
     }
-    this.playerList = playerList;
+    this.playerList = (ArrayList<Player>) playerList;
+    Debug.printMessage(this,"LIST SIZE PLAYERS: " +this.playerList.size());
     this.round = round;
     this.turn = turn;
     this.running = running;
@@ -531,7 +534,6 @@ public class GameState implements Serializable, Cloneable {
   public int getTurn() {
     return turn;
   }
-
 
 
 }

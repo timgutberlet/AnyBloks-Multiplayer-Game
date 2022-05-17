@@ -6,6 +6,7 @@ import game.model.Turn;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
@@ -14,6 +15,7 @@ import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.game.IllegalTurnPacket;
 import net.packet.game.InitGamePacket;
+import net.packet.game.PlayerListPacket;
 import net.packet.game.TurnPacket;
 import net.transmission.EndpointServer;
 
@@ -77,33 +79,47 @@ public class InboundServerHandler {
 
     Debug.printMessage(this, username + " " + passwordHash);
 
-    //check if username has been connected before
-    if (this.server.getUsername2Session().keySet().contains(username)) {
-      Debug.printMessage(this, "I SHOULD NOT BE HERE DURING STARTUP PHASE");
-      //find existing player with the username
-      for (Player player : gameSession.getPlayerList()) {
-        if (player.getUsername().equals(username)) {
-          //only override if player is of type AI
-          if (player.isAI()) {
-            Debug.printMessage(this, "THE REMOTE SESSION WILL BE REPLACE BY AN AI");
-            this.server.getUsername2Session().put(username, session);
+		//check if username has been connected before
+		if (this.server.getUsername2Session().keySet().contains(username)) {
+			Debug.printMessage(this, "I SHOULD NOT BE HERE DURING STARTUP PHASE");
+			//find existing player with the username
+			for (Player player : gameSession.getPlayerList()) {
+				if (player.getUsername().equals(username)) {
+					//only override if player is of type AI
+					if (player.isAI()) {
+						Debug.printMessage(this, "THE REMOTE SESSION WILL BE REPLACE BY AN AI");
+						this.server.getUsername2Session().put(username, session);
+						Debug.printMessage(this, ""+loginPacket.getPlayerType());
 
-            if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
-              player.setAI(false);
-              player.setType(loginPacket.getPlayerType());
-            }
+						Debug.printMessage(this, ""+loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER));
 
-          }
-        }
-      }
-    } else {
-      // handle a new player by adding to gamesession and in the dictionary
-      Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
-      gameSession.addPlayer(new Player(username, PlayerType.REMOTE_PLAYER));
-      this.server.getUsername2Session().put(username, session);
-      Debug.printMessage(this,
-          "Username2Session size: " + this.server.getUsername2Session().size());
-    }
+						if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
+							//TODO check whether booleans make sense
+							Debug.printMessage(this, "AN OLD PLAYER JOINED THE SESSION AGAIN!!!!");
+							player.setAI(false);
+							player.setType(loginPacket.getPlayerType());
+							this.server.getOutboundServerHandler()
+									.sendGameStart(player.getUsername(), gameSession.getGame()
+											.getGameState());
+						}
+
+					}
+				}
+			}
+		} else {
+			// handle a new player by adding to gamesession and in the dictionary
+			Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
+
+			gameSession.addPlayer(new Player(username, loginPacket.getPlayerType()));
+
+			this.server.getUsername2Session().put(username, session);
+			Debug.printMessage(this,
+					"Username2Session size: " + this.server.getUsername2Session().size());
+		}
+
+		PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
+		wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET,playerListPacket);
+		this.server.broadcastMessage(wrappedPacket);
 
     String[] toReturn = {"true", username};
 

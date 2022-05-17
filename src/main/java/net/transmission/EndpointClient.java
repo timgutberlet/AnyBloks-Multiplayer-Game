@@ -115,6 +115,10 @@ public class EndpointClient {
         Debug.printMessage("CHECK CON RECEIVED");
         break;
 
+      case PLAYER_LIST_PACKET:
+        this.clientHandler.updatePlayerList(packet);
+
+
       //
     }
 

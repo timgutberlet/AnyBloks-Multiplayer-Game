@@ -8,6 +8,7 @@ import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class testGameClient {
 
   public static void main(String[] args) {
 
-    //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+    org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
     ChatMessagePacket chatMessagePacket = new ChatMessagePacket(
         LocalDateTime.now() + " Hello World", "user1");
     //WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
@@ -85,9 +86,13 @@ public class testGameClient {
 
       //play on remote machine (get IP via testInetAdress)
 
-      ses = container.connectToServer(client, URI.create("ws://134.155.206.121:8081/packet"));
+     // ses = container.connectToServer(client, URI.create("ws://192.168.178.27:8081/packet"));
       //ses = container.connectToServer(client, URI.create("ws://134.155.205.170:8081/packet"));
 
+
+      String IPAdress = Inet4Address.getLocalHost().getHostAddress();
+
+      ses = container.connectToServer(client, URI.create("ws://" + IPAdress + ":8081/packet"));
 
       //Init session
       InitSessionPacket initSessionPacket = new InitSessionPacket();

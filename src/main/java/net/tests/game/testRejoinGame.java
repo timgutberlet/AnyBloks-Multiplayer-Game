@@ -44,14 +44,14 @@ public class testRejoinGame {
 		//WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-		Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
+		Player localPlayer = new Player("LocalPlayer", PlayerType.REMOTE_PLAYER);
 		EndpointClient client = new EndpointClient(localPlayer);
 
 		Session ses = null;
 
 		try {
 
-			ses = container.connectToServer(client, URI.create("ws://134.155.206.121:8081/packet"));
+			ses = container.connectToServer(client, URI.create("ws://192.168.178.27:8081/packet"));
 
 			//Init session
 			InitSessionPacket initSessionPacket = new InitSessionPacket();

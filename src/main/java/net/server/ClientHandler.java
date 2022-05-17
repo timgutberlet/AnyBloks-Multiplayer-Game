@@ -12,6 +12,7 @@ import net.packet.chat.ChatMessagePacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
+import net.packet.game.PlayerListPacket;
 import net.packet.game.RequestTurnPacket;
 import net.packet.game.TurnPacket;
 import net.transmission.EndpointClient;
@@ -118,6 +119,11 @@ public class ClientHandler {
   public void saveChatMessage(WrappedPacket wrappedPacket) {
     ChatMessagePacket chatMessagePacket = (ChatMessagePacket) wrappedPacket.getPacket();
     this.client.getGameSession().addChatMessage(chatMessagePacket.getChatMessage());
+  }
+
+  public void updatePlayerList(WrappedPacket wrappedPacket){
+    PlayerListPacket playerListPacket = (PlayerListPacket) wrappedPacket.getPacket();
+    this.gameSession.setPlayerList(playerListPacket.getPlayerList());
   }
 
 }
