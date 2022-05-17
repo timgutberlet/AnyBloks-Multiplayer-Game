@@ -121,23 +121,7 @@ public class EndpointServer {
       case LOGIN_REQUEST_PACKET:
         Debug.printMessage(this, " LOGIN_REQUEST_PACKET recieved");
         //TODO use this function in the final product
-        //String[] response = this.inboundServerHandler.verifyLogin(packet, client);
-
-        //old function just used to test
-        String[] response = this.inboundServerHandler.addVerifiedUser(packet, client);
-        if (response[0].equals("true")) {
-          //checks whether a remote accoutn will be overwritten by local remote ai
-          if(!this.getUsername2Session().keySet().contains(response[1])) {
-            //add a new player to the gamesession
-            //gameSession.addPlayer(new Player(response[1], PlayerType.REMOTE_PLAYER));
-          }
-
-          //this.getUsername2Session().put(response[1],client);
-
-        } else {
-          client.getBasicRemote().sendObject(
-              new LoginResponsePacket("Credentials could not be verified"));
-        }
+        this.inboundServerHandler.verifyLogin(packet, client);
         break;
 
       case CHAT_MESSAGE_PACKET:
