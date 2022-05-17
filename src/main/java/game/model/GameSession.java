@@ -43,7 +43,6 @@ public class GameSession {
 	private ArrayList<Player> playerList;
 	private Player hostPlayer;
 	private Game game;
-	private GameServer gameServer;
 
 	private LinkedList<GameMode> gameList;
 
@@ -60,7 +59,7 @@ public class GameSession {
 	public static ArrayList<String> currentGameIds = new ArrayList<>();
 
 	/**
-	 * a Session is created by a Player in the MainMenu
+	 * a Session is created by a Player in the MainMenu.
 	 *
 	 * @param player
 	 * @author tgeilen
@@ -86,7 +85,7 @@ public class GameSession {
 	}
 
 	/**
-	 * a Session is created
+	 * a Session is created.
 	 *
 	 * @param
 	 * @author tgeilen
@@ -112,7 +111,7 @@ public class GameSession {
 	}
 
 	/**
-	 * a Player can join a Session from the MainMenu
+	 * a Player can join a Session from the MainMenu.
 	 *
 	 * @param player
 	 * @author tgeilen
@@ -127,7 +126,9 @@ public class GameSession {
 	}
 
 	/**
-	 * setter for localPlayer
+	 * Setter for local player.
+	 *
+	 * @param localPlayer
 	 */
 
 	public void setLocalPlayer(Player localPlayer) {
@@ -135,7 +136,7 @@ public class GameSession {
 	}
 
 	/**
-	 * Function returning the local player
+	 * Function returning the local player.
 	 *
 	 * @author tgutberl
 	 */
@@ -144,7 +145,7 @@ public class GameSession {
 	}
 
 	/**
-	 * function to set the host of a session
+	 * function to set the host of a session.
 	 *
 	 * @param host
 	 * @author tgeilen
@@ -156,7 +157,7 @@ public class GameSession {
 
 
 	/**
-	 * creates and starts a new Game
+	 * creates and starts a new Game.
 	 *
 	 * @author tgeilen
 	 */
@@ -171,7 +172,7 @@ public class GameSession {
 	}
 
 	/**
-	 * creates and starts a new Game on the server
+	 * creates and starts a new Game on the server.
 	 *
 	 * @author tgeilen
 	 */
@@ -203,7 +204,7 @@ public class GameSession {
 
 
 	/**
-	 * add the value of the placed poly to the scoreboard
+	 * add the value of the placed poly to the scoreboard.
 	 *
 	 * @param player
 	 * @param value
@@ -221,7 +222,7 @@ public class GameSession {
 	}
 
 	/**
-	 * function to update GameState of current game
+	 * function to update GameState of current game.
 	 *
 	 * @author tgeilen
 	 */
@@ -231,7 +232,7 @@ public class GameSession {
 	}
 
 	/**
-	 * functions that triggered when someone has won the game
+	 * functions that triggered when someone has won the game.
 	 *
 	 * @author tgeilen
 	 */
@@ -239,11 +240,21 @@ public class GameSession {
 		//TODO add logic
 	}
 
+	/**
+	 * function to add chat message to the chat.
+	 *
+	 * @param chatMessage
+	 */
 	public void addChatMessage(ChatMessage chatMessage) {
 		this.chat.addMessage(chatMessage);
 
 	}
 
+	/**
+	 * create a new bot player and add to this GameSession.
+	 *
+	 * @param playerType
+	 */
 	public void addBot(PlayerType playerType) {
 		this.numOfBots++;
 		Player bot = new Player("Bot " + this.numOfBots, playerType);
@@ -255,6 +266,11 @@ public class GameSession {
 
 	}
 
+	/**
+	 * create a new remote client and connect to server.
+	 *
+	 * @param player
+	 */
 	public void addToSession(Player player) {
 
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -286,6 +302,7 @@ public class GameSession {
 
 	/**
 	 * Updates the scoreBoard of the lobby after a game has ended.
+	 *
 	 */
 	public void updateGameSessionScoreboard(){
 
@@ -300,7 +317,11 @@ public class GameSession {
 		String gameMode = gameState.getGameMode().getName();
 	}
 
-
+	/**
+	 * onnects a new AI Player with the same name as a player who lost connection.
+	 *
+	 * @param username
+	 */
 	public void changePlayer2AI(String username) {
 		for (Player player : this.playerList) {
 			if (player.getUsername().equals(username)) {
@@ -347,24 +368,44 @@ public class GameSession {
 	}
 
 	/**
-	 * functions thats stops the current session by stopping the hostServer
+	 * functions thats stops the current session by stopping the hostServer.
 	 */
 	public void stopSession() {
 		hostServer.stop();
 	}
 
+	/**
+	 * gets the chat of the current session.
+	 *
+	 * @return Chat
+	 */
 	public Chat getChat() {
 		return this.chat;
 	}
 
+	/**
+	 * gets the game of teh current gamesession.
+	 *
+	 * @return Game
+	 */
 	public Game getGame() {
 		return this.game;
 	}
 
+	/**
+	 * returns teh current PlayerList.
+	 *
+	 * @return ArrayList<Player>
+	 */
 	public ArrayList<Player> getPlayerList() {
 		return this.playerList;
 	}
 
+	/**
+	 * returns the scoreboard of the current session.
+	 *
+	 * @return HashMap
+	 */
 	public HashMap<String, Integer> getScoreboard() {
 		return scoreboard;
 	}
@@ -378,34 +419,67 @@ public class GameSession {
 		this.game = game;
 	}
 
+	/**
+	 * sets the InboundServerHandler.
+	 *
+	 * @param inboundServerHandler
+	 */
+
 	public void setInboundServerHandler(InboundServerHandler inboundServerHandler) {
 		this.inboundServerHandler = inboundServerHandler;
 	}
 
+	/**
+	 * sets the OutboundServerHandler.
+	 *
+	 * @param outboundServerHandler
+	 */
 	public void setOutboundServerHandler(OutboundServerHandler outboundServerHandler) {
 		this.outboundServerHandler = outboundServerHandler;
 	}
 
+	/**
+	 * returns the OutboundServerHanlder of the current gamesession.
+	 *
+	 * @return OutboundServerhandler
+	 */
 	public OutboundServerHandler getOutboundServerHandler() {
 		return outboundServerHandler;
 	}
 
+	/**
+	 * returns the InboundServerHanlder of the current gamesession.
+	 *
+	 * @return InboundServerhandler
+	 */
 	public InboundServerHandler getInboundServerHandler() {
 		return inboundServerHandler;
 	}
 
-	public GameServer getGameServer() {
-		return gameServer;
-	}
 
+	/**
+	 * returns the list of games that will be played in the tournament.
+	 *
+	 * @return
+	 */
 	public LinkedList<GameMode> getGameList() {
 		return gameList;
 	}
 
+	/**
+	 * sets the list games that will be played in a tournament
+	 *
+	 * @param gameList
+	 */
 	public void setGameList(LinkedList<GameMode> gameList) {
 		this.gameList = gameList;
 	}
 
+	/**
+	 * sets the playerList of the current gamesession
+	 *
+	 * @param playerList
+	 */
 	public void setPlayerList(ArrayList<Player> playerList){
 		this.playerList = playerList;
 	}

@@ -60,25 +60,35 @@ public class InboundServerHandler {
    */
   public String[] verifyLogin(WrappedPacket wrappedPacket, Session session) {
 
-    Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
-    LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
-    String username = loginPacket.getUsername();
-    String passwordHash = loginPacket.getPasswordHash();
-    //Checking the credentials against the database
-    String dbPasswordHash = "";
-    boolean loginSuccess = false;
-    try {
-      DbServer dbServer = DbServer.getInstance();
-      dbPasswordHash = dbServer.getUserPasswordHash(username);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    //Check whether stored passwordHash and sent passwordHash are equal
-    loginSuccess = dbPasswordHash.equals(passwordHash);
-    //TODO : IMPLEMENT LOGIN FAILURE
+		Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
+		LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
+		String username = loginPacket.getUsername();
+		String passwordHash = loginPacket.getPasswordHash();
+		//Checking the credentials against the database
+		String dbPasswordHash = "";
+		boolean loginSuccess = false;
+		try {
+			DbServer dbServer = DbServer.getInstance();
+			dbPasswordHash = dbServer.getUserPasswordHash(username);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//Check whether stored passwordHash and sent passwordHash are equal
+		loginSuccess = dbPasswordHash.equals(passwordHash);
+		//TODO : IMPLEMENT LOGIN FAILURE
 
-    Debug.printMessage(this, username + " " + passwordHash);
+		//call when user is verified
+		//this.addVerifiedUser(wrappedPacket,session);
 
+
+		Debug.printMessage(this, username + " " + passwordHash);
+
+		return null;
+
+	}
+	public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session){
+		LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
+		String username = loginPacket.getUsername();
 		//check if username has been connected before
 		if (this.server.getUsername2Session().keySet().contains(username)) {
 			Debug.printMessage(this, "I SHOULD NOT BE HERE DURING STARTUP PHASE");

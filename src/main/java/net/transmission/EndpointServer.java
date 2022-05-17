@@ -120,7 +120,11 @@ public class EndpointServer {
 
       case LOGIN_REQUEST_PACKET:
         Debug.printMessage(this, " LOGIN_REQUEST_PACKET recieved");
-        String[] response = this.inboundServerHandler.verifyLogin(packet, client);
+        //TODO use this function in the final product
+        //String[] response = this.inboundServerHandler.verifyLogin(packet, client);
+
+        //old function just used to test
+        String[] response = this.inboundServerHandler.addVerifiedUser(packet, client);
         if (response[0].equals("true")) {
           //checks whether a remote accoutn will be overwritten by local remote ai
           if(!this.getUsername2Session().keySet().contains(response[1])) {
@@ -169,12 +173,10 @@ public class EndpointServer {
     try {
       Session client = username2Session.get(username);
       client.getBasicRemote().sendObject(wrappedPacket);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (EncodeException e) {
-      e.printStackTrace();
     } catch (Exception e) {
-      e.printStackTrace();
+      Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
+      gameSession.changePlayer2AI(username);
+      //e.printStackTrace();
     }
   }
 
@@ -190,12 +192,15 @@ public class EndpointServer {
 
     try {
       client.getBasicRemote().sendObject(wrappedPacket);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } catch (EncodeException e) {
-      e.printStackTrace();
     } catch (Exception e) {
-      e.printStackTrace();
+      Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
+      for (String username : this.getUsername2Session().keySet()) {
+        if (client.equals(this.getUsername2Session().get(username))){
+          gameSession.changePlayer2AI(username);
+        }
+      }
+
+      //e.printStackTrace();
     }
   }
 
@@ -205,12 +210,10 @@ public class EndpointServer {
       client = this.getUsername2Session().get(username);
       try {
         client.getBasicRemote().sendObject(wrappedPacket);
-      } catch (IOException e) {
-        e.printStackTrace();
-      } catch (EncodeException e) {
-        e.printStackTrace();
-      } catch (Exception e){
-        e.printStackTrace();
+      } catch (Exception e) {
+        Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
+        gameSession.changePlayer2AI(username);
+        //e.printStackTrace();
       }
     }
   }
