@@ -66,5 +66,12 @@ public class SquareBoardPane extends BoardPane {
       }
     }
   }
+
+  public void resize(double width) {
+    this.size = (0.4 * width) / board.getSize();
+    this.fields.clear();
+    this.getChildren().clear();
+    setBoard();
+  }
 }
 

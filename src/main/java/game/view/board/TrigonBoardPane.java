@@ -13,8 +13,8 @@ import javafx.scene.paint.Color;
  */
 public class TrigonBoardPane extends BoardPane {
 
-  private final double xOfSet;
-  private final double yOfSet;
+  private double xOfSet;
+  private double yOfSet;
 
   public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
@@ -138,5 +138,14 @@ public class TrigonBoardPane extends BoardPane {
         setTriangle(i, j);
       }
     }
+  }
+
+  public void resize(double width) {
+    size = 0.4 * width / 18;
+    xOfSet = Math.sin(Math.toRadians(30)) * size;
+    yOfSet = Math.sin(Math.toRadians(60)) * size;
+    this.fields.clear();
+    this.getChildren().clear();
+    setBoard();
   }
 }
