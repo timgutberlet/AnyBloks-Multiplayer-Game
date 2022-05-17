@@ -3,6 +3,8 @@ package net;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import game.model.Debug;
+import game.model.chat.Chat;
+import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
@@ -96,7 +98,8 @@ public class RemoteChatTest {
 			e.printStackTrace();
 		}
 
-		ChatMessagePacket chatMessagePacket = new ChatMessagePacket("Hallo Janik","testUser");
+		ChatMessage chatMessage= new ChatMessage("testUser", "Hallo Janik");
+		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chatMessage);
 		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET,chatMessagePacket);
 
 		client.sendToServer(wrappedPacket);

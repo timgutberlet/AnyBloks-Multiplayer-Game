@@ -38,9 +38,7 @@ public class testChatClient {
     Player player = new Player("user1",PlayerType.REMOTE_PLAYER);
 
     org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-    ChatMessagePacket chatMessagePacket = new ChatMessagePacket(
-        LocalDateTime.now() + " Hello World", player.getUsername());
-    //WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
+
 
 
 

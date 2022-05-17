@@ -39,9 +39,7 @@ public class testRejoinGame {
 	public static void main(String[] args) {
 
 		//org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(
-				LocalDateTime.now() + " Hello World", "user1");
-		//WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
+
 
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 		Player localPlayer = new Player("LocalPlayer", PlayerType.REMOTE_PLAYER);
