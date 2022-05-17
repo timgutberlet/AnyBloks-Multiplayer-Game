@@ -37,16 +37,16 @@ public class BoardPane extends Pane {
     checkFieldColor = new HashMap<>();
   }
   public void setCheckFieldColor(Paint color, int x, int y){
-    this.checkFieldColor.put(""+x+y, color);
+    this.checkFieldColor.put(""+(x*1000)+y, color);
   }
   public void setCheckFieldColor(Paint color, int x, int y, int isRight){
-    this.checkFieldColor.put(""+x+y+isRight, color);
+    this.checkFieldColor.put(""+(x*1000)+y+isRight, color);
   }
   public void resetCheckFieldColor(int x, int y){
-    this.checkFieldColor.remove(""+x+y);
+    this.checkFieldColor.remove(""+(x*1000)+y);
   }
   public void resetCheckFieldColor(int x, int y, int isRight){
-    this.checkFieldColor.remove(""+x+y+isRight);
+    this.checkFieldColor.remove(""+(x*1000)+y+isRight);
   }
 
   public void resetAllCheckFields(){

@@ -44,8 +44,8 @@ public class TrigonBoardPane extends BoardPane {
         .addAll(xOfSet + size + j * size + i * xOfSet - move, yOfSet + i * yOfSet - moveYOfSet, //right vertex
             size + j * size + i * xOfSet, 0.0 + i * yOfSet + moveYOfSet, // top vertex
             xOfSet + j * size + i * xOfSet + move, yOfSet + i * yOfSet - moveYOfSet);
-    if(checkFieldColor.containsKey(""+i+j+1)){
-      checkTrigonField.setFill(checkFieldColor.get(""+i+j+1));
+    if(checkFieldColor.containsKey(""+(i*1000)+j+1)){
+      checkTrigonField.setFill(checkFieldColor.get(""+(i*1000)+j+1));
     }else{
       checkTrigonField.setFill(color);
     }
@@ -83,8 +83,8 @@ public class TrigonBoardPane extends BoardPane {
         .addAll(xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet - moveYOfSet, // top vertex
             size + j * size + i * xOfSet - move, 0.0 + i * yOfSet + moveYOfSet, // right vertex
             0.0 + j * size + i * xOfSet + move, 0.0 + i * yOfSet + moveYOfSet);
-    if(checkFieldColor.containsKey(""+i+j+0)){
-      checkTrigonField.setFill(checkFieldColor.get(""+i+j+0));
+    if(checkFieldColor.containsKey(""+(i*1000)+j+0)){
+      checkTrigonField.setFill(checkFieldColor.get(""+(i*1000)+j+0));
     }else{
       checkTrigonField.setFill(color);
     }

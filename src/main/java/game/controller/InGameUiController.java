@@ -6,6 +6,7 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.InputHandler;
 import engine.handler.ThreadHandler;
+import engine.handler.UserInputThread;
 import game.model.Debug;
 import game.model.Game;
 import game.model.GameSession;
@@ -35,6 +36,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 public abstract class InGameUiController extends AbstractUiController {
@@ -66,10 +68,12 @@ public abstract class InGameUiController extends AbstractUiController {
   private Label hintLabel2;
   private Label hintLabel3;
   private VBox labelBox;
+  private ThreadHandler threadHelp;
 
   public InGameUiController(AbstractGameController gameController, Game game,
       GameSession gameSession, ThreadHandler threadHelp) {
     super(gameController);
+    this.threadHelp = threadHelp;
     this.inputHandler = gameController.getInputHandler();
     this.gameSession = gameSession;
     this.game = gameSession.getGame();
@@ -153,7 +157,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void handleQuitButtonClicked() {
-
+    gameEnd();
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
@@ -218,7 +222,6 @@ public abstract class InGameUiController extends AbstractUiController {
 
 
 
-    Debug.printMessage("Localplayer : " + localPlayer.getType());
     aiCalcRunning = localPlayer.getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
@@ -226,16 +229,9 @@ public abstract class InGameUiController extends AbstractUiController {
       if (!game.getGameState().isPlayTurn()) {
         refreshUi();
       }
-      for (Field field : boardPane.getFields()) {
-        if (gameController.getInputHandler().isFieldPressed(field)) {
-          Debug.printMessage(
-              "Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
-        }
-      }
       //Check if Player has Turn
       if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
         boolean action = false;
-        Debug.printMessage(this, "Current player is local player");
 
         for (PolyPane polyPane : stackPanes.get(0).getPolyPanes()) {
           if (inputHandler.isPolyClicked(polyPane)) {
@@ -328,9 +324,10 @@ public abstract class InGameUiController extends AbstractUiController {
               if (possibleFields != null) {
                 for (int[] coords : possibleFields) {
                   if(game.getGamemode().getName().equals("TRIGON")){
-                    boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1], coords[2]);
+                    boardPane.setCheckFieldColor(Color.BLACK, coords[0], coords[1], coords[2]);
+
                   }else{
-                    boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1]);
+                    boardPane.setCheckFieldColor(Color.BLACK, coords[0], coords[1]);
                   }
                 }
               }
@@ -373,7 +370,8 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   protected void gameEnd() {
-    //TODO
+    threadHelp.interrupt();
+    this.gameSession.endGame(null);
   }
 
   /**
@@ -383,7 +381,7 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-
+    threadHelp.interrupt();
   }
 
   /**

@@ -34,8 +34,8 @@ public class SquareBoardPane extends BoardPane {
         sizeHelp + j * size + move, 0 + i * size + move,
         sizeHelp + j * size + move, sizeHelp + i * size + move,
         0 + j * size + move, sizeHelp + i * size + move);
-    if(checkFieldColor.containsKey(""+i+j)){
-      checkField.setFill(checkFieldColor.get(""+i+j));
+    if(checkFieldColor.containsKey(""+i*1000+j)){
+      checkField.setFill(checkFieldColor.get(""+i*1000+j));
     }else{
       checkField.setFill(color);
     }
