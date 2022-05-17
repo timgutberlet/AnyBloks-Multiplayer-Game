@@ -240,6 +240,27 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
     return res;
   }
 
+  @Override
+  public ArrayList<int[]> getPossibleFieldsForPoly(Poly poly, boolean isFirstRound){
+    ArrayList<int[]> res = new ArrayList<>();
+    ArrayList<Poly> help = new ArrayList<>();
+    help.add(poly);
+    for (Turn t : getPossibleMoves(help,isFirstRound)){
+      int xRef = ((PolySquare)poly).shape.get(0).getPos()[0];
+      int yRef = ((PolySquare)poly).shape.get(0).getPos()[1];
+      int x = t.getX();
+      int y = t.getY();
+      for (int[] pos : getPossibleFields(poly.getColor(), isFirstRound)){
+        for (FieldSquare fs: ((PolySquare) t.getPoly()).getShape()){
+          if (fs.getPos()[0] + x - xRef == pos[0] && fs.getPos()[1] + y - yRef == pos[1]){
+            res.add(pos);
+          }
+        }
+      }
+    }
+    return res;
+  }
+
   /**
    * Method that gives back a list of all possible moves of a list of remaining polygons
    *

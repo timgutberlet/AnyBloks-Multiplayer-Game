@@ -1,5 +1,6 @@
 package game.view.board;
 
+import engine.component.CheckTrigonField;
 import engine.component.Field;
 import engine.component.TrigonField;
 import engine.handler.ColorHandler;
@@ -31,6 +32,18 @@ public class TrigonBoardPane extends BoardPane {
    * @param color
    */
   private void setTriangleRight(int i, int j, Color color) {
+
+    CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 1);
+    double sizeHelp = size * 0.4;
+    double move = size / 2 - sizeHelp / 2;
+    checkTrigonField.getPoints()
+        .addAll(xOfSet + sizeHelp + j * size + i * xOfSet + move, yOfSet + i * yOfSet + move, //right vertex
+            sizeHelp + j * size + i * xOfSet + move, 0.0 + i * yOfSet + move, // top vertex
+            xOfSet + j * size + i * xOfSet + move, yOfSet + i * yOfSet + move);
+    checkTrigonField.setFill(Color.RED);
+    checkFields.add(checkTrigonField);
+    this.getChildren().add(checkTrigonField);
+
     Field triangleRight = new TrigonField(i, j, 1);
     triangleRight.getPoints().addAll(
         xOfSet + size + j * size + i * xOfSet, yOfSet + i * yOfSet, //right vertex

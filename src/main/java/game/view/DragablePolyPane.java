@@ -54,9 +54,6 @@ public class DragablePolyPane extends Pane {
     this.innerCircleColor = Color.GRAY;
   }
 
-  public Field showLocation(){
-    return this.polyPane.getFields().get(0);
-  }
 
   public List<Field> getField(){
     return this.polyPane.getFields();

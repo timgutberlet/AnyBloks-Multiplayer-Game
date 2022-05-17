@@ -2,10 +2,14 @@ package game.view.board;
 
 import engine.component.Field;
 import engine.handler.InputHandler;
+import game.model.Color;
 import game.model.board.Board;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 
 /**
  * @author lbaudenb
@@ -19,6 +23,8 @@ public class BoardPane extends Pane {
 
   protected final List<Field> checkFields;
 
+  protected HashMap<String, Paint> checkFieldColor;
+
   protected double size;
 
   protected InputHandler inputHandler;
@@ -28,8 +34,14 @@ public class BoardPane extends Pane {
     fields = new ArrayList<>();
     checkFields = new ArrayList<>();
     this.inputHandler = inputHandler;
+    checkFieldColor = new HashMap<>();
   }
-
+  public void setCheckFieldColor(Paint color, int x, int y){
+    this.checkFieldColor.put(""+x+y, color);
+  }
+  public void resetCheckFieldColor(int x, int y){
+    this.checkFieldColor.remove(""+x+y);
+  }
   /**
    * Method that returns all field Elements of the Board
    */
@@ -55,6 +67,7 @@ public class BoardPane extends Pane {
   public void repaint(Board board) {
     this.board = board;
     this.fields.clear();
+    this.checkFields.clear();
     this.getChildren().clear();
     setBoard();
   }

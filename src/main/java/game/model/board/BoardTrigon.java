@@ -4,8 +4,10 @@ import game.model.Color;
 import game.model.Debug;
 import game.model.Turn;
 import game.model.field.Field;
+import game.model.field.FieldSquare;
 import game.model.field.FieldTrigon;
 import game.model.polygon.Poly;
+import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
 import game.view.InGameView;
 import java.io.Serializable;
@@ -263,6 +265,26 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return res;
   }
 
+  @Override
+  public ArrayList<int[]> getPossibleFieldsForPoly(Poly poly, boolean isFirstRound){
+    ArrayList<int[]> res = new ArrayList<>();
+    ArrayList<Poly> help = new ArrayList<>();
+    help.add(poly);
+    for (Turn t : getPossibleMoves(help,isFirstRound)){
+      int xRef = ((PolyTrigon)poly).shape.get(0).getPos()[0];
+      int yRef = ((PolyTrigon)poly).shape.get(0).getPos()[1];
+      int x = t.getX();
+      int y = t.getY();
+      for (int[] pos : getPossibleFields(poly.getColor(), isFirstRound)){
+        for (FieldSquare fs: ((PolySquare) t.getPoly()).getShape()){
+          if (fs.getPos()[0] + x - xRef == pos[0] && fs.getPos()[1] + y - yRef == pos[1] && fs.getPos()[2] == pos[2]){
+            res.add(pos);
+          }
+        }
+      }
+    }
+    return res;
+  }
 
   /**
    * Method that gives back a list of all possible moves of a list of remaining polygons

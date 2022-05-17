@@ -48,6 +48,8 @@ public abstract class Board {
 
   public abstract ArrayList<int[]> getPossibleFields(Color color, boolean isFirstRound);
 
+  public abstract ArrayList<int[]> getPossibleFieldsForPoly(Poly poly, boolean isFirstRound);
+
   public abstract ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys,
       boolean isFirstRound);
 

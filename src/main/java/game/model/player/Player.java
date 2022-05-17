@@ -174,7 +174,7 @@ public class Player implements Serializable {
       while (this.selectedTurn == null){
         try {
           Thread.sleep(10);
-          System.out.println("Waiting for PlayerInput");
+          Debug.printMessage(this, "Waiting for PlayerInput");
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -183,7 +183,7 @@ public class Player implements Serializable {
       Turn returnTurn = this.selectedTurn;
       this.selectedTurn = null;
       this.aiCalcRunning = true;
-      return returnTurn; //TODO add logic for non ai players
+      return returnTurn;
     }
   }
   public void setSelectedTurn(Turn turn){

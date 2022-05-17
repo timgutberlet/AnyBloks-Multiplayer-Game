@@ -5,11 +5,14 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.InputHandler;
 import engine.handler.ThreadHandler;
+import game.model.Debug;
 import game.model.Game;
 import game.model.GameSession;
 import game.model.Turn;
 import game.model.chat.Chat;
 import game.model.player.Player;
+import game.model.polygon.PolySquare;
+import game.model.polygon.PolyTrigon;
 import game.view.DragablePolyPane;
 import game.view.DragableSuarePane;
 import game.view.DragableTrigonPane;
@@ -30,7 +33,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javax.crypto.BadPaddingException;
 
 public abstract class InGameUiController extends AbstractUiController {
 
@@ -98,7 +103,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "CLASSIC":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -106,7 +111,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -136,7 +141,7 @@ public abstract class InGameUiController extends AbstractUiController {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
-  private void refreshStack() {
+  private void refreshUi() {
     stackPanes.clear();
     stacks.getChildren().clear();
     switch (game.getGamemode().getName()) {
@@ -145,7 +150,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "CLASSIC":
         for (Player p : game.getPlayers()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -153,7 +158,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : game.getPlayers()) {
           StackTrigonPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolys(p), stage.getWidth());
+              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -181,25 +186,19 @@ public abstract class InGameUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
     //Die Folgenden zwei Befehle sollten für einen Reibungslosen Spielablauf optimiert werden
-    boardPane.repaint(game.getGameState().getBoard());
     //noinspection LanguageDetectionInspection
     //Test
+    boardPane.repaint(game.getGameState().getBoard());
 
+    //makes board resizable
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-      //makes board resizable
       boardPane.resize(stage.getWidth());
-      //deletes dragable poly from parent when resized
-      pane.getChildren().remove(dragablePolyPane);
-      dragablePolyPane = null;
     });
 
-    //Checks if turn is currently played , only refresh Stack if not
-    if (!game.getGameState().isPlayTurn()) {
-      refreshStack();
-    }
+    refreshUi();
 
     localPlayer = gameSession.getLocalPlayer();
-    System.out.println("Localplayer : " + localPlayer.getType());
+    Debug.printMessage("Localplayer : " + localPlayer.getType());
     aiCalcRunning = localPlayer.getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
@@ -208,14 +207,14 @@ public abstract class InGameUiController extends AbstractUiController {
       //Check if Player has Turn
       for (Field field : boardPane.getFields()) {
         if (gameController.getInputHandler().isFieldPressed(field)) {
-          System.out.println(
+          Debug.printMessage(
               "Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
         }
       }
 
       if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
         boolean action = false;
-        System.out.println("Current player is local player");
+        Debug.printMessage(this, "Current player is local player");
 
         for (PolyPane polyPane : stackPanes.get(0).getPolyPanes()) {
           if (inputHandler.isPolyClicked(polyPane)) {
@@ -239,32 +238,35 @@ public abstract class InGameUiController extends AbstractUiController {
             localPlayer.setSelectedPoly(polyPane.getPoly());
           }
         }
-
-        if (inputHandler.isKeyPressed(KeyCode.ESCAPE)) {
-          pane.getChildren().remove(dragablePolyPane);
-          dragablePolyPane = null;
-        }
-
         if (this.dragablePolyPane != null) {
           boolean currentIntersection = false;
           Bounds polyBounds = dragablePolyPane.getCheckPolyField()
               .localToScene(dragablePolyPane.getCheckPolyField().getBoundsInLocal());
           for (Field field : boardPane.getCheckFields()) {
+            boardPane.resetCheckFieldColor(field.getX(), field.getY());
             Bounds boardBounds = field.localToScene(field.getBoundsInParent());
             if (polyBounds.intersects(boardBounds)) {
               //Add is Poly Possible
-              int[] pos = {field.getX(), field.getY()};
-              if(game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(), game.getGameState().isFirstRound())) {
+              int addX;
+              int addY;
+              int addIsRight = 0;
+              if (game.getGamemode().getName().equals("TRIGON")){
+                addX = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[0];
+                addY = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[1];
+                addIsRight = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[2];
+              } else {
+                addX = ((PolySquare) dragablePolyPane.getPoly()).getShape().get(0).getPos()[0];
+                addY = ((PolySquare) dragablePolyPane.getPoly()).getShape().get(0).getPos()[1];
+              }
+              int [] pos = {field.getX() + addX, field.getY() + addY};
+              if(game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(), game.getGameState().isFirstRound())){
                 dragablePolyPane.inncerCircleSetColor();
                 currentIntersection = true;
                 dragablePolyPane.rerender();
-                if (inputHandler.isKeyPressed(KeyCode.ENTER)) {
-                  Turn turn = new Turn(dragablePolyPane.getPoly(),
-                      new int[]{field.getX(), field.getY()});
+                if(inputHandler.isKeyPressed(KeyCode.ENTER)){
+                  Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
                   localPlayer.setSelectedTurn(turn);
-                  pane.getChildren().remove(dragablePolyPane);
-                  dragablePolyPane = null;
-                  refreshStack();
+                  refreshUi();
                 }
               }
             }
@@ -274,7 +276,10 @@ public abstract class InGameUiController extends AbstractUiController {
             dragablePolyPane.inncerCircleResetColor();
             dragablePolyPane.rerender();
           }
-
+          ArrayList<int []> possibleFields = game.getGameState().getBoard().getPossibleFieldsForPoly(dragablePolyPane.getPoly(), game.getGameState().isFirstRound());
+          for(int[] coords : possibleFields){
+            boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1]);
+          }
         }
 
         //If localPlayer has selected a Poly, check if he also already click on the Board
