@@ -50,7 +50,7 @@ public class TrigonPolyPane extends PolyPane {
         xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet); // left vertex
     triangleRight.setFill(color);
     triangleRight.setStroke(Color.TRANSPARENT);
-    if (true) {
+    if (!color.equals(Color.TRANSPARENT)) {
       triangleRight.setStroke(Color.BLACK);
     }
     fields.add(triangleRight);
@@ -73,7 +73,7 @@ public class TrigonPolyPane extends PolyPane {
         0.0 + j * size + i * xOfSet, 0.0 + i * yOfSet);  // left vertex
     triangleLeft.setFill(color);
     triangleLeft.setStroke(Color.TRANSPARENT);
-    if (true) {
+    if (!color.equals(Color.TRANSPARENT)) {
       triangleLeft.setStroke(Color.BLACK);
     }
     fields.add(triangleLeft);

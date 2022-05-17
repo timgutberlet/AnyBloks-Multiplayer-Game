@@ -98,7 +98,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "CLASSIC":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -106,7 +106,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -136,7 +136,7 @@ public abstract class InGameUiController extends AbstractUiController {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
-  private void refreshUi() {
+  private void refreshStack() {
     stackPanes.clear();
     stacks.getChildren().clear();
     switch (game.getGamemode().getName()) {
@@ -145,7 +145,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "CLASSIC":
         for (Player p : game.getPlayers()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -153,7 +153,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : game.getPlayers()) {
           StackTrigonPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -185,12 +185,18 @@ public abstract class InGameUiController extends AbstractUiController {
     //noinspection LanguageDetectionInspection
     //Test
 
-    //makes board resizable
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+      //makes board resizable
       boardPane.resize(stage.getWidth());
+      //deletes dragable poly from parent when resized
+      pane.getChildren().remove(dragablePolyPane);
+      dragablePolyPane = null;
     });
 
-    refreshUi();
+    //Checks if turn is currently played , only refresh Stack if not
+    if (!game.getGameState().isPlayTurn()) {
+      refreshStack();
+    }
 
     localPlayer = gameSession.getLocalPlayer();
     System.out.println("Localplayer : " + localPlayer.getType());
@@ -233,6 +239,12 @@ public abstract class InGameUiController extends AbstractUiController {
             localPlayer.setSelectedPoly(polyPane.getPoly());
           }
         }
+
+        if (inputHandler.isKeyPressed(KeyCode.ESCAPE)) {
+          pane.getChildren().remove(dragablePolyPane);
+          dragablePolyPane = null;
+        }
+
         if (this.dragablePolyPane != null) {
           boolean currentIntersection = false;
           Bounds polyBounds = dragablePolyPane.getCheckPolyField()
@@ -241,15 +253,18 @@ public abstract class InGameUiController extends AbstractUiController {
             Bounds boardBounds = field.localToScene(field.getBoundsInParent());
             if (polyBounds.intersects(boardBounds)) {
               //Add is Poly Possible
-              int [] pos = {field.getX(), field.getY()};
-              if(game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(), game.getGameState().isFirstRound())){
+              int[] pos = {field.getX(), field.getY()};
+              if(game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(), game.getGameState().isFirstRound())) {
                 dragablePolyPane.inncerCircleSetColor();
                 currentIntersection = true;
                 dragablePolyPane.rerender();
-                if(inputHandler.isKeyPressed(KeyCode.ENTER)){
-                  Turn turn = new Turn(dragablePolyPane.getPoly(), new int[] {field.getX(), field.getY()});
+                if (inputHandler.isKeyPressed(KeyCode.ENTER)) {
+                  Turn turn = new Turn(dragablePolyPane.getPoly(),
+                      new int[]{field.getX(), field.getY()});
                   localPlayer.setSelectedTurn(turn);
-                  refreshUi();
+                  pane.getChildren().remove(dragablePolyPane);
+                  dragablePolyPane = null;
+                  refreshStack();
                 }
               }
             }

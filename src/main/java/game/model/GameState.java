@@ -73,6 +73,8 @@ public class GameState implements Serializable, Cloneable {
    */
   private boolean started;
 
+  private boolean playTurn;
+
   /**
    * The reason why the game ended.
    */
@@ -374,7 +376,12 @@ public class GameState implements Serializable, Cloneable {
     return false;
   }
 
+  public boolean isPlayTurn() {
+    return playTurn;
+  }
+
   public boolean playTurn(Turn turn) {
+    playTurn = true;
     if (checkEnd(turn)) {
       return false;
     }
@@ -390,6 +397,7 @@ public class GameState implements Serializable, Cloneable {
     incTurn();
 
     history.get(this.turn % playerList.size()).add(turn);
+    playTurn = false;
     return res;
   }
 
