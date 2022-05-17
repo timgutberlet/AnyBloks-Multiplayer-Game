@@ -58,6 +58,7 @@ public abstract class InGameUiController extends AbstractUiController {
   private HBox buttonBox;
   private boolean aiCalcRunning;
   private Player localPlayer;
+  private ArrayList<int[]> possibleFields;
 
   public InGameUiController(AbstractGameController gameController, Game game,
       GameSession gameSession, ThreadHandler threadHelp) {
@@ -71,6 +72,7 @@ public abstract class InGameUiController extends AbstractUiController {
     this.pane = new BorderPane();
     playerPoints = new ArrayList<>();
     stackPanes = new ArrayList<>();
+    possibleFields = new ArrayList<>();
     threadHelp.start();
     super.root.getChildren().add(pane);
     createBoard();
@@ -184,6 +186,7 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+    boolean paintAllFields = true;
     //Die Folgenden zwei Befehle sollten für einen Reibungslosen Spielablauf optimiert werden
     //noinspection LanguageDetectionInspection
     //Test
@@ -198,16 +201,16 @@ public abstract class InGameUiController extends AbstractUiController {
 
     localPlayer = gameSession.getLocalPlayer();
 
-    if (!game.getGameState().isPlayTurn()) {
-      refreshUi();
-    }
+
 
     Debug.printMessage("Localplayer : " + localPlayer.getType());
     aiCalcRunning = localPlayer.getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
-
     } else {
+      if (!game.getGameState().isPlayTurn()) {
+        refreshUi();
+      }
       for (Field field : boardPane.getFields()) {
         if (gameController.getInputHandler().isFieldPressed(field)) {
           Debug.printMessage(
@@ -239,12 +242,16 @@ public abstract class InGameUiController extends AbstractUiController {
               dragablePolyPane.setPoly(polyPane);
             }
             localPlayer.setSelectedPoly(polyPane.getPoly());
+            possibleFields = game.getGameState().getBoard()
+                .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
+                    game.getGameState().isFirstRound());
           }
         }
 
         if (inputHandler.isKeyPressed(KeyCode.ESCAPE)) {
           pane.getChildren().remove(dragablePolyPane);
           dragablePolyPane = null;
+          possibleFields = null;
         }
 
         if (this.dragablePolyPane != null) {
@@ -283,28 +290,25 @@ public abstract class InGameUiController extends AbstractUiController {
                 currentIntersection = true;
                 dragablePolyPane.rerender();
                 if (inputHandler.isKeyPressed(KeyCode.ENTER)) {
+                  System.out.println(dragablePolyPane.getPoly());
                   Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
                   localPlayer.setSelectedTurn(turn);
                   pane.getChildren().remove(dragablePolyPane);
+                  possibleFields = null;
                   dragablePolyPane = null;
                 }
               }
             }
-          }
-          if (!currentIntersection) {
-            dragablePolyPane.inncerCircleResetColor();
-            dragablePolyPane.rerender();
-          }
-
-          if (dragablePolyPane != null) {
-            ArrayList<int[]> possibleFields = game.getGameState().getBoard()
-                .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
-                    game.getGameState().isFirstRound());
-            for (int[] coords : possibleFields) {
-              boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1]);
+            if (!currentIntersection) {
+              dragablePolyPane.inncerCircleResetColor();
+              dragablePolyPane.rerender();
+            }
+            if(possibleFields != null){
+              for (int[] coords : possibleFields) {
+                boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1]);
+              }
             }
           }
-
         }
 
         //If localPlayer has selected a Poly, check if he also already click on the Board

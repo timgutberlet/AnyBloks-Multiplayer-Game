@@ -67,7 +67,7 @@ public class MainMenuUiController extends AbstractUiController {
    * @author lbaudenb
    */
   @FXML
-  public void lobby() {
+  public void multiplayer() {
     gameController.setActiveUiController(new LobbyController(gameController));
   }
 

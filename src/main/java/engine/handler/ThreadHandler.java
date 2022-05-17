@@ -19,6 +19,7 @@ public class ThreadHandler extends Thread{
   public void run() {
     while (!Thread.currentThread().isInterrupted()){
       this.gameSession.getGame().makeMove();
+      System.out.println("Next Move");
     }
     System.out.println("Interrupted");
   }

@@ -6,7 +6,7 @@ package game.model;
  */
 public class Debug {
 
-  static boolean debug = true;
+  static boolean debug = false;
 
   public static void printMessage(String message) {
     if (debug) {
