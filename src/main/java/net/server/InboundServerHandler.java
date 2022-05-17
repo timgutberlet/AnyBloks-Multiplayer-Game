@@ -59,26 +59,27 @@ public class InboundServerHandler {
    * @return String[] [0] "true"/"false" [1] username
    */
   public String[] verifyLogin(WrappedPacket wrappedPacket, Session session) {
-
 		Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
 		LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
 		String username = loginPacket.getUsername();
 		String passwordHash = loginPacket.getPasswordHash();
 		//Checking the credentials against the database
+
 		String dbPasswordHash = "";
 		boolean loginSuccess = false;
 		try {
 			DbServer dbServer = DbServer.getInstance();
-			dbPasswordHash = dbServer.getUserPasswordHash(username);
+      if(!dbServer.doesUsernameExist(username)){
+        loginSuccess = false;
+      } else {
+        dbPasswordHash = dbServer.getUserPasswordHash(username);
+        //Check whether stored passwordHash and sent passwordHash are equal
+        loginSuccess = dbPasswordHash.equals(passwordHash);
+      }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//Check whether stored passwordHash and sent passwordHash are equal
-		loginSuccess = dbPasswordHash.equals(passwordHash);
 		//TODO : IMPLEMENT LOGIN FAILURE
-
-		//call when user is verified
-		//this.addVerifiedUser(wrappedPacket,session);
 
 
 		Debug.printMessage(this, username + " " + passwordHash);
