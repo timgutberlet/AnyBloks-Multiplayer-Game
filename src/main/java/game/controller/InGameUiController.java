@@ -35,7 +35,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javax.crypto.BadPaddingException;
 
 public abstract class InGameUiController extends AbstractUiController {
 
@@ -238,6 +237,7 @@ public abstract class InGameUiController extends AbstractUiController {
             localPlayer.setSelectedPoly(polyPane.getPoly());
           }
         }
+
         if (this.dragablePolyPane != null) {
           boolean currentIntersection = false;
           Bounds polyBounds = dragablePolyPane.getCheckPolyField()
@@ -250,36 +250,50 @@ public abstract class InGameUiController extends AbstractUiController {
               int addX;
               int addY;
               int addIsRight = 0;
-              if (game.getGamemode().getName().equals("TRIGON")){
+              int pos[];
+              if (game.getGamemode().getName().equals("TRIGON")) {
                 addX = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[0];
                 addY = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[1];
-                addIsRight = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[2];
+                addIsRight = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0)
+                    .getPos()[2];
+                pos = new int[3];
+                pos[0] = field.getX() + addX;
+                pos[1] = field.getY() + addY;
+                pos[2] = addIsRight;
               } else {
                 addX = ((PolySquare) dragablePolyPane.getPoly()).getShape().get(0).getPos()[0];
                 addY = ((PolySquare) dragablePolyPane.getPoly()).getShape().get(0).getPos()[1];
+                pos = new int[2];
+                pos[0] = field.getX() + addX;
+                pos[1] = field.getY() + addY;
               }
-              int [] pos = {field.getX() + addX, field.getY() + addY};
-              if(game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(), game.getGameState().isFirstRound())){
+              //change
+              if (game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(),
+                  game.getGameState().isFirstRound())) {
                 dragablePolyPane.inncerCircleSetColor();
                 currentIntersection = true;
                 dragablePolyPane.rerender();
-                if(inputHandler.isKeyPressed(KeyCode.ENTER)){
+                if (inputHandler.isKeyPressed(KeyCode.ENTER)) {
                   Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
                   localPlayer.setSelectedTurn(turn);
                   refreshUi();
                 }
               }
             }
-            ;
           }
           if (!currentIntersection) {
             dragablePolyPane.inncerCircleResetColor();
             dragablePolyPane.rerender();
           }
-          ArrayList<int []> possibleFields = game.getGameState().getBoard().getPossibleFieldsForPoly(dragablePolyPane.getPoly(), game.getGameState().isFirstRound());
-          for(int[] coords : possibleFields){
+
+          ArrayList<int[]> possibleFields = game.getGameState().getBoard()
+              .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
+                  game.getGameState().isFirstRound());
+          for (int[] coords : possibleFields) {
             boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1]);
           }
+
+
         }
 
         //If localPlayer has selected a Poly, check if he also already click on the Board
@@ -336,4 +350,5 @@ public abstract class InGameUiController extends AbstractUiController {
 
   }
 }
+
 

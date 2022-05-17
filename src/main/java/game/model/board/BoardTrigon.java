@@ -276,7 +276,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
       int x = t.getX();
       int y = t.getY();
       for (int[] pos : getPossibleFields(poly.getColor(), isFirstRound)){
-        for (FieldSquare fs: ((PolySquare) t.getPoly()).getShape()){
+        for (FieldTrigon fs: ((PolyTrigon) t.getPoly()).getShape()){
           if (fs.getPos()[0] + x - xRef == pos[0] && fs.getPos()[1] + y - yRef == pos[1] && fs.getPos()[2] == pos[2]){
             res.add(pos);
           }
@@ -468,6 +468,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return startFields;
   }
 }
+
 
 
 

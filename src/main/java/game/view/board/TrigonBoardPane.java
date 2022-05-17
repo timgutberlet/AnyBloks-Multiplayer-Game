@@ -36,11 +36,19 @@ public class TrigonBoardPane extends BoardPane {
     CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 1);
     double sizeHelp = size * 0.4;
     double move = size / 2 - sizeHelp / 2;
+
+    double yOfSetHelp = yOfSet * 0.4;
+    double moveYOfSet = yOfSet/2 - yOfSetHelp/2;
+
     checkTrigonField.getPoints()
-        .addAll(xOfSet + sizeHelp + j * size + i * xOfSet + move, yOfSet + i * yOfSet + move, //right vertex
-            sizeHelp + j * size + i * xOfSet + move, 0.0 + i * yOfSet + move, // top vertex
-            xOfSet + j * size + i * xOfSet + move, yOfSet + i * yOfSet + move);
-    checkTrigonField.setFill(Color.RED);
+        .addAll(xOfSet + size + j * size + i * xOfSet - move, yOfSet + i * yOfSet - moveYOfSet, //right vertex
+            size + j * size + i * xOfSet, 0.0 + i * yOfSet + moveYOfSet, // top vertex
+            xOfSet + j * size + i * xOfSet + move, yOfSet + i * yOfSet - moveYOfSet);
+    if(checkFieldColor.containsKey(""+i+j)){
+      checkTrigonField.setFill(checkFieldColor.get(""+i+j));
+    }else{
+      checkTrigonField.setFill(color);
+    }
     checkFields.add(checkTrigonField);
     this.getChildren().add(checkTrigonField);
 
@@ -63,6 +71,26 @@ public class TrigonBoardPane extends BoardPane {
    * @param color
    */
   private void setTriangleLeft(int i, int j, Color color) {
+
+    CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 1);
+    double sizeHelp = size * 0.4;
+    double move = size / 2 - sizeHelp / 2;
+
+    double yOfSetHelp = yOfSet * 0.4;
+    double moveYOfSet = yOfSet/2 - yOfSetHelp/2;
+
+    checkTrigonField.getPoints()
+        .addAll(xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet - moveYOfSet, // top vertex
+            size + j * size + i * xOfSet - move, 0.0 + i * yOfSet + moveYOfSet, // right vertex
+            0.0 + j * size + i * xOfSet + move, 0.0 + i * yOfSet + moveYOfSet);
+    if(checkFieldColor.containsKey(""+i+j)){
+      checkTrigonField.setFill(checkFieldColor.get(""+i+j));
+    }else{
+      checkTrigonField.setFill(color);
+    }
+    checkFields.add(checkTrigonField);
+    this.getChildren().add(checkTrigonField);
+
     Field triangleLeft = new TrigonField(i, j, 0);
     triangleLeft.getPoints().addAll(
         xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex

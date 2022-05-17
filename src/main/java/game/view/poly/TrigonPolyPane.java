@@ -1,5 +1,6 @@
 package game.view.poly;
 
+import engine.component.CheckTrigonField;
 import engine.component.TrigonField;
 import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
@@ -43,6 +44,8 @@ public class TrigonPolyPane extends PolyPane {
    * @param color
    */
   private void setTriangleRight(int i, int j, Color color) {
+    //This sets the checkField used for checkng intersections with the Board
+
     TrigonField triangleRight = new TrigonField(i, j, 1);
     triangleRight.getPoints().addAll(
         size + j * size + i * xOfSet, 0.0 + i * yOfSet, // top vertex
@@ -66,6 +69,21 @@ public class TrigonPolyPane extends PolyPane {
    * @param color
    */
   private void setTriangleLeft(int i, int j, Color color) {
+    if (i == 0 && j == 0) {
+      CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 0);
+      double sizeHelp = size * 0.4;
+      double move = size / 2 - sizeHelp / 2;
+      double yOfSetHelp = yOfSet * 0.4;
+      double moveYOfSet = yOfSet / 2 - yOfSetHelp / 2;
+      checkTrigonField.getPoints()
+          .addAll(xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet - moveYOfSet, // top vertex
+              size + j * size + i * xOfSet - move, 0.0 + i * yOfSet + moveYOfSet, // right vertex
+              0.0 + j * size + i * xOfSet + move, 0.0 + i * yOfSet + moveYOfSet);
+      checkTrigonField.setFill(color);
+      checkPolyField = checkTrigonField;
+      this.getChildren().add(checkTrigonField);
+    }
+
     TrigonField triangleLeft = new TrigonField(i, j, 0);
     triangleLeft.getPoints().addAll(
         xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex
@@ -131,4 +149,5 @@ public class TrigonPolyPane extends PolyPane {
     setPoly();
   }
 }
+
 
