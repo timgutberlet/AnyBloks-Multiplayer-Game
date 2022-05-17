@@ -21,7 +21,7 @@ public class DragableSuarePane extends DragablePolyPane {
     circleX = 2.5 * size + size;
     circleY = 2.5 * size + size;
 
-    outsideCircle = new Circle();
+    Circle outsideCircle = new Circle();
     outsideCircle.setCenterX(circleX);
     outsideCircle.setCenterY(circleY);
     outsideCircle.setRadius(2.5 * size + size);
@@ -33,7 +33,7 @@ public class DragableSuarePane extends DragablePolyPane {
     innerCircle.setFill(innerCircleColor);
     innerCircle.setOpacity(0.5);
 
-    Shape donut = Shape.subtract(outsideCircle, innerCircle);
+    donut = Shape.subtract(outsideCircle, innerCircle);
     donut.setFill(Color.GRAY);
 
     polyPane.setSize(size);

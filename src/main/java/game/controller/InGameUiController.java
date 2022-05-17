@@ -192,25 +192,29 @@ public abstract class InGameUiController extends AbstractUiController {
     //makes board resizable
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
       boardPane.resize(stage.getWidth());
+      pane.getChildren().remove(dragablePolyPane);
+      dragablePolyPane = null;
     });
 
-    refreshUi();
-
     localPlayer = gameSession.getLocalPlayer();
+
+    if (!game.getGameState().isPlayTurn()) {
+      refreshUi();
+    }
+
     Debug.printMessage("Localplayer : " + localPlayer.getType());
     aiCalcRunning = localPlayer.getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
 
     } else {
-      //Check if Player has Turn
       for (Field field : boardPane.getFields()) {
         if (gameController.getInputHandler().isFieldPressed(field)) {
           Debug.printMessage(
               "Field " + field.getX() + " " + field.getY() + " was Pressed in last Frame");
         }
       }
-
+      //Check if Player has Turn
       if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
         boolean action = false;
         Debug.printMessage(this, "Current player is local player");
@@ -236,6 +240,11 @@ public abstract class InGameUiController extends AbstractUiController {
             }
             localPlayer.setSelectedPoly(polyPane.getPoly());
           }
+        }
+
+        if (inputHandler.isKeyPressed(KeyCode.ESCAPE)) {
+          pane.getChildren().remove(dragablePolyPane);
+          dragablePolyPane = null;
         }
 
         if (this.dragablePolyPane != null) {
@@ -276,7 +285,8 @@ public abstract class InGameUiController extends AbstractUiController {
                 if (inputHandler.isKeyPressed(KeyCode.ENTER)) {
                   Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
                   localPlayer.setSelectedTurn(turn);
-                  refreshUi();
+                  pane.getChildren().remove(dragablePolyPane);
+                  dragablePolyPane = null;
                 }
               }
             }
@@ -286,13 +296,14 @@ public abstract class InGameUiController extends AbstractUiController {
             dragablePolyPane.rerender();
           }
 
-          ArrayList<int[]> possibleFields = game.getGameState().getBoard()
-              .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
-                  game.getGameState().isFirstRound());
-          for (int[] coords : possibleFields) {
-            boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1]);
+          if (dragablePolyPane != null) {
+            ArrayList<int[]> possibleFields = game.getGameState().getBoard()
+                .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
+                    game.getGameState().isFirstRound());
+            for (int[] coords : possibleFields) {
+              boardPane.setCheckFieldColor(Color.RED, coords[0], coords[1]);
+            }
           }
-
 
         }
 
@@ -350,5 +361,13 @@ public abstract class InGameUiController extends AbstractUiController {
 
   }
 }
+
+
+
+
+
+
+
+
 
 

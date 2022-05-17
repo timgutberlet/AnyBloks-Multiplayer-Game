@@ -27,7 +27,7 @@ public class DragablePolyPane extends Pane {
   protected Button mirror;
 
   protected Circle innerCircle;
-  protected Circle outsideCircle;
+  protected Shape donut;
 
   protected Color innerCircleColor;
 
@@ -96,21 +96,27 @@ public class DragablePolyPane extends Pane {
     mirror.relocate(circleX - size * 0.5, 0);
     rotateLeft.relocate(0, circleX - size * 0.5);
     rotateRight.relocate(2 * circleX - size, circleY - size * 0.5);
+
     this.getChildren().add(mirror);
     this.getChildren().add(rotateLeft);
     this.getChildren().add(rotateRight);
   }
 
   public void setPoly(PolyPane polyPane) {
-    this.polyPane = polyPane;
     this.getChildren().clear();
-    rerender();
+    this.polyPane = polyPane;
+    build();
+    buttons();
   }
 
   public void rerender() {
-    this.getChildren().clear();
+    this.getChildren().remove(innerCircle);
+    this.getChildren().remove(donut);
+    this.getChildren().remove(polyPane);
     build();
-    buttons();
+    mirror.toFront();
+    rotateLeft.toFront();
+    rotateRight.toFront();
   }
 
 }
