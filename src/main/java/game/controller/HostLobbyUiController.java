@@ -13,7 +13,12 @@ import game.model.gamemodes.GMTrigon;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,13 +27,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
- * @author lbaudenb
+ * Class to Controll Inputs for the HostLobby
+ *
+ *
  * @author tgutberl
  */
-
-public class LobbyController extends AbstractUiController {
+public class HostLobbyUiController extends AbstractUiController {
 
   private final AbstractGameController gameController;
 
@@ -40,6 +51,10 @@ public class LobbyController extends AbstractUiController {
 
   private GameMode gameMode;
   private ObservableList<String> list;
+
+  @FXML
+  private AnchorPane mainPane;
+
 
   @FXML
   private Label player1;
@@ -74,15 +89,18 @@ public class LobbyController extends AbstractUiController {
   @FXML
   private Label difficultyPlayer3;
 
+  @FXML
+  private Label informationIP;
+
   /**
    * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize
    *
    * @param gameController Gamecontroller Object currently used
    * @author tgutberl
    */
-  public LobbyController(AbstractGameController gameController) {
+  public HostLobbyUiController(AbstractGameController gameController) {
     super(gameController);
-    this.gameSession = new GameSession(new Player("You", PlayerType.HOST_PLAYER));
+    this.gameSession = new GameSession(new Player("HOST", PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
   }
@@ -90,21 +108,58 @@ public class LobbyController extends AbstractUiController {
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/LobbyView.fxml"));
+      loader.setLocation(getClass().getResource("/HostLobbyView.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
+      updateSize(mainPane, gameController.getStage());
+      setIP();
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
+  //Italic Font
+  public static final Font ITALIC_FONT =
+      Font.font(
+          "Serif",
+          FontPosture.ITALIC,
+          Font.getDefault().getSize()
+      );
 
+  public void setIP(){
+    try {
+      this.informationIP.setText(Inet4Address.getLocalHost().getHostAddress());
+    } catch (UnknownHostException e) {
+      this.informationIP.setText("No IP Found");
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Copy to Clipboard Method, for the IP
+   *
+   * @author tgutberl
+   */
   @FXML
-  public void back() {
-    gameController.setActiveUiController(new MainMenuUiController(gameController));
+  public void copyToClipboard(){
+    String clipBoardString = informationIP.getText();
+    StringSelection stringSelection = new StringSelection(clipBoardString);
+    Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+    clipboard.setContents(stringSelection, null);
   }
 
   @FXML
-  public void play() {
+  public void back() {
+    gameController.setActiveUiController(new PlayUiController(gameController));
+  }
+
+  @FXML
+  public void reset(){
+    //TODO @tbuscher implement Reset Account Statistics
+  }
+
+
+  @FXML
+  public void playGame() {
     ArrayList<Player> players = this.gameSession.getPlayerList();
     boolean error = false;
 

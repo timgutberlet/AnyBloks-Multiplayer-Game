@@ -16,18 +16,16 @@ import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * @author lbaudenb
  * @author tgutberl
  */
-
-public class MainMenuUiController extends AbstractUiController {
+public class PlayUiController extends AbstractUiController {
 
   @FXML
   AnchorPane mainPane;
 
   private final AbstractGameController gameController;
 
-  public MainMenuUiController(AbstractGameController gameController) {
+  public PlayUiController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
     init(super.root);
@@ -42,7 +40,7 @@ public class MainMenuUiController extends AbstractUiController {
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/MainMenuView.fxml"));
+      loader.setLocation(getClass().getResource("/PlayView.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
@@ -52,42 +50,43 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the PlayView
+   * Method to Start the the LocalLobbyView
    *
    * @author tgutberl
    */
   @FXML
-  public void play() {
-    gameController.setActiveUiController(new PlayUiController(gameController));
+  public void playVsAi() {
+    gameController.setActiveUiController(new LocalLobbyUiController(gameController));
   }
 
   /**
-   * Method to Start Tutuorial
+   * Method to Join a Lobby
    *
    * @author tgutberl
    */
   @FXML
-  public void tutorial() {
-    GameSession gameSession = new GameSession();
-    GameMode gameMode = new GMTutorial();
-    Player player = new Player("You", PlayerType.HOST_PLAYER);
-    Player opponentAiPlayer = new Player("Opponent(Ai)", PlayerType.AI_EASY);
-    gameSession.addPlayer(player);
-    gameSession.addPlayer(opponentAiPlayer);
-    gameSession.setGame(new Game(gameSession, gameMode));
-    gameSession.startGame(gameMode);
-    ThreadHandler threadHelp = new ThreadHandler(gameSession);
-    gameController.setActiveUiController(new TutorialUiController(gameController, gameSession, threadHelp));
+  public void joinLobby() {
+    gameController.setActiveUiController(new JoinAuthController(gameController));
   }
 
   /**
-   * Method to get into SettingController - to get into SettingUI
+   * Method to Host a Lobby
    *
    * @author tgutberl
    */
   @FXML
-  public void setting() {
-    gameController.setActiveUiController(new SettingUiController(gameController));
+  public void hostLobby() {
+    gameController.setActiveUiController(new HostLobbyUiController(gameController));
+  }
+
+  /**
+   * Method to get back to the MainMenu
+   *
+   * @author tgutberl
+   */
+  @FXML
+  public void back() {
+    gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
   /**
@@ -102,26 +101,6 @@ public class MainMenuUiController extends AbstractUiController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
-
-  /**
-   * Method to get get into the credits view
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void credits() {
-
-  }
-
-  /**
-   * Method to get get into the help view
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void help() {
-
   }
 
   @Override
@@ -139,4 +118,3 @@ public class MainMenuUiController extends AbstractUiController {
     updateSize(mainPane, gameController.getStage());
   }
 }
-

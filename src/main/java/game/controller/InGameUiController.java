@@ -371,7 +371,11 @@ public abstract class InGameUiController extends AbstractUiController {
 
   protected void gameEnd() {
     threadHelp.interrupt();
-    this.gameSession.endGame(null);
+    try {
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -381,6 +385,11 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
+    try {
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     threadHelp.interrupt();
   }
 
