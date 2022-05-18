@@ -14,12 +14,12 @@ public class Turn {
 	/**
 	 * represents the poly
 	 */
-	Poly poly;
+	public Poly poly;
 
 	/**
 	 * represents the move in the form {column, row, rotation, mirrored}
 	 */
-	int[] turn;
+	public int[] turn = new int[6];
 
 	/**
 	 * represents the number of squares, which could be the start point for other players, which could
@@ -40,8 +40,18 @@ public class Turn {
 	 * @author tiotto
 	 */
 	public Turn(Poly poly, int[] turn) {
+
+		//solving a major problem with jackson
+		//DO NOT CHANGE!!! pls
+		int[] turn6 = new int[6];
+		for(int i = 0; i< turn.length;i++){
+			turn6[i] = turn[i];
+		}
+		for(int i= turn.length; i< turn6.length; i++){
+			turn6[i] = 0;
+		}
 		this.poly = poly;
-		this.turn = turn;
+		this.turn = turn6;
 	}
 
 	/**
@@ -63,7 +73,11 @@ public class Turn {
 	}
 
 	public PolyTrigon getPolyTrigon() {
+		if (poly.getClass().getName().equals("PolyTrigon")) {
 			return (PolyTrigon) poly;
+		} else {
+			return null;
+		}
 	}
 
 	public Poly getPoly() {
@@ -105,6 +119,8 @@ public class Turn {
 	public int getIsRight() {
 		return turn[2];
 	}
+
+	public void setIsRight(int i){}
 
 	public int getRoomDiscovery() {
 		return roomDiscovery;

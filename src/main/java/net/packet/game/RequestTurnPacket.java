@@ -78,7 +78,7 @@ public class RequestTurnPacket extends Packet {
 
   public GameState getGameState() {
 
-    Debug.printMessage(this, "Length of recieved remaining polys" + this.remainingPolys.size());
+    Debug.printMessage(this, "Length of recieved remaining polys " + this.remainingPolys.size());
 
     ArrayList<ArrayList<Poly>> remPoly = this.remainingPolys;
 

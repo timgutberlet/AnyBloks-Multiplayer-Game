@@ -6,13 +6,16 @@ import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
+import javax.websocket.EncodeException;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import net.packet.abstr.PacketType;
@@ -20,6 +23,7 @@ import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.chat.ChatMessagePacket;
+import net.packet.game.InitSessionPacket;
 import net.server.ClientHandler;
 import net.server.HashingHandler;
 import net.server.HostServer;
@@ -60,6 +64,16 @@ public class GameSession {
 
 	public static ArrayList<String> currentGameIds = new ArrayList<>();
 
+	private Boolean localPlayerTurn = false;
+
+	private Boolean updatingGameState = false;
+
+	/**
+	 * used to change the view to InGameController.
+	 *
+	 */
+	private Boolean gameStarted = false;
+
 	/**
 	 * a Session is created by a Player in the MainMenu.
 	 *
@@ -69,7 +83,7 @@ public class GameSession {
 	public GameSession(Player player) {
 		//create chatThread and start it
 		this.chat = new Chat();
-		this.chat.run();
+		//this.chat.run();
 
 		this.playerList = new ArrayList<>();
 		this.hostPlayer = player;
@@ -95,7 +109,7 @@ public class GameSession {
 	public GameSession() {
 		//create chatThread and start it
 		this.chat = new Chat();
-		this.chat.run();
+		//this.chat.run();
 
 		this.playerList = new ArrayList<>();
 
@@ -178,7 +192,7 @@ public class GameSession {
 
 		while (this.getPlayerList().size()
 				< gameMode.getNeededPlayers() - 1) {
-			this.addBot(PlayerType.AI_EASY);
+			this.addBot(this.defaultAI);
 		}
 
 		Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
@@ -222,8 +236,18 @@ public class GameSession {
 	 * @author tgeilen
 	 */
 	public void updateGame(GameState gameState) {
+		this.updatingGameState = true;
 		this.game.updateGameState(gameState);
 		this.playerList = gameState.getPlayerList();
+		for(Player p: playerList){
+			if(p.equals(this.localPlayer)){
+				Debug.printMessage(this,"Local player currently " + this.localPlayer);
+				Debug.printMessage(this,"Local player new " + p);
+				this.localPlayer = p;
+				Debug.printMessage(this,"Local player changed to " + this.localPlayer);
+			}
+		}
+		this.updatingGameState = false;
 	}
 
 	/**
@@ -373,6 +397,64 @@ public class GameSession {
 
 	}
 
+
+	public EndpointClient joinLocalGame() {
+		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+		Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
+		EndpointClient client = new EndpointClient(localPlayer);
+
+		Session ses;
+
+		try {
+
+			String IPAdress = Inet4Address.getLocalHost().getHostAddress();
+
+			ses = container.connectToServer(client, URI.create("ws://" + IPAdress + ":8081/packet"));
+
+			//Init session
+			InitSessionPacket initSessionPacket = new InitSessionPacket();
+			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_SESSION_PACKET,
+					initSessionPacket);
+			ses.getBasicRemote().sendObject(wrappedPacket);
+
+			//Create Account
+			String passwordHash = HashingHandler.sha256encode("123456");
+			CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
+					localPlayer.getUsername(),
+					passwordHash);
+			wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+					createAccReq);
+			//... and send it
+			client.sendToServer(wrappedPacket);
+
+			//Sleep so updates can be made in DB
+			try {
+				TimeUnit.MILLISECONDS.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			//Login
+			LoginRequestPacket loginRequestPacket = new LoginRequestPacket(localPlayer.getUsername(),
+					"1234", localPlayer.getType());
+			Debug.printMessage("LoginRequestPacket has been sent to the server");
+			wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
+					loginRequestPacket);
+			ses.getBasicRemote().sendObject(wrappedPacket);
+
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (DeploymentException e) {
+			e.printStackTrace();
+		} catch (EncodeException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return client;
+	}
+
 	/**
 	 * functions thats stops the current session by stopping the hostServer.
 	 */
@@ -488,6 +570,35 @@ public class GameSession {
 	 */
 	public void setPlayerList(ArrayList<Player> playerList) {
 		this.playerList = playerList;
+	}
+
+	/**
+	 * sets the value of the defaultAI
+	 *
+	 * @param defaultAI dfault AI type
+	 */
+	public void setDefaultAI(PlayerType defaultAI) {
+		this.defaultAI = defaultAI;
+	}
+
+	public void setLocalPlayerTurn(Boolean localPlayerTurn) {
+		this.localPlayerTurn = localPlayerTurn;
+	}
+
+	public Boolean isLocalPlayerTurn() {
+		return localPlayerTurn;
+	}
+
+	public Boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	public void setGameStarted(Boolean gameStarted) {
+		this.gameStarted = gameStarted;
+	}
+
+	public Boolean isUpdatingGameState() {
+		return updatingGameState;
 	}
 
 	/**

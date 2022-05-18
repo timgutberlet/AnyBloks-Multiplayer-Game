@@ -1,5 +1,7 @@
 package net.transmission;
 
+//import game.controller.JoinGameLobbyController;
+//import game.controller.LocalGameLobbyController;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.chat.ChatMessage;
@@ -29,12 +31,12 @@ import org.slf4j.LoggerFactory;
 
 public class EndpointClient {
 
-  private Session server;
-  private GameSession gameSession;
-  private ClientHandler clientHandler;
-  private Player player;
+	private Session server;
+	private GameSession gameSession;
+	private ClientHandler clientHandler;
+	private Player player;
 
-	public EndpointClient(Player player){
+	public EndpointClient(Player player) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession();
@@ -42,24 +44,51 @@ public class EndpointClient {
 		this.player.setGameSession(this.gameSession);
 		this.clientHandler = new ClientHandler(this);
 	}
+/*
+	public EndpointClient(LocalGameLobbyController localGameLobbyController, Player player) {
+		super();
+		this.player = player;
+		this.gameSession = new GameSession(player);
+		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+		this.gameSession.setLocalPlayer(player);
+		this.player.setGameSession(this.gameSession);
+		this.clientHandler = new ClientHandler(this);
+		Debug.printMessage(this, "EndpointClient created from GUI 1");
+		this.clientHandler.initLocalGame(player);
 
-  public EndpointClient() {
+		Debug.printMessage(this, "EndpointClient created from GUI 2");
+	}
 
-  }
+	public EndpointClient(JoinGameLobbyController joinGameLobbyController, Player player) {
+		super();
+		this.player = player;
+		this.gameSession = new GameSession(player);
+		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+		this.gameSession.setLocalPlayer(player);
+		this.player.setGameSession(this.gameSession);
+		this.clientHandler = new ClientHandler(this);
+		Debug.printMessage(this, "EndpointClient created from GUI 1");
+		this.clientHandler.initLocalGame(player);
 
+		Debug.printMessage(this, "EndpointClient created from GUI 2");
+	}
+*/
+	public EndpointClient() {
 
-  private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
+	}
 
-  /**
-   * Method used to connect to server. TODO : evaluate createAccount / Login
-   *
-   * @param ses Session in use
-   * @throws IOException     is thrown
-   * @throws EncodeException is thrown
-   */
-  @OnOpen
-  public void onOpen(final Session ses)
-      throws IOException, EncodeException {
+	private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
+
+	/**
+	 * Method used to connect to server. TODO : evaluate createAccount / Login
+	 *
+	 * @param ses Session in use
+	 * @throws IOException     is thrown
+	 * @throws EncodeException is thrown
+	 */
+	@OnOpen
+	public void onOpen(final Session ses)
+			throws IOException, EncodeException {
 //        ses.getBasicRemote().sendObject(new CreateAccountRequestPacket("testuser", "testPW"));
 
 /*
@@ -67,15 +96,15 @@ public class EndpointClient {
       new CreateAccountRequestPacket("testuser", "testPW")));
    Debug.printMessage(this,"CREATE_ACCOUNT_REQUEST sent to " + ses.getId());
 */
-    this.server = ses;
-    //this.clientHandler = new ClientHandler(this);
-    //this.gameSession = new GameSession();
-    //this.player.setGameSession(this.gameSession);
-    ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
-    ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
+		this.server = ses;
+		//this.clientHandler = new ClientHandler(this);
+		//this.gameSession = new GameSession();
+		//this.player.setGameSession(this.gameSession);
+		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
+		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
 
 
-  }
+	}
 
   @OnMessage
   public void onMessage(final WrappedPacket packet, Session ses) {
@@ -152,7 +181,9 @@ public class EndpointClient {
     return player;
   }
 
-
+	public ClientHandler getClientHandler() {
+		return this.clientHandler;
+	}
 }
 
 

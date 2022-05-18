@@ -95,6 +95,9 @@ public class Player implements Serializable {
         type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
     this.isHost = false;
     this.selectedTurn = null;
+    if(!this.isAI){
+      this.aiCalcRunning = false;
+    }
 
 
   }
@@ -107,11 +110,7 @@ public class Player implements Serializable {
    * @author tbuscher
    */
   public Player(String username, PlayerType type, boolean isHost) {
-    this.username = username;
-    this.type = type;
-    this.score = 0;
-    this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
-        type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
+    this(username,type);
     this.isHost = isHost;
   }
 
@@ -168,18 +167,27 @@ public class Player implements Serializable {
   public Turn makeTurn(GameState gameState) {
     if (this.isAI) {
       this.aiCalcRunning = true;
+
+      try {
+        TimeUnit.SECONDS.sleep(4);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
       return AI.calculateNextMove(gameState, this);
     } else {
       this.aiCalcRunning = false;
       while (this.selectedTurn == null){
         try {
+          Debug.printMessage(this,this.getUsername()+" " + this);
+         // Debug.printMessage(this, "A TURN NEEDS TO BE MADE");
           Thread.sleep(10);
-          Debug.printMessage(this, "Waiting for PlayerInput");
+          Debug.printMessage(this, "Waiting for PlayerInput from this "+ this);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
       }
-      System.out.println("Turn Selected");
+      System.out.println("Turn Selected from player " + this);
       Turn returnTurn = this.selectedTurn;
       this.selectedTurn = null;
       this.aiCalcRunning = true;
@@ -192,6 +200,10 @@ public class Player implements Serializable {
 
   public Boolean getAiCalcRunning() {
     return this.aiCalcRunning;
+  }
+
+  public void setAiCalcRunning(boolean aiCalcRunning) {
+    this.aiCalcRunning = aiCalcRunning;
   }
 
   public Poly getSelectedPoly() {
@@ -224,9 +236,9 @@ public class Player implements Serializable {
     return username;
   }
 
-  public String toString() {
-    return username;
-  }
+  //public String toString() {
+  //  return username;
+  //}
 
   public int getOrderNum() {
     return this.orderNum;
@@ -242,5 +254,11 @@ public class Player implements Serializable {
 
   public void setType(PlayerType type) {
     this.type = type;
+  }
+
+  @Override
+  public boolean equals(Object object){
+    Player p = (Player) object;
+    return this.username.equals(p.getUsername());
   }
 }

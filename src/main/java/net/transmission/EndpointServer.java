@@ -89,6 +89,9 @@ public class EndpointServer {
 //  public void onMessage(final WrappedPacket packet) throws IOException, EncodeException {
   public void onMessage(final WrappedPacket packet, final Session client)
       throws IOException, EncodeException {
+
+    System.out.println("Size username 2 session "+ this.getUsername2Session().size());
+
     LOG.info("A packet has been sent here by a client, it is of the type: {} send by {}",
         packet.getPacketType().toString(), client.getId());
     PacketType type = packet.getPacketType();

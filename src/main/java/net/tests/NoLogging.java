@@ -19,6 +19,7 @@ public class NoLogging implements Logger {
 
   @Override
   public void warn(Throwable thrown) {
+    thrown.printStackTrace();
   }
 
   @Override

@@ -7,12 +7,29 @@ import game.model.Turn;
 import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
+import game.model.player.PlayerType;
+import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.URI;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
+import javax.websocket.ContainerProvider;
+import javax.websocket.DeploymentException;
+import javax.websocket.EncodeException;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.account.CreateAccountRequestPacket;
+import net.packet.account.LoginRequestPacket;
 import net.packet.chat.ChatMessagePacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
+import net.packet.game.InitGamePacket;
+import net.packet.game.InitSessionPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.RequestTurnPacket;
 import net.packet.game.TurnPacket;
@@ -33,8 +50,91 @@ public class ClientHandler {
   public ClientHandler(EndpointClient client) {
     this.client = client;
     this.player = this.client.getPlayer();
-    this.gameSession = new GameSession();
+    this.gameSession = client.getGameSession();
+
   }
+
+
+  public void initLocalGame(Player localPlayer){
+
+    final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+
+    try {
+      TimeUnit.MILLISECONDS.sleep(200);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    Session ses;
+
+    try {
+
+      String IPAdress = Inet4Address.getLocalHost().getHostAddress();
+
+      ses = container.connectToServer(this.client, URI.create("ws://" + IPAdress + ":8081/packet"));
+
+      TimeUnit.MILLISECONDS.sleep(100);
+
+      //Init session
+//      InitSessionPacket initSessionPacket = new InitSessionPacket();
+//      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_SESSION_PACKET,
+//          initSessionPacket);
+//      ses.getBasicRemote().sendObject(wrappedPacket);
+
+      //Create Account
+      String passwordHash = HashingHandler.sha256encode("123456");
+      CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
+          localPlayer.getUsername(),
+          passwordHash);
+     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+          createAccReq);
+      //... and send it
+      client.sendToServer(wrappedPacket);
+
+      //Sleep so updates can be made in DB
+      try {
+        TimeUnit.MILLISECONDS.sleep(500);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+      //Login
+      LoginRequestPacket loginRequestPacket = new LoginRequestPacket(localPlayer.getUsername(),
+          passwordHash, localPlayer.getType());
+      Debug.printMessage("LoginRequestPacket has been sent to the server");
+      wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
+          loginRequestPacket);
+      ses.getBasicRemote().sendObject(wrappedPacket);
+
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (DeploymentException e) {
+      e.printStackTrace();
+    } catch (EncodeException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+
+  }
+
+  /**
+   * function called on client side to send INIT GAME PACKET TO SERVER
+   *
+   * @param gameModes
+   */
+  public void startLocalGame(LinkedList<GameMode> gameModes){
+    InitGamePacket initGamePacket = new InitGamePacket(gameModes);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
+
+    this.client.sendToServer(wrappedPacket);
+
+
+  }
+
 
   /**
    * function that starts a game on the client side.
@@ -49,6 +149,7 @@ public class ClientHandler {
     GameState gameState = gameStartPacket.getGameState();
     this.client.getGameSession().startGame(gamemode);
     this.client.getGameSession().updateGame(gameState);
+    this.client.getGameSession().setGameStarted(true);
   }
 
   /**
@@ -78,17 +179,31 @@ public class ClientHandler {
       Debug.printMessage(this, player.getUsername() + ": It is my turn...");
       Debug.printMessage(this,"Runde: " + gameState.getRound());
       Debug.printMessage(this,gameState.isFirstRound()?"FIRST ROUND!!!":"___NOT___ FIRST ROUND");
-      Turn turn = this.player.makeTurn(gameState);
+
+      // flag for UI to enable input
+      this.gameSession.setLocalPlayerTurn(true);
+
+      Turn turn = this.gameSession.getLocalPlayer().makeTurn(gameState);;
       if (turn == null) {
         Debug.printMessage(this, "I don't know what to do!!!");
       } else {
         Debug.printMessage(this, player.getUsername() + ": I know what to do...");
       }
-      TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
-      WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
-      this.client.sendToServer(wrPacket);
+
+      this.sendTurn(turn);
+
+      this.gameSession.setLocalPlayerTurn(false);
+
     }
   }
+
+  public void sendTurn(Turn turn){
+    Debug.printMessage(this,turn.toString());
+    TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
+    WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
+    this.client.sendToServer(wrPacket);
+  }
+
 
   /**
    * updates the gameState for the local client.

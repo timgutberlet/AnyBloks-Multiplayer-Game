@@ -86,6 +86,8 @@ public class InboundServerHandler {
 
 		//TODO : IMPLEMENT LOGIN FAILURE
 
+		loginSuccess = true; //TODO unbedingt wieder entfenrnen, nur zum testen
+
 		if (loginSuccess) {
 			//call when user is verified
 			this.addVerifiedUser(wrappedPacket, session);
@@ -213,11 +215,12 @@ public class InboundServerHandler {
 		TurnPacket turnPacket = (TurnPacket) packet.getPacket();
 		Turn turn = turnPacket.getTurn();
 
-		CheckConnectionThread.turnRecieved = true;
+		CheckConnectionThread.turnReceived = true;
 
 		if (gameSession.getGame().checkTurn(turn)) {
 			Debug.printMessage(this, "The recieved turn is legal and will be played");
-			gameSession.getGame().makeMove(turn);
+			gameSession.getGame().makeMoveServer(turn);
+			//this.server.getOutboundServerHandler().broadcastGameUpdate();
 		} else {
 			IllegalTurnPacket illegalTurnPacket = new IllegalTurnPacket();
 			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.ILLEGAL_TURN_PACKET,

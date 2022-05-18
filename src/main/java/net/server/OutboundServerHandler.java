@@ -63,9 +63,9 @@ public class OutboundServerHandler {
     this.server.sendMessage(wrappedPacket, username);
     Debug.printMessage(this, "Requested turn from " + username);
 
-    CheckConnectionThread checkConnectionThread = new CheckConnectionThread(gameSession, username,
-        this.server);
-    checkConnectionThread.start();
+    //CheckConnectionThread checkConnectionThread = new CheckConnectionThread(gameSession, username,
+    //    this.server);
+    //checkConnectionThread.start();
   }
 
 

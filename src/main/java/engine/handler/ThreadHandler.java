@@ -18,7 +18,7 @@ public class ThreadHandler extends Thread{
   @Override
   public void run() {
     while (!Thread.currentThread().isInterrupted()){
-      this.gameSession.getGame().makeMove();
+      this.gameSession.getGame().makeMoveServer();
       System.out.println("Next Move");
     }
     System.out.println("Interrupted");

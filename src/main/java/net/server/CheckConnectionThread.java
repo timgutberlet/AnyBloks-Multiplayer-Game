@@ -2,11 +2,8 @@ package net.server;
 
 import game.model.Debug;
 import game.model.GameSession;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import javax.websocket.EncodeException;
 import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
 import net.packet.CheckConnectionPacket;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
@@ -30,14 +27,14 @@ public class CheckConnectionThread extends Thread {
 
 	private Boolean connectionCrashed = false;
 
-	public static boolean turnRecieved;
+	public static boolean turnReceived;
 
 
 	public CheckConnectionThread(GameSession gameSession, String username, EndpointServer serverEndpoint) {
 
 		this.requestCounter = 0;
 
-		turnRecieved = false;
+		turnReceived = false;
 
 		this.session = serverEndpoint.getUsername2Session().get(username);
 
@@ -49,17 +46,18 @@ public class CheckConnectionThread extends Thread {
 	}
 
 	public void run() {
+		int threshold = 10;
 
-		turnRecieved = false;
+		turnReceived = false;
 
-		while (this.requestCounter < 10 && !this.connectionCrashed && !turnRecieved) {
+		while (this.requestCounter < threshold && !this.connectionCrashed && !turnReceived) {
 			this.checkConnectionPacket = new CheckConnectionPacket();
 
 			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHECK_CONNECTION_PACKET,
 					this.checkConnectionPacket);
 
 			try {
-				Debug.printMessage(this,"_________Sending CheckConnection message to " + this.username + "_________");
+				Debug.printMessage(this,"_________Sending CheckConnection message to " + this.username + "_________  " + this.requestCounter);
 				this.session.getBasicRemote().sendObject(wrappedPacket);
 
 			} catch (Exception e) {
@@ -76,6 +74,13 @@ public class CheckConnectionThread extends Thread {
 				e.printStackTrace();
 			}
 
+			this.requestCounter++;
+
+		}
+
+		if(this.requestCounter >= threshold){
+			Debug.printMessage(this, "THE SERVER LOST CONNECTION TO " + this.username + "WITHOUT EXCEPTION");
+			this.gameSession.changePlayer2AI(this.username);
 		}
 
 	}

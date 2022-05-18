@@ -77,7 +77,7 @@ public class Game {
 	 * @author tgeilen
 	 */
 
-	public void makeMove() {
+	public void makeMoveServer() {
 		if (this.gameState.isStateRunning()) {
 
 			Player currentPlayer = this.gameState.getPlayerCurrent();
@@ -98,7 +98,7 @@ public class Game {
 	 *
 	 * @author tgeilen
 	 */
-	public void makeMove(Turn turn) {
+	public void makeMoveServer(Turn turn) {
 		//Debug.printMessage(this,this.board.toString());
 		Player currentPlayer = this.gameState.getPlayerCurrent();
 
