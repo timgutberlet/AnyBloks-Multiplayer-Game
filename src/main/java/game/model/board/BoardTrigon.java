@@ -185,7 +185,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * Method that gives back, if a specific square on the board has a side by side neighbor square of
-   * a specific color
+   * a specific color.
    *
    * @param x       x value of the field.
    * @param y       y value of the field
@@ -220,7 +220,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * Method that gives back, if a specific square on the board has a neighbor over the edge of a
-   * specific color
+   * specific color.
    *
    * @param x       x value of the field.
    * @param y       y value of the field
@@ -234,7 +234,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     boolean hasNeighborOfGrad2Color = false;
     hasNeighborOfGrad2Color =
         hasNeighborOfGrad2Color || isOnTheBoard(x, y + 1, isRight) && getColor(x, y + 1,
-            isRight).equals(color); //TODO Wieso Warnung, dass der Bool immer false sein sollte?
+            isRight).equals(color);
     hasNeighborOfGrad2Color =
         hasNeighborOfGrad2Color || isOnTheBoard(x + 1, y, isRight) && getColor(x + 1, y,
             isRight).equals(color);
@@ -260,7 +260,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     int add = (isRight == 1 ? 1 : -1);
     hasNeighborOfGrad3Color =
         hasNeighborOfGrad3Color || isOnTheBoard(x - 1, y + 1, 1 - isRight) && getColor(x - 1, y + 1,
-            1 - isRight).equals(color); //TODO Warum Warnung, dass Bool immer false sein sollte?
+            1 - isRight).equals(color);
     hasNeighborOfGrad3Color =
         hasNeighborOfGrad3Color || isOnTheBoard(x + 1, y - 1, 1 - isRight) && getColor(x + 1, y - 1,
             1 - isRight).equals(color);
@@ -284,7 +284,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * Method that finds out if a placement of a poly at a specific position is legitimate
+   * Method that finds out if a placement of a poly at a specific position is legitimate.
    *
    * @param x            x value of the position
    * @param y            y value of the position
@@ -338,7 +338,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * Method that gives back a list of all the possible positions, that are over the edge to already
-   * placed polygons
+   * placed polygons.
    *
    * @param color searched color
    * @return Arraylist with coordinates inside, which contain the position of the fields
@@ -394,7 +394,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   // ======================================================================
 
   /**
-   * Method that gives back a list of all possible moves of a list of remaining polygons
+   * Method that gives back a list of all possible moves of a list of remaining polygons.
    *
    * @param remainingPolys list of remaining polys
    * @param isFirstRound   boolean, if it is the first round
@@ -452,7 +452,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * this method gives back the list of the specific placements of a polygon for a given position
+   * this method gives back the list of the specific placements of a polygon for a given position.
    *
    * @param x            x value of the position
    * @param y            y value of the position
@@ -494,7 +494,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * this method gives back a list of the possible positions and the specific placement of possible
-   * placements of a given polygon represented by a list of turns
+   * placements of a given polygon represented by a list of turns.
    *
    * @param poly         the given polygon
    * @param isFirstRound boolean, if it is the firstRound
@@ -568,7 +568,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * method that counts and safes the number of squares which could lead to a next turn for a
-   * different color, which are covered by the given turn
+   * different color, which are covered by the given turn.
    *
    * @param turn the considered turn as a result the number is stored as an attribute of the turn
    *             itself
@@ -592,7 +592,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * this method returns the maximum width a color has occupied measured from the starting edge
+   * this method returns the maximum width a color has occupied measured from the starting edge.
    *
    * @param c      Color, which is looked for
    * @return maximum width
@@ -611,7 +611,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * this method returns the maximum height a color has occupied measured from the starting edge
+   * this method returns the maximum height a color has occupied measured from the starting edge.
    *
    * @param c      Color, which is looked for
    * @return maximum height
