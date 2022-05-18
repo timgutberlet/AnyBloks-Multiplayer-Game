@@ -1,6 +1,5 @@
 package game.model.player;
 
-import game.model.Color;
 import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
@@ -115,11 +114,11 @@ public class AI {
       board.assignNumberBlockedFields(turn);
     }
     possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
-    possibleMoves.sort((o1, o2) -> o2.getNumberBlockedSquares() - o1.getNumberBlockedSquares());
+    possibleMoves.sort((o1, o2) -> o2.getNumberBlockedFields() - o1.getNumberBlockedFields());
     int rand = 0;
     for (int i = 0; i < possibleMoves.size(); i++) {
-      if (possibleMoves.get(0).getNumberBlockedSquares() > possibleMoves.get(i)
-          .getNumberBlockedSquares()
+      if (possibleMoves.get(0).getNumberBlockedFields() > possibleMoves.get(i)
+          .getNumberBlockedFields()
           || possibleMoves.get(0).getPoly().getSize() > possibleMoves.get(i).getPoly().getSize()) {
         rand = (int) (Math.random() * i);
         break;
@@ -179,7 +178,7 @@ public class AI {
         gameState.getBoard().assignNumberBlockedFields(turn);
       }
       possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
-      possibleMoves.sort((o1, o2) -> o2.getNumberBlockedSquares() - o1.getNumberBlockedSquares());
+      possibleMoves.sort((o1, o2) -> o2.getNumberBlockedFields() - o1.getNumberBlockedFields());
       possibleMoves.sort((o1, o2) -> o2.getRoomDiscovery() - o1.getRoomDiscovery());
       int rand = 0;
       for (int i = 0; i < possibleMoves.size(); i++) {
@@ -205,6 +204,36 @@ public class AI {
   public static Turn calculateNextHardMoveAggressive(GameState gameState, Player player){
     return calculateNextMiddleMove(gameState.getBoard(), gameState.getRemainingPolys(player),
         gameState.isFirstRound());
+  }
+
+  /**
+   * calculates the next move through sorting the possible moves after the weighted blocked fields of the
+   * opponents as the first criteria and the size of the poly as the second criteria.
+   *
+   * @param gameState current state
+   * @param player ai player which needs to play
+   * @return "best" turn
+   */
+  public static Turn calculateNextHardMoveReallyAggressive(GameState gameState, Player player){
+    ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
+    for (Turn turn : possibleMoves) {
+      gameState.assignNumberBlockedFieldsWeighted(turn);
+    }
+    possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+    possibleMoves.sort((o1, o2) -> o2.getNumberBlockedFieldsWeighted() - o1.getNumberBlockedFieldsWeighted());
+    int rand = 0;
+    for (int i = 0; i < possibleMoves.size(); i++) {
+      if (possibleMoves.get(0).getNumberBlockedFieldsWeighted() > possibleMoves.get(i)
+          .getNumberBlockedFieldsWeighted()
+          || possibleMoves.get(0).getPoly().getSize() > possibleMoves.get(i).getPoly().getSize()) {
+        rand = (int) (Math.random() * i);
+        break;
+      }
+    }
+    if (possibleMoves.size() == 0) {
+      return null;
+    }
+    return possibleMoves.get(rand);
   }
 
   /**

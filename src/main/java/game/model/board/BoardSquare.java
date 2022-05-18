@@ -559,7 +559,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
         }
       }
     }
-    turn.setNumberBlockedSquares(num);
+    turn.setNumberBlockedFields(num);
   }
 
   /**

@@ -1,14 +1,11 @@
 package game.model.board;
 
-import engine.component.TrigonField;
 import game.model.Color;
 import game.model.Debug;
 import game.model.Turn;
 import game.model.field.Field;
-import game.model.field.FieldSquare;
 import game.model.field.FieldTrigon;
 import game.model.polygon.Poly;
-import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
 import game.view.InGameView;
 import java.io.Serializable;
@@ -588,7 +585,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
         }
       }
     }
-    turn.setNumberBlockedSquares(num);
+    turn.setNumberBlockedFields(num);
   }
 
   /**

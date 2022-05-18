@@ -6,34 +6,40 @@ import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
 
 /**
- * this class represents a move of a player in one turn
+ * this class represents a move of a player in one turn.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Turn {
 
 	/**
-	 * represents the poly
+	 * represents the poly.
 	 */
 	public Poly poly;
 
 	/**
-	 * represents the move in the form {column, row, rotation, mirrored}
+	 * represents the move in the form {column, row, rotation, mirrored}.
 	 */
 	public int[] turn = new int[6];
 
 	/**
 	 * represents the number of squares, which could be the start point for other players, which could
-	 * be blocked by this poly and turn
+	 * be blocked by this poly and turn.
 	 */
-	int numberBlockedSquares = 0;
+	int numberBlockedFields = 0;
 
 	/**
-	 * represents the number of new rows or columns, which can be discovered by this turn
+	 * represents the number of squares, which could be the start point for other players, which could
+	 * be blocked by this poly and turn multiplied with the size of the poly, which could be placed there.
+	 */
+	int numberBlockedFieldsWeighted = 0;
+
+	/**
+	 * represents the number of new rows or columns, which can be discovered by this turn.
 	 */
 	int roomDiscovery = 0;
 
 	/**
-	 * initializing the values
+	 * initializing the values.
 	 *
 	 * @param poly represents the poly
 	 * @param turn represents the move in form an integer array {column, row, rotation, mirrored}
@@ -55,11 +61,8 @@ public class Turn {
 	}
 
 	/**
-	 * empty constructor for jackson
-	 *
-	 * @return
+	 * empty constructor for jackson.
 	 */
-
 	public Turn() {
 
 	}
@@ -92,12 +95,20 @@ public class Turn {
 		return this.turn;
 	}
 
-	public int getNumberBlockedSquares() {
-		return numberBlockedSquares;
+	public int getNumberBlockedFields() {
+		return numberBlockedFields;
 	}
 
-	public void setNumberBlockedSquares(int numberBlockedSquares) {
-		this.numberBlockedSquares = numberBlockedSquares;
+	public void setNumberBlockedFields(int numberBlockedFields) {
+		this.numberBlockedFields = numberBlockedFields;
+	}
+
+	public int getNumberBlockedFieldsWeighted() {
+		return numberBlockedFieldsWeighted;
+	}
+
+	public void setNumberBlockedFieldsWeighted(int numberBlockedFieldsWeighted) {
+		this.numberBlockedFieldsWeighted = numberBlockedFieldsWeighted;
 	}
 
 	public int getColumn() {
@@ -138,6 +149,11 @@ public class Turn {
 		return turn[3] == 1;
 	}
 
+	/**
+	 * converts to board to a string.
+	 * @return the string representation of the board
+	 */
+	@Override
 	public String toString() {
 		StringBuffer res = new StringBuffer(poly.toString());
 		if (poly.getClass().getName().equals("game.model.polygon.PolyTrigon")) {
@@ -152,6 +168,11 @@ public class Turn {
 
 	}
 
+	/**
+	 * method to deep clone a board.
+	 * @return returns the deep clone of the board
+	 */
+	@Override
 	public Turn clone() {
 		return new Turn(this.poly.clone(), turn);
 	}
@@ -174,6 +195,10 @@ public class Turn {
 		this.turn = turn;
 	}
 
+	/**
+	 * converts the board into code, which creates the board.
+	 * @return string containing the creating code
+	 */
 	public String toCode(){
 		StringBuffer res = new StringBuffer(poly.toCode());
 		res.append("Turn t = new Turn(p, new int[] {"+ getX() + "," + getY() + ","+ getIsRight() + "});\n");

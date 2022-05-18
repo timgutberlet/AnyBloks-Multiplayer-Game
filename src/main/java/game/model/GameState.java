@@ -683,5 +683,38 @@ public class GameState implements Serializable, Cloneable {
     }
     t.setRoomDiscovery(roomDiscovery);
   }
+
+  /**
+   * method that counts and safes the number of squares which could lead to a next turn for a
+   * different color, which are covered by the given turn multiplied by the size of potential polys that could be placed there
+   *
+   * @param turn the considered turn as a result the number is stored as an attribute of the turn
+   *             itself
+   */
+  public void assignNumberBlockedFieldsWeighted(Turn turn) {
+    int num = 0;
+
+    for (Color c : Color.values()) {
+      if (!c.equals(turn.getPoly().getColor()) && !c.equals(Color.WHITE)) {
+        for (Poly p : getRemainingPolys(getPlayerFromColor(c))) {
+          ArrayList<int[]> selection = getBoard().getPossibleFieldsForPoly(p, isFirstRound());
+          if (gameMode.getName().equals("TRIGON")){
+            for (FieldTrigon ft : ((PolyTrigon) turn.getPoly()).getShape()){
+              if (selection.contains(ft.getPos())) {
+                num += p.getSize();
+              }
+            }
+          } else {
+            for (FieldSquare fs : ((PolySquare) turn.getPoly()).getShape()){
+              if (selection.contains(fs.getPos())) {
+                num += p.getSize();
+              }
+            }
+          }
+        }
+      }
+    }
+    turn.setNumberBlockedFieldsWeighted(num);
+  }
 }
 
