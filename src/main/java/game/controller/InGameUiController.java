@@ -4,6 +4,7 @@ import engine.component.Field;
 import engine.component.TrigonField;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
+import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
 import engine.handler.ThreadHandler;
 import engine.handler.UserInputThread;
@@ -28,12 +29,16 @@ import game.view.stack.StackTrigonPane;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -46,11 +51,10 @@ public abstract class InGameUiController extends AbstractUiController {
   private final Chat chat;
   private final AbstractGameController gameController;
   private final InputHandler inputHandler;
-  private final BorderPane pane;
+  private BorderPane pane;
   private final List<StackPane> stackPanes;
   private final List<Label> playerPoints;
-  private final int count = 0;
-  Stage stage;
+  private Stage stage;
   private Button testButton;
   private StackPane stackLocal;
   private VBox stacks;
@@ -64,10 +68,17 @@ public abstract class InGameUiController extends AbstractUiController {
   private ArrayList<int[]> possibleFields;
   private Boolean submitRequested;
 
+
   private Label hintLabel1;
   private Label hintLabel2;
   private Label hintLabel3;
   private VBox labelBox;
+
+  private GridPane scorePane;
+  private List<Label> scores;
+  private List<Label> names;
+  private Label turn;
+
   private ThreadHandler threadHelp;
 
   public InGameUiController(AbstractGameController gameController, Game game,
@@ -80,15 +91,13 @@ public abstract class InGameUiController extends AbstractUiController {
     this.chat = gameSession.getChat();
     this.gameController = gameController;
     this.stage = gameController.getStage();
-    this.pane = new BorderPane();
     playerPoints = new ArrayList<>();
     stackPanes = new ArrayList<>();
     possibleFields = new ArrayList<>();
     submitRequested = false;
     threadHelp.start();
-    super.root.getChildren().add(pane);
-    createBoard();
     setUpUi();
+    createBoard();
   }
 
   public void createBoard() {
@@ -108,6 +117,54 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void setUpUi() {
+    pane = new BorderPane();
+    pane.setTranslateY(100);
+    super.root.getChildren().add(pane);
+
+    scores = new ArrayList<>();
+    names = new ArrayList<>();
+    int playerSize = game.getPlayers().size();
+    scorePane = new GridPane();
+    scorePane.setPrefWidth(stage.getWidth());
+    scorePane.setPrefHeight(100);
+    scorePane.setMaxHeight(100);
+    super.root.getChildren().add(scorePane);
+    int i = 0;
+    for (Player p : this.gameSession.getPlayerList()) {
+      VBox vbox = new VBox();
+      Label score = new Label("0");
+      Label name = new Label(p.getUsername());
+      name.setTextFill(ColorHandler.getJavaColor(game.getGameState().getColorFromPlayer(p)));
+      scores.add(score);
+      names.add(name);
+      vbox.getChildren().add(name);
+      vbox.getChildren().add(score);
+      vbox.setAlignment(Pos.CENTER);
+      if (i < playerSize / 2) {
+        scorePane.add(vbox, i, 0);
+      } else {
+        scorePane.add(vbox, i + 1, 0);
+      }
+      i++;
+    }
+
+    ColumnConstraints coll = new ColumnConstraints();
+    coll.setMinWidth(stage.getWidth() / (playerSize + 1));
+
+    for (int j = 0; j <= playerSize; j++) {
+      scorePane.getColumnConstraints().add(coll);
+    }
+
+    RowConstraints row = new RowConstraints();
+    row.setPrefHeight(100);
+    scorePane.getRowConstraints().add(row);
+
+    VBox vbox = new VBox();
+    turn = new Label("");
+    vbox.getChildren().add(turn);
+    vbox.setAlignment(Pos.CENTER);
+    scorePane.addColumn(playerSize / 2, vbox);
+
     labelBox = new VBox();
     labelBox.setSpacing(20);
     hintLabel1 = new Label("Set Poly: Push 'P'-Button, ENTER or SPACE");
@@ -162,6 +219,30 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void refreshUi() {
+    int playerSize = game.getPlayers().size();
+    stage.widthProperty().addListener((obs, oldVal, newVal) -> {
+      //makes board resizable
+      boardPane.resize(stage.getWidth());
+      //makes scores resizable
+      ColumnConstraints coll = new ColumnConstraints();
+      coll.setMinWidth(stage.getWidth() / (playerSize + 1));
+      for (int i = 0; i <= playerSize; i++) {
+        scorePane.getColumnConstraints().set(i, coll);
+      }
+      pane.getChildren().remove(dragablePolyPane);
+      dragablePolyPane = null;
+    });
+
+    for (int i = 0; i < playerSize; i++) {
+      scores.get(i).setText(game.getGameState().getScores()[i] + "");
+    }
+
+    if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
+      turn.setText("Your Turn");
+    } else {
+      turn.setText(game.getGameState().getPlayerCurrent().getUsername());
+    }
+
     stackPanes.clear();
     stacks.getChildren().clear();
     switch (game.getGamemode().getName()) {
@@ -211,13 +292,6 @@ public abstract class InGameUiController extends AbstractUiController {
     //Test
     boardPane.repaint(game.getGameState().getBoard());
 
-    //makes board resizable
-    stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-      boardPane.resize(stage.getWidth());
-      pane.getChildren().remove(dragablePolyPane);
-      dragablePolyPane = null;
-    });
-
     localPlayer = gameSession.getLocalPlayer();
 
 
@@ -226,7 +300,7 @@ public abstract class InGameUiController extends AbstractUiController {
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
     } else {
-      if (!game.getGameState().isPlayTurn()) {
+      if (!game.getGameState().playsTurn()) {
         refreshUi();
       }
       //Check if Player has Turn
