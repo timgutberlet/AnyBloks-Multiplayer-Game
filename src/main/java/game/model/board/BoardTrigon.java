@@ -16,13 +16,24 @@ import java.util.ArrayList;
 
 /**
  * @author tiotto
+ * @date 29.03.2022
  */
 public class BoardTrigon extends Board implements Serializable, Cloneable {
 
-  private final ArrayList<FieldTrigon> board = new ArrayList<>();
+  /**
+   * List with the fields of the board.
+   */
+  private ArrayList<FieldTrigon> board = new ArrayList<>();
 
-  private final ArrayList<FieldTrigon> startFields = new ArrayList<>();
+  /**
+   * list with the fields of the board, where player can start the game.
+   */
+  private ArrayList<FieldTrigon> startFields = new ArrayList<>();
 
+  /**
+   * creates a new and empty trigon board. Stores as well the right start fields.
+   *
+   */
   public BoardTrigon() {
     for (int i = 0; i < 18; i++) {
       for (int j = 0; j < 18; j++) {
@@ -48,6 +59,11 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     startFields.add(new FieldTrigon(3, 11, 1));
   }
 
+  /**
+   * creates a new trigon board as a copy of the given parameters.
+   * @param board given board as a list of fields
+   * @param startFields given start fields
+   */
   public BoardTrigon(ArrayList<FieldTrigon> board, ArrayList<FieldTrigon> startFields) {
     for (FieldTrigon ft : board) {
       this.board.add(ft.clone());
@@ -55,17 +71,39 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     for (FieldTrigon ft : startFields) {
       this.startFields.add(ft.clone());
     }
+
+    this.SIZE = 26;
   }
 
+  // ======================================================================
+  // ======================== Getter and Setter ===========================
+  // ======================================================================
+
+  /**
+   * gives back the board
+   * @return board
+   */
   public ArrayList<FieldTrigon> getBoard() {
     return board;
   }
 
+  /**
+   * returns the color of a field identified by the given coordinates.
+   * @param pos given coordinates
+   * @return the specific field
+   */
   @Override
   public Color getColor(int[] pos) {
     return getColor(pos[0], pos[1], pos[2]);
   }
 
+  /**
+   * returns the color of a field identified by the given coordinates.
+   * @param x       x value of the field.
+   * @param y       y value of the field
+   * @param isRight isRight value of the field
+   * @return the specific field
+   */
   public Color getColor(int x, int y, int isRight) {
     if (isOnTheBoard(x, y, isRight)) {
       return getField(x, y, isRight).getColor();
@@ -73,21 +111,45 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return null;
   }
 
+  /**
+   * checks if a field identified by the given coordinates is part of the board.
+   * @param pos given coordinates
+   * @return boolean, if the field is part of the board
+   */
   @Override
   public boolean isOnTheBoard(int[] pos) {
     return isOnTheBoard(pos[0], pos[1], pos[2]);
   }
 
+  /**
+   * checks if a field identified by the given coordinates is part of the board.
+   * @param x coordinate
+   * @param y coordinate
+   * @param isRight value of the field
+   * @return boolean, if the field is part of the board
+   */
   public boolean isOnTheBoard(int x, int y, int isRight) {
     return x >= 0 && x < 18 && y >= 0 && y < 18 && (x + y > 8 && x + y < SIZE
         || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0) && (isRight == 0 || isRight == 1);
   }
 
+  /**
+   * returns the field identified by the given coordinates.
+   * @param pos given coordinates
+   * @return the specific field
+   */
   @Override
   public Field getField(int[] pos) {
     return getField(pos[0], pos[1], pos[2]);
   }
 
+  /**
+   * returns the field identified by the given coordinates.
+   * @param x coordinate
+   * @param y coordinate
+   * @param isRight value of the field
+   * @return the specific field
+   */
   public FieldTrigon getField(int x, int y, int isRight) {
     for (FieldTrigon ft : board) {
       if (ft.pos[0] == x && ft.pos[1] == y && ft.pos[2] == isRight) {
@@ -98,6 +160,24 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return null;
   }
 
+  /**
+   * returns the fields, where player can start their game.
+   * @return list of the fields, where can be started
+   */
+  public ArrayList<FieldTrigon> getStartFields() {
+    return startFields;
+  }
+
+  // ======================================================================
+  // ============= Neighbor dependencies and isPolyPossible ===============
+  // ======================================================================
+
+  /**
+   * checks if a field identified by the given coordinates has the given color as a direct neighbor, means with a shared edge.
+   * @param pos given coordinates
+   * @param c given color
+   * @return boolean, if one of the direct neighbor fields has this color
+   */
   @Override
   public boolean isColorDirectNeighbor(int[] pos, Color c) {
     return isColorDirectNeighbor(pos[0], pos[1], pos[2], c);
@@ -127,6 +207,12 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return isOnTheBoard(x, y, 1 - isRight) && getColor(x, y, 1 - isRight).equals(color);
   }
 
+  /**
+   * checks if a field identified by the given coordinates has the given color as an indirect neighbor, means with a shared corner.
+   * @param pos given coordinates
+   * @param c given color
+   * @return boolean, if one of the indirect neighbor fields has this color
+   */
   @Override
   public boolean isColorIndirectNeighbor(int[] pos, Color c) {
     return isColorIndirectNeighbor(pos[0], pos[1], pos[2], c);
@@ -185,7 +271,13 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return hasNeighborOfGrad3Color;
   }
 
-
+  /**
+   * checks if the given poly is possible at the given position on the field.
+   * @param pos given position (coordinates)
+   * @param poly given poly
+   * @param isFirstRound if it is the first round
+   * @return boolean, if the poly is possible at the position
+   */
   @Override
   public boolean isPolyPossible(int[] pos, Poly poly, boolean isFirstRound) {
     return isPolyPossible(pos[0], pos[1], pos[2], (PolyTrigon) poly, isFirstRound);
@@ -239,6 +331,10 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return indirectNeighbor;
   }
 
+  // ======================================================================
+  // ============= getPossibleFields general and for poly =================
+  // ======================================================================
+
 
   /**
    * Method that gives back a list of all the possible positions, that are over the edge to already
@@ -266,6 +362,12 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return res;
   }
 
+  /**
+   * gets the coordinates of all fields, where the given poly can be placed (the field with the indirect color neighbor).
+   * @param poly given poly
+   * @param isFirstRound if it is the first round
+   * @return list of coordinates, where the poly can be placed
+   */
   @Override
   public ArrayList<int[]> getPossibleFieldsForPoly(Poly poly, boolean isFirstRound){
     ArrayList<int[]> res = new ArrayList<>();
@@ -287,6 +389,10 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return res;
   }
 
+  // ======================================================================
+  // ================ Get possible Moves and help methods =================
+  // ======================================================================
+
   /**
    * Method that gives back a list of all possible moves of a list of remaining polygons
    *
@@ -296,17 +402,50 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    * if the polygon has to be mirrored.
    */
   @Override
-  public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound) {
+  public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound){
     ArrayList<Turn> res = new ArrayList<>();
-    for (Poly poly : remainingPolys) {
-      ArrayList<Turn> movesWithPoly = possibleFieldsAndShadesForPoly((PolyTrigon) poly,
-          isFirstRound);
-      res.addAll(movesWithPoly);
+    for (Poly p : remainingPolys){
+      Poly pClone = p.clone();
+      for (boolean mirrored : new boolean[] {true, false}){
+        A: for (int i = 0; i < 6; i++){
+          res.addAll(getMovesForPoly((PolyTrigon) p, isFirstRound));
+          p.rotateLeft();
+          if (p.equalsReal(pClone)){
+            continue A;
+          }
+        }
+        p.mirror();
+      }
     }
     return res;
   }
 
+  /**
+   * Method gives back a list of all possible moves for one specific poly (without rotation or mirror).
+   *
+   * @param p considered poly
+   * @param isFirstRound   boolean, if it is the first round
+   * @return returns a List with all the possible moves for p
+   */
+  public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
+    ArrayList<Turn> res = new ArrayList<>();
+    for (int[] pos : getPossibleFields(p.getColor(), isFirstRound)){
+      for(FieldTrigon ft : p.getShape()){
+        if(isPolyPossible(pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2],p, isFirstRound)){
+          res.add(new Turn(p.clone(), new int[] {pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2]}));
+        }
+      }
+    }
+    return res;
+  }
 
+  /**
+   * gets a list of moves, that are possible with the given poly at one position (considering rotation and mirroring as well).
+   * @param pos given position
+   * @param poly given poly
+   * @param isFirstRound if it is the first round
+   * @return list of turns, that are possible with that poly at the given position
+   */
   @Override
   public ArrayList<Turn> getPolyShadesPossible(int[] pos, Poly poly, boolean isFirstRound) {
     return getPolyShadesPossible(pos[0], pos[1], pos[2], (PolyTrigon) poly, isFirstRound);
@@ -340,7 +479,14 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     return res;
   }
 
-
+  /**
+   * this method gives back a list of the possible positions and the specific placement of possible
+   * placements of a given polygon represented by a list of turns.
+   *
+   * @param poly         the given polygon
+   * @param isFirstRound boolean, if it is the firstRound
+   * @return list of turns with the specific poly
+   */
   @Override
   public ArrayList<Turn> getPossibleFieldsAndShadesForPoly(Poly poly, boolean isFirstRound) {
     return possibleFieldsAndShadesForPoly((PolyTrigon) poly, isFirstRound);
@@ -370,44 +516,15 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   // ======================================================================
-  // ========================= Get possible Moves ===================================
+  // =================== Play turn and update board =======================
   // ======================================================================
 
-public ArrayList<Turn> getPossibleMoves2(ArrayList<Poly> remainingPolys, boolean isFirstRound){
-    ArrayList<Turn> res = new ArrayList<>();
-    for (Poly p : remainingPolys){
-      Poly pClone = p.clone();
-      for (boolean mirrored : new boolean[] {true, false}){
-        A: for (int i = 0; i < 6; i++){
-          res.addAll(getMovesForPoly((PolyTrigon) p, isFirstRound));
-          p.rotateLeft();
-          if (p.equalsReal(pClone)){
-            continue A;
-          }
-        }
-        p.mirror();
-      }
-    }
-    return res;
-}
-
-public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
-    ArrayList<Turn> res = new ArrayList<>();
-    for (int[] pos : getPossibleFields(p.getColor(), isFirstRound)){
-      for(FieldTrigon ft : p.getShape()){
-        if(isPolyPossible(pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2],p, isFirstRound)){
-          res.add(new Turn(p.clone(), new int[] {pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2]}));
-        }
-      }
-    }
-    return res;
-}
-
-
-  // ======================================================================
-  // ========================= Other Stuff ===================================
-  // ======================================================================
-
+  /**
+   * method to play a given turn.
+   * @param turn given turn
+   * @param isFirstRound if it is the first round
+   * @return boolean, if the turn was executed successful
+   */
   @Override
   public boolean playTurn(Turn turn, boolean isFirstRound) {
     if (turn == null) {
@@ -432,11 +549,6 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
     return false;
   }
 
-  @Override
-  public BoardTrigon clone() {
-    return new BoardTrigon(this.board, this.startFields);
-  }
-
   /**
    * Method updates the IngameView with the current colored Squares
    *
@@ -451,7 +563,7 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
   }
 
   // ======================================================================
-  // ========================= AI-Stuff ===================================
+  // ========================= AI-methods ===================================
   // ======================================================================
 
   /**
@@ -479,6 +591,13 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
     turn.setNumberBlockedSquares(num);
   }
 
+  /**
+   * this method returns the maximum width a color has occupied measured from the starting edge
+   *
+   * @param c      Color, which is looked for
+   * @return maximum width
+   */
+  @Override
   public int occupiedWidth(Color c){
     double maxWidth = -1;
     double minWidth = SIZE;
@@ -491,6 +610,13 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
     return (int) Math.round(maxWidth-minWidth);
   }
 
+  /**
+   * this method returns the maximum height a color has occupied measured from the starting edge
+   *
+   * @param c      Color, which is looked for
+   * @return maximum height
+   */
+  @Override
   public int occupiedHeight(Color c){
     int maxHeight = -1;
     int minHeight = SIZE;
@@ -503,6 +629,11 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
     return maxHeight-minHeight;
   }
 
+  /**
+   * evaluates the current score for a given color.
+   * @param c given color
+   * @return score as int
+   */
   @Override
   public int getScoreOfColor(Color c) {
     int res = 0;
@@ -514,6 +645,11 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
     return res;
   }
 
+  /**
+   * evaluates the current score for a given color reduced by the score of the other colors.
+   * @param c given color
+   * @return score as int
+   */
   @Override
   public int getScoreOfColorMiniMax(Color c) {
     int res = 0;
@@ -527,6 +663,24 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
     return res;
   }
 
+  // ======================================================================
+  // ================ Clone, toString, toCode  ============================
+  // ======================================================================
+
+  /**
+   * method to deep clone a board.
+   * @return returns the deep clone of the board
+   */
+  @Override
+  public BoardTrigon clone() {
+    return new BoardTrigon(this.board, this.startFields);
+  }
+
+  /**
+   * converts to board to a string.
+   * @return the string representation of the board
+   */
+  @Override
   public String toCode(){
     StringBuffer res = new StringBuffer();
     res.append("BoardTrigon bt = new BoardTrigon(new GMTrigon());\nbt.getBoard().clear();\n");
@@ -538,10 +692,6 @@ public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
       res.append("bt.getStartFields().add(" + ft.toCode() + ");");
     }
     return res.toString();
-  }
-
-  public ArrayList<FieldTrigon> getStartFields() {
-    return startFields;
   }
 }
 
