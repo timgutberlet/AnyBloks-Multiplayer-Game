@@ -2,21 +2,19 @@ package net.transmission;
 
 //import game.controller.JoinGameLobbyController;
 //import game.controller.LocalGameLobbyController;
+import game.controller.CHANGESTOBI.JoinGameLobbyControllerTOBI;
+import game.controller.CHANGESTOBI.LocalGameLobbyControllerTOBI;
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.EncodeException;
-import javax.websocket.Endpoint;
-import javax.websocket.EndpointConfig;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.chat.ChatMessagePacket;
 import net.server.ClientHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +42,8 @@ public class EndpointClient {
 		this.player.setGameSession(this.gameSession);
 		this.clientHandler = new ClientHandler(this);
 	}
-/*
-	public EndpointClient(LocalGameLobbyController localGameLobbyController, Player player) {
+
+	public EndpointClient(LocalGameLobbyControllerTOBI localGameLobbyControllerTOBI, Player player) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);
@@ -59,7 +57,7 @@ public class EndpointClient {
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
 
-	public EndpointClient(JoinGameLobbyController joinGameLobbyController, Player player) {
+	public EndpointClient(JoinGameLobbyControllerTOBI joinGameLobbyControllerTOBI, Player player) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);
@@ -72,7 +70,7 @@ public class EndpointClient {
 
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
-*/
+
 	public EndpointClient() {
 
 	}
