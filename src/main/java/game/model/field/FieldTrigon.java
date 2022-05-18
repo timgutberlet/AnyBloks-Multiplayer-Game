@@ -61,6 +61,10 @@ public class FieldTrigon extends Field implements Cloneable {
     return new FieldTrigon(this.pos[0], this.pos[1], this.pos[2], this.color);
   }
 
+  /**
+   * converts the board into code, which creates the board.
+   * @return string containing the creating code
+   */
   public String toCode(){
     return "new game.model.field.FieldTrigon(" + pos[0] + "," + pos[1] +"," + pos[2] + "," + "game.model.Color." + getColor() + ")";
   }

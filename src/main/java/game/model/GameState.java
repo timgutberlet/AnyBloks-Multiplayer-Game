@@ -17,7 +17,8 @@ import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 /**
- * this class represents the current state of one specific game
+ * this class represents the current state of one specific game.
+ * @author tiotto
  */
 
 public class GameState implements Serializable, Cloneable {
@@ -28,35 +29,30 @@ public class GameState implements Serializable, Cloneable {
   private static final long serialVersionUID = 1L;
 
   /**
-   * The session of this GameState
-   */
-  //private GameSession gameSession;
-
-  /**
-   * used game mode
+   * used game mode.
    */
   private GameMode gameMode;
 
   /**
-   * game board
+   * game board.
    */
   private Board board;
 
   /**
    * list of arrays of the remaining polys of each player (every player has the same index in player
-   * as their remaining polys)
+   * as their remaining polys).
    */
   private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
   /**
-   * list of every participating player
+   * list of every participating player.
    */
   private ArrayList<Player> playerList;
   /**
-   * round number
+   * round number.
    */
   private int round;
   /**
-   * turn number
+   * turn number.
    */
   private int turn;
   /**
@@ -64,12 +60,12 @@ public class GameState implements Serializable, Cloneable {
    */
   private final ArrayList<ArrayList<Turn>> history = new ArrayList<>();
   /**
-   * states if the game is currently running
+   * states if the game is currently running.
    */
   private boolean running;
 
   /**
-   * states if the game has already started
+   * states if the game has already started.
    */
   private boolean started;
 
@@ -78,6 +74,9 @@ public class GameState implements Serializable, Cloneable {
    */
   private ArrayList<Color> winners = new ArrayList<>();
 
+  /**
+   * if the game state currently plays a turn.
+   */
   private boolean playTurn;
 
   /**
@@ -86,7 +85,7 @@ public class GameState implements Serializable, Cloneable {
   private String stateEnding;
 
   /**
-   * initializing of all default parameters
+   * initializing of all default parameters.
    *
    * @param gameMode gives the game mode for the current game
    * @author tiotto
@@ -111,7 +110,7 @@ public class GameState implements Serializable, Cloneable {
   }
 
   /**
-   * Constructor to copy a GameState (only used in this.clone())
+   * Constructor to copy a GameState (only used in this.clone()).
    *
    * @param gameMode       gameMode
    * @param board          board
@@ -145,14 +144,14 @@ public class GameState implements Serializable, Cloneable {
   }
 
   /**
-   * empty constructor for jackson
+   * empty constructor for jackson.
    */
   public GameState() {
 
   }
 
   /**
-   * initalises the polys for all players depending on the selected gamemode
+   * initializes the polys for all players depending on the selected game mode.
    */
   private void init() {
     Debug.printMessage(this, "THE CURRENT PLAYER LIST SIZE IS " + this.playerList.size());
@@ -199,7 +198,7 @@ public class GameState implements Serializable, Cloneable {
   }
 
   /**
-   * returns the remaining polys for a specific player
+   * returns the remaining polys for a specific player.
    *
    * @param p player for whom the remaining parts are required
    * @return remaining polys for a specific player
@@ -223,6 +222,12 @@ public class GameState implements Serializable, Cloneable {
     return null;
   }
 
+  /**
+   * returns the cloned remaining polys for a specific player.
+   *
+   * @param p player for whom the remaining parts are required
+   * @return cloned remaining polys for a specific player
+   */
   public ArrayList<Poly> getRemainingPolysClone(Player p) {
 
     // Debug.printMessage(this, "Size fo remainingPolys arrayList:");
@@ -246,6 +251,10 @@ public class GameState implements Serializable, Cloneable {
     return null;
   }
 
+  /**
+   * get the player, that has to play the next move.
+   * @return player, that has to play the next move
+   */
   public Player getPlayerCurrent() {
     if (getPlayerList().size() > 0) {
       return getPlayerList().get(this.turn % this.playerList.size());
@@ -254,6 +263,10 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  /**
+   * get the color, that has to play next.
+   * @return color, that has to play next
+   */
   public Color getColorCurrent(){
     return getColorFromPlayer(getPlayerCurrent());
   }
@@ -262,6 +275,11 @@ public class GameState implements Serializable, Cloneable {
     return playerList;
   }
 
+  /**
+   * converts the color into a player.
+   * @param c given color
+   * @return corresponding player
+   */
   public Player getPlayerFromColor(Color c) {
     switch (c) {
       case RED:
@@ -282,11 +300,18 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  /**
+   * gets the color from a player.
+   * @param p given player
+   * @return corresponding color
+   */
   public Color getColorFromPlayer(Player p) {
     return Color.values()[getPlayerList().indexOf(p) + 1];
   }
 
-
+  /**
+   * increases the turn by one and if needed the round number.
+   */
   public void incTurn() {
     this.turn = turn + 1;
     this.round = turn / playerList.size() + 1;
@@ -296,14 +321,26 @@ public class GameState implements Serializable, Cloneable {
     return round;
   }
 
+  /**
+   * checks if it is the first round.
+   * @return boolean if it is the first round
+   */
   public boolean isFirstRound() {
     return (round == 1);
   }
 
+  /**
+   * if the game is running.
+   * @return if the game is running.
+   */
   public boolean isStateRunning() {
     return running;
   }
 
+  /**
+   * set the state of running.
+   * @param running new state
+   */
   public void setStateRunning(boolean running) {
     this.running = running;
     if (running) {
@@ -311,6 +348,10 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  /**
+   * if the game ended.
+   * @return if the game has ended
+   */
   public String getStateEnding() {
     return stateEnding;
   }
@@ -324,6 +365,10 @@ public class GameState implements Serializable, Cloneable {
     return started;
   }
 
+  /**
+   * checks if the game is at its end point.
+   * @return boolean, if the game is ended
+   */
   public boolean checkEnd() {
     boolean end = true;
     for (Player p : playerList) {
@@ -352,6 +397,11 @@ public class GameState implements Serializable, Cloneable {
     return end;
   }
 
+  /**
+   * checks if the game would be ended after the given turn.
+   * @param turn given turn.
+   * @return if the game would end after the turn
+   */
   public boolean checkEnd(Turn turn) {
 
     boolean end = true;
@@ -397,14 +447,19 @@ public class GameState implements Serializable, Cloneable {
   }
 
   /**
-   * Checks if gamestate currently plays a turn
+   * Checks if game state currently plays a turn.
    *
-   * @return
+   * @return playTurn
    */
   public boolean playsTurn() {
     return playTurn;
   }
 
+  /**
+   * initiates the play of a turn and sets while the turn is being played isTurn on true.
+   * @param turn played turn
+   * @return boolean if the turn was played right
+   */
   public boolean playTurn(Turn turn) {
     playTurn = true;
     if (checkEnd(turn)) {
@@ -426,6 +481,10 @@ public class GameState implements Serializable, Cloneable {
     return res;
   }
 
+  /**
+   * deep clone of the game state
+   * @return deep clone of the game state
+   */
   @Override
   public GameState clone() {
     Board boardCopy = this.board.clone();
@@ -458,6 +517,11 @@ public class GameState implements Serializable, Cloneable {
         running, started, stateEnding, historyCopy);
   }
 
+  /**
+   * clones the game state and plays the turn on the copy.
+   * @param turn given turn
+   * @return clone of the game state with the turn played
+   */
   public GameState tryTurn(Turn turn) {
     if (turn == null) {
       return this.clone();
@@ -467,6 +531,11 @@ public class GameState implements Serializable, Cloneable {
     return gameStateCopy;
   }
 
+  /**
+   * returns the color that needs to play next.
+   * @param c current color
+   * @return color that needs to play next
+   */
   public Color getNextColor(Color c) {
     switch (c) {
       case RED:
@@ -478,6 +547,10 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  /**
+   * converts to board to a string.
+   * @return the string representation of the board
+   */
   @Override
   public String toString() {
 
@@ -487,36 +560,45 @@ public class GameState implements Serializable, Cloneable {
       result += p.getUsername() + "\n";
     }
 
-		/*
-		result += "\nSize fo remainingPolys arrayList:\n";
-		result += "Entries: "+remainingPolys.size() +"\n";
-		for(ArrayList<Poly> arr : this.remainingPolys){
-			result += "		Polys: "+arr.size() + "\n";
-		}
-		*
-		 */
+    if (Debug.debug) {
+      result += "\nSize fo remainingPolys arrayList:\n";
+      result += "Entries: " + remainingPolys.size() + "\n";
+      for (ArrayList<Poly> arr : this.remainingPolys) {
+        result += "		Polys: " + arr.size() + "\n";
+      }
+    }
+
+
+    if (Debug.debug) {
+      return "GameState{" +
+          "\n player=" + playerList +
+          "\n round=" + round +
+          "\n turn=" + turn +
+          "\n running=" + running +
+          "\n started=" + started +
+          "\n stateEnding='" + stateEnding + '\'' +
+          '}' + '\n';
+    }
     return result;
   }
-    /*
-    return "GameState{" +
-        "\n player=" + player +
-        "\n round=" + round +
-        "\n turn=" + turn +
-        "\n running=" + running +
-        "\n started=" + started +
-        "\n stateEnding='" + stateEnding + '\'' +
-        '}' + '\n';
-  }
-*/
 
+  /**
+   * converts an integer into a two digit string
+   * @param i integer
+   * @return two digit string
+   */
   private static String twoDigit(int i) {
     if (i < 10) {
       return "0" + i;
     }
     return Integer.toString(i);
   }
-/*
-  public String getHistory(){ // table over all played poly sizes for every player
+
+  /**
+   * gives back a String that represents the history of the game
+   * @return String that represents the history of the game
+   */
+  public String getHistoryString(){ // table over all played poly sizes for every player
     StringBuffer res = new StringBuffer();
     for (int i = 1; i < getRound(); i++){
       res.append("" + twoDigit(i));
@@ -546,7 +628,7 @@ public class GameState implements Serializable, Cloneable {
       res.append(" | "+ sum);
     }
     return res.toString();
-  }*/
+  }
 
   public GameMode getGameMode() {
     return gameMode;
@@ -572,6 +654,10 @@ public class GameState implements Serializable, Cloneable {
     return winners;
   }
 
+  /**
+   * returns an array with all the current scores sorted after their color
+   * @return array with all the current scores sorted after their color
+   */
   public int[] getScores(){
     int[] res = new int[4];
     res[0] = board.getScoreOfColor(Color.RED);
@@ -581,6 +667,10 @@ public class GameState implements Serializable, Cloneable {
     return res;
   }
 
+  /**
+   * stores the room discovery for the given turn in the turn itself.
+   * @param t given turn
+   */
   public void assignRoomDiscovery(Turn t){
     int heightBefore = board.occupiedHeight(t.getColor());
     int widthBefore = board.occupiedWidth(t.getColor());

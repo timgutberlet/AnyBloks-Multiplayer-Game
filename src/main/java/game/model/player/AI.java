@@ -5,6 +5,8 @@ import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.board.Board;
+import game.model.player.HardAI.MiniMax.MiniMax;
+import game.model.player.HardAI.MonteCarloTreeSearch.MonteCarloTreeSearch;
 import game.model.polygon.Poly;
 import java.util.ArrayList;
 
@@ -16,19 +18,13 @@ import java.util.ArrayList;
 
 public class AI {
 
-  /**
-   * Initial values of Alpha and Beta for the minimax algorithm with alpha-beta pruning
-   */
-  static int MAX = 1000;
-  static int MIN = -1000;
-
-
   static int[][] roundSections = new int[][] {{5, 20}, //Classic Gamemode
       {2,16}, //Duo Gamemode
       {2,16}, //Junior Gamemode
       {6, 23}};   //Trigon Gamemode
+
   /**
-   * calculated the next move for an AI Player depending on the set difficulty
+   * calculated the next move for an AI Player depending on the set difficulty.
    *
    * @param gameState current gameState of the game
    * @param player    considered player
@@ -73,7 +69,7 @@ public class AI {
   }
 
   /**
-   * calculates the next easy move through sorting the possible moves after the size of the poly
+   * calculates the next easy move through sorting the possible moves after the size of the poly.
    *
    * @param board          considered board
    * @param remainingPolys remaining polys of the player which the calculation is for
@@ -104,7 +100,7 @@ public class AI {
 
   /**
    * calculates the next move through sorting the possible moves after the blocked fields of the
-   * opponents as the first criteria and the size of the poly as the second criteria
+   * opponents as the first criteria and the size of the poly as the second criteria.
    *
    * @param board          considered board
    * @param remainingPolys remaining polys of the player which the calculation is for
@@ -136,7 +132,10 @@ public class AI {
   }
 
   /**
-   * calculates the next move with the minimax algorithm or a variation of it
+   * calculates the next move out of different tactics through the game.
+   * First the algorithm tries to get as spread as possible with its polys.
+   * Second the algorithm tries to block the other players moves.
+   * Third it evaluates the best move till the end of the game.
    *
    * @param gameState current gameState
    * @param player    player, for whom the next move is calculated
@@ -144,55 +143,35 @@ public class AI {
    */
   public static Turn calculateNextHardMove(GameState gameState, Player player) {
     int gameModeNumber = 0;
-    switch(gameState.getGameMode().getName()){
-      case "CLASSIC": gameModeNumber = 0; break;
-      case "DUO": gameModeNumber = 1; break;
-      case "JUNIOR": gameModeNumber = 2; break;
-      case "TRIGON": gameModeNumber = 3; break;
+    switch (gameState.getGameMode().getName()) {
+      case "CLASSIC":
+        gameModeNumber = 0;
+        break;
+      case "DUO":
+        gameModeNumber = 1;
+        break;
+      case "JUNIOR":
+        gameModeNumber = 2;
+        break;
+      case "TRIGON":
+        gameModeNumber = 3;
+        break;
     }
-    if(gameState.getRound() < roundSections[gameModeNumber][0] + 1){
+    if (gameState.getRound() < roundSections[gameModeNumber][0] + 1) {
       return calculateNextHardMoveRoomDiscovery(gameState, player);
-    } else if(gameState.getRound() < roundSections[gameModeNumber][1] + 1){
+    } else if (gameState.getRound() < roundSections[gameModeNumber][1] + 1) {
       return calculateNextHardMoveAggressive(gameState, player);
     } else {
-      return calculateNextHardMoveMCTS(gameState,player);
+      return calculateNextHardMoveMCTS(gameState, player);
     }
-/*    long start = System.currentTimeMillis();
-    int bestVal = MIN;
-    Turn bestTurn = null;
-    int alpha = MIN;
-    int beta = MAX;
-    ArrayList<Turn> possibleMoves = gameState.getBoard()
-        .getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
-    possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
-    for (Turn t : possibleMoves) { //for every possible turn are the future steps been calculated and then the best is chosen
-      int turnVal;
-      if (gameState.getPlayerList().size()
-          == 2) { //with two players the real minimax algorithm can be used for the evaluation of the turn
-//        turnVal = minimax2Player(gameState.tryTurn(t),
-//            gameState.getNextColor(gameState.getColorFromPlayer(player)), 0, false,
-//            2); // start with the next color
-        turnVal = minimax2Player2(gameState.tryTurn(t),
-            gameState.getNextColor(gameState.getColorFromPlayer(player)), 0, false, alpha, beta, 2);
-
-      } else { //with four players a variation of the minimax algorithm can be used for the evaluation of the turn
-        turnVal = minimax4Player(gameState.tryTurn(t), gameState.getColorFromPlayer(player), 0,
-            2); // always with the color of the current player
-      }
-      if (turnVal > bestVal) {
-        bestTurn = t;
-        bestVal = turnVal;
-      }
-      alpha = Math.max(bestVal, turnVal);
-      if (beta <= alpha) {
-        break;
-      }
-    }
-    long finish = System.currentTimeMillis();
-    System.out.println("Time: " + (finish - start) + " ms");
-    return bestTurn;*/
   }
 
+  /**
+   * calculates the next move which offers the most room discovery, means is the most spread one compared to the situation before.
+   * @param gameState current game state
+   * @param player ai player which needs to play
+   * @return "best" turn
+   */
   public static Turn calculateNextHardMoveRoomDiscovery(GameState gameState, Player player){
       ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
       for (Turn turn : possibleMoves) {
@@ -217,192 +196,42 @@ public class AI {
       return possibleMoves.get(rand);
   }
 
+  /**
+   * calculates the next move, which can block as most fields, where opponents can place polys in the future, as possible.
+   * @param gameState current state
+   * @param player ai player which needs to play
+   * @return "best" turn
+   */
   public static Turn calculateNextHardMoveAggressive(GameState gameState, Player player){
     return calculateNextMiddleMove(gameState.getBoard(), gameState.getRemainingPolys(player),
         gameState.isFirstRound());
   }
 
+  /**
+   * calculates the next move, which is calculated by the monte carlo tree search
+   * @param gameState current state
+   * @param player ai player which needs to play
+   * @return "best" turn
+   */
   public static Turn calculateNextHardMoveMCTS(GameState gameState, Player player){
-    return game.model.player.HardAI.MonteCarloTreeSearch.findNextMove(gameState);
-  }
-
-
-  /**
-   * calculated the next move with two players with a view in the future of h steps under the
-   * assumption that all other player play perfectly as well
-   *
-   * @param gameState used gameState (should be copied when given)
-   * @param c         color of the current player (switches between the min and the max player)
-   * @param depth     current depth of the minimax tree
-   * @param isMax     boolean, if the current evaluation is for the max or the min player
-   * @param h         maximum steps in the future / height of the minimax tree
-   * @return best result that can be achieved with the current turn
-   */
-  public static int minimax2Player(GameState gameState, Color c, int depth, boolean isMax, int h) {
-    if (depth == h) {
-      if (h % 2 == 0) {
-        return evaluate(gameState.getBoard(), gameState.getNextColor(c));
-      } else {
-        return evaluate(gameState.getBoard(), c);
-      }
-    }
-
-    if (isMax) { //calculation for the max player with the goal to maximize the best integer
-      int best = -1000; //lower than the worst result
-      for (Turn t : gameState.getBoard()
-          .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
-              gameState.isFirstRound())) { //for every possible turn, the result of the next player will be calculated
-        best = Math.max(best,
-            minimax2Player(gameState.tryTurn(t), gameState.getNextColor(c), depth + 1, false,
-                h)); //max of the already calculated evaluation and the current evaluation with the played turn
-      }
-      return best;
-    } else { //calculation for the min player with the goal to minimize the best integer
-      int best = 1000; //higher than the best result
-      for (Turn t : gameState.getBoard()
-          .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
-              gameState.isFirstRound())) {//for every possible turn, the result of the next player will be calculated
-        best = Math.min(best,
-            minimax2Player(gameState.tryTurn(t), gameState.getNextColor(c), depth + 1, true,
-                h)); //min of the already calculated evaluation and the current evaluation with the played turn
-      }
-      return best;
-    }
-  }
-
-  public static int minimax2Player2(GameState gameState, Color c, int depth, boolean isMax,
-      int alpha, int beta, int h) {
-    if (depth == h) {
-      if (h % 2 == 0) {
-        return evaluate(gameState.getBoard(), gameState.getNextColor(c));
-      } else {
-        return evaluate(gameState.getBoard(), c);
-      }
-    }
-
-    if (isMax) { //calculation for the max player with the goal to maximize the best integer
-      int best = MIN; //lower than the worst result
-      ArrayList<Turn> possibleMoves = gameState.getBoard()
-          .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
-              gameState.isFirstRound());
-      possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
-
-      for (Turn t : possibleMoves) { //for every possible turn, the result of the next player will be calculated
-        int val = Math.max(best,
-            minimax2Player2(gameState.tryTurn(t), gameState.getNextColor(c), depth + 1, false,
-                alpha, beta,
-                h)); //max of the already calculated evaluation and the current evaluation with the played turn
-        best = Math.max(best, val);
-        alpha = Math.max(alpha, best);
-
-        if (beta <= alpha) {
-          break;
-        }
-      }
-      return best;
-    } else { //calculation for the min player with the goal to minimize the best integer
-      int best = MAX; //higher than the best result
-      ArrayList<Turn> possibleMoves = gameState.getBoard()
-          .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
-              gameState.isFirstRound());
-      possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
-
-      for (Turn t : possibleMoves) {//for every possible turn, the result of the next player will be calculated
-        int val = Math.min(best,
-            minimax2Player2(gameState.tryTurn(t), gameState.getNextColor(c), depth + 1, true, alpha,
-                beta, h));
-        best = Math.min(best, val);
-        beta = Math.min(beta, best);
-
-        if (beta <= alpha) { //alpha-beta pruning
-          break;
-        }
-      }
-      return best;
-    }
+    return MonteCarloTreeSearch.findNextMove(gameState);
   }
 
   /**
-   * minimax evaluation of the board for a specific color
-   *
-   * @param board analyzed board
-   * @param c     considered color
-   * @return returns the evaluation, which subtracts the score of the opponents from the score of
-   * the considered color
+   * calculates the next move, which is calculated by the minimax algorithm
+   * @param gameState current state
+   * @param player ai player which needs to play
+   * @return "best" turn
    */
-  static int evaluate(Board board, Color c) {
-    return board.getScoreOfColorMiniMax(c);
+  public static Turn calculateNextHardMoveMiniMax(GameState gameState, Player player){
+    return MiniMax.calculateNextHardMoveMiniMax(gameState,player);
   }
 
   /**
-   * calculates the next move with four players with a view in the future of h steps under the
-   * assumption, that all other players play with the middle AI
-   *
-   * @param gameState used gameState (should be copied when given)
-   * @param c         color of the player, which the calculation is for
-   * @param depth     current steps in the future
-   * @param h         maximum steps in the future
-   * @return best result that can be achieved after the other players have played
-   * <p>
-   * actually it is not a minimax algorithm anymore, but only a max algorithm for the playing
-   * player
+   * sets the round sections for a specific game mode
+   * @param a number of the game mode
+   * @param value new round sections
    */
-  public static int minimax4Player(GameState gameState, Color c, int depth, int h) {
-    if (depth == h) {
-      return evaluate(gameState.getBoard(),
-          c); //after the defined steps into the future the evaluation of the board for the current color will be returned
-    }
-    Color current = c;
-    for (int i = 0; i < 3; i++) { //calculate the other players turns
-      current = gameState.getNextColor(current);
-      gameState.playTurn(calculateNextMiddleMove(gameState.getBoard(),
-          gameState.getRemainingPolys(gameState.getPlayerFromColor(current)),
-          gameState.isFirstRound()));
-    }
-    int best = -1000; //lower than the worst possible result
-    for (Turn t : gameState.getBoard()
-        .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerFromColor(c)),
-            gameState.isFirstRound())) { //for every possible turn, another round will be calculated
-      best = Math.max(best,
-          minimax4Player(gameState.tryTurn(t), gameState.getNextColor(current), depth + 1, h));
-    }
-    return best; //return the evaluation of the best move
-  }
-
-  /*
-  public static Turn calculateNextHardMove(Player player, GameLogic gameLogic) {
-    ArrayList<Turn> possibleMoves = gameLogic.getPossibleMoves(player);
-    for (Turn turn : possibleMoves) {
-      gameLogic.assignNumberBlockedSquares(turn);
-      gameLogic.assignRoomDiscovery(turn);
-    }
-
-    int currentRoomDiscovery = GameLogic.occupiedHeight(gameLogic.getColorFromPlayer(player),
-        gameLogic.getGameState().getBoard(), player.getStartX()) + GameLogic.occupiedHeight(
-        gameLogic.getColorFromPlayer(player), gameLogic.getGameState().getBoard(),
-        player.getStartY());
-
-    if (currentRoomDiscovery > gameLogic.getGameState().getBoard()
-        .getSize()) { //If more than the half of the game board is discovered, it concentrates on playing against the enemy
-      possibleMoves.sort(new Comparator<Turn>() {
-        public int compare(Turn o1, Turn o2) {
-          return o1.getNumberBlockedSquares() - o2.getNumberBlockedSquares();
-        }
-      });
-    } else {
-      possibleMoves.sort(new Comparator<Turn>() {
-        public int compare(Turn o1, Turn o2) {
-          return o1.getRoomDiscovery() - o2.getRoomDiscovery();
-        }
-      });
-    }
-    if (possibleMoves.size() == 0) { //"pass" to implement
-      return null;
-    }
-    return possibleMoves.get(0);
-  }
- */
-
   public static void setRoundSections(int a, int[] value){
     roundSections[a] = value;
   }

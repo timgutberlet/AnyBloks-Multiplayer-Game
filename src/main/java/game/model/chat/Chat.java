@@ -19,7 +19,7 @@ public class Chat {
   }
 
   /**
-   * the chat runs in parallel to the main game, therefore it lives in its own thread
+   * the chat runs in parallel to the main game, therefore it lives in its own thread.
    *
    * @author tgeilen
    */
@@ -35,7 +35,7 @@ public class Chat {
   }
 
   /**
-   * as there is no elegant way to kill a thread, a simple boolean variable is used
+   * as there is no elegant way to kill a thread, a simple boolean variable is used.
    *
    * @author tgeilen
    */
@@ -44,7 +44,7 @@ public class Chat {
   }
 
   /**
-   * function to add a message to the chat
+   * function to add a message to the chat.
    * <p>
    * for now it debugs to the console
    *
@@ -58,14 +58,26 @@ public class Chat {
     Debug.printMessage("[CHAT] " + player.getUsername() + ": " + message);
   }
 
+  /**
+   * adds a given chat message.
+   * @param chatMessage given chat message
+   */
   public void addMessage(ChatMessage chatMessage) {
     chatMessages.add(chatMessage);
   }
 
+  /**
+   * returns all the chat messages.
+   * @return returns a list with all chatMessages
+   */
   public ArrayList<ChatMessage> getChat() {
     return chatMessages;
   }
 
+  /**
+   * String representation of the chat.
+   * @return string representation of the chat
+   */
   @Override
   public String toString() {
     String result = "";

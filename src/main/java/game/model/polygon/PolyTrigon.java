@@ -7,16 +7,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * this class represents a specific polygon of the game
+ * this class represents a specific polygon of the game.
  *
  * @author tiotto
- * @author tgutberl
  */
 
 public class PolyTrigon extends Poly {
 
   public static ArrayList<ArrayList<FieldTrigon>> shapeListTrigon = new ArrayList<>();
 
+  /**
+   * Initializing all pieces of the trigon game.
+   * @author tiotto
+   */
   static {
     FieldTrigon f000 = new FieldTrigon(0, 0, 0);
     FieldTrigon f001 = new FieldTrigon(0, 0, 1);
@@ -114,12 +117,25 @@ public class PolyTrigon extends Poly {
     }
   }
 
+  /**
+   * initializes all values of a poly, so it can be used to clone a poly.
+   * @param shape shape of the poly
+   * @param color color of the poly
+   * @param rotation rotation of the poly
+   * @param isMirrored if the poly is mirrored
+   */
   public PolyTrigon(ArrayList<FieldTrigon> shape, Color color, int rotation, boolean isMirrored) {
     super(color, rotation, isMirrored);
     this.shape = shape;
     this.size = shape.size();
   }
 
+  /**
+   * compares two shapes and evaluates if they are equal independent of rotation and mirroring.
+   * @param s1 shape 1
+   * @param s2 shape 2
+   * @return if they are the same
+   */
   public static boolean shapeEquals(ArrayList<FieldTrigon> s1, ArrayList<FieldTrigon> s2) {
     if (s1.size() != s2.size()) {
       return false;
@@ -237,10 +253,18 @@ public class PolyTrigon extends Poly {
     isMirrored = !isMirrored;
   }
 
+  /**
+   * gets the shape of the poly.
+   * @return shape of the poly
+   */
   public ArrayList<FieldTrigon> getShape() {
     return shape;
   }
 
+  /**
+   * gets deep clone of the poly.
+   * @return deep clone of the poly
+   */
   @Override
   public PolyTrigon clone() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
@@ -250,6 +274,11 @@ public class PolyTrigon extends Poly {
     return new PolyTrigon(newShape, color, rotation, isMirrored);
   }
 
+  /**
+   * evaluates if o is the same poly but maybe in another rotation or mirroring.
+   * @param o other object
+   * @return if they are the same
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -274,6 +303,11 @@ public class PolyTrigon extends Poly {
     return res && color == poly.color;
   }
 
+  /**
+   * evaluates if o is exactly the same poly.
+   * @param o other object
+   * @return if they are exactly the same
+   */
   @Override
   public boolean equalsReal(Object o) {
     if (this == o) {
@@ -317,6 +351,10 @@ public class PolyTrigon extends Poly {
     return false;
   }
 
+  /**
+   * returns the height of the poly.
+   * @return height of the poly
+   */
   @Override
   public int getHeight() {
     int res = 0;
@@ -328,6 +366,10 @@ public class PolyTrigon extends Poly {
     return res + 1;
   }
 
+  /**
+   * returns the width of the poly.
+   * @return width of the poly
+   */
   @Override
   public int getWidth() {
     int res = 0;
@@ -339,6 +381,14 @@ public class PolyTrigon extends Poly {
     return res + 1;
   }
 
+
+  /**
+   * checks if the poly contains the given field
+   * @param x coordinate
+   * @param y coordinate
+   * @param isRight coordinate
+   * @return boolean if the poly contains the field
+   */
   public boolean containsField(int x, int y, int isRight) {
     for (FieldTrigon ft : shape) {
       if (ft.pos[0] == x && ft.pos[1] == y && ft.pos[2] == isRight) {
@@ -348,6 +398,10 @@ public class PolyTrigon extends Poly {
     return false;
   }
 
+  /**
+   * converts the board into code, which creates the board.
+   * @return string containing the creating code
+   */
   public String toCode(){
     StringBuffer res = new StringBuffer("ArrayList<FieldTrigon> shape = new ArrayList<>();\n");
     for (FieldTrigon ft : shape){

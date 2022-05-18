@@ -12,23 +12,32 @@ import java.util.Objects;
 public abstract class Field {
 
   /**
-   * contains the position of the square
+   * contains the position of the square.
    */
   public int[] pos;
 
   /**
-   * current color of the square
+   * current color of the square.
    */
   public Color color;
 
+  /**
+   * get current color of the square.
+   */
   public Color getColor() {
     return color;
   }
 
+  /**
+   * set current color of the square.
+   */
   public void setColor(Color color) {
     this.color = color;
   }
 
+  /**
+   * get the position of the square.
+   */
   public int[] getPos() {
     return pos;
   }
@@ -97,6 +106,10 @@ public abstract class Field {
     return true;
   }
 
+  /**
+   * returns the hash code of the field.
+   * @return the hash code of the field
+   */
   @Override
   public int hashCode() {
     int result = Objects.hash(color);

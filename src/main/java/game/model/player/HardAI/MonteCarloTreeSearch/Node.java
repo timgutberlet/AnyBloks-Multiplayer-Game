@@ -1,19 +1,37 @@
-package game.model.player.HardAI;
+package game.model.player.HardAI.MonteCarloTreeSearch;
 
-import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import java.util.ArrayList;
 
 /**
+ * represents one node of a monte carlo tree search.
  * @author tiotto
  * @date 16.05.2022
  */
 public class Node {
+
+  /**
+   * state of the node.
+   */
   NodeState state;
+
+  /**
+   * parent node.
+   */
   Node parent;
+
+  /**
+   * list of child nodes.
+   */
   ArrayList<Node> childArray;
 
+  /**
+   * creates a node out of the parent node and the initializing components of the node state.
+   * @param parent parent
+   * @param state gameState
+   * @param playedTurn last played turn to get to the gameState
+   */
   public Node(Node parent, GameState state, Turn playedTurn){
     this.parent = parent;
     this.state = new NodeState(state, playedTurn);
@@ -44,10 +62,18 @@ public class Node {
     this.childArray = childArray;
   }
 
+  /**
+   * gives back a random picked child.
+   * @return random picked child.
+   */
   public Node getRandomChildNode(){
     return childArray.get((int) (Math.random() * childArray.size()));
   }
 
+  /**
+   * gives back the child with the highest score.
+   * @return child with the highest score.
+   */
   public Node getChildWithMaxScore(){
     double max = Integer.MIN_VALUE;
     Node winner = null;
@@ -64,6 +90,10 @@ public class Node {
     return winner;
   }
 
+  /**
+   * deep clones a node.
+   * @return clones node
+   */
   public Node clone(){
     if (getState().getPlayedTurn() == null){
       return new Node(parent, getState().getGameState().clone(), null);

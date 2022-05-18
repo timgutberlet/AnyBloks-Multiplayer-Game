@@ -7,20 +7,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * this class represents a specific polygon of the game
+ * this class represents a specific polygon of the game.
  *
  * @author tiotto
- * @author tgutberl
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PolySquare extends Poly {
 
   public static ArrayList<ArrayList<FieldSquare>> shapeListClassic = new ArrayList<>();
-  public static ArrayList<ArrayList<FieldSquare>> shapeListDuo = new ArrayList<>();
+  public static ArrayList<ArrayList<FieldSquare>> shapeListDuo;
   public static ArrayList<ArrayList<FieldSquare>> shapeListJunior = new ArrayList<>();
 
   /**
-   * Initializing all pieces of the basic Game
+   * Initializing all pieces of the basic Game modes.
    *
    * @author tgutberl
    * @author tiotto
@@ -122,12 +121,12 @@ public class PolySquare extends Poly {
 
   /**
    * represents the shape of the polygon as an array of boolean whether the position is filled with
-   * the polygon or not
+   * the polygon or not.
    */
   public ArrayList<FieldSquare> shape;
 
   /**
-   * empty constructor for jackson
+   * empty constructor for jackson.
    */
 
   public PolySquare() {
@@ -135,7 +134,7 @@ public class PolySquare extends Poly {
   }
 
   /**
-   * Initializes the default values of a polygon
+   * Initializes the default values of a polygon.
    *
    * @param shape shape of the polygon
    * @param color color of the polygon
@@ -149,12 +148,25 @@ public class PolySquare extends Poly {
     }
   }
 
+  /**
+   * initializes all values of a poly, so it can be used to clone a poly.
+   * @param shape shape of the poly
+   * @param color color of the poly
+   * @param rotation rotation of the poly
+   * @param isMirrored if the poly is mirrored
+   */
   public PolySquare(ArrayList<FieldSquare> shape, Color color, int rotation, boolean isMirrored) {
     super(color, rotation, isMirrored);
     this.shape = shape;
     this.size = shape.size();
   }
 
+  /**
+   * compares two shapes and evaluates if they are equal independent of rotation and mirroring.
+   * @param s1 shape 1
+   * @param s2 shape 2
+   * @return if they are the same
+   */
   public static boolean shapeEquals(ArrayList<FieldSquare> s1, ArrayList<FieldSquare> s2) {
     if (s1.size() != s2.size()) {
       return false;
@@ -173,6 +185,11 @@ public class PolySquare extends Poly {
     return true;
   }
 
+  /**
+   * returns the height of the poly.
+   * @return height of the poly
+   */
+  @Override
   public int getHeight() {
     int res = 0;
     for (FieldSquare fs : shape) {
@@ -183,6 +200,11 @@ public class PolySquare extends Poly {
     return res + 1;
   }
 
+  /**
+   * returns the width of the poly.
+   * @return width of the poly
+   */
+  @Override
   public int getWidth() {
     int res = 0;
     for (FieldSquare fs : shape) {
@@ -194,8 +216,9 @@ public class PolySquare extends Poly {
   }
 
   /**
-   * rotates the polygon to the left
+   * rotates the polygon to the left.
    */
+  @Override
   public void rotateLeft() {
     ArrayList<FieldSquare> newShape = new ArrayList<>();
     for (FieldSquare fs : shape) {
@@ -206,8 +229,9 @@ public class PolySquare extends Poly {
   }
 
   /**
-   * rotates the polygon to the right
+   * rotates the polygon to the right.
    */
+  @Override
   public void rotateRight() {
     for (int i = 1; i < 4; i++) {
       this.rotateLeft();
@@ -215,8 +239,9 @@ public class PolySquare extends Poly {
   }
 
   /**
-   * mirrors the polygon
+   * mirrors the polygon.
    */
+  @Override
   public void mirror() {
     ArrayList<FieldSquare> newShape = new ArrayList<>();
     for (FieldSquare fs : shape) {
@@ -226,40 +251,18 @@ public class PolySquare extends Poly {
     isMirrored = !isMirrored;
   }
 
+  /**
+   * gets the shape of the poly.
+   * @return shape of the poly
+   */
   public ArrayList<FieldSquare> getShape() {
     return shape;
   }
 
-  /* public String toString() {
-    StringBuffer res = new StringBuffer();
-    String element = "";
-    switch (getColor()) {
-      case RED:
-        element = "\uD83D\uDFE5";
-        break;
-      case BLUE:
-        element = "\uD83D\uDFE6";
-        break;
-      case GREEN:
-        element = "\uD83D\uDFE9";
-        break;
-      case YELLOW:
-        element = "\uD83D\uDFE8";
-        break;
-    }
-    for (int i = 0; i < width; i++) {
-      for (int j = 0; j < height; j++) {
-        if (shape[i][j]) {
-          res.append(element);
-        } else {
-          res.append("\uD83D\uDFEB");
-        }
-      }
-      res.append("\n");
-    }
-    return res.toString();
-  } */
-
+  /**
+   * gets deep clone of the poly.
+   * @return deep clone of the poly
+   */
   @Override
   public PolySquare clone() {
     ArrayList<FieldSquare> newShape = new ArrayList<>();
@@ -269,6 +272,11 @@ public class PolySquare extends Poly {
     return new PolySquare(newShape, color, rotation, isMirrored);
   }
 
+  /**
+   * evaluates if o is the same poly but maybe in another rotation or mirroring.
+   * @param o other object
+   * @return if they are the same
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -293,6 +301,11 @@ public class PolySquare extends Poly {
     return res && color == poly.color;
   }
 
+  /**
+   * evaluates if o is exactly the same poly.
+   * @param o other object
+   * @return if they are exactly the same
+   */
   @Override
   public boolean equalsReal(Object o) {
     if (this == o) {
@@ -336,6 +349,12 @@ public class PolySquare extends Poly {
     return false;
   }
 
+  /**
+   * checks if the poly contains the given field
+   * @param x coordinate
+   * @param y coordinate
+   * @return boolean if the poly contains the field
+   */
   public boolean containsField(int x, int y) {
     for (FieldSquare fs : shape) {
       if (fs.pos[0] == x && fs.pos[1] == y) {
@@ -345,6 +364,10 @@ public class PolySquare extends Poly {
     return false;
   }
 
+  /**
+   * converts to board to a string.
+   * @return the string representation of the board
+   */
   @Override
   public String toString() {
     StringBuffer res = new StringBuffer();
@@ -376,6 +399,10 @@ public class PolySquare extends Poly {
     return res.toString();
   }
 
+  /**
+   * converts the board into code, which creates the board.
+   * @return string containing the creating code
+   */
   public String toCode(){
     StringBuffer res = new StringBuffer("ArrayList<FieldSquare> shape = new ArrayList<>();\n");
     for (FieldSquare fs : shape){

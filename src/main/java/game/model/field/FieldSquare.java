@@ -23,20 +23,26 @@ public class FieldSquare extends Field implements Cloneable {
    */
 
   /**
-   * empty constructor for jackson
+   * empty constructor for jackson.
    */
   public FieldSquare() {
 
   }
 
-
+  /**
+   * creates a new empty field
+   *
+   * @param col column of the square on the board
+   * @param row row of the square on the board
+   * @author tiotto
+   */
   public FieldSquare(int col, int row) {
     this.pos = new int[]{col, row};
     this.color = Color.WHITE;
   }
 
   /**
-   * initializing the default values
+   * initializing the default values.
    *
    * @param col column of the square on the board
    * @param row row of the square on the board
@@ -49,7 +55,7 @@ public class FieldSquare extends Field implements Cloneable {
   }
 
   /**
-   * creates a real copy of the square
+   * creates a real copy of the square.
    *
    * @return real copy of the square
    */
@@ -58,6 +64,10 @@ public class FieldSquare extends Field implements Cloneable {
     return new FieldSquare(this.pos[0], this.pos[1], this.color);
   }
 
+  /**
+   * converts the board into code, which creates the board.
+   * @return string containing the creating code
+   */
   public String toCode(){
     return "new game.model.field.FieldSquare(" + pos[0] + "," + pos[1] +"," + "game.model.Color." + getColor() + ")";
   }
