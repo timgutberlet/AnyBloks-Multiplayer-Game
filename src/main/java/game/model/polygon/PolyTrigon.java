@@ -1,5 +1,6 @@
 package game.model.polygon;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.Color;
 import game.model.field.FieldSquare;
 import game.model.field.FieldTrigon;
@@ -11,10 +12,13 @@ import java.util.Arrays;
  *
  * @author tiotto
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PolyTrigon extends Poly {
 
   public static ArrayList<ArrayList<FieldTrigon>> shapeListTrigon = new ArrayList<>();
+
+  private String polyType = "Trigon";
+
 
   /**
    * Initializing all pieces of the trigon game.
@@ -103,6 +107,13 @@ public class PolyTrigon extends Poly {
   public ArrayList<FieldTrigon> shape;
 
   /**
+   * empty constructor for jackson.
+   */
+  public PolyTrigon(){
+
+  }
+
+  /**
    * Initializes the default values of a polygon
    *
    * @param shape shape of the polygon
@@ -115,6 +126,7 @@ public class PolyTrigon extends Poly {
     for (FieldTrigon ft : shape) {
       ft.setColor(color);
     }
+    this.polyType  = "Trigon";
   }
 
   /**
@@ -399,6 +411,14 @@ public class PolyTrigon extends Poly {
   }
 
   /**
+   * returns the type of the poly.
+   * @return
+   */
+  public String getPolyType(){
+    return this.polyType;
+  }
+
+  /**
    * converts the board into code, which creates the board.
    * @return string containing the creating code
    */
@@ -409,5 +429,9 @@ public class PolyTrigon extends Poly {
     }
     res.append("PolyTrigon p = new PolyTrigon(shape, Color.Blue);\n");
     return res.toString();
+  }
+
+  public void setPolyType(String polyType) {
+    this.polyType = polyType;
   }
 }

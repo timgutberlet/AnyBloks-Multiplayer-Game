@@ -18,6 +18,8 @@ public class PolySquare extends Poly {
   public static ArrayList<ArrayList<FieldSquare>> shapeListDuo;
   public static ArrayList<ArrayList<FieldSquare>> shapeListJunior = new ArrayList<>();
 
+  private String polyType = "Square";
+
   /**
    * Initializing all pieces of the basic Game modes.
    *
@@ -146,6 +148,7 @@ public class PolySquare extends Poly {
     for (FieldSquare fs : shape) {
       fs.setColor(color);
     }
+    this.polyType = "Square";
   }
 
   /**
@@ -400,6 +403,14 @@ public class PolySquare extends Poly {
   }
 
   /**
+   * returns the type of the poly.
+   * @return
+   */
+  public String getPolyType(){
+    return this.polyType;
+  }
+
+  /**
    * converts the board into code, which creates the board.
    * @return string containing the creating code
    */
@@ -410,5 +421,9 @@ public class PolySquare extends Poly {
     }
     res.append("PolySquare p = new PolySquare(shape, Color.Blue);\n");
     return res.toString();
+  }
+
+  public void setPolyType(String polyType) {
+    this.polyType = polyType;
   }
 }

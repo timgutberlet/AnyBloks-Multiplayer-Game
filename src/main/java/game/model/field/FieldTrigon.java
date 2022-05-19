@@ -1,7 +1,9 @@
 package game.model.field;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.Color;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 /**
  * This class represents one triangle of a trigon game board
  *
@@ -9,6 +11,14 @@ import game.model.Color;
  * @date 21.03.2022
  */
 public class FieldTrigon extends Field implements Cloneable {
+
+  /**
+   * empty constructor for jackson.
+   */
+  public FieldTrigon(){
+
+  }
+
 
   /**
    * initializing the default values
@@ -23,6 +33,7 @@ public class FieldTrigon extends Field implements Cloneable {
     this.pos = new int[]{x, y, isRight};
     this.color = Color.WHITE;
   }
+
 
   /**
    * initializing the default values
@@ -68,4 +79,23 @@ public class FieldTrigon extends Field implements Cloneable {
   public String toCode(){
     return "new game.model.field.FieldTrigon(" + pos[0] + "," + pos[1] +"," + pos[2] + "," + "game.model.Color." + getColor() + ")";
   }
+
+  /**
+   * override of function.
+   * @return
+   */
+  @Override
+  public Boolean isOccupied() {
+    return super.isOccupied();
+  }
+
+  /**
+   * override of function.
+   * @return
+   */
+  @Override
+  public Color getColor() {
+    return super.getColor();
+  }
+
 }

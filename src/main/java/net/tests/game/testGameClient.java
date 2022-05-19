@@ -4,6 +4,7 @@ import static com.fasterxml.jackson.databind.type.LogicalType.Map;
 
 import game.model.Debug;
 import game.model.gamemodes.GMClassic;
+import game.model.gamemodes.GMTrigon;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
@@ -97,7 +98,7 @@ public class testGameClient {
       TimeUnit.SECONDS.sleep(2);
       //Start game
       LinkedList<GameMode> gameModeLinkedList = new LinkedList<>();
-      gameModeLinkedList.add(new GMClassic());
+      gameModeLinkedList.add(new GMTrigon());
       gameModeLinkedList.add(new GMClassic());
       InitGamePacket initGamePacket = new InitGamePacket(gameModeLinkedList);
       wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);

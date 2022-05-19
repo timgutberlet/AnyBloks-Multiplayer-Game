@@ -36,6 +36,11 @@ public abstract class Poly implements Cloneable {
   public boolean isMirrored;
 
   /**
+   * tells whether trigon or square.
+   */
+  public String polyType = "";
+
+  /**
    * empty constructor for jackson
    */
   public Poly() {
@@ -145,6 +150,12 @@ public abstract class Poly implements Cloneable {
    * @return width of the poly
    */
   public abstract int getWidth();
+
+  /**
+   * returns the type of the poly.
+   * @return
+   */
+  public abstract String getPolyType();
 
   /**
    * converts the board into code, which creates the board.
