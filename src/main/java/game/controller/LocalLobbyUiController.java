@@ -135,7 +135,7 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   @FXML
   public void back() {
-    gameController.setActiveUiController(new MainMenuUiController(gameController));
+    gameController.setActiveUiController(new PlayUiController(gameController));
   }
 
   @FXML

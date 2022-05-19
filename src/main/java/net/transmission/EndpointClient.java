@@ -80,7 +80,7 @@ public class EndpointClient {
 		this.player.setGameSession(this.gameSession);
 		this.clientHandler = new ClientHandler(this);
 		Debug.printMessage(this, "EndpointClient created from GUI 1");
-		this.clientHandler.initLocalGame(player);
+		this.clientHandler.initLocalGame(player, ip);
 
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}

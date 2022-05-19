@@ -70,7 +70,7 @@ public class JoinAuthController extends AbstractUiController {
   @FXML
   public void joinLobby() {
     if(this.ipField.getText().length() >= 7 && this.usernameField.getText().length() >= 2){
-      gameController.setActiveUiController(new JoinLobbyUiController(gameController, this.ipField.getText()));
+      gameController.setActiveUiController(new JoinLobbyUiController(gameController, this.ipField.getText(), this.usernameField.getText()));
     }
     else{
       if(this.ipField.getText().length() < 7){

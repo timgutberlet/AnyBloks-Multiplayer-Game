@@ -383,6 +383,10 @@ public class HostLobbyUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
+    if(this.gameSession.getPlayerList().size()>1){
+      player1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+    }
+
     if(this.gameSession.isGameStarted()){
       ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
       gameController.setActiveUiController(

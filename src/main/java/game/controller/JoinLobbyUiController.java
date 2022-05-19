@@ -89,14 +89,14 @@ public class JoinLobbyUiController extends AbstractUiController {
    * @param gameController Gamecontroller Object currently used
    * @author tgutberl
    */
-  public JoinLobbyUiController(AbstractGameController gameController, String ipField) {
+  public JoinLobbyUiController(AbstractGameController gameController, String ipField, String username) {
     super(gameController);
     //this.gameSession = new GameSession(new Player("You", PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
 
 
-    Player player = new Player("tilman",PlayerType.REMOTE_PLAYER);
+    Player player = new Player(username ,PlayerType.REMOTE_PLAYER);
     this.client = new EndpointClient(this, player, ipField);
 
 
