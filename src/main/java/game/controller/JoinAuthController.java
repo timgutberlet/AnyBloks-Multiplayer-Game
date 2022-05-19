@@ -6,6 +6,8 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -16,6 +18,15 @@ public class JoinAuthController extends AbstractUiController {
   private final AbstractGameController gameController;
   @FXML
   AnchorPane mainPane;
+
+  @FXML
+  TextField usernameField;
+
+  @FXML
+  TextField ipField;
+
+  @FXML
+  PasswordField passwordField;
 
   public JoinAuthController(AbstractGameController gameController) {
     super(gameController);
@@ -58,7 +69,17 @@ public class JoinAuthController extends AbstractUiController {
    */
   @FXML
   public void joinLobby() {
-    gameController.setActiveUiController(new JoinLobbyUiController(gameController));
+    if(this.ipField.getText().length() >= 7 && this.usernameField.getText().length() >= 2){
+      gameController.setActiveUiController(new JoinLobbyUiController(gameController, this.ipField.getText()));
+    }
+    else{
+      if(this.ipField.getText().length() < 7){
+        this.ipField.setText("IP to short, please reEnter!");
+      }
+      if(this.usernameField.getText().length() < 2){
+        this.usernameField.setText("Username must at least be 2 Characters");
+      }
+    }
   }
 
   /**

@@ -2,8 +2,8 @@ package net.transmission;
 
 //import game.controller.JoinGameLobbyController;
 //import game.controller.LocalGameLobbyController;
-import game.controller.CHANGESTOBI.JoinGameLobbyControllerTOBI;
-import game.controller.CHANGESTOBI.LocalGameLobbyControllerTOBI;
+import game.controller.JoinLobbyUiController;
+import game.controller.LocalLobbyUiController;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.player.Player;
@@ -43,7 +43,7 @@ public class EndpointClient {
 		this.clientHandler = new ClientHandler(this);
 	}
 
-	public EndpointClient(LocalGameLobbyControllerTOBI localGameLobbyControllerTOBI, Player player) {
+	public EndpointClient(LocalLobbyUiController localLobbyUiController, Player player) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);
@@ -57,7 +57,7 @@ public class EndpointClient {
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
 
-	public EndpointClient(JoinGameLobbyControllerTOBI joinGameLobbyControllerTOBI, Player player) {
+	public EndpointClient(JoinLobbyUiController joinLobbyUiController, Player player) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);

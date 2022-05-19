@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
   minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
   stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" fx:controller="game.controller.JoinAuthController"
@@ -83,7 +84,7 @@
                                     <Font size="25.0"/>
                                  </font>
                               </Label>
-                              <TextField fx:id="passwordField"/>
+                              <PasswordField fx:id="passwordField"/>
                            </children>
                         </VBox>
                         <VBox GridPane.columnIndex="1" GridPane.rowIndex="3" alignment="CENTER"
