@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -12,31 +17,30 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
-  minHeight="-Infinity"
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
   minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css"
-  xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="game.controller.LocalLobbyUiController"
-  fx:id="mainPane">
+  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="game.controller.LocalLobbyUiController">
   <children>
-    <SplitPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-      AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-      dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0"
-      prefWidth="160.0">
+    <SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0"
+      AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+      AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
             <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
-                <HBox GridPane.rowIndex="1" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
-                  spacing="20.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.rowIndex="1">
                   <children>
                     <Button mnemonicParsing="false" onAction="#decreaseDifficulty1" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Button>
-                    <Label text="None" fx:id="player1">
+                    <Label fx:id="player1" text="None">
                       <font>
                         <Font size="25.0"/>
                       </font>
@@ -48,47 +52,45 @@
                     </Button>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="CENTER"
-                  prefHeight="100.0"
-                  prefWidth="200.0" spacing="50.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0"
+                  GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <children>
-                    <Label text="-" fx:id="namePlayer1">
+                    <Label fx:id="namePlayer1" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Label>
-                    <Label text="-" fx:id="difficultyPlayer1">
+                    <Label fx:id="difficultyPlayer1" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Label>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER"
-                  prefHeight="100.0"
-                  prefWidth="200.0" spacing="50.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0"
+                  GridPane.columnIndex="1" GridPane.rowIndex="2">
                   <children>
-                    <Label text="-" fx:id="namePlayer2">
+                    <Label fx:id="namePlayer2" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Label>
-                    <Label text="-" fx:id="difficultyPlayer2">
+                    <Label fx:id="difficultyPlayer2" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Label>
                   </children>
                 </HBox>
-                <HBox GridPane.rowIndex="2" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
-                  spacing="20.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.rowIndex="2">
                   <children>
                     <Button mnemonicParsing="false" onAction="#decreaseDifficulty2" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Button>
-                    <Label text="None" fx:id="player2">
+                    <Label fx:id="player2" text="None">
                       <font>
                         <Font size="25.0"/>
                       </font>
@@ -100,15 +102,15 @@
                     </Button>
                   </children>
                 </HBox>
-                <HBox GridPane.rowIndex="3" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
-                  spacing="20.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0"
+                  GridPane.rowIndex="3">
                   <children>
                     <Button mnemonicParsing="false" onAction="#decreaseDifficulty3" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Button>
-                    <Label text="None" fx:id="player3">
+                    <Label fx:id="player3" text="None">
                       <font>
                         <Font size="25.0"/>
                       </font>
@@ -120,32 +122,30 @@
                     </Button>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" alignment="CENTER"
-                  prefHeight="100.0"
-                  prefWidth="200.0" spacing="50.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0"
+                  GridPane.columnIndex="1" GridPane.rowIndex="3">
                   <children>
-                    <Label text="-" fx:id="namePlayer3">
+                    <Label fx:id="namePlayer3" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Label>
-                    <Label text="-" fx:id="difficultyPlayer3">
+                    <Label fx:id="difficultyPlayer3" text="-">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Label>
                   </children>
                 </HBox>
-                <HBox GridPane.columnIndex="1" alignment="CENTER" prefHeight="100.0"
-                  prefWidth="200.0"
-                  spacing="50.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0"
+                  GridPane.columnIndex="1">
                   <children>
-                    <Label text="You" fx:id="nameHostPlayer">
+                    <Label fx:id="nameHostPlayer" text="You">
                       <font>
                         <Font size="25.0"/>
                       </font>
                     </Label>
-                    <Label text="Player" fx:id="difficultyPlayer11">
+                    <Label fx:id="difficultyPlayer11" text="Player">
                       <font>
                         <Font size="25.0"/>
                       </font>
@@ -177,29 +177,47 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
           <children>
-            <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-              AnchorPane.rightAnchor="0.0"
-              AnchorPane.topAnchor="0.0" layoutX="172.0" layoutY="13.0">
+            <GridPane layoutX="172.0" layoutY="13.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <children>
-                <Button GridPane.columnIndex="1" mnemonicParsing="false" onAction="#play"
-                  prefWidth="200.0"
-                  text="Play">
+                <Button mnemonicParsing="false" onAction="#play" prefWidth="200.0" text="Play"
+                  GridPane.columnIndex="1">
                   <font>
                     <Font size="40.0"/>
                   </font>
                 </Button>
                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                   <children>
-                    <ComboBox prefWidth="150.0" fx:id="gameModes"/>
-                    <Label text="Select Game Mode">
-                      <font>
-                        <Font size="25.0"/>
-                      </font>
-                    </Label>
+                    <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0"
+                      prefWidth="200.0">
+                      <content>
+                        <VBox fx:id="box">
+                          <children>
+                            <HBox alignment="CENTER" spacing="50.0">
+                              <children>
+                                <ComboBox fx:id="gameMode" prefWidth="150.0"/>
+                                <Label text="1"/>
+                              </children>
+                              <VBox.margin>
+                                <Insets bottom="10.0" top="10.0"/>
+                              </VBox.margin>
+                            </HBox>
+                          </children>
+                        </VBox>
+                      </content>
+                    </ScrollPane>
+                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                      <children>
+                        <Button fx:id="deleteRound" mnemonicParsing="false" onAction="#deleteRound"
+                          text="-"/>
+                        <Button fx:id="addRound" mnemonicParsing="false" onAction="#addRound"
+                          text="+"/>
+                      </children>
+                    </HBox>
                   </children>
                 </VBox>
-                <VBox GridPane.columnIndex="2" alignment="BOTTOM_RIGHT" prefHeight="200.0"
-                  prefWidth="100.0">
+                <VBox alignment="BOTTOM_RIGHT" prefHeight="200.0" prefWidth="100.0"
+                  GridPane.columnIndex="2">
                   <children>
                     <Button mnemonicParsing="false" onAction="#back" text="Back">
                       <font>
