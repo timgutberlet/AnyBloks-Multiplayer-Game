@@ -495,6 +495,15 @@ public class GameSession {
 	 *
 	 * @return HashMap
 	 */
+	public HashMap<String, Integer> getGameSessionScoreboard() {
+		return gameSessionScoreboard;
+	}
+
+	/**
+	 * returns the scoreboard of the current game.
+	 *
+	 * @return HashMap
+	 */
 	public HashMap<String, Integer> getScoreboard() {
 		return scoreboard;
 	}

@@ -56,7 +56,6 @@ public abstract class InGameUiController extends AbstractUiController {
   private ArrayList<int[]> possibleFields;
   private Boolean submitRequested;
 
-
   private BorderPane pane;
   private BoardPane boardPane;
   private final List<StackPane> stackPanes;
@@ -199,12 +198,20 @@ public abstract class InGameUiController extends AbstractUiController {
 
     buttonBox = new HBox();
     quitButton = new Button("Quit");
-    testButton = new Button("Test");
+    testButton = new Button("ScoreBoard");
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
+    testButton.setOnMouseClicked(mouseEvent -> {
+      this.handleTestButtonClicked();
+    });
     buttonBox.getChildren().add(quitButton);
     buttonBox.getChildren().add(testButton);
     pane.setBottom(buttonBox);
     inputHandler.makeDraggable(testButton);
+  }
+
+  private void handleTestButtonClicked() {
+    ScoreBoardUiController.sortScoreBoard(gameSession);
+    gameController.setActiveUiController(new ScoreBoardUiController(gameController, gameSession));
   }
 
   private void handleQuitButtonClicked() {
