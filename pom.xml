@@ -67,14 +67,6 @@
     </dependency>
 
     <dependency>
-      <groupId>javax.websocket</groupId>
-      <artifactId>javax-websocket-all</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/local-maven-repo/javax-websocket-all.jar</systemPath>
-    </dependency>
-
-    <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
       <version>${jetty.version}</version>
