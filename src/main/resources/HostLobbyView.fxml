@@ -49,34 +49,10 @@
               <children>
                 <GridPane>
                   <children>
-                    <GridPane>
+                    <GridPane GridPane.columnIndex="1">
                       <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="2">
+                        <HBox alignment="CENTER" prefHeight="57.0" prefWidth="381.0" spacing="50.0" GridPane.rowIndex="2">
                           <children>
-                            <Button mnemonicParsing="false" onAction="#decreaseDifficulty1" text="-">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Button>
-                            <Button mnemonicParsing="false" onAction="#increaseDifficulty1" text="+">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Button>
-                            <Label fx:id="player1" text="None">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="57.0" prefWidth="381.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                          <children>
-                            <Label fx:id="namePlayer1" text="-">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Label>
                             <Label fx:id="difficultyPlayer1" text="-">
                               <font>
                                 <Font size="20.0" />
@@ -84,13 +60,8 @@
                             </Label>
                           </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="3">
                           <children>
-                            <Label fx:id="namePlayer2" text="-">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Label>
                             <Label fx:id="difficultyPlayer2" text="-">
                               <font>
                                 <Font size="20.0" />
@@ -98,51 +69,8 @@
                             </Label>
                           </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="3">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="4">
                           <children>
-                            <Button mnemonicParsing="false" onAction="#decreaseDifficulty2" text="-">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Button>
-                            <Button mnemonicParsing="false" onAction="#increaseDifficulty2" text="+">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Button>
-                            <Label fx:id="player2" text="None">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.rowIndex="4">
-                          <children>
-                            <Button mnemonicParsing="false" onAction="#decreaseDifficulty3" text="-">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Button>
-                            <Button mnemonicParsing="false" onAction="#increaseDifficulty3" text="+">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Button>
-                            <Label fx:id="player3" text="None">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                          <children>
-                            <Label fx:id="namePlayer3" text="-">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Label>
                             <Label fx:id="difficultyPlayer3" text="-">
                               <font>
                                 <Font size="20.0" />
@@ -150,9 +78,9 @@
                             </Label>
                           </children>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1">
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                           <children>
-                            <Label fx:id="nameHostPlayer" text="Players">
+                            <Label fx:id="nameHostPlayer" text="Human Players:">
                               <HBox.margin>
                                 <Insets top="20.0" />
                               </HBox.margin>
@@ -162,25 +90,8 @@
                             </Label>
                           </children>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="1">
                           <children>
-                            <Label text="Add AI Players">
-                              <HBox.margin>
-                                <Insets top="20.0" />
-                              </HBox.margin>
-                              <font>
-                                <Font size="25.0" />
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                          <children>
-                            <Label fx:id="namePlayer11" text="You">
-                              <font>
-                                <Font size="20.0" />
-                              </font>
-                            </Label>
                             <Label fx:id="difficultyPlayer11" text="HOST">
                               <font>
                                 <Font size="20.0" />
@@ -191,7 +102,6 @@
                       </children>
                       <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       </columnConstraints>
                       <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -201,7 +111,7 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                     </GridPane>
-                    <GridPane alignment="TOP_CENTER" GridPane.columnIndex="1">
+                    <GridPane alignment="TOP_CENTER" GridPane.columnIndex="2">
                       <children>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                           <children>
@@ -307,7 +217,7 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                           <children>
-                            <Button mnemonicParsing="false" text="Reset" fx:id="reset">
+                            <Button fx:id="reset" mnemonicParsing="false" text="Reset">
                               <HBox.margin>
                                 <Insets top="20.0" />
                               </HBox.margin>
@@ -331,9 +241,33 @@
                         <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                     </GridPane>
+                        <GridPane>
+                        <children>
+                              <TextArea prefHeight="236.0" prefWidth="299.0" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets top="20.0" />
+                                       </GridPane.margin>
+                                    </TextArea>
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="12.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <children>
+                            <TextField prefHeight="0.0" prefWidth="299.0" />
+                          </children>
+                        </VBox>
+                        </children>
+                        <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="78.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="308.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="34.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                        <RowConstraints maxHeight="287.0" minHeight="223.0" prefHeight="287.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        </GridPane>
                   </children>
                   <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0" prefWidth="696.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0" prefWidth="471.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0" prefWidth="457.0" />
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.0" minWidth="10.0" prefWidth="584.0" />
                   </columnConstraints>
                   <rowConstraints>
@@ -342,25 +276,6 @@
                 </GridPane>
                 <GridPane prefHeight="136.0" prefWidth="1280.0" GridPane.rowIndex="1">
                   <children>
-                    <GridPane>
-                      <children>
-                        <TextArea prefHeight="111.0" prefWidth="325.0" GridPane.columnIndex="1" />
-                        <VBox alignment="BOTTOM_CENTER" prefHeight="12.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                          <children>
-                            <TextField />
-                          </children>
-                        </VBox>
-                      </children>
-                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="78.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="308.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="34.0" />
-                      </columnConstraints>
-                      <rowConstraints>
-                        <RowConstraints maxHeight="111.0" minHeight="10.0" prefHeight="111.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                      </rowConstraints>
-                    </GridPane>
                     <VBox alignment="CENTER" prefHeight="134.0" prefWidth="640.0" spacing="10.0" GridPane.columnIndex="2">
                       <children>
                         <Label text="Join Information:">
@@ -386,6 +301,33 @@
                         </Label>
                       </children>
                     </VBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                        <children>
+                        <Label text="AI Default Strength:">
+                        <HBox.margin>
+                          <Insets />
+                        </HBox.margin>
+                        <font>
+                          <Font size="20.0" />
+                        </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#decreaseDifficulty1" text="-">
+                        <font>
+                          <Font size="15.0" />
+                        </font>
+                        </Button>
+                        <Label fx:id="player1" text="None">
+                        <font>
+                          <Font size="20.0" />
+                        </font>
+                        </Label>
+                        <Button mnemonicParsing="false" onAction="#increaseDifficulty1" text="+">
+                        <font>
+                          <Font size="15.0" />
+                        </font>
+                        </Button>
+                        </children>
+                        </HBox>
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -398,7 +340,7 @@
                 </GridPane>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                   <children>
-                    <Button mnemonicParsing="false" text="PLAY GAME" textAlignment="CENTER" onAction="#playGame">
+                    <Button mnemonicParsing="false" onAction="#playGame" text="PLAY GAME" textAlignment="CENTER">
                       <font>
                         <Font size="25.0" />
                       </font>
