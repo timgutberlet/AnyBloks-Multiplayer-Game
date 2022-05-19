@@ -32,10 +32,10 @@ public class HostServer {
    *
    * @param portNumber port to use
    */
-  public void startServer(int portNumber) throws Exception {
+  public void startRestfulServer(int portNumber) throws Exception {
 
     String IPAdress = Inet4Address.getLocalHost().getHostAddress();
-    URI baseUri = UriBuilder.fromUri("http://"+IPAdress+"/").port(portNumber).build();
+    URI baseUri = UriBuilder.fromUri("http://" + IPAdress + "/").port(portNumber).build();
     ServerConfig config = new ServerConfig();
 
     server = JettyHttpContainerFactory.createServer(baseUri, config);

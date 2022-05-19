@@ -8,15 +8,19 @@ import game.controller.JoinLobbyUiController;
 import game.controller.LocalLobbyUiController;
 import game.model.Debug;
 import game.model.GameSession;
+import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.EncodeException;
+import javax.websocket.Endpoint;
+import javax.websocket.EndpointConfig;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
+import net.packet.chat.ChatMessagePacket;
 import net.server.ClientHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +35,12 @@ import org.slf4j.LoggerFactory;
 
 public class EndpointClient {
 
-	private Session server;
-	private GameSession gameSession;
-	private ClientHandler clientHandler;
-	private Player player;
+  private Session server;
+  private GameSession gameSession;
+  private ClientHandler clientHandler;
+  private Player player;
 
-	public EndpointClient(Player player) {
+	public EndpointClient(Player player){
 		super();
 		this.player = player;
 		this.gameSession = new GameSession();

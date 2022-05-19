@@ -1,6 +1,8 @@
 package net.server;
 
 import javax.ws.rs.ApplicationPath;
+import net.AuthRessources.AccountRegisterRessource;
+import net.AuthRessources.TokenGenerationRessource;
 import net.AuthenticationFilter;
 import net.LoggingRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -20,7 +22,9 @@ public class ServerConfig extends ResourceConfig {
 
   public ServerConfig() {
     // activate the request filters
-    register(AuthenticationFilter.class);
+    //register(AuthenticationFilter.class);
+    register(TokenGenerationRessource.class);
+    register(AccountRegisterRessource.class);
     register(LoggingRequestFilter.class);
     register(JacksonFeature.class);       // make JSON usable
 

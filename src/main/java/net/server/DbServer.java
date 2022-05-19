@@ -1,6 +1,5 @@
 package net.server;
 
-import game.model.Debug;
 import game.model.GameScoreBoard;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -142,7 +141,100 @@ public class DbServer extends DbHandler {
       e.printStackTrace();
     }
 
+    try {
+      // Table for authTokens
+      Statement gameSessionScores = con.createStatement();
+      gameSessionScores.execute(
+          "CREATE TABLE IF NOT EXISTS authTokens (authToken TEXT NOT NULL,"
+              + " username TEXT  NOT NULL)");
+      gameSessionScores.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
+
+  }
+
+  /**
+   * Test whether there is a token already saved for a user
+   *
+   * @param username of user
+   * @return boolean
+   */
+  public synchronized boolean doesUserHaveAuthToken(String username) {
+    boolean userHasToken = false;
+    try {
+      Statement getAuthToken = con.createStatement();
+      ResultSet resultSet = getAuthToken.executeQuery(
+          "GET authToken from authTokens WHERE username = '" + username + "' ");
+      if (resultSet.next()) {
+        //in this case the result was not empty, therefore a token for the user has been saved
+        userHasToken = true;
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return userHasToken;
+  }
+
+  /**
+   * Deletes any saved tokens for a user
+   *
+   * @param username of user
+   */
+  public synchronized void deleteAuthToken(String username) {
+    if (doesUserHaveAuthToken(username)) {
+      try {
+        Statement deleteStatement = con.createStatement();
+        deleteStatement.execute("DELETE FROM authTokens WHERE username = '" + username + "'");
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  /**
+   * Inserts an authToken or a certain user
+   *
+   * @param username of user
+   * @param token    to be inserted
+   */
+  public synchronized void insertAuthToken(String username, String token) {
+    try {
+      Statement insert = con.createStatement();
+      insert.execute(
+          "INSERT INTO authTokens(username, authToken) VALUES('" + username + "', '" + token
+              + "')");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Method to check if a provided token for a username equals the one saved in the database.
+   *
+   * @param username      of user trying to authenticate
+   * @param providedToken by user
+   * @return boolean: is the token valid?
+   */
+  public synchronized boolean testAuthToken(String username, String providedToken) {
+    boolean authSucess = false;
+    if (doesUserHaveAuthToken(username)) {
+
+      try {
+        Statement getAuthToken = con.createStatement();
+        ResultSet resultSet = getAuthToken.executeQuery(
+            "GET authToken from authTokens WHERE username = '" + username + "' ");
+        String dbToken = resultSet.getString(1);
+        if (providedToken.equals(dbToken)) {
+          authSucess = true;
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+    return authSucess;
   }
 
   /**

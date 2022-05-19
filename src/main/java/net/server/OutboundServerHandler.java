@@ -133,8 +133,8 @@ public class OutboundServerHandler {
   }
 
   /**
-   * broadcast GAME_WIN_PACKET to all clients
-   * save the gameScore, and if a gameSession ends, connect all gameScores to it
+   * broadcast GAME_WIN_PACKET to all clients.
+   * save the gameScore, and if a gameSession ends, connect all gameScores to it.
    *
    * @param usernameWinner
    * @author tgeilen

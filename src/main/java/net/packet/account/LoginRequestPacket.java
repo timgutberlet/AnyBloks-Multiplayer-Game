@@ -11,7 +11,7 @@ import net.packet.abstr.Packet;
 public class LoginRequestPacket extends Packet {
 
   private String username;
-  private String passwordHash;
+  private String token;
   private PlayerType playerType;
 
   /**
@@ -26,12 +26,12 @@ public class LoginRequestPacket extends Packet {
   /**
    * Constructor.
    *
-   * @param username     of account
-   * @param passwordHash user thinks belongs to account
+   * @param username of account
+   * @param token    user thinks belongs to account
    */
-  public LoginRequestPacket(String username, String passwordHash, PlayerType playerType) {
+  public LoginRequestPacket(String username, String token, PlayerType playerType) {
     this.username = username;
-    this.passwordHash = passwordHash;
+    this.token = token;
     this.playerType = playerType;
   }
 
@@ -49,8 +49,8 @@ public class LoginRequestPacket extends Packet {
    *
    * @return passwordHash
    */
-  public String getPasswordHash() {
-    return passwordHash;
+  public String getToken() {
+    return token;
   }
 
   /**

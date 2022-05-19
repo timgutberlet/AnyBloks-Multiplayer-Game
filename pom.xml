@@ -48,6 +48,13 @@
       <version>1.11</version>
     </dependency>
 
+    <!-- java jwt for token generation -->
+    <dependency>
+      <groupId>com.auth0</groupId>
+      <artifactId>java-jwt</artifactId>
+      <version>3.14.0</version>
+    </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>

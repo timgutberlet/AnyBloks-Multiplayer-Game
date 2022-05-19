@@ -62,7 +62,7 @@ public class InboundServerHandler {
 		Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
 		LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
 		String username = loginPacket.getUsername();
-		String passwordHash = loginPacket.getPasswordHash();
+		String passwordHash = loginPacket.getToken();
 		//Checking the credentials against the database
 		String dbPasswordHash = "";
 		boolean loginSuccess = false;
@@ -81,6 +81,7 @@ public class InboundServerHandler {
 				e.printStackTrace();
 			}
 		} else {
+			//AI players do not need auth
 			loginSuccess = true;
 		}
 
@@ -91,6 +92,7 @@ public class InboundServerHandler {
 		if (loginSuccess) {
 			//call when user is verified
 			this.addVerifiedUser(wrappedPacket, session);
+			//TODO: send successful loginresponsepacket
 		} else {
 			LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
 					"Credentials could not be verified");
