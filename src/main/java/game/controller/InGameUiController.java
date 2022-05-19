@@ -6,7 +6,6 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.InputHandler;
 import engine.handler.ThreadHandler;
-import game.controller.MainMenuUiController;
 import game.model.Debug;
 import game.model.Game;
 import game.model.GameSession;
@@ -246,14 +245,12 @@ public abstract class InGameUiController extends AbstractUiController {
                   case "JUNIOR":
                   case "DUO":
                   case "CLASSIC":
-                    //keep original - Error becaused of changed class name
-                    //dragablePolyPane = new DragableSuarePane(polyPane, boardPane.getSize(),
-                    //		inputHandler, this);
+                    dragablePolyPane = new DragableSuarePane(polyPane, boardPane.getSize(),
+                        inputHandler, this);
                     break;
                   case "TRIGON":
-                    //keep original - Error becaused of changed class name
-                    //dragablePolyPane = new DragableTrigonPane(polyPane, boardPane.getSize(),
-                    //		inputHandler, this);
+                    dragablePolyPane = new DragableTrigonPane(polyPane, boardPane.getSize(),
+                        inputHandler, this);
                     break;
                 }
                 pane.setLeft(dragablePolyPane);

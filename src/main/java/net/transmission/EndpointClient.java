@@ -57,7 +57,7 @@ public class EndpointClient {
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
 
-	public EndpointClient(JoinLobbyUiController joinLobbyUiController, Player player) {
+	public EndpointClient(JoinLobbyUiController joinLobbyUiController, Player player, String ip) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);
