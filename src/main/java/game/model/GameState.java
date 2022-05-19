@@ -448,15 +448,6 @@ public class GameState implements Serializable, Cloneable {
     }
     return false;
   }
-
-  /**
-   * Returns whether PlayTurn is set.
-   *
-   * @return
-   */
-  public boolean isPlayTurn() {
-    return playTurn;
-  }
   /**
    * Checks if game state currently plays a turn.
    *
