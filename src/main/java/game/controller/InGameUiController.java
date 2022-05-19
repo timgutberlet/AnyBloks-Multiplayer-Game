@@ -280,8 +280,6 @@ public abstract class InGameUiController extends AbstractUiController {
     boardPane.repaint(game.getGameState().getBoard());
 
     localPlayer = gameSession.getLocalPlayer();
-    System.out.println("Local player Color" + game.getGameState().getColorFromPlayer(localPlayer));
-    System.out.println("Local player Count" + gameSession.getPlayerList().indexOf(localPlayer));
 
     aiCalcRunning = game.getCurrentPlayer().getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then

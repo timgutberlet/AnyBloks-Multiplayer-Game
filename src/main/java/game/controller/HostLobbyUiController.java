@@ -125,7 +125,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
 
 
-    Player player = new Player("tobi",PlayerType.REMOTE_PLAYER);
+    Player player = new Player("HOST",PlayerType.REMOTE_PLAYER);
     this.client = new EndpointClient(this,player);
 
 

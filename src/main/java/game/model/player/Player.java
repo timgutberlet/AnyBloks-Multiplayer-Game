@@ -6,7 +6,6 @@ import game.model.GameState;
 import game.model.Turn;
 import game.model.polygon.Poly;
 import java.io.Serializable;
-import java.security.cert.CertificateExpiredException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,6 +22,11 @@ public class Player implements Serializable {
    * Type of the player.
    */
   private PlayerType type;
+
+  /**
+   * Boolean if player is Connected
+   */
+  private boolean isPlayerConnected;
 
   /**
    * Current score of the player.
@@ -95,11 +99,22 @@ public class Player implements Serializable {
         type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
     this.isHost = false;
     this.selectedTurn = null;
-    if(!this.isAI){
+    if(!this.isAI) {
       this.aiCalcRunning = false;
+
     }
+  }
+  /**
+   *
+   * @return returns if boolean connected
+   * @author tgutberl
+   */
+  public boolean isPlayerConnected(){
+    return this.isPlayerConnected;
+  }
 
-
+  public void setPlayerConnected(boolean playerConnected){
+    this.isPlayerConnected = playerConnected;
   }
 
   /**

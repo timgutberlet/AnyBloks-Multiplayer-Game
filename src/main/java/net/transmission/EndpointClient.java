@@ -3,6 +3,7 @@ package net.transmission;
 //import game.controller.JoinGameLobbyController;
 //import game.controller.LocalGameLobbyController;
 import game.controller.HostLobbyUiController;
+import game.controller.JoinAuthController;
 import game.controller.JoinLobbyUiController;
 import game.controller.LocalLobbyUiController;
 import game.model.Debug;
@@ -72,6 +73,20 @@ public class EndpointClient {
 	}
 
 	public EndpointClient(JoinLobbyUiController joinLobbyUiController, Player player, String ip) {
+		super();
+		this.player = player;
+		this.gameSession = new GameSession(player);
+		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+		this.gameSession.setLocalPlayer(player);
+		this.player.setGameSession(this.gameSession);
+		this.clientHandler = new ClientHandler(this);
+		Debug.printMessage(this, "EndpointClient created from GUI 1");
+		this.clientHandler.initLocalGame(player, ip);
+
+		Debug.printMessage(this, "EndpointClient created from GUI 2");
+	}
+
+	public EndpointClient(JoinAuthController joinAuthController, Player player, String ip) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);

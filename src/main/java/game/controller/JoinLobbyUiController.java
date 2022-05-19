@@ -26,6 +26,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javax.ws.rs.client.Client;
 import net.server.ClientHandler;
 import net.transmission.EndpointClient;
 
@@ -47,8 +48,6 @@ public class JoinLobbyUiController extends AbstractUiController {
   private GameMode gameMode;
   private ObservableList<String> list;
 
-  private EndpointClient client;
-  private ClientHandler clientHandler;
 
   @FXML
   private Label player1;
@@ -89,24 +88,12 @@ public class JoinLobbyUiController extends AbstractUiController {
    * @param gameController Gamecontroller Object currently used
    * @author tgutberl
    */
-  public JoinLobbyUiController(AbstractGameController gameController, String ipField, String username) {
+  public JoinLobbyUiController(AbstractGameController gameController, GameSession gameSession) {
+
     super(gameController);
-    //this.gameSession = new GameSession(new Player("You", PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
-
-
-    Player player = new Player(username ,PlayerType.REMOTE_PLAYER);
-    this.client = new EndpointClient(this, player, ipField);
-
-
-
-    this.gameSession = client.getGameSession();
-    this.gameSession.setLocalPlayer(player);
-
-
-    this.clientHandler = client.getClientHandler();
-
+    this.gameSession = gameSession;
   }
 
   public void init(Group root) {
@@ -200,7 +187,7 @@ public class JoinLobbyUiController extends AbstractUiController {
       gameList.add(this.gameMode);
       //this.gameSession.setGameList(gameList);
 
-      this.clientHandler.startLocalGame(gameList);
+      this.gameSession.clientHandler.startLocalGame(gameList);
 
 
       try {

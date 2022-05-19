@@ -2,13 +2,22 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
+import engine.handler.ThreadHandler;
+import game.model.Debug;
+import game.model.GameSession;
+import game.model.gamemodes.GameMode;
+import game.model.player.Player;
+import game.model.player.PlayerType;
 import java.io.IOException;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import net.server.ClientHandler;
+import net.transmission.EndpointClient;
 
 /**
  * @author tgutberl
@@ -21,6 +30,14 @@ public class JoinAuthController extends AbstractUiController {
 
   @FXML
   TextField usernameField;
+
+  private GameMode gameMode;
+  private ObservableList<String> list;
+
+  private EndpointClient client;
+  private ClientHandler clientHandler;
+
+  private GameSession gameSession;
 
   @FXML
   TextField ipField;
@@ -70,7 +87,11 @@ public class JoinAuthController extends AbstractUiController {
   @FXML
   public void joinLobby() {
     if(this.ipField.getText().length() >= 7 && this.usernameField.getText().length() >= 2){
-      gameController.setActiveUiController(new JoinLobbyUiController(gameController, this.ipField.getText(), this.usernameField.getText()));
+      Player player = new Player(this.usernameField.getText() ,PlayerType.REMOTE_PLAYER);
+      this.client = new EndpointClient(this, player, ipField.getText());
+      this.gameSession = client.getGameSession();
+      this.gameSession.setLocalPlayer(player);
+      this.clientHandler = client.getClientHandler();
     }
     else{
       if(this.ipField.getText().length() < 7){
@@ -124,6 +145,13 @@ public class JoinAuthController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController) {
 
+    if(this.gameSession.getLocalPlayer().isPlayerConnected()){
+      gameController.setActiveUiController(
+          new JoinLobbyUiController(gameController, gameSession));
+      //this.gameSession.setGameStarted();
+    } else {
+      Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
+    }
   }
 
   @FXML

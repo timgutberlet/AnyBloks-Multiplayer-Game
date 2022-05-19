@@ -72,11 +72,16 @@ public class Turn {
 	}
 
 	public PolySquare getPolySquare() {
-		return (PolySquare) poly;
+			return (PolySquare) poly;
 	}
 
 	public PolyTrigon getPolyTrigon() {
-			return (PolyTrigon) poly;
+		//TODO
+			if(poly.getClass().getName().equals("PolyTrigon")){
+				return (PolyTrigon) poly;
+			}else{
+				return null;
+			}
 		}
 
 		public Poly getPoly() {
