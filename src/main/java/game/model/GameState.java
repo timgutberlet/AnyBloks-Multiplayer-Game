@@ -559,9 +559,10 @@ public class GameState implements Serializable, Cloneable {
     String result = "PlayerList: \n";
 
     for (Player p : this.playerList) {
-      result += p.getUsername() + "\n";
-    }
+      result += "Player " + p.getUsername() + " Color: " + getColorFromPlayer(p) + "\n";
 
+    }
+    /*
     if (Debug.debug) {
       result += "\nSize fo remainingPolys arrayList:\n";
       result += "Entries: " + remainingPolys.size() + "\n";
@@ -580,7 +581,7 @@ public class GameState implements Serializable, Cloneable {
           "\n started=" + started +
           "\n stateEnding='" + stateEnding + '\'' +
           '}' + '\n';
-    }
+    }*/
     return result;
   }
 

@@ -97,7 +97,7 @@ public class JoinLobbyUiController extends AbstractUiController {
 
 
     Player player = new Player("tilman",PlayerType.REMOTE_PLAYER);
-    this.client = new EndpointClient(this,player);
+    this.client = new EndpointClient(this, player, ipField);
 
 
 

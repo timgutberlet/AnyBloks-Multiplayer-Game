@@ -248,6 +248,7 @@ public class GameSession {
 			}
 		}
 		this.updatingGameState = false;
+		System.out.println(gameState.toString());
 	}
 
 	/**

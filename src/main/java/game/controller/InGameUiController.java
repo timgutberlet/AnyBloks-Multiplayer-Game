@@ -217,6 +217,8 @@ public abstract class InGameUiController extends AbstractUiController {
     });
 
     localPlayer = gameSession.getLocalPlayer();
+    System.out.println("Local player Color" + game.getGameState().getColorFromPlayer(localPlayer));
+    System.out.println("Local player Count" + gameSession.getPlayerList().indexOf(localPlayer));
 
     aiCalcRunning = localPlayer.getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
@@ -238,7 +240,7 @@ public abstract class InGameUiController extends AbstractUiController {
         boolean action = false;
 
         if (!this.gameSession.isUpdatingGameState()) {
-          for (PolyPane polyPane : stackPanes.get(0).getPolyPanes()) {
+          for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer)).getPolyPanes()) {
             if (inputHandler.isPolyClicked(polyPane)) {
               if (dragablePolyPane == null) {
                 switch (game.getGamemode().getName()) {

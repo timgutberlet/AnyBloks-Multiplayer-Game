@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,6 +34,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import net.server.ClientHandler;
+import net.server.HostServer;
+import net.tests.NoLogging;
+import net.transmission.EndpointClient;
 
 /**
  * Class to Controll Inputs for the HostLobby
@@ -51,6 +57,9 @@ public class HostLobbyUiController extends AbstractUiController {
 
   private GameMode gameMode;
   private ObservableList<String> list;
+
+  private EndpointClient client;
+  private ClientHandler clientHandler;
 
   @FXML
   private AnchorPane mainPane;
@@ -100,9 +109,32 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   public HostLobbyUiController(AbstractGameController gameController) {
     super(gameController);
-    this.gameSession = new GameSession(new Player("HOST", PlayerType.HOST_PLAYER));
+    //this.gameSession = new GameSession(new Player("You", PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
+
+    HostServer hostServer = new HostServer();
+    try {
+      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      hostServer.startWebsocket(8081);
+      Debug.printMessage("[testChatServer] Server is running");
+      //TimeUnit.SECONDS.sleep(3);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+
+
+    Player player = new Player("tobi",PlayerType.REMOTE_PLAYER);
+    this.client = new EndpointClient(this,player);
+
+
+
+    this.gameSession = client.getGameSession();
+    this.gameSession.setLocalPlayer(player);
+
+
+    this.clientHandler = client.getClientHandler();
   }
 
   public void init(Group root) {
@@ -166,54 +198,24 @@ public class HostLobbyUiController extends AbstractUiController {
     if (!namePlayer1.equals("-")) {
       switch (difficultyPlayer1.getText()) {
         case "Easy":
-          this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_EASY));
+          this.gameSession.setDefaultAI(PlayerType.AI_EASY);
+          //this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_EASY));
           //players.add(new Player(nameAiPlayer1, PlayerType.AI_EASY));
           break;
         case "Middle":
-          this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
+          this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+          //this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
           //players.add(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
           break;
         case "Hard":
-          this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_HARD));
+          this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+          //this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_HARD));
           //players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
       }
       Debug.printMessage("" + this.gameSession.getPlayerList().size());
     }
-    if (!namePlayer2.equals("-")) {
-      switch (difficultyPlayer2.getText()) {
-        case "Easy":
-          this.gameSession.addPlayer(new Player(nameAiPlayer2, PlayerType.AI_EASY));
-          //players.add(new Player(nameAiPlayer2, PlayerType.AI_EASY));
-          break;
-        case "Middle":
-          this.gameSession.addPlayer(new Player(nameAiPlayer2, PlayerType.AI_MIDDLE));
-          //players.add(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
-          break;
-        case "Hard":
-          this.gameSession.addPlayer(new Player(nameAiPlayer2, PlayerType.AI_HARD));
-          //players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
-      }
-      Debug.printMessage("" + this.gameSession.getPlayerList().size());
-    }
-    if (!namePlayer3.equals("-")) {
-      switch (difficultyPlayer3.getText()) {
-        case "Easy":
-          this.gameSession.addPlayer(new Player(nameAiPlayer3, PlayerType.AI_EASY));
-          //players.add(new Player(nameAiPlayer3, PlayerType.AI_EASY));
-          break;
-        case "Middle":
-          this.gameSession.addPlayer(new Player(nameAiPlayer3, PlayerType.AI_MIDDLE));
-          //players.add(new Player(nameAiPlayer3, PlayerType.AI_MIDDLE));
-          break;
-        case "Hard":
-          this.gameSession.addPlayer(new Player(nameAiPlayer3, PlayerType.AI_HARD));
-          //players.add(new Player(nameAiPlayer3, PlayerType.AI_HARD));
-      }
-      Debug.printMessage("" + this.gameSession.getPlayerList().size());
-    }
+
     //this.gameSession.addHost(new Player("You", PlayerType.AI_EASY));
-    System.out.println(this.gameSession.getPlayerList().size());
-    //players.add(new Player("You", PlayerType.AI_EASY));
 
     String gameMode = gameModes.getValue();
 
@@ -243,11 +245,11 @@ public class HostLobbyUiController extends AbstractUiController {
         ErrorMessageHandler.showErrorMessage("No GameMode was selected");
         error = true;
     }
-    if (players.size() < 2) {
-      ErrorMessageHandler.showErrorMessage(
-          "The GameMode " + this.gameMode.getName() + " requires at least 2 players");
-      error = true;
-    }
+//    if (players.size() < 2) {
+//      ErrorMessageHandler.showErrorMessage(
+//          "The GameMode " + this.gameMode.getName() + " requires at least 2 players");
+//      error = true;
+//    }
     if (!error) {
       //for(Player p: players){
       //  p.setSession(this.session);
@@ -257,13 +259,44 @@ public class HostLobbyUiController extends AbstractUiController {
       //this.session.setGame(new Game(this.session, this.gameMode));
       Debug.printMessage("Hallo2");
 
+
+      LinkedList<GameMode> gameList = new LinkedList<>();
+      //gameList.add(new GMClassic());
+      gameList.add(this.gameMode);
+      //this.gameSession.setGameList(gameList);
+
+      this.clientHandler.startLocalGame(gameList);
+
+
+      try {
+        TimeUnit.SECONDS.sleep(3);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
+
+
+
+
+      Debug.printMessage(this,"Game has been set");
+
       this.gameSession.startGame(this.gameMode);
       Debug.printMessage("Hallo3");
+      Debug.printMessage("Laenge der Liste: "+this.gameSession.getPlayerList().size());
+
+      if(this.gameSession.getPlayerList().size()==4){
+        player1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+        player2.setText(this.gameSession.getPlayerList().get(2).getUsername());
+        player3.setText(this.gameSession.getPlayerList().get(3).getUsername());
+      }
+
+
       //game.startGame();
-      ThreadHandler threadHelp = new ThreadHandler(gameSession);
-      gameController.setActiveUiController(
-          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
+      //ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
+      //gameController.setActiveUiController(
+      //    new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
     }
+
 
   }
 
@@ -345,6 +378,19 @@ public class HostLobbyUiController extends AbstractUiController {
   @Override
   public void onExit() {
 
+  }
+
+  @Override
+  public void update(AbstractGameController gameController, double deltaTime) {
+
+    if(this.gameSession.isGameStarted()){
+      ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
+      gameController.setActiveUiController(
+          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
+      //this.gameSession.setGameStarted();
+    } else {
+      Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
+    }
   }
 
   @Override
