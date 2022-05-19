@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.LoginRequestPacket;
+import net.packet.account.RestfulLoginPacket;
 import net.server.DbServer;
 
 /**
@@ -30,13 +31,13 @@ public class TokenGenerationRessource {
     System.out.println("Hi from auth method");
 
     try {
-      if (wrappedPacket.getPacketType() != PacketType.LOGIN_REQUEST_PACKET) {
+      if (wrappedPacket.getPacketType() != PacketType.RESTFUL_LOGIN_PACKET) {
         throw new Exception("This packet is not of the correct type");
       }
 
-      LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
-      String username = loginPacket.getUsername();
-      String passwordHash = loginPacket.getToken();
+      RestfulLoginPacket restfulLoginPacket = (RestfulLoginPacket) wrappedPacket.getPacket();
+      String username = restfulLoginPacket.getUsername();
+      String passwordHash = restfulLoginPacket.getPasswordHash();
 
       // Authenticate user with db
       authenticate(username, passwordHash);

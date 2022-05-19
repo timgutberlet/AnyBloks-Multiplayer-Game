@@ -1,6 +1,5 @@
 package token;
 
-import game.model.player.PlayerType;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -9,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.LoginRequestPacket;
+import net.packet.account.RestfulLoginPacket;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.Test;
 
@@ -28,9 +27,9 @@ public class tokenClientTest {
     String Ip = "localhost";
     String targetAddress = "http://" + Ip + ":8082/";
 
-    LoginRequestPacket loginRequestPacket = new LoginRequestPacket("testuser"
-        , "123455", PlayerType.REMOTE_PLAYER);
-    WrappedPacket toSend = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET, loginRequestPacket);
+    RestfulLoginPacket restfulLoginPacket = new RestfulLoginPacket("testuser",
+        "123456"); //Remember to send actually hashed PW!
+    WrappedPacket toSend = new WrappedPacket(PacketType.RESTFUL_LOGIN_PACKET, restfulLoginPacket);
 
     WebTarget targetPath = testClient.target(targetAddress).path("/authentication/");
     Response receivedToken = targetPath.request(MediaType.APPLICATION_JSON)

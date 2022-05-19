@@ -62,7 +62,7 @@ public class InboundServerHandler {
 		Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
 		LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
 		String username = loginPacket.getUsername();
-		String passwordHash = loginPacket.getToken();
+		String token = loginPacket.getToken();
 		//Checking the credentials against the database
 		String dbPasswordHash = "";
 		boolean loginSuccess = false;
@@ -70,12 +70,11 @@ public class InboundServerHandler {
 		if(loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)){
 			try {
 				DbServer dbServer = DbServer.getInstance();
-				if (!dbServer.doesUsernameExist(username)) {
+				if (!dbServer.doesUserHaveAuthToken(username)) {
 					loginSuccess = false;
 				} else {
-					dbPasswordHash = dbServer.getUserPasswordHash(username);
-					//Check whether stored passwordHash and sent passwordHash are equal
-					loginSuccess = dbPasswordHash.equals(passwordHash);
+					//In this case there is a user that has a token stored in the database
+					loginSuccess = dbServer.testAuthToken(username, token);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
