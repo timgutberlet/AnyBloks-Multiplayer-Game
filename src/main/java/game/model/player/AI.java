@@ -159,7 +159,7 @@ public class AI {
     if (gameState.getRound() < roundSections[gameModeNumber][0] + 1) {
       return calculateNextHardMoveRoomDiscovery(gameState, player);
     } else if (gameState.getRound() < roundSections[gameModeNumber][1] + 1) {
-      return calculateNextHardMoveAggressive(gameState, player);
+      return calculateNextHardMoveReallyAggressive(gameState, player);
     } else {
       return calculateNextHardMoveMCTS(gameState, player);
     }

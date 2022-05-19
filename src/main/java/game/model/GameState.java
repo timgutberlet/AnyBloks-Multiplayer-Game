@@ -192,6 +192,9 @@ public class GameState implements Serializable, Cloneable {
     }
   }
 
+  public boolean isPlayTurn() {
+    return playTurn;
+  }
 
   public Board getBoard() {
     return board;
@@ -702,7 +705,8 @@ public class GameState implements Serializable, Cloneable {
   public void assignNumberBlockedFieldsWeighted(Turn turn) {
     int num = 0;
 
-    for (Color c : Color.values()) {
+    for (int i = 0; i < playerList.size()+1; i++) {
+      Color c = Color.values()[i];
       if (!c.equals(turn.getPoly().getColor()) && !c.equals(Color.WHITE)) {
         for (Poly p : getRemainingPolys(getPlayerFromColor(c))) {
           ArrayList<int[]> selection = getBoard().getPossibleFieldsForPoly(p, isFirstRound());
