@@ -4,8 +4,6 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ErrorMessageHandler;
 import engine.handler.ThreadHandler;
-import game.controller.LocalGameUiController;
-import game.controller.MainMenuUiController;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.gamemodes.GMClassic;
@@ -26,9 +24,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javax.ws.rs.client.Client;
-import net.server.ClientHandler;
-import net.transmission.EndpointClient;
 
 /**
  * @author lbaudenb
@@ -99,7 +94,7 @@ public class JoinLobbyUiController extends AbstractUiController {
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/LocalLobbyView.fxml"));
+      loader.setLocation(getClass().getResource("/LocalLobbyView3.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
     } catch (IOException e) {

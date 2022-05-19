@@ -95,8 +95,8 @@
                                     <Font size="25.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="usernameField1" />
-                              <Text fx:id="usernameError1" fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0" text="IP Error" />
+                              <TextField fx:id="ipField" />
+                              <Text fx:id="ipError" fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0" text="IP Error" />
                            </children>
                         </VBox>
               </children>

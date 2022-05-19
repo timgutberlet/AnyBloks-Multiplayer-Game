@@ -14,3 +14,11 @@
 .button:pressed {
   -fx-background-color: #FF9569;
 }
+
+.scroll-pane {
+  -fx-background-color:  #E7E7E0;
+}
+
+.overall-background {
+  -fx-background-color:  #E7E7E0;
+}

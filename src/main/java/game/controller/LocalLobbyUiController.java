@@ -29,6 +29,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import net.server.ClientHandler;
 import net.server.HostServer;
 import net.tests.NoLogging;
@@ -43,13 +44,14 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   private final AbstractGameController gameController;
 
-  private final String nameAiPlayer1 = "Bob";
-  private final String nameAiPlayer2 = "Anna";
-  private final String nameAiPlayer3 = "Tom";
+  private final String nameAiPlayer1 = "Tobi";
+  private final String nameAiPlayer2 = "Janik";
+  private final String nameAiPlayer3 = "Tore";
 
   private final GameSession gameSession;
 
   private LinkedList<GameMode> gameModes = new LinkedList<>();
+  private LinkedList<PlayerType> aiPlayers = new LinkedList<>();
   private ObservableList<String> list;
 
   private List<ComboBox<String>> rounds = new ArrayList<>();
@@ -71,25 +73,13 @@ public class LocalLobbyUiController extends AbstractUiController {
   private VBox box;
 
   @FXML
+  Label roundCount;
+
+  @FXML
   private ComboBox<String> gameMode;
 
   @FXML
-  private Button addRound;
-
-  @FXML
-  private Button deleteRound;
-
-  @FXML
-  private Label nameHostPlayer;
-
-  @FXML
-  private Label namePlayer1;
-
-  @FXML
-  private Label namePlayer2;
-
-  @FXML
-  private Label namePlayer3;
+  Text gamemodeError;
 
   @FXML
   private Label difficultyPlayer1;
@@ -108,7 +98,6 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   public LocalLobbyUiController(AbstractGameController gameController) {
     super(gameController);
-    //this.gameSession = new GameSession(new Player("You", PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
 
@@ -124,7 +113,7 @@ public class LocalLobbyUiController extends AbstractUiController {
 
 
 
-    Player player = new Player("tobi",PlayerType.REMOTE_PLAYER);
+    Player player = new Player("You", PlayerType.REMOTE_PLAYER);
     this.client = new EndpointClient(this,player);
 
 
@@ -143,6 +132,7 @@ public class LocalLobbyUiController extends AbstractUiController {
       loader.setLocation(getClass().getResource("/LocalLobbyView.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
+      gamemodeError.setText("");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -154,31 +144,50 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   @FXML
-  public void play() {
+  public void playGame() {
     ArrayList<Player> players = this.gameSession.getPlayerList();
     boolean error = false;
 
-    if (!namePlayer1.equals("-")) {
+    if (!player1.getText().equals("-")) {
       switch (difficultyPlayer1.getText()) {
         case "Easy":
+          aiPlayers.add(PlayerType.AI_EASY);
           this.gameSession.setDefaultAI(PlayerType.AI_EASY);
-          //this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_EASY));
-          //players.add(new Player(nameAiPlayer1, PlayerType.AI_EASY));
           break;
         case "Middle":
           this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
-          //this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
-          //players.add(new Player(nameAiPlayer1, PlayerType.AI_MIDDLE));
+          aiPlayers.add(PlayerType.AI_MIDDLE);
           break;
         case "Hard":
           this.gameSession.setDefaultAI(PlayerType.AI_HARD);
-          //this.gameSession.addPlayer(new Player(nameAiPlayer1, PlayerType.AI_HARD));
-          //players.add(new Player(nameAiPlayer1, PlayerType.AI_HARD));
+          aiPlayers.add(PlayerType.AI_HARD);
       }
-      Debug.printMessage("" + this.gameSession.getPlayerList().size());
+    }
+    if (!player2.getText().equals("-")) {
+      switch (difficultyPlayer2.getText()) {
+        case "Easy":
+          aiPlayers.add(PlayerType.AI_EASY);
+          break;
+        case "Middle":
+          this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+          break;
+        case "Hard":
+          this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+      }
     }
 
-    //this.gameSession.addHost(new Player("You", PlayerType.AI_EASY));
+    if (!player3.getText().equals("-")) {
+      switch (difficultyPlayer3.getText()) {
+        case "Easy":
+          aiPlayers.add(PlayerType.AI_EASY);
+          break;
+        case "Middle":
+          this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+          break;
+        case "Hard":
+          this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+      }
+    }
 
     List<String> gameModes = new ArrayList<>();
 
@@ -216,19 +225,7 @@ public class LocalLobbyUiController extends AbstractUiController {
       }
     }
 
-//    if (players.size() < 2) {
-//      ErrorMessageHandler.showErrorMessage(
-//          "The GameMode " + this.gameMode.getName() + " requires at least 2 players");
-//      error = true;
-//    }
     if (!error) {
-      //for(Player p: players){
-      //  p.setSession(this.session);
-      //}
-      //Game game = new Game(players, this.gameMode);
-      Debug.printMessage("Hallo");
-      //this.session.setGame(new Game(this.session, this.gameMode));
-      Debug.printMessage("Hallo2");
 
       LinkedList<GameMode> gameList = this.gameModes;
       this.gameSession.setGameList(gameList);
@@ -241,10 +238,6 @@ public class LocalLobbyUiController extends AbstractUiController {
         e.printStackTrace();
       }
 
-
-
-
-
       Debug.printMessage(this,"Game has been set");
 
       this.gameSession.startGame(this.gameModes.get(0));
@@ -256,12 +249,6 @@ public class LocalLobbyUiController extends AbstractUiController {
         player2.setText(this.gameSession.getPlayerList().get(2).getUsername());
         player3.setText(this.gameSession.getPlayerList().get(3).getUsername());
       }
-
-
-      //game.startGame();
-      //ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
-      //gameController.setActiveUiController(
-      //    new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
     }
 
 
@@ -270,32 +257,38 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   @FXML
   private void increaseDifficulty1() {
-    increaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1, player1);
+    System.out.println("increase!!!!");
+    increaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
 
   @FXML
   private void increaseDifficulty2() {
-    increaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2, player2);
+    System.out.println("increase!!!!");
+    increaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
 
   @FXML
   private void increaseDifficulty3() {
-    increaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3, player3);
+    System.out.println("increase!!!!");
+    increaseAi(difficultyPlayer3, nameAiPlayer3, player3);
   }
 
   @FXML
   private void decreaseDifficulty1() {
-    decreaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1, player1);
+    System.out.println("decrease!!!!");
+    decreaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
 
   @FXML
   private void decreaseDifficulty2() {
-    decreaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2, player2);
+    System.out.println("decrease!!!!");
+    decreaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
 
   @FXML
   private void decreaseDifficulty3() {
-    decreaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3, player3);
+    System.out.println("decrease!!!!!");
+    decreaseAi(difficultyPlayer3, nameAiPlayer3, player3);
   }
 
   @FXML
@@ -307,25 +300,32 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   @FXML
   public void addRound() {
+    if(gamemodeError.getText().length() > 0){
+      gamemodeError.setText("");
+    }
     round++;
     HBox hBox = new HBox();
     hBox.setAlignment(Pos.CENTER);
     ComboBox<String> comboBox = new ComboBox<>();
     comboBox.setPrefWidth(150);
+    comboBox.setPrefHeight(25);
     initializeComboBox(comboBox);
-    Label label = new Label(round + "");
+    roundCount.setText(""+round);
     hBox.getChildren().add(comboBox);
-    hBox.getChildren().add(label);
-    hBox.setSpacing(50);
     rounds.add(comboBox);
     box.getChildren().add(hBox);
   }
 
   @FXML
   public void deleteRound() {
-    round--;
-    box.getChildren().remove(box.getChildren().get(round));
-    rounds.remove(round);
+    if(round > 1){
+      round--;
+      roundCount.setText(""+round);
+      box.getChildren().remove(box.getChildren().get(round));
+      rounds.remove(round);
+    }else{
+      gamemodeError.setText("You need to have at least one Round!");
+    }
   }
 
   private void initializeComboBox(ComboBox<String> comboBox) {
@@ -333,42 +333,40 @@ public class LocalLobbyUiController extends AbstractUiController {
     comboBox.setItems(list);
   }
 
-  private void increaseAi(Label namePlayer, Label difficultyPlayer, String name, Label player) {
-    if (namePlayer.getText().equals("-") || difficultyPlayer.getText().equals("-")) {
-      namePlayer.setText(name);
+  private void increaseAi(Label difficultyPlayer, String name, Label player) {
+    if (difficultyPlayer.getText().equals("None")) {
       difficultyPlayer.setText("Easy");
-      player.setText("Easy");
+      player.setText(name);
     } else {
       switch (difficultyPlayer.getText()) {
         case "Easy":
           difficultyPlayer.setText("Middle");
-          player.setText("Middle");
+          player.setText(name);
           break;
         case "Middle":
-          difficultyPlayer.setText("-");
-          namePlayer.setText("-");
-          player.setText("None");
+          difficultyPlayer.setText("Hard");
+          player.setText(name);
           break;
-        /*case "Hard":
-          difficultyPlayer.setText("-");
-          namePlayer.setText("-");*/
+        case "Hard":
+          difficultyPlayer.setText("None");
+          player.setText("-");
       }
     }
   }
 
-  private void decreaseAi(Label namePlayer, Label difficultyPlayer, String name, Label player) {
+  private void decreaseAi(Label difficultyPlayer, String name, Label player) {
     switch (difficultyPlayer.getText()) {
       case "Easy":
-        difficultyPlayer.setText("-");
-        namePlayer.setText("-");
-        player.setText("None");
+        difficultyPlayer.setText("None");
+        player.setText("-");
         break;
       case "Middle":
         difficultyPlayer.setText("Easy");
-        player.setText("Easy");
+        player.setText(name);
         break;
-     /* case "Hard":
-        difficultyPlayer.setText("Middle");*/
+      case "Hard":
+        difficultyPlayer.setText("Middle");
+        player.setText(name);
     }
   }
 
@@ -385,7 +383,6 @@ public class LocalLobbyUiController extends AbstractUiController {
       ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
-      //this.gameSession.setGameStarted();
     } else {
       Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
     }
