@@ -150,9 +150,8 @@ public class HostLobbyUiController extends AbstractUiController {
 
     this.gameSession = client.getGameSession();
     this.gameSession.setLocalPlayer(player);
-
-
     this.clientHandler = client.getClientHandler();
+    gameSession.setClientHandler(this.clientHandler);
   }
 
   public void registerChatMessage(){
@@ -196,7 +195,6 @@ public class HostLobbyUiController extends AbstractUiController {
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
-      gameSession.setClientHandler(this.clientHandler);
     } catch (IOException e) {
       e.printStackTrace();
     }
