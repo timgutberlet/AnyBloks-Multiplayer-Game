@@ -1,5 +1,8 @@
 package net.server;
 
+import static game.model.player.AIMessages.getAfterMatchAIComment;
+import static game.model.player.AIMessages.getAfterTurnAIComment;
+
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
@@ -329,6 +332,7 @@ public class ClientHandler {
     GameState gameState = gameUpdatePacket.getGameState();
 
     this.client.getGameSession().updateGame(gameState);
+    getAfterTurnAIComment(this.gameSession);
   }
 
   /**
@@ -342,6 +346,7 @@ public class ClientHandler {
     String winner = gameWinPacket.getUsername();
     this.client.getGameSession().endGame(winner);
     this.client.getGameSession().setGameOver(true);
+    getAfterMatchAIComment(this.gameSession);
   }
 
   /**

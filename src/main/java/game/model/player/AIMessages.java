@@ -1,5 +1,8 @@
 package game.model.player;
 
+import game.model.GameSession;
+import game.model.chat.ChatMessage;
+
 /**
  * generates chat messages for the AI player to comment the game.
  * @author tiotto
@@ -21,16 +24,23 @@ public class AIMessages {
    * gets a random comment after a played turn.
    * @return random comment after a played turn
    */
-  public static String getAfterTurnComment(){
-    return afterTurnComments[(int) Math.round(Math.random() * afterTurnComments.length)];
+  public static void getAfterTurnAIComment(GameSession gameSession){
+    if (gameSession.getLocalPlayer().isAI()) {
+      String message = afterTurnComments[(int) Math.round(
+          Math.random() * afterTurnComments.length)];
+      gameSession.addChatMessage(message);
+    }
   }
 
   /**
    * gets a random comment after a finished game.
    * @return gets a random comment after a finished game
    */
-  public static String getAfterMatchComment(){
-    return afterGameComments[(int) Math.round(Math.random() * afterTurnComments.length)];
+  public static void getAfterMatchAIComment(GameSession gameSession) {
+    if (gameSession.getLocalPlayer().isAI()) {
+      String message = afterGameComments[(int) Math.round(Math.random() * afterTurnComments.length)];
+      gameSession.addChatMessage(message);
+    }
   }
 
 }
