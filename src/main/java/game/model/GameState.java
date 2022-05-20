@@ -697,21 +697,26 @@ public class GameState implements Serializable, Cloneable {
   public void assignNumberBlockedFieldsWeighted(Turn turn) {
     int num = 0;
 
-    for (int i = 0; i < playerList.size()+1; i++) {
+    A: for (int i = 0; i < playerList.size()+1; i++) {
       Color c = Color.values()[i];
       if (!c.equals(turn.getPoly().getColor()) && !c.equals(Color.WHITE)) {
-        for (Poly p : getRemainingPolys(getPlayerFromColor(c))) {
+        ArrayList<Poly> remainingPolys = getRemainingPolysClone(getPlayerFromColor(c));
+        remainingPolys.sort((o1, o2) -> o2.getSize() - o1.getSize());
+        for (Poly p : remainingPolys) {
+          if (p.getSize() < remainingPolys.get(0).getSize()){
+            break A;
+          }
           ArrayList<int[]> selection = getBoard().getPossibleFieldsForPoly(p, isFirstRound());
           if (gameMode.getName().equals("TRIGON")){
             for (FieldTrigon ft : ((PolyTrigon) turn.getPoly()).getShape()){
               if (selection.contains(ft.getPos())) {
-                num += p.getSize();
+                num++;
               }
             }
           } else {
             for (FieldSquare fs : ((PolySquare) turn.getPoly()).getShape()){
               if (selection.contains(fs.getPos())) {
-                num += p.getSize();
+                num++;
               }
             }
           }

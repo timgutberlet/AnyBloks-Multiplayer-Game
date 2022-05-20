@@ -64,14 +64,14 @@ public class MainT {
     System.out.println(game.getGameState().getRound());
     gameSession.stopSession();*/
 
-    //AI.setRoundSections(0,new int[]{0,24});
-    //int[] result = playClassicGame(true);
-    //System.out.println(result);
+    AI.setRoundSections(0,new int[]{0,24});
+    int[] result = playClassicGame(true);
+    System.out.println(result);
     AI.setRoundSections(1,new int[]{0,24});
-    int[] result = playDuoGame(true);
+    result = playDuoGame(true);
     System.out.println(result);
     AI.setRoundSections(2,new int[]{0,24});
-    result = playClassicGame(true);
+    result = playJuniorGame(true);
     System.out.println(result);
     AI.setRoundSections(3,new int[]{0,24});
     result = playTrigonGame(true);

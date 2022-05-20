@@ -257,11 +257,140 @@ public class PolyTrigon extends Poly {
    * mirrors the polygon
    */
   public void mirror() {
-    int help = this.rotation;
-    for (int i = 0; i < 3; i++) {
-      this.rotateLeft();
+    ArrayList<FieldTrigon> newShape = new ArrayList<>();
+    for (FieldTrigon ft : getShape()) {
+      switch (ft.getPos()[0]){
+        case 0: {
+          switch (ft.getPos()[1]) {
+            case 0 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(0, 3, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(1, 3, 0, getColor()));
+              }
+            }
+            case 1 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(1, 2, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(2, 2, 0, getColor()));
+              }
+            }
+            case 2 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(2, 1, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(3, 1, 0, getColor()));
+              }
+            }
+            case 3 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(3, 0, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(0, 0, 0, getColor()));
+              }
+            }
+          }
+        }
+        case 1:{
+          switch (ft.getPos()[1]) {
+            case 0 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(1, 3, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(2, 3, 0, getColor()));
+              }
+            }
+            case 1 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(2, 2, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(3, 2, 0, getColor()));
+              }
+            }
+            case 2 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(3, 1, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(0, 1, 0, getColor()));
+              }
+            }
+            case 3 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(0, 0, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(1, 0, 0, getColor()));
+              }
+            }
+          }
+        }
+        case 2:{
+          switch (ft.getPos()[1]) {
+            case 0 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(2, 3, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(3, 3, 0, getColor()));
+              }
+            }
+            case 1 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(3, 2, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(0, 2, 0, getColor()));
+              }
+            }
+            case 2 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(0, 1, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(1, 1, 0, getColor()));
+              }
+            }
+            case 3 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(1, 0, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(2, 0, 0, getColor()));
+              }
+            }
+          }
+        }
+        case 3:{
+          switch (ft.getPos()[1]) {
+            case 0 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(3, 3, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(0, 3, 0, getColor()));
+              }
+            }
+            case 1 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(0, 2, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(1, 2, 0, getColor()));
+              }
+            }
+            case 2 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(1, 1, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(2, 1, 0, getColor()));
+              }
+            }
+            case 3 -> {
+              if (ft.getPos()[2] == 0) {
+                newShape.add(new FieldTrigon(2, 0, 1, getColor()));
+              } else {
+                newShape.add(new FieldTrigon(3, 0, 0, getColor()));
+              }
+            }
+          }
+        }
+      }
     }
-    this.rotation = help;
+    shape = newShape;
     isMirrored = !isMirrored;
   }
 
