@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ThreadHandler;
+import engine.handler.ThreadHandlerRestful;
 import game.model.Game;
 import game.model.GameSession;
 import game.model.gamemodes.GMTutorial;
@@ -31,6 +32,10 @@ public class MainMenuUiController extends AbstractUiController {
     super(gameController);
     this.gameController = gameController;
     init(super.root);
+
+    ThreadHandlerRestful threadHandlerRestful = new ThreadHandlerRestful();
+    threadHandlerRestful.start();
+
   }
 
   /**

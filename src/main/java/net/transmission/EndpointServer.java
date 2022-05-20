@@ -61,7 +61,6 @@ public class EndpointServer {
     gameSession = new GameSession();
     this.inboundServerHandler = new InboundServerHandler(this, gameSession);
     this.outboundServerHandler = new OutboundServerHandler(this, gameSession);
-
   }
 
   /**
