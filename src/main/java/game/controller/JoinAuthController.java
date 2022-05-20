@@ -55,6 +55,8 @@ public class JoinAuthController extends AbstractUiController {
   private ClientHandler clientHandler;
   private GameSession gameSession;
 
+  private Boolean joinSuccesful;
+
   public JoinAuthController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
@@ -196,6 +198,8 @@ public class JoinAuthController extends AbstractUiController {
         this.ipError.setText("");
         this.passwordError.setText("");
         this.usernameError.setText("");
+
+        this.joinSuccesful = true;
       }
 
 
@@ -283,12 +287,12 @@ public class JoinAuthController extends AbstractUiController {
 
     } else {
 
-      if (this.gameSession.isGameStarted()) {
+      if (this.joinSuccesful) {
         ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
         gameController.setActiveUiController(
-            new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession,
-                threadHelp));
+            new JoinLobbyUiController(gameController, gameSession));
         this.gameSession.setGameStarted(false);
+        this.joinSuccesful = false;
       } else {
         Debug.printMessage(this, "GameSession Controller " + this.gameSession);
       }
