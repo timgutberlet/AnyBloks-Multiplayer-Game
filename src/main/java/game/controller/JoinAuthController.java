@@ -60,13 +60,14 @@ public class JoinAuthController extends AbstractUiController {
     init(super.root);
   }
 
-  public JoinAuthController(AbstractGameController gameController, String Ip, String username) {
+  public JoinAuthController(AbstractGameController gameController, String ip, String username) {
     super(gameController);
     this.gameController = gameController;
     init(super.root);
-    this.ipField.setText(Ip);
+    this.ipField.setText(ip);
     this.usernameField.setText(username);
   }
+
 
   /**
    * Method to initialize the FXML
@@ -87,13 +88,33 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the the LocalLobbyView
+   * Method to Start the the createAccountController
    *
    * @author tgutberl
    */
   @FXML
   public void createAccount() {
     gameController.setActiveUiController(new CreateAccountController(gameController));
+  }
+
+  /**
+   * Method to Start the the EditAccountController
+   *
+   * @author tgutberl
+   */
+  @FXML
+  public void editAccount() {
+    gameController.setActiveUiController(new EditAccountController(gameController));
+  }
+
+  /**
+   * Method to Start the the DeleteAccountController
+   *
+   * @author tgutberl
+   */
+  @FXML
+  public void deleteAccount() {
+    gameController.setActiveUiController(new DeleteAccountController(gameController));
   }
 
   /**

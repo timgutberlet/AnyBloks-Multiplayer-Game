@@ -67,7 +67,7 @@
                            <children>
                               <ImageView fitHeight="336.0" fitWidth="338.0">
                                  <image>
-                                    <Image url="@../../../../../Downloads/sadFrog.jpg" />
+                                    <Image url="images/sadFrog.jpg" />
                                  </image>
                               </ImageView>
                            </children>

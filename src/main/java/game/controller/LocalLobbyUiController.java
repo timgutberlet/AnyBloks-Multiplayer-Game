@@ -146,20 +146,18 @@ public class LocalLobbyUiController extends AbstractUiController {
   @FXML
   public void playGame() {
     ArrayList<Player> players = this.gameSession.getPlayerList();
+    this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
     boolean error = false;
 
     if (!player1.getText().equals("-")) {
       switch (difficultyPlayer1.getText()) {
         case "Easy":
           aiPlayers.add(PlayerType.AI_EASY);
-          this.gameSession.setDefaultAI(PlayerType.AI_EASY);
           break;
         case "Middle":
-          this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
           aiPlayers.add(PlayerType.AI_MIDDLE);
           break;
         case "Hard":
-          this.gameSession.setDefaultAI(PlayerType.AI_HARD);
           aiPlayers.add(PlayerType.AI_HARD);
       }
     }
@@ -169,10 +167,10 @@ public class LocalLobbyUiController extends AbstractUiController {
           aiPlayers.add(PlayerType.AI_EASY);
           break;
         case "Middle":
-          this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+          aiPlayers.add(PlayerType.AI_MIDDLE);
           break;
         case "Hard":
-          this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+          aiPlayers.add(PlayerType.AI_HARD);
       }
     }
 
@@ -182,10 +180,10 @@ public class LocalLobbyUiController extends AbstractUiController {
           aiPlayers.add(PlayerType.AI_EASY);
           break;
         case "Middle":
-          this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+          aiPlayers.add(PlayerType.AI_MIDDLE);
           break;
         case "Hard":
-          this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+          aiPlayers.add(PlayerType.AI_HARD);
       }
     }
 

@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -99,9 +101,37 @@
                             </Label>
                           </children>
                         </HBox>
+                                    <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#kickPlayer1">
+                                       <graphic>
+                                          <ImageView fx:id="trashBin1" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/trash-can.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" onAction="#kickPlayer2">
+                                       <graphic>
+                                          <ImageView fx:id="trashBin2" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/trash-can.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="trashBin3" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="4" onAction="#kickPlayer3">
+                                       <graphic>
+                                          <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@images/trash-can.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
                       </children>
                       <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.0" minWidth="10.0" prefWidth="288.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="186.0" minWidth="0.0" prefWidth="92.0" />
                       </columnConstraints>
                       <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -291,17 +321,7 @@
                         <Button mnemonicParsing="false" onAction="#copyToClipboard" text="Copy to Clipboard" />
                       </children>
                     </VBox>
-                    <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0" GridPane.columnIndex="1">
-                      <children>
-                        <ComboBox fx:id="gameModes" prefWidth="150.0" />
-                        <Label text="Select Gamemode">
-                          <font>
-                            <Font size="18.0" />
-                          </font>
-                        </Label>
-                      </children>
-                    </VBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1">
                         <children>
                         <Label text="AI Default Strength:">
                         <HBox.margin>
@@ -328,6 +348,16 @@
                         </Button>
                         </children>
                         </HBox>
+                        <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0">
+                        <children>
+                        <ComboBox fx:id="gameModes" prefWidth="150.0" />
+                        <Label text="Select Gamemode">
+                          <font>
+                            <Font size="18.0" />
+                          </font>
+                        </Label>
+                        </children>
+                        </VBox>
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
