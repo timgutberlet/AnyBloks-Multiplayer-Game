@@ -60,7 +60,7 @@ public class InboundServerHandler {
    */
   public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
     Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
-
+    System.out.println( "LOGIN_REQUEST_PACKET recieved in Handler");
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
     String token = loginPacket.getToken();

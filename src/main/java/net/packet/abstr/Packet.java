@@ -8,6 +8,7 @@ import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.CreateAccountResponsePacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.account.LoginResponsePacket;
+import net.packet.account.RestfulLoginPacket;
 import net.packet.account.UpdateAccountRequestPacket;
 import net.packet.chat.ChatMessagePacket;
 import net.packet.game.GameStartPacket;
@@ -29,7 +30,7 @@ import net.packet.game.TurnPacket;
     @JsonSubTypes.Type(value = CreateAccountResponsePacket.class, name = "CreateResponsePacket"),
     @JsonSubTypes.Type(value = GameUpdatePacket.class, name = "GameUpdatePacket"),
     @JsonSubTypes.Type(value = InitSessionPacket.class, name = "InitPacket"),
-		@JsonSubTypes.Type(value = LoginRequestPacket.class, name = "RestfulLoginPacket"),
+		@JsonSubTypes.Type(value = RestfulLoginPacket.class, name = "RestfulLoginPacket"),
 		@JsonSubTypes.Type(value = LoginRequestPacket.class, name = "LoginRequestPacket"),
     @JsonSubTypes.Type(value = LoginResponsePacket.class, name = "LoginResponsePacket"),
     @JsonSubTypes.Type(value = PlayerOrderPacket.class, name = "PlayerOrderPacket"),

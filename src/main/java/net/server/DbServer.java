@@ -344,17 +344,15 @@ public class DbServer extends DbHandler {
    * @return true if there is an account / false if the username is unused
    */
   public synchronized boolean doesUsernameExist(String username) {
-    boolean doesExist = true;
+    boolean doesExist = false;
     try {
       Statement getUsers = con.createStatement();
       ResultSet resultSet = getUsers.executeQuery(
           "SELECT* FROM players WHERE players.username = '" + username + "';");
-      int count = 0;
       if (resultSet.next()) {
-        count = Integer.parseInt(resultSet.getString(1));
+        doesExist = true;
       }
       //Since usernames are unique, if the username is set, it will appear exactly once
-      doesExist = count == 1;
       resultSet.close();
       getUsers.close();
     } catch (SQLException e) {

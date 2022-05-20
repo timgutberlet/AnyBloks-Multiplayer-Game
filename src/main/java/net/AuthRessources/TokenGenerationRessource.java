@@ -11,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.LoginRequestPacket;
 import net.packet.account.RestfulLoginPacket;
 import net.server.DbServer;
 
@@ -31,13 +30,18 @@ public class TokenGenerationRessource {
     System.out.println("Hi from auth method");
 
     try {
+      String username ="";
+      String passwordHash = "";
+      RestfulLoginPacket restfulLoginPacket = null;
       if (wrappedPacket.getPacketType() != PacketType.RESTFUL_LOGIN_PACKET) {
         throw new Exception("This packet is not of the correct type");
       }
 
-      RestfulLoginPacket restfulLoginPacket = (RestfulLoginPacket) wrappedPacket.getPacket();
-      String username = restfulLoginPacket.getUsername();
-      String passwordHash = restfulLoginPacket.getPasswordHash();
+      System.out.println(wrappedPacket.getPacket());
+      restfulLoginPacket = (RestfulLoginPacket) wrappedPacket.getPacket();
+      username = restfulLoginPacket.getUsername();
+      passwordHash = restfulLoginPacket.getPasswordHash();
+
 
       System.out.println(restfulLoginPacket.getUsername() + " " + restfulLoginPacket.getPasswordHash());
 
@@ -58,7 +62,9 @@ public class TokenGenerationRessource {
 
   private void authenticate(String username, String password) throws Exception {
     DbServer dbServer = DbServer.getInstance();
-    if (!dbServer.doesUsernameExist(username)) {
+    System.out.println(dbServer.doesUsernameExist(username));
+    System.out.println(!dbServer.doesUsernameExist(username));
+    if (!(dbServer.doesUsernameExist(username))) {
       throw new Exception("The username doesn't exist!");
     }
     String dbpasswordHash = dbServer.getUserPasswordHash(username);
