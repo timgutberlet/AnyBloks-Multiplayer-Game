@@ -39,6 +39,8 @@ public class TokenGenerationRessource {
       String username = restfulLoginPacket.getUsername();
       String passwordHash = restfulLoginPacket.getPasswordHash();
 
+      System.out.println(restfulLoginPacket.getUsername() + " " + restfulLoginPacket.getPasswordHash());
+
       // Authenticate user with db
       authenticate(username, passwordHash);
 
@@ -49,6 +51,7 @@ public class TokenGenerationRessource {
       return Response.ok(token).build();
 
     } catch (Exception e) {
+      e.printStackTrace();
       return Response.status(Response.Status.FORBIDDEN).build();
     }
   }
@@ -59,12 +62,15 @@ public class TokenGenerationRessource {
       throw new Exception("The username doesn't exist!");
     }
     String dbpasswordHash = dbServer.getUserPasswordHash(username);
+
+    System.out.println(username + " " + password);
+    System.out.println(username + " " + dbpasswordHash);
     if (!password.equals(dbpasswordHash)) {
       throw new Exception("The credentials are wrong!");
     }
   }
 
-  private String issueToken(String username) {
+  public String issueToken(String username) {
     boolean passed = true;
 
     //delete any old authTokens that might exist for the user
@@ -89,7 +95,7 @@ public class TokenGenerationRessource {
     }
 
     //Insert the new token into the DB
-    dbServer.testAuthToken(username, token);
+    dbServer.insertAuthToken(username, token);
 
     return token;
   }

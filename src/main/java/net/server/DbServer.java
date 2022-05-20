@@ -166,7 +166,7 @@ public class DbServer extends DbHandler {
     try {
       Statement getAuthToken = con.createStatement();
       ResultSet resultSet = getAuthToken.executeQuery(
-          "GET authToken from authTokens WHERE username = '" + username + "' ");
+          "SELECT authToken from authTokens WHERE username = '" + username + "' ");
       if (resultSet.next()) {
         //in this case the result was not empty, therefore a token for the user has been saved
         userHasToken = true;
@@ -225,7 +225,7 @@ public class DbServer extends DbHandler {
       try {
         Statement getAuthToken = con.createStatement();
         ResultSet resultSet = getAuthToken.executeQuery(
-            "GET authToken from authTokens WHERE username = '" + username + "' ");
+            "SELECT authToken from authTokens WHERE username = '" + username + "' ");
         String dbToken = resultSet.getString(1);
         if (providedToken.equals(dbToken)) {
           authSucess = true;
