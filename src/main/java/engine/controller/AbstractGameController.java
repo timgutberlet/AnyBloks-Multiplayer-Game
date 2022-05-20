@@ -41,7 +41,7 @@ public abstract class AbstractGameController extends AnimationTimer {
     Scene scene = new Scene(gameRoot, Config.getIntValue("SCREEN_WIDTH"),
         Config.getIntValue("SCREEN_HEIGHT"));
     stage.setScene(scene);
-    stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/sadFrog.jpg")));
+    stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
     fpsTimer = System.currentTimeMillis();
     this.stage = stage;
     this.application = application;

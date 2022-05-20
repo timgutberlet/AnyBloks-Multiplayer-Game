@@ -70,11 +70,11 @@ public class CreateAccountController extends AbstractUiController {
       //Sets the Theme, according to the settings
       switch (Config.getStringValue("THEME")){
         case "BRIGHT":
-          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.setStyle("-fx-background-color:#ffffff;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
-          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.setStyle("-fx-background-color: #000000;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":

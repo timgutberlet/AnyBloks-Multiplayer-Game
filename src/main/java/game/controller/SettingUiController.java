@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -28,6 +29,9 @@ public class SettingUiController extends AbstractUiController {
   ObservableList<String> themes;
 
   private String saveMessage = "";
+
+  @FXML
+  TextField hostPlayerField;
 
   @FXML
   AnchorPane mainPane;
@@ -141,6 +145,7 @@ public class SettingUiController extends AbstractUiController {
           break;
       }
     }
+    Config.set("HOSTPLAYER", hostPlayerField.getText());
     Config.saveProperty();
     updateSize(mainPane, gameController.getStage());
     // set alert type
@@ -191,6 +196,7 @@ public class SettingUiController extends AbstractUiController {
           break;
       }
       saveConfirm.setText(saveMessage);
+      hostPlayerField.setText(Config.getStringValue("HOSTNAME"));
     } catch (IOException e) {
       e.printStackTrace();
     }

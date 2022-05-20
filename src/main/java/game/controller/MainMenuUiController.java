@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
+import javax.swing.text.html.ImageView;
 
 /**
  * @author lbaudenb

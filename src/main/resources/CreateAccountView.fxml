@@ -70,7 +70,7 @@
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="46.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                   <children>
-                    <Label prefHeight="97.0" prefWidth="173.0" text="Password Again">
+                    <Label prefHeight="59.0" prefWidth="174.0" text="Password Again">
                       <font>
                         <Font size="25.0" />
                       </font>
