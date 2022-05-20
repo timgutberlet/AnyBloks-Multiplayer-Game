@@ -166,7 +166,7 @@ public class DbServer extends DbHandler {
     try {
       Statement getAuthToken = con.createStatement();
       ResultSet resultSet = getAuthToken.executeQuery(
-          "GET authToken from authTokens WHERE username = '" + username + "' ");
+          "SELECT authToken from authTokens WHERE username = '" + username + "' ");
       if (resultSet.next()) {
         //in this case the result was not empty, therefore a token for the user has been saved
         userHasToken = true;
@@ -225,7 +225,7 @@ public class DbServer extends DbHandler {
       try {
         Statement getAuthToken = con.createStatement();
         ResultSet resultSet = getAuthToken.executeQuery(
-            "GET authToken from authTokens WHERE username = '" + username + "' ");
+            "SELECT authToken from authTokens WHERE username = '" + username + "' ");
         String dbToken = resultSet.getString(1);
         if (providedToken.equals(dbToken)) {
           authSucess = true;
@@ -344,17 +344,15 @@ public class DbServer extends DbHandler {
    * @return true if there is an account / false if the username is unused
    */
   public synchronized boolean doesUsernameExist(String username) {
-    boolean doesExist = true;
+    boolean doesExist = false;
     try {
       Statement getUsers = con.createStatement();
       ResultSet resultSet = getUsers.executeQuery(
           "SELECT* FROM players WHERE players.username = '" + username + "';");
-      int count = 0;
       if (resultSet.next()) {
-        count = Integer.parseInt(resultSet.getString(1));
+        doesExist = true;
       }
       //Since usernames are unique, if the username is set, it will appear exactly once
-      doesExist = count == 1;
       resultSet.close();
       getUsers.close();
     } catch (SQLException e) {

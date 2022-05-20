@@ -80,27 +80,23 @@ public class CreateAccountController extends AbstractUiController {
 
 
   public void serverCreateAccount(String username, String password, String ip){
-    //TODO remove
-    try {
-      ip = Inet4Address.getLocalHost().getHostAddress();
-    } catch (UnknownHostException e) {
-      e.printStackTrace();
-    }
 
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
-    password = HashingHandler.sha256encode("123456");
-    CreateAccountRequestPacket carp = new CreateAccountRequestPacket("testuser", password);
+    password = HashingHandler.sha256encode(password);
+    CreateAccountRequestPacket carp = new CreateAccountRequestPacket(usernameField.getText(), password);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
         carp);
 
     String targetAddress = "http://" + ip + ":8082/";
+    System.out.println("Ich sende an den Server");
 
     WebTarget targetPath = testClient.target(targetAddress).path("/register/");
     Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
+    System.out.println("Ich empfange von dem Server");
     if (receivedAnswer.getStatus() != 200) {
       System.out.println("Something went wrong");
       usernameError.setText(String.valueOf(receivedAnswer.getStatusInfo()));
@@ -122,7 +118,8 @@ public class CreateAccountController extends AbstractUiController {
     passwordError1.setText("");
     passwordError2.setText("");
     if(passwordField1.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() > 3 && passwordField1.getText().equals(passwordField2.getText())){
-      serverCreateAccount(usernameField.getText(), passwordField1.getText(), this.ipField.getText());
+      serverCreateAccount(usernameField.getText(), passwordField1.getText(),this.ipField.getText());
+      gameController.setActiveUiController(new JoinAuthController(gameController,ipField.getText(),usernameField.getText()));
     }else{
       if(usernameField.getText().length() < 3) {
         usernameError.setText("Please enter a username with at least three Characters");

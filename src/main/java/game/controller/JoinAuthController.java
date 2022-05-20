@@ -142,12 +142,18 @@ public class JoinAuthController extends AbstractUiController {
       WrappedPacket wrappedPacket = new WrappedPacket(PacketType.RESTFUL_LOGIN_PACKET,
           restfulLoginPacket);
 
+      System.out.println("PasswortHash" + passwordHash);
+
       WebTarget targetPath = testClient.target(targetAddress).path("/authentication/");
       Response receivedToken = targetPath.request(MediaType.APPLICATION_JSON)
           .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
       if (receivedToken.getStatus() != 200) {
         System.out.println("Unexpected answer!");
+        System.out.println(receivedToken.getStatus());
+        System.out.println(receivedToken.getStatusInfo());
+
+
         passwordError.setText(
             "You seem to have entered an invalid username or password. "
                 + "Please make sure you enter a valid username & password or create an account!");

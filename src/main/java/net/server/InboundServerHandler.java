@@ -60,7 +60,7 @@ public class InboundServerHandler {
    */
   public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
     Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
-
+    System.out.println( "LOGIN_REQUEST_PACKET recieved in Handler");
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
     String token = loginPacket.getToken();
@@ -133,15 +133,16 @@ public class InboundServerHandler {
       }
     } else {
       // handle a new player by adding to gamesession and in the dictionary
-      if (gameSession.getGame().getGameState().isStateRunning()) {
-        LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
-            "This Lobby is currently playing. Try again at another time.",
-            "ipAddress");
-        WrappedPacket wrappedPacketLoginResponse = new WrappedPacket(
-            PacketType.LOGIN_RESPONSE_PACKET,
-            loginResponsePacket);
-        this.server.sendMessage(wrappedPacketLoginResponse, session);
-      } else if (gameSession.getPlayerList().size() < 4) {
+//      if (gameSession.getGame().getGameState().isStateRunning()) {
+//        LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
+//            "This Lobby is currently playing. Try again at another time.",
+//            "ipAddress");
+//        WrappedPacket wrappedPacketLoginResponse = new WrappedPacket(
+//            PacketType.LOGIN_RESPONSE_PACKET,
+//            loginResponsePacket);
+//        this.server.sendMessage(wrappedPacketLoginResponse, session);
+//      } else
+        if (gameSession.getPlayerList().size() < 4) {
 
         Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
 

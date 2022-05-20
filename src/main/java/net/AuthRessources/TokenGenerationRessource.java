@@ -11,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.LoginRequestPacket;
 import net.packet.account.RestfulLoginPacket;
 import net.server.DbServer;
 
@@ -31,13 +30,20 @@ public class TokenGenerationRessource {
     System.out.println("Hi from auth method");
 
     try {
+      String username ="";
+      String passwordHash = "";
+      RestfulLoginPacket restfulLoginPacket = null;
       if (wrappedPacket.getPacketType() != PacketType.RESTFUL_LOGIN_PACKET) {
         throw new Exception("This packet is not of the correct type");
       }
 
-      RestfulLoginPacket restfulLoginPacket = (RestfulLoginPacket) wrappedPacket.getPacket();
-      String username = restfulLoginPacket.getUsername();
-      String passwordHash = restfulLoginPacket.getPasswordHash();
+      System.out.println(wrappedPacket.getPacket());
+      restfulLoginPacket = (RestfulLoginPacket) wrappedPacket.getPacket();
+      username = restfulLoginPacket.getUsername();
+      passwordHash = restfulLoginPacket.getPasswordHash();
+
+
+      System.out.println(restfulLoginPacket.getUsername() + " " + restfulLoginPacket.getPasswordHash());
 
       // Authenticate user with db
       authenticate(username, passwordHash);
@@ -49,22 +55,28 @@ public class TokenGenerationRessource {
       return Response.ok(token).build();
 
     } catch (Exception e) {
+      e.printStackTrace();
       return Response.status(Response.Status.FORBIDDEN).build();
     }
   }
 
   private void authenticate(String username, String password) throws Exception {
     DbServer dbServer = DbServer.getInstance();
-    if (!dbServer.doesUsernameExist(username)) {
+    System.out.println(dbServer.doesUsernameExist(username));
+    System.out.println(!dbServer.doesUsernameExist(username));
+    if (!(dbServer.doesUsernameExist(username))) {
       throw new Exception("The username doesn't exist!");
     }
     String dbpasswordHash = dbServer.getUserPasswordHash(username);
+
+    System.out.println(username + " " + password);
+    System.out.println(username + " " + dbpasswordHash);
     if (!password.equals(dbpasswordHash)) {
       throw new Exception("The credentials are wrong!");
     }
   }
 
-  private String issueToken(String username) {
+  public String issueToken(String username) {
     boolean passed = true;
 
     //delete any old authTokens that might exist for the user
@@ -89,7 +101,7 @@ public class TokenGenerationRessource {
     }
 
     //Insert the new token into the DB
-    dbServer.testAuthToken(username, token);
+    dbServer.insertAuthToken(username, token);
 
     return token;
   }
