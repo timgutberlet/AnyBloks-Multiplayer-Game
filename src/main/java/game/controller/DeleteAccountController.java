@@ -40,10 +40,10 @@ public class DeleteAccountController extends AbstractUiController {
   TextField usernameField;
 
   @FXML
-  PasswordField passwordField1, passwordField2;
+  PasswordField passwordField;
 
   @FXML
-  Text usernameError, passwordError1, passwordError2, ipError;
+  Text usernameError, passwordError,  ipError;
 
   public DeleteAccountController(AbstractGameController gameController) {
     super(gameController);
@@ -65,8 +65,8 @@ public class DeleteAccountController extends AbstractUiController {
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
       usernameError.setText("");
-      passwordError1.setText("");
-      passwordError2.setText("");
+      passwordError.setText("");
+      ipError.setText("");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -119,19 +119,15 @@ public class DeleteAccountController extends AbstractUiController {
   @FXML
   public void createAccount() {
     usernameError.setText("");
-    passwordError1.setText("");
-    passwordError2.setText("");
-    if(passwordField1.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() > 3 && passwordField1.getText().equals(passwordField2.getText())){
-      serverCreateAccount(usernameField.getText(), passwordField1.getText(), this.ipField.getText());
+    passwordError.setText("");
+    if(passwordField.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() >= 2 ){
+      //TODO
     }else{
-      if(usernameField.getText().length() < 3) {
-        usernameError.setText("Please enter a username with at least three Characters");
+      if(usernameField.getText().length() < 2) {
+        usernameError.setText("Please enter a username with at least two Characters");
       }
-      if(!passwordField1.getText().equals(passwordField2.getText())){
-        passwordError2.setText("The passwords do not match!");
-      }
-      if(passwordField1.getText().length() < 6){
-        passwordError1.setText("The Password has to be at least 6 Characters!");
+      if(passwordField.getText().length() < 6){
+        passwordError.setText("The Password has to be at least 6 Characters!");
       }
     }
   }

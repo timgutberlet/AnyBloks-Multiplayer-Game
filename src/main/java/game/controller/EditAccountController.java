@@ -40,10 +40,10 @@ public class EditAccountController extends AbstractUiController {
   TextField usernameField;
 
   @FXML
-  PasswordField passwordField1, passwordField2;
+  PasswordField oldPasswordField, newPasswordField;
 
   @FXML
-  Text usernameError, passwordError1, passwordError2, ipError;
+  Text usernameError, oldPasswordError, newPasswordError, ipError;
 
   public EditAccountController(AbstractGameController gameController) {
     super(gameController);
@@ -64,9 +64,10 @@ public class EditAccountController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
+      ipError.setText("");
       usernameError.setText("");
-      passwordError1.setText("");
-      passwordError2.setText("");
+      oldPasswordError.setText("");
+      newPasswordError.setText("");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -119,19 +120,16 @@ public class EditAccountController extends AbstractUiController {
   @FXML
   public void createAccount() {
     usernameError.setText("");
-    passwordError1.setText("");
-    passwordError2.setText("");
-    if(passwordField1.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() > 3 && passwordField1.getText().equals(passwordField2.getText())){
-      serverCreateAccount(usernameField.getText(), passwordField1.getText(), this.ipField.getText());
+    oldPasswordError.setText("");
+    newPasswordError.setText("");
+    if(oldPasswordField.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() >= 2 ){
+      //TODO
     }else{
-      if(usernameField.getText().length() < 3) {
-        usernameError.setText("Please enter a username with at least three Characters");
+      if(usernameField.getText().length() < 2) {
+        usernameError.setText("Please enter a username with at least two Characters");
       }
-      if(!passwordField1.getText().equals(passwordField2.getText())){
-        passwordError2.setText("The passwords do not match!");
-      }
-      if(passwordField1.getText().length() < 6){
-        passwordError1.setText("The Password has to be at least 6 Characters!");
+      if(oldPasswordField.getText().length() < 6){
+        oldPasswordError.setText("The Password has to be at least 6 Characters!");
       }
     }
   }
@@ -167,7 +165,12 @@ public class EditAccountController extends AbstractUiController {
 
   @Override
   public void update(AbstractGameController gameController) {
-
+    if(oldPasswordField.getText().length() < 6 && oldPasswordField.getText().length() > 0){
+      oldPasswordError.setText("The Password has to be at least 6 Characters!");
+    }
+    if(usernameField.getText().length() < 2 && usernameField.getText().length() > 0){
+      usernameError.setText("The username has to be at least 2 Characters!");
+    }
   }
 
   @FXML

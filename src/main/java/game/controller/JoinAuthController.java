@@ -82,6 +82,9 @@ public class JoinAuthController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
+      this.ipError.setText("");
+      this.passwordError.setText("");
+      this.usernameError.setText("");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -169,7 +172,6 @@ public class JoinAuthController extends AbstractUiController {
         this.ipError.setText("");
         this.passwordError.setText("");
         this.usernameError.setText("");
-
       }
 
 

@@ -16,6 +16,9 @@ import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 
 /**
+ * Controller that lets the user choose, what Game he wants to play. He can choose between
+ * "PlayVsAi", "Joinlobby"  and "Hostlobby"
+ *
  * @author tgutberl
  */
 public class PlayUiController extends AbstractUiController {

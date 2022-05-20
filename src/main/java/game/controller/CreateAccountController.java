@@ -117,12 +117,13 @@ public class CreateAccountController extends AbstractUiController {
     usernameError.setText("");
     passwordError1.setText("");
     passwordError2.setText("");
-    if(passwordField1.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() > 3 && passwordField1.getText().equals(passwordField2.getText())){
+    ipError.setText("");
+    if(passwordField1.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() >= 2 && passwordField1.getText().equals(passwordField2.getText())){
       serverCreateAccount(usernameField.getText(), passwordField1.getText(),this.ipField.getText());
       gameController.setActiveUiController(new JoinAuthController(gameController,ipField.getText(),usernameField.getText()));
     }else{
-      if(usernameField.getText().length() < 3) {
-        usernameError.setText("Please enter a username with at least three Characters");
+      if(usernameField.getText().length() < 2) {
+        usernameError.setText("Please enter a username with at least two Characters");
       }
       if(!passwordField1.getText().equals(passwordField2.getText())){
         passwordError2.setText("The passwords do not match!");

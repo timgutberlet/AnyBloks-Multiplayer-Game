@@ -42,6 +42,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+
+/**
+ * UiController controlling the Ingame Inputs and Outputs, as well as the VIew
+ *
+ * @author tgutberl
+ */
+
 public abstract class InGameUiController extends AbstractUiController {
 
   private final GameSession gameSession;

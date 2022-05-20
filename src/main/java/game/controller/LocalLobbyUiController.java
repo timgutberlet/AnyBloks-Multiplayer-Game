@@ -111,16 +111,11 @@ public class LocalLobbyUiController extends AbstractUiController {
       e.printStackTrace();
     }
 
-
-
-    Player player = new Player("You", PlayerType.REMOTE_PLAYER);
+    Player player = new Player("Tilman", PlayerType.REMOTE_PLAYER);
     this.client = new EndpointClient(this,player);
-
-
 
     this.gameSession = client.getGameSession();
     this.gameSession.setLocalPlayer(player);
-
 
     this.clientHandler = client.getClientHandler();
 
@@ -145,7 +140,6 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   @FXML
   public void playGame() {
-    ArrayList<Player> players = this.gameSession.getPlayerList();
     this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
     boolean error = false;
 
@@ -186,11 +180,12 @@ public class LocalLobbyUiController extends AbstractUiController {
           aiPlayers.add(PlayerType.AI_HARD);
       }
     }
+    this.gameSession.setAiPlayers(aiPlayers);
 
     List<String> gameModes = new ArrayList<>();
 
-    for (ComboBox<String> round : this.rounds) {
-      gameModes.add(round.getValue());
+    for (ComboBox<String> gameRound : this.rounds) {
+      gameModes.add(gameRound.getValue());
     }
 
     for (String gameMode : gameModes) {
@@ -200,14 +195,14 @@ public class LocalLobbyUiController extends AbstractUiController {
           this.gameModes.add(new GMClassic());
           break;
         case "Duo":
-          if (players.size() > 2) {
+          if (aiPlayers.size() > 1) {
             ErrorMessageHandler.showErrorMessage("The GameMode Duo only allows for 2 players");
             error = true;
           }
           this.gameModes.add(new GMDuo());
           break;
         case "Junior":
-          if (players.size() > 2) {
+          if (aiPlayers.size() > 2) {
             ErrorMessageHandler.showErrorMessage("The GameMode Junior only allows for 2 players");
             error = true;
           }
@@ -224,7 +219,6 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
 
     if (!error) {
-
       LinkedList<GameMode> gameList = this.gameModes;
       this.gameSession.setGameList(gameList);
 
@@ -237,8 +231,6 @@ public class LocalLobbyUiController extends AbstractUiController {
       }
 
       Debug.printMessage(this,"Game has been set");
-
-      this.gameSession.startGame(this.gameModes.get(0));
       Debug.printMessage("Hallo3");
       Debug.printMessage("Laenge der Liste: "+this.gameSession.getPlayerList().size());
 
@@ -248,9 +240,42 @@ public class LocalLobbyUiController extends AbstractUiController {
         player3.setText(this.gameSession.getPlayerList().get(3).getUsername());
       }
     }
+  }
+
+  private void initializeComboBox(ComboBox<String> comboBox) {
+    list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
+    comboBox.setItems(list);
+  }
+
+  @FXML
+  public void addRound() {
+    if(gamemodeError.getText().length() > 0){
+      gamemodeError.setText("");
+    }
+    round++;
+    HBox hBox = new HBox();
+    hBox.setAlignment(Pos.CENTER);
+    ComboBox<String> comboBox = new ComboBox<>();
+    comboBox.setPrefWidth(150);
+    comboBox.setPrefHeight(25);
+    initializeComboBox(comboBox);
+    roundCount.setText(""+round);
+    hBox.getChildren().add(comboBox);
+    rounds.add(comboBox);
+    box.getChildren().add(hBox);
+  }
 
 
-
+  @FXML
+  public void deleteRound() {
+    if(round > 1){
+      round--;
+      roundCount.setText(""+round);
+      box.getChildren().remove(box.getChildren().get(round));
+      rounds.remove(round);
+    }else{
+      gamemodeError.setText("You need to have at least one Round!");
+    }
   }
 
   @FXML
@@ -294,41 +319,6 @@ public class LocalLobbyUiController extends AbstractUiController {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     gameMode.setItems(list);
     rounds.add(gameMode);
-  }
-
-  @FXML
-  public void addRound() {
-    if(gamemodeError.getText().length() > 0){
-      gamemodeError.setText("");
-    }
-    round++;
-    HBox hBox = new HBox();
-    hBox.setAlignment(Pos.CENTER);
-    ComboBox<String> comboBox = new ComboBox<>();
-    comboBox.setPrefWidth(150);
-    comboBox.setPrefHeight(25);
-    initializeComboBox(comboBox);
-    roundCount.setText(""+round);
-    hBox.getChildren().add(comboBox);
-    rounds.add(comboBox);
-    box.getChildren().add(hBox);
-  }
-
-  @FXML
-  public void deleteRound() {
-    if(round > 1){
-      round--;
-      roundCount.setText(""+round);
-      box.getChildren().remove(box.getChildren().get(round));
-      rounds.remove(round);
-    }else{
-      gamemodeError.setText("You need to have at least one Round!");
-    }
-  }
-
-  private void initializeComboBox(ComboBox<String> comboBox) {
-    list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
-    comboBox.setItems(list);
   }
 
   private void increaseAi(Label difficultyPlayer, String name, Label player) {

@@ -276,21 +276,21 @@
                         <GridPane prefHeight="136.0" prefWidth="1280.0" GridPane.rowIndex="1">
                            <children>
                               <VBox alignment="CENTER" prefHeight="134.0" prefWidth="640.0" spacing="10.0" GridPane.columnIndex="2" />
-                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0" GridPane.columnIndex="1">
+                              <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0">
                                  <children>
-                                    <Label text="Gamemode:">
+                                    <Label text="No. of Rounds:">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label text="none">
+                                    <Label text="1">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </VBox>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1">
                                  <children>
                                     <Label text="AI Default Strength:">
                                        <font>

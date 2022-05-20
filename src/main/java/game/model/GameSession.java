@@ -22,7 +22,6 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
-import net.packet.chat.ChatMessagePacket;
 import net.packet.game.InitSessionPacket;
 import net.server.ClientHandler;
 import net.server.HashingHandler;
@@ -66,15 +65,16 @@ public class GameSession {
 
 	private Boolean localPlayerTurn = false;
 
-  private Boolean updatingGameState = false;
+	private Boolean updatingGameState = false;
 
-  private String loginStatus = "";
+	private String loginStatus = "";
 
-  private String ip = "";
+	private String ip = "";
+
+	private LinkedList<PlayerType> aiPlayers;
 
 	/**
 	 * used to change the view to InGameController.
-	 *
 	 */
 	private Boolean gameStarted = false;
 
@@ -196,7 +196,15 @@ public class GameSession {
 
 		while (this.getPlayerList().size()
 				< gameMode.getNeededPlayers() - 1) {
-			this.addBot(this.defaultAI);
+			if (this.aiPlayers != null) {
+				if (this.aiPlayers.size() > 0) {
+					this.addBot(this.aiPlayers.pop());
+				} else {
+					this.addBot(this.defaultAI);
+				}
+			}else{
+				this.addBot(this.defaultAI);
+			}
 		}
 
 		Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
@@ -213,6 +221,10 @@ public class GameSession {
 		this.game.startGame();
 
 		return this.game;
+	}
+
+	public void setAiPlayers(LinkedList<PlayerType> aiPlayers) {
+		this.aiPlayers = aiPlayers;
 	}
 
 

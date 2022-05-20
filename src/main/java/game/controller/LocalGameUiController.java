@@ -7,6 +7,8 @@ import game.model.GameSession;
 
 /**
  * @author tgutberl
+ *
+ * Class that is called, when a local game is played
  */
 public class LocalGameUiController extends InGameUiController {
 

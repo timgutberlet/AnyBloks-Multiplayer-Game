@@ -20,7 +20,7 @@ public class Config {
   /**
    * Path of config.properties path
    */
-  private static final String configPath = "./src/main/resources/config.properties";
+  private static final String configPath = "./blocks3/config.properties";
   /**
    * Properties Object, which will be used locally in the Class
    */
@@ -112,7 +112,7 @@ public class Config {
       }
     } else {
       try {
-        Files.createFile(Paths.get(configPath));
+        Files.createDirectories(Paths.get(configPath));
       } catch (IOException e) {
         e.printStackTrace();
       }

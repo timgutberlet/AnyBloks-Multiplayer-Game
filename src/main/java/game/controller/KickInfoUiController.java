@@ -16,6 +16,8 @@ import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 
 /**
+ * Class that shows up, when a player is Kicked from a Hostlobby
+ *
  * @author tgutberl
  */
 
