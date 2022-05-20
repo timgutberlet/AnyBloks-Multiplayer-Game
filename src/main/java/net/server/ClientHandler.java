@@ -370,4 +370,8 @@ public class ClientHandler {
     this.gameSession.setLoginStatus(loginResponsePacket.getLoginStatus());
 
   }
+
+  public EndpointClient getClient() {
+    return client;
+  }
 }

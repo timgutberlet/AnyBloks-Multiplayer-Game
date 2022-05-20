@@ -87,6 +87,8 @@ public class InboundServerHandler {
       loginSuccess = true;
     }
 
+    System.out.println();
+
     if (loginSuccess) {
       //call when user is verified
       this.addVerifiedUser(wrappedPacket, session);
@@ -104,10 +106,10 @@ public class InboundServerHandler {
   public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
-    System.out.println(username);
+    System.out.println(username + " addVerfiedUser");
     //check if username has been connected before
     if (this.server.getUsername2Session().keySet().contains(username)) {
-
+      System.out.println(username + " in keyset");
       //find existing player with the username
       for (Player player : gameSession.getPlayerList()) {
         if (player.getUsername().equals(username)) {
@@ -145,18 +147,21 @@ public class InboundServerHandler {
 //            loginResponsePacket);
 //        this.server.sendMessage(wrappedPacketLoginResponse, session);
 //      } else
-      System.out.println(gameSession.getPlayerList().size());
+
+      //System.out.println(gameSession.getPlayerList().size());
       System.out.println(gameSession.getPlayerList());
-      System.out.println(gameSession.getPlayerList().get(0));
-        if (gameSession.getPlayerList().size() < 4) {
+      //System.out.println(gameSession.getPlayerList().get(0));
+      if (gameSession.getPlayerList().size() < 4) {
 
         Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
 
         gameSession.addPlayer(new Player(username, loginPacket.getPlayerType()));
 
         this.server.getUsername2Session().put(username, session);
-        Debug.printMessage(this,
+        System.out.println(
             "Username2Session size: " + this.server.getUsername2Session().size());
+        System.out.println(
+            "Gamesession size: " + this.server.getGameSession().getPlayerList().size());
       } else {
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
             "This Lobby is full. Try again at another time.", "ipAddress");
@@ -167,17 +172,17 @@ public class InboundServerHandler {
 
       }
     }
+      PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
+      wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET, playerListPacket);
+      this.server.broadcastMessage(wrappedPacket);
 
-    PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
-    wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET, playerListPacket);
-    this.server.broadcastMessage(wrappedPacket);
+      String[] toReturn = {"true", username};
 
-    String[] toReturn = {"true", username};
+      //this.server.addUsernameSession(username, session);
+      Debug.printMessage(this,
+          "New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
+      return toReturn;
 
-    //this.server.addUsernameSession(username, session);
-    Debug.printMessage(this,
-        "New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
-    return toReturn;
   }
 
   /**

@@ -191,6 +191,29 @@ public class EndpointClient {
 
   }
 
+
+
+	/**
+	 * function to easily send packets to server from bot
+	 *
+	 * @param wrappedPacket
+	 * @author tgeilen
+	 */
+	public void sendToServer(WrappedPacket wrappedPacket, String botUsername) {
+
+		wrappedPacket.setToken("");
+		wrappedPacket.setUsername(botUsername);
+
+		Debug.printMessage(this, "I am sending something to the server...");
+		try {
+			this.server.getBasicRemote().sendObject(wrappedPacket);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (EncodeException e) {
+			e.printStackTrace();
+		}
+		Debug.printMessage(this, "I have sent something to the server...");
+	}
   /**
    * function to easily send packets to server
    *

@@ -337,7 +337,9 @@ public class GameSession {
 			Debug.printMessage("LoginRequestPacket has been sent to the server");
 			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
 					loginRequestPacket);
-			session.getBasicRemote().sendObject(wrappedPacket);
+
+			endpointClient.sendToServer(wrappedPacket, player.getUsername());
+			//session.getBasicRemote().sendObject(wrappedPacket);
 
 
 		} catch (DeploymentException e) {
