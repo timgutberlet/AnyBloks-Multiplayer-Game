@@ -4,6 +4,7 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ErrorMessageHandler;
 import engine.handler.ThreadHandler;
+import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.gamemodes.GMClassic;
@@ -24,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * @author lbaudenb
@@ -46,6 +48,9 @@ public class JoinLobbyUiController extends AbstractUiController {
 
   @FXML
   private Label player1;
+
+  @FXML
+  private AnchorPane mainPane;
 
   @FXML
   private Label player2;
@@ -97,6 +102,26 @@ public class JoinLobbyUiController extends AbstractUiController {
       loader.setLocation(getClass().getResource("/LocalLobbyView3.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
+      updateSize(mainPane, gameController.getStage());
+      //Sets the Theme, according to the settings
+      switch (Config.getStringValue("THEME")){
+        case "BRIGHT":
+          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          break;
+        case "DARK":
+          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          break;
+        case "INTEGRA":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          break;
+        case "THINK":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          break;
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }

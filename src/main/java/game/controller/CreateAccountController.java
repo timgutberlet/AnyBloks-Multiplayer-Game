@@ -2,6 +2,7 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
+import game.config.Config;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
@@ -67,6 +68,26 @@ public class CreateAccountController extends AbstractUiController {
       usernameError.setText("");
       passwordError1.setText("");
       passwordError2.setText("");
+      ipError.setText("");
+      //Sets the Theme, according to the settings
+      switch (Config.getStringValue("THEME")){
+        case "BRIGHT":
+          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          break;
+        case "DARK":
+          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          break;
+        case "INTEGRA":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          break;
+        case "THINK":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          break;
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }

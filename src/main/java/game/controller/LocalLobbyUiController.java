@@ -4,6 +4,7 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ErrorMessageHandler;
 import engine.handler.ThreadHandler;
+import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.gamemodes.GMClassic;
@@ -27,6 +28,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -59,6 +61,9 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   private EndpointClient client;
   private ClientHandler clientHandler;
+
+  @FXML
+  AnchorPane mainPane;
 
   @FXML
   private Label player1;
@@ -128,6 +133,26 @@ public class LocalLobbyUiController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       gamemodeError.setText("");
+      updateSize(mainPane, gameController.getStage());
+      //Sets the Theme, according to the settings
+      switch (Config.getStringValue("THEME")){
+        case "BRIGHT":
+          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          break;
+        case "DARK":
+          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          break;
+        case "INTEGRA":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          break;
+        case "THINK":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          break;
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }

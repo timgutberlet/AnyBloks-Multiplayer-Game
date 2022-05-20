@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ThreadHandler;
+import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.gamemodes.GameMode;
@@ -85,6 +86,25 @@ public class JoinAuthController extends AbstractUiController {
       this.ipError.setText("");
       this.passwordError.setText("");
       this.usernameError.setText("");
+      //Sets the Theme, according to the settings
+      switch (Config.getStringValue("THEME")){
+        case "BRIGHT":
+          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          break;
+        case "DARK":
+          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          break;
+        case "INTEGRA":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          break;
+        case "THINK":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          break;
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }

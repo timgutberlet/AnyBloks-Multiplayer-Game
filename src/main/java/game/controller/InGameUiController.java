@@ -287,10 +287,6 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
-    boolean paintAllFields = true;
-    //Die Folgenden zwei Befehle sollten für einen Reibungslosen Spielablauf optimiert werden
-    //noinspection LanguageDetectionInspection
-    //Test
     boardPane.repaint(game.getGameState().getBoard());
 
     localPlayer = gameSession.getLocalPlayer();

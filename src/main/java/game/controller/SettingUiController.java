@@ -1,14 +1,18 @@
 package game.controller;
 
+import com.sun.tools.javac.Main;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
@@ -21,8 +25,24 @@ public class SettingUiController extends AbstractUiController {
 
   private final AbstractGameController gameController;
 
+  /**
+   * Themes that are available
+   */
+  ObservableList<String> themes;
+
+  private String saveMessage = "";
+
+  @FXML
+  AnchorPane mainPane;
+
+  @FXML
+  Label saveConfirm;
+
   @FXML
   AnchorPane settingsPane;
+
+  @FXML
+  ChoiceBox themeBox;
 
   @FXML
   public void back() {
@@ -37,6 +57,7 @@ public class SettingUiController extends AbstractUiController {
     windowWidth.setText(String.valueOf(Integer.parseInt(windowWidth.getText()) + 10));
     Config.set("SCREEN_WIDTH", windowWidth.getText());
     System.out.println("Screen width increast" + windowWidth.getText());
+    saveConfirm.setText("");
   }
 
   @FXML
@@ -44,13 +65,16 @@ public class SettingUiController extends AbstractUiController {
     if (!(Integer.parseInt(windowWidth.getText()) - 10 < 1280)) {
       windowWidth.setText(String.valueOf(Integer.parseInt(windowWidth.getText()) - 10));
       Config.set("SCREEN_WIDTH", windowWidth.getText());
+      saveConfirm.setText("");
     }
+    saveConfirm.setText("");
   }
 
   @FXML
   private void increaseHeight() {
     windowHeight.setText(String.valueOf(Integer.parseInt(windowHeight.getText()) + 10));
     Config.set("SCREEN_HEIGHT", windowHeight.getText());
+    saveConfirm.setText("");
   }
 
   @FXML
@@ -59,10 +83,8 @@ public class SettingUiController extends AbstractUiController {
       windowHeight.setText(String.valueOf(Integer.parseInt(windowHeight.getText()) - 10));
       Config.set("SCREEN_HEIGHT", windowHeight.getText());
     }
+    saveConfirm.setText("");
   }
-
-  // create a alert
-  Alert a = new Alert(AlertType.NONE);
 
   /**
    * Method to reset the the config to the standard Parameters
@@ -71,21 +93,62 @@ public class SettingUiController extends AbstractUiController {
   private void reset() {
     Config.loadStandardConfig();
     loadSettings();
-    save();
+    themeBox.setValue(Config.getStringValue("THEME"));
+    save("Successfully Resettet");
   }
+
 
   /**
    * Method to save the changes into the config
    */
   @FXML
   public void save() {
+    if(!Config.getStringValue("THEME").equals(themeBox.getValue())){
+      switch (themeBox.getValue().toString()) {
+        case "BRIGHT":
+          Config.set("THEME", "BRIGHT");
+          break;
+        case "DARK":
+          Config.set("THEME", "DARK");
+          break;
+        case "INTEGRA":
+          Config.set("THEME", "INTEGRA");
+          break;
+        case "THINK":
+          Config.set("THEME", "THINK");
+          break;
+      }
+    }
     Config.saveProperty();
-    updateSize(settingsPane, gameController.getStage());
+    updateSize(mainPane, gameController.getStage());
     // set alert type
-    a.setAlertType(AlertType.CONFIRMATION);
-
-    // show the dialog
-    a.show();
+    gameController.setActiveUiController(new MainMenuUiController(gameController));
+    gameController.setActiveUiController(new SettingUiController(gameController, "Successfully saved!"));
+    saveConfirm.setText("Successfully saved!");
+  }
+  @FXML
+  public void save(String reset) {
+    if(!Config.getStringValue("THEME").equals(themeBox.getValue())){
+      switch (themeBox.getValue().toString()) {
+        case "BRIGHT":
+          Config.set("THEME", "BRIGHT");
+          break;
+        case "DARK":
+          Config.set("THEME", "DARK");
+          break;
+        case "INTEGRA":
+          Config.set("THEME", "INTEGRA");
+          break;
+        case "THINK":
+          Config.set("THEME", "THINK");
+          break;
+      }
+    }
+    Config.saveProperty();
+    updateSize(mainPane, gameController.getStage());
+    // set alert type
+    gameController.setActiveUiController(new MainMenuUiController(gameController));
+    gameController.setActiveUiController(new SettingUiController(gameController, reset));
   }
 
   /**
@@ -100,6 +163,37 @@ public class SettingUiController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       loadSettings();
+      themes = FXCollections.observableArrayList("BRIGHT", "DARK", "INTEGRA", "THINK");
+      updateSize(mainPane, gameController.getStage());
+      themeBox.setItems(themes);
+      //Sets the Theme, according to the settings
+      switch (Config.getStringValue("THEME")) {
+        case "BRIGHT":
+          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          themeBox.setValue("BRIGHT");
+          break;
+        case "DARK":
+          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          themeBox.setValue("DARK");
+          break;
+        case "INTEGRA":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          themeBox.setValue("INTEGRA");
+          break;
+        case "THINK":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          themeBox.setValue("THINK");
+          break;
+      }
+      saveConfirm.setText(saveMessage);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -113,6 +207,18 @@ public class SettingUiController extends AbstractUiController {
   public SettingUiController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
+    init(super.root);
+  }
+
+  /**
+   * Sets Gamecontroller and calls init Method
+   *
+   * @param gameController AbstractGameController Object
+   */
+  public SettingUiController(AbstractGameController gameController, String saveMessage) {
+    super(gameController);
+    this.gameController = gameController;
+    this.saveMessage = saveMessage;
     init(super.root);
   }
 
@@ -137,6 +243,5 @@ public class SettingUiController extends AbstractUiController {
 
   @FXML
   public void initialize() {
-    updateSize(settingsPane, gameController.getStage());
   }
 }

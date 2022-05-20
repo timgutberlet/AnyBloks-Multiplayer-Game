@@ -20,7 +20,10 @@ public class Config {
   /**
    * Path of config.properties path
    */
-  private static final String configPath = "./blocks3/config.properties";
+  private static final String configPath = "./bloks3/config.properties";
+  private static final String folderPath = "./bloks3/";
+  private static final String styleGoalPath = "./src/main/java/game.controller/styleBrightTheme.css";
+  private static final String styleSourcePath = "./src/main/resources/styles/styleBrightTheme.css";
   /**
    * Properties Object, which will be used locally in the Class
    */
@@ -112,7 +115,8 @@ public class Config {
       }
     } else {
       try {
-        Files.createDirectories(Paths.get(configPath));
+        Files.createDirectories(Paths.get(folderPath));
+        Files.createFile(Paths.get(configPath));
       } catch (IOException e) {
         e.printStackTrace();
       }
