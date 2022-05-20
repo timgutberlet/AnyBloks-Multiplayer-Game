@@ -19,6 +19,8 @@ public class WrappedPacket implements Serializable {
 
   private PacketType type;
   private Packet packet;
+  private String username;
+  private String token;
 
   /**
    * Constructor
@@ -61,6 +63,20 @@ public class WrappedPacket implements Serializable {
    */
   public PacketType getPacketType() {
     return type;
+  }
+
+  /**
+   * Getter
+   */
+  public String getUsername() {
+    return username;
+  }
+
+  /**
+   * Getter
+   */
+  public String getToken() {
+    return token;
   }
 
   /**

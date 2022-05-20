@@ -24,6 +24,7 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
+import net.packet.account.LoginResponsePacket;
 import net.packet.chat.ChatMessagePacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;

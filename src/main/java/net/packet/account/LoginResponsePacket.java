@@ -11,9 +11,10 @@ import net.packet.abstr.Packet;
 public class LoginResponsePacket extends Packet {
 
   String errorMessage;
+  String loginStatus;
 
   /**
-   * Constructor, leave errorMessage = "" if no error occurred.
+   * Constructor.
    *
    * @param errorMessage in case of failure
    */
@@ -21,6 +22,16 @@ public class LoginResponsePacket extends Packet {
     this.errorMessage = errorMessage;
   }
 
+  /**
+   * Constructor.
+   *
+   * @param errorMessage in case of failure
+   * @param loginStatus to which the errorMessage is supposed to be displayed
+   */
+  public LoginResponsePacket(String errorMessage, String loginStatus) {
+    this.errorMessage = errorMessage;
+    this.loginStatus = loginStatus;
+  }
   /**
    * Getter.
    *
@@ -30,4 +41,7 @@ public class LoginResponsePacket extends Packet {
     return errorMessage;
   }
 
+  public String getLoginStatus() {
+    return loginStatus;
+  }
 }

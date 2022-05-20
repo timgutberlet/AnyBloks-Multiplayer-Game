@@ -26,135 +26,152 @@ import net.transmission.EndpointServer;
  */
 public class InboundServerHandler {
 
-	private static GameSession gameSession;
-	private EndpointServer server;
+  private static GameSession gameSession;
+  private EndpointServer server;
 
-	/**
-	 * constructor for jackson
-	 */
-	public InboundServerHandler() {
-	}
+  /**
+   * constructor for jackson
+   */
+  public InboundServerHandler() {
+  }
 
-	/**
-	 * Constructor
-	 */
-	public InboundServerHandler(EndpointServer server, GameSession gameSession) {
+  /**
+   * Constructor
+   */
+  public InboundServerHandler(EndpointServer server, GameSession gameSession) {
 
-		this.server = server;
-		if (InboundServerHandler.gameSession == null) {
-			InboundServerHandler.gameSession = gameSession;
-			InboundServerHandler.gameSession.setInboundServerHandler(this);
-		}
+    this.server = server;
+    if (InboundServerHandler.gameSession == null) {
+      InboundServerHandler.gameSession = gameSession;
+      InboundServerHandler.gameSession.setInboundServerHandler(this);
+    }
 
-		Debug.printMessage(this, "InboundServerHandler created");
-
-
-	}
+    Debug.printMessage(this, "InboundServerHandler created");
 
 
-	/**
-	 * Verifies whether Login is correct according to Database
-	 *
-	 * @param wrappedPacket wrapped LoginRequestPacket
-	 * @return String[] [0] "true"/"false" [1] username
-	 */
-	public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
-		Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
-		LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
-		String username = loginPacket.getUsername();
-		String token = loginPacket.getToken();
-		//Checking the credentials against the database
-		String dbPasswordHash = "";
-		boolean loginSuccess = false;
-		//only check with db if not a bot
-		if(loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)){
-			try {
-				DbServer dbServer = DbServer.getInstance();
-				if (!dbServer.doesUserHaveAuthToken(username)) {
-					loginSuccess = false;
-				} else {
-					//In this case there is a user that has a token stored in the database
-					loginSuccess = dbServer.testAuthToken(username, token);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			//AI players do not need auth
-			loginSuccess = true;
-		}
-
-		//TODO : IMPLEMENT LOGIN FAILURE
-
-		loginSuccess = true; //TODO unbedingt wieder entfenrnen, nur zum testen
-
-		if (loginSuccess) {
-			//call when user is verified
-			this.addVerifiedUser(wrappedPacket, session);
-			//TODO: send successful loginresponsepacket
-		} else {
-			LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
-					"Credentials could not be verified");
-			wrappedPacket = new WrappedPacket(PacketType.LOGIN_RESPONSE_PACKET, loginResponsePacket);
-			this.server.sendMessage(wrappedPacket,session);
-		}
+  }
 
 
-	}
+  /**
+   * Verifies whether Login is correct according to Database
+   *
+   * @param wrappedPacket wrapped LoginRequestPacket
+   * @return String[] [0] "true"/"false" [1] username
+   */
+  public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
+    Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
 
-	public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
-		LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
-		String username = loginPacket.getUsername();
-		//check if username has been connected before
-		if (this.server.getUsername2Session().keySet().contains(username)) {
-			Debug.printMessage(this, "I SHOULD NOT BE HERE DURING STARTUP PHASE");
-			//find existing player with the username
-			for (Player player : gameSession.getPlayerList()) {
-				if (player.getUsername().equals(username)) {
-					//only override if player is of type AI
-					if (player.isAI()) {
-						Debug.printMessage(this, "THE REMOTE SESSION WILL BE REPLACE BY AN AI");
-						this.server.getUsername2Session().put(username, session);
-						Debug.printMessage(this, "" + loginPacket.getPlayerType());
+    LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
+    String username = loginPacket.getUsername();
+    String token = loginPacket.getToken();
 
-						Debug.printMessage(this,
-								"" + loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER));
+    //Checking the credentials against the database
+    boolean loginSuccess = false;
+    //only check with db if not a bot
+    if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
+      try {
+        DbServer dbServer = DbServer.getInstance();
+        if (!dbServer.doesUserHaveAuthToken(username)) {
+          loginSuccess = false;
+        } else {
+          //In this case there is a user that has a token stored in the database
+          loginSuccess = dbServer.testAuthToken(username, token);
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    } else {
+      //AI players do not need auth
+      loginSuccess = true;
+    }
 
-						if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
-							//TODO check whether booleans make sense
-							Debug.printMessage(this, "AN OLD PLAYER JOINED THE SESSION AGAIN!!!!");
-							player.setAI(false);
-							player.setType(loginPacket.getPlayerType());
-							this.server.getOutboundServerHandler()
-									.sendGameStart(player.getUsername(), gameSession.getGame()
-											.getGameState());
-						}
+    if (loginSuccess) {
+      //call when user is verified
+      this.addVerifiedUser(wrappedPacket, session);
 
-					}
-				}
-			}
-		} else {
-			// handle a new player by adding to gamesession and in the dictionary
-			Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
+    } else {
+      LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
+          "Credentials could not be verified", "password");
+      wrappedPacket = new WrappedPacket(PacketType.LOGIN_RESPONSE_PACKET, loginResponsePacket);
+      this.server.sendMessage(wrappedPacket, session);
+    }
 
-			gameSession.addPlayer(new Player(username, loginPacket.getPlayerType()));
 
-			this.server.getUsername2Session().put(username, session);
-			Debug.printMessage(this,
-					"Username2Session size: " + this.server.getUsername2Session().size());
-		}
+  }
 
-		PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
-		wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET, playerListPacket);
-		this.server.broadcastMessage(wrappedPacket);
+  public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
+    LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
+    String username = loginPacket.getUsername();
+    //check if username has been connected before
+    if (this.server.getUsername2Session().keySet().contains(username)) {
 
-		String[] toReturn = {"true", username};
+      //find existing player with the username
+      for (Player player : gameSession.getPlayerList()) {
+        if (player.getUsername().equals(username)) {
+          //only override if player is of type AI (former remote players have been made into an AI
+          //by the changePlayer"AI from GameSession)
+          if (player.isAI()) {
+            Debug.printMessage(this, "THE REMOTE SESSION WILL REPLACE AN AI");
+            this.server.getUsername2Session().put(username, session);
+            Debug.printMessage(this, "" + loginPacket.getPlayerType());
 
-		//this.server.addUsernameSession(username, session);
-		Debug.printMessage(this,
-				"New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
-		return toReturn;
-	}
+            Debug.printMessage(this,
+                "" + loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER));
+
+            if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
+              //TODO check whether booleans make sense
+              Debug.printMessage(this, "AN OLD PLAYER JOINED THE SESSION AGAIN!!!!");
+              player.setAI(false);
+              player.setType(loginPacket.getPlayerType());
+              this.server.getOutboundServerHandler()
+                  .sendGameStart(player.getUsername(), gameSession.getGame()
+                      .getGameState());
+            }
+
+          }
+        }
+      }
+    } else {
+      // handle a new player by adding to gamesession and in the dictionary
+      if (gameSession.getGame().getGameState().isStateRunning()) {
+        LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
+            "This Lobby is currently playing. Try again at another time.",
+            "ipAddress");
+        WrappedPacket wrappedPacketLoginResponse = new WrappedPacket(
+            PacketType.LOGIN_RESPONSE_PACKET,
+            loginResponsePacket);
+        this.server.sendMessage(wrappedPacketLoginResponse, session);
+      } else if (gameSession.getPlayerList().size() < 4) {
+
+        Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
+
+        gameSession.addPlayer(new Player(username, loginPacket.getPlayerType()));
+
+        this.server.getUsername2Session().put(username, session);
+        Debug.printMessage(this,
+            "Username2Session size: " + this.server.getUsername2Session().size());
+      } else {
+        LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
+            "This Lobby is full. Try again at another time.", "ipAddress");
+        WrappedPacket wrappedPacketLoginResponse = new WrappedPacket(
+            PacketType.LOGIN_RESPONSE_PACKET,
+            loginResponsePacket);
+        this.server.sendMessage(wrappedPacketLoginResponse, session);
+
+      }
+    }
+
+    PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
+    wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET, playerListPacket);
+    this.server.broadcastMessage(wrappedPacket);
+
+    String[] toReturn = {"true", username};
+
+    //this.server.addUsernameSession(username, session);
+    Debug.printMessage(this,
+        "New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
+    return toReturn;
+  }
 
 	/**
 	 * Method called after receiving a CreateAccountReqeustPacket. This tries to save the account in
@@ -179,60 +196,60 @@ public class InboundServerHandler {
 			//Try to create account if the username is still available
 			success = dbServer.newAccount(username, passwordHash);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-		if (!success) {
-			errorMessage = "There was an issue with the database!";
-		}
-		return errorMessage;
-	}
+    if (!success) {
+      errorMessage = "There was an issue with the database!";
+    }
+    return errorMessage;
+  }
 
-	public void startGame(WrappedPacket wrappedPacket) {
+  public void startGame(WrappedPacket wrappedPacket) {
 
-		InitGamePacket initGamePacket = (InitGamePacket) wrappedPacket.getPacket();
+    InitGamePacket initGamePacket = (InitGamePacket) wrappedPacket.getPacket();
 
-		//this.server.getOutboundServerHandler().broadcastGameStart(initGamePacket.getGameMode());
+    //this.server.getOutboundServerHandler().broadcastGameStart(initGamePacket.getGameMode());
 
-		LinkedList<GameMode> gameModes = initGamePacket.getGameMode();
+    LinkedList<GameMode> gameModes = initGamePacket.getGameMode();
 
-		gameSession.setGameList(gameModes);
+    gameSession.setGameList(gameModes);
 
-		gameSession.startGameServer();
-
-
-	}
+    gameSession.startGameServer();
 
 
-	/**
-	 * recieve a turn from a remote player and forward it to game logic
-	 *
-	 * @param packet
-	 * @author tgeilen
-	 */
-	public void recieveTurn(Session client, WrappedPacket packet) {
-		Debug.printMessage(this, "Recieved turn");
-		TurnPacket turnPacket = (TurnPacket) packet.getPacket();
-		Turn turn = turnPacket.getTurn();
-
-		CheckConnectionThread.turnReceived = true;
-
-		if (gameSession.getGame().checkTurn(turn)) {
-			Debug.printMessage(this, "The recieved turn is legal and will be played");
-			gameSession.getGame().makeMoveServer(turn);
-			//this.server.getOutboundServerHandler().broadcastGameUpdate();
-		} else {
-			IllegalTurnPacket illegalTurnPacket = new IllegalTurnPacket();
-			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.ILLEGAL_TURN_PACKET,
-					illegalTurnPacket);
-			this.server.sendMessage(wrappedPacket, client);
-		}
+  }
 
 
-	}
+  /**
+   * recieve a turn from a remote player and forward it to game logic
+   *
+   * @param packet
+   * @author tgeilen
+   */
+  public void recieveTurn(Session client, WrappedPacket packet) {
+    Debug.printMessage(this, "Recieved turn");
+    TurnPacket turnPacket = (TurnPacket) packet.getPacket();
+    Turn turn = turnPacket.getTurn();
 
-	public EndpointServer getServer() {
-		return server;
-	}
+    CheckConnectionThread.turnReceived = true;
+
+    if (gameSession.getGame().checkTurn(turn)) {
+      Debug.printMessage(this, "The recieved turn is legal and will be played");
+      gameSession.getGame().makeMoveServer(turn);
+      //this.server.getOutboundServerHandler().broadcastGameUpdate();
+    } else {
+      IllegalTurnPacket illegalTurnPacket = new IllegalTurnPacket();
+      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.ILLEGAL_TURN_PACKET,
+          illegalTurnPacket);
+      this.server.sendMessage(wrappedPacket, client);
+    }
+
+
+  }
+
+  public EndpointServer getServer() {
+    return server;
+  }
 }

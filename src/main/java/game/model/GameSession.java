@@ -100,16 +100,16 @@ public class GameSession {
 		}
 	}
 
-	/**
-	 * a Session is created.
-	 *
-	 * @param
-	 * @author tgeilen
-	 */
-	public GameSession() {
-		//create chatThread and start it
-		this.chat = new Chat();
-		//this.chat.run();
+  /**
+   * a Session is created.
+   *
+   * @param
+   * @author tgeilen
+   */
+  public GameSession() {
+    //create chatThread and start it
+    this.chat = new Chat();
+    //this.chat.run();
 
 		this.playerList = new ArrayList<>();
 
@@ -517,15 +517,6 @@ public class GameSession {
 		this.game = game;
 	}
 
-	/**
-	 * sets the InboundServerHandler.
-	 *
-	 * @param inboundServerHandler
-	 */
-
-	public void setInboundServerHandler(InboundServerHandler inboundServerHandler) {
-		this.inboundServerHandler = inboundServerHandler;
-	}
 
 	/**
 	 * sets the OutboundServerHandler.
@@ -554,6 +545,15 @@ public class GameSession {
 		return inboundServerHandler;
 	}
 
+  /**
+   * sets the InboundServerHandler.
+   *
+   * @param inboundServerHandler
+   */
+
+  public void setInboundServerHandler(InboundServerHandler inboundServerHandler) {
+    this.inboundServerHandler = inboundServerHandler;
+  }
 
 	/**
 	 * returns the list of games that will be played in the tournament.
@@ -610,6 +610,10 @@ public class GameSession {
 	public Boolean isUpdatingGameState() {
 		return updatingGameState;
 	}
+
+  public void setIp(String ip) {
+    this.ip = ip;
+  }
 
 	/**
 	 * function that helps to output the most relevant information of a session.

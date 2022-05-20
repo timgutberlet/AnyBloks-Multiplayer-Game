@@ -16,8 +16,20 @@ import javafx.scene.Group;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
+import net.packet.account.RestfulLoginPacket;
 import net.server.ClientHandler;
+import net.server.HashingHandler;
 import net.transmission.EndpointClient;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  * @author tgutberl
@@ -30,20 +42,17 @@ public class JoinAuthController extends AbstractUiController {
 
   @FXML
   TextField usernameField;
-
-  private GameMode gameMode;
-  private ObservableList<String> list;
-
-  private EndpointClient client;
-  private ClientHandler clientHandler;
-
-  private GameSession gameSession;
-
   @FXML
   TextField ipField;
-
   @FXML
   PasswordField passwordField;
+  @FXML
+  Text ipError, passwordError, usernameError;
+  private GameMode gameMode;
+  private ObservableList<String> list;
+  private EndpointClient client;
+  private ClientHandler clientHandler;
+  private GameSession gameSession;
 
   public JoinAuthController(AbstractGameController gameController) {
     super(gameController);
@@ -97,7 +106,7 @@ public class JoinAuthController extends AbstractUiController {
       if(this.ipField.getText().length() < 7){
         this.ipField.setText("IP to short, please reEnter!");
       }
-      if(this.usernameField.getText().length() < 2){
+      if (this.usernameField.getText().length() < 2) {
         this.usernameField.setText("Username must at least be 2 Characters");
       }
     }
@@ -145,12 +154,12 @@ public class JoinAuthController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController) {
 
-    if(this.gameSession.getLocalPlayer().isPlayerConnected()){
+    if (this.gameSession.getLocalPlayer().isPlayerConnected()) {
       gameController.setActiveUiController(
           new JoinLobbyUiController(gameController, gameSession));
       //this.gameSession.setGameStarted();
     } else {
-      Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
+      Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }
   }
 

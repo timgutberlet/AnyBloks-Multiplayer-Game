@@ -3,6 +3,8 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -10,6 +12,17 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
+import net.packet.account.CreateAccountRequestPacket;
+import net.server.HashingHandler;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  * @author tgutberl
@@ -63,8 +76,37 @@ public class CreateAccountController extends AbstractUiController {
 
 
 
-  public void serverCreateAccount(String username, String password){
+  public void serverCreateAccount(String username, String password, String ip){
+    //TODO remove
+    try {
+      ip = Inet4Address.getLocalHost().getHostAddress();
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    }
 
+
+    Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+
+    password = HashingHandler.sha256encode("123456");
+    CreateAccountRequestPacket carp = new CreateAccountRequestPacket("testuser", password);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+        carp);
+
+    String targetAddress = "http://" + ip + ":8082/";
+
+    WebTarget targetPath = testClient.target(targetAddress).path("/register/");
+    Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
+
+    if (receivedAnswer.getStatus() != 200) {
+      System.out.println("Something went wrong");
+      usernameError.setText(String.valueOf(receivedAnswer.getStatusInfo()));
+    } else {
+      System.out.println(receivedAnswer.getStatus());
+      System.out.println("Everything worked");
+      gameController.setActiveUiController(new JoinAuthController(gameController, ip, username));
+
+    }
   }
   /**
    * Method to create an Account, go Back to JoinAuthController and be logged in
