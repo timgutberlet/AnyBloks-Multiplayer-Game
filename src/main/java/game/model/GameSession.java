@@ -287,6 +287,15 @@ public class GameSession {
 	}
 
 	/**
+	 * Setter for localGame.
+	 *
+	 * @author tgutberl
+	 */
+	public void setClientHandler(ClientHandler clientHandler){
+		this.clientHandler = clientHandler;
+	}
+
+	/**
 	 * function to add a new msg and broadcast to all players
 	 *
 	 * @param msg message

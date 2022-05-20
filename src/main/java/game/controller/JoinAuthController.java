@@ -192,6 +192,7 @@ public class JoinAuthController extends AbstractUiController {
         System.out.println(token);
         this.gameSession.setAuthToken(token);
         this.clientHandler = client.getClientHandler();
+        this.gameSession.setClientHandler(this.clientHandler);
 
 
 

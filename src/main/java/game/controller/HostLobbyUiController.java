@@ -196,7 +196,7 @@ public class HostLobbyUiController extends AbstractUiController {
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
-
+      gameSession.setClientHandler(this.clientHandler);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -443,16 +443,12 @@ public class HostLobbyUiController extends AbstractUiController {
     } else {
       Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
     }
-
-    if (gameSession.getChat().getChatMessages().size() > chatMessageLength) {
-      chat.setText("");
+    String help = "";
       for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
-        chat.appendText(
-            chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getHours() + " "
-                + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
+        help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getHours() + " "
+                + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
       }
-      chatMessageLength = gameSession.getChat().getChatMessages().size();
-    }
+      chat.setText(help);
   }
 
   @Override
