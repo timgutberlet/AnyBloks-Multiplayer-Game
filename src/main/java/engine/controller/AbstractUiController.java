@@ -41,6 +41,7 @@ public abstract class AbstractUiController implements Initializable, Updating {
   }
 
   public void update(AbstractGameController gameController, double deltaTime) {
+
   }
 
   /**

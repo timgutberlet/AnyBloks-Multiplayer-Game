@@ -184,7 +184,7 @@ public class Player implements Serializable {
       this.aiCalcRunning = true;
 
       try {
-        TimeUnit.SECONDS.sleep(4);
+        TimeUnit.MILLISECONDS.sleep(200);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

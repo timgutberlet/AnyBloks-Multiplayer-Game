@@ -140,7 +140,9 @@ public class OutboundServerHandler {
    * @author tgeilen
    */
   public void broadcastGameWin(String usernameWinner) {
-    gameSession.updateGameSessionScoreboard();
+    gameSession.setGameOver(true);
+    //gameSession.updateGameSessionScoreboard();
+    gameSession.setGameOver(true);
     GameWinPacket gameWinPacket = new GameWinPacket(usernameWinner);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_WIN_PACKET, gameWinPacket);
 
@@ -165,7 +167,7 @@ public class OutboundServerHandler {
     this.server.broadcastMessage(wrappedPacket);
 
     try {
-      TimeUnit.SECONDS.sleep(2);
+      TimeUnit.MILLISECONDS.sleep(200);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

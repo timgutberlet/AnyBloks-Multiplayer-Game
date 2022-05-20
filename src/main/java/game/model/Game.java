@@ -120,14 +120,8 @@ public class Game {
 				Debug.printMessage(this, "All players have been informed about the made turn");
 			}
 
-			if (!this.gameState.checkEnd() && !checkPassedTurns()) {
-				Debug.printMessage(this, "The Game is still running and the next player will be"
-						+ "asked to make a turn");
-
+			if (!this.gameState.checkEnd()) {
 				Player nextPlayer = this.gameState.getPlayerCurrent();
-				//Debug.printMessage(this, "Sending a GameUpdate to all players");
-				//this.gameSession.getOutboundServerHandler().broadcastGameUpdate();
-				Debug.printMessage(this, "Requesting " + nextPlayer.getUsername() + " to make a turn");
 
 				this.gameSession.getOutboundServerHandler().requestTurn(nextPlayer.getUsername());
 			} else {

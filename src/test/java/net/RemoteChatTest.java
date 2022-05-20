@@ -99,7 +99,9 @@ public class RemoteChatTest {
 		}
 
 		ChatMessage chatMessage= new ChatMessage("testUser", "Hallo Janik");
-		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chatMessage);
+		Chat chat = new Chat();
+		chat.addMessage(chatMessage);
+		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chat);
 		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET,chatMessagePacket);
 
 		client.sendToServer(wrappedPacket);

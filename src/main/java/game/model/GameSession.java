@@ -44,7 +44,7 @@ public class GameSession {
 
 	public ClientHandler clientHandler;
 
-	private final Chat chat;
+	private Chat chat;
 	private ArrayList<Player> playerList;
 	private Player hostPlayer;
 	private Game game;
@@ -75,6 +75,8 @@ public class GameSession {
 
 	private String authToken = "";
 
+	private Boolean gameOver = false;
+
 	/**
 	 * used to change the view to InGameController.
 	 */
@@ -89,7 +91,7 @@ public class GameSession {
 	public GameSession(Player player) {
 		//create chatThread and start it
 		this.chat = new Chat();
-		//this.chat.run();
+		this.chat.run();
 
 		this.playerList = new ArrayList<>();
 		this.hostPlayer = player;
@@ -287,8 +289,10 @@ public class GameSession {
 	public void addChatMessage(String msg) {
 
 		ChatMessage chatMessage = new ChatMessage(this.localPlayer.getUsername(),msg);
+		this.saveChatMessage(chatMessage);
 
-		this.clientHandler.broadcastChatMessage(chatMessage);
+
+		this.clientHandler.broadcastChatMessage(chat);
 
 	}
 
@@ -664,6 +668,26 @@ public class GameSession {
 	 */
 	public String getAuthToken(){
 		return this.authToken;
+	}
+
+	/**
+	 * getter.
+	 * @return gameOver
+	 */
+	public Boolean isGameOver() {
+		return gameOver;
+	}
+
+	/**
+	 * setter.
+	 * @param gameOver gameOver
+	 */
+	public void setGameOver(Boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
+	public void setChat(Chat chat){
+		this.chat = chat;
 	}
 
 	/**

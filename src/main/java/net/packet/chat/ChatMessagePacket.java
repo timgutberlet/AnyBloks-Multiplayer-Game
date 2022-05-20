@@ -1,5 +1,6 @@
 package net.packet.chat;
 
+import game.model.chat.Chat;
 import game.model.chat.ChatMessage;
 import net.packet.abstr.Packet;
 
@@ -15,25 +16,25 @@ public class ChatMessagePacket extends Packet {
    * Contains the text of the message.
    */
 
-  private final ChatMessage chatMessage;
+  private final Chat chat;
 
   /**
    * default constructor for jackson.
    */
   public ChatMessagePacket() {
-    this.chatMessage = null;
+    this.chat = null;
   }
 
   /**
    * Create new ChatMessagePacket.
    *
-   * @param chatMessage chatMessage to be send
+   * @param chat chatMessage to be send
    */
-  public ChatMessagePacket(ChatMessage chatMessage) {
-    this.chatMessage = chatMessage;
+  public ChatMessagePacket(Chat chat) {
+    this.chat = chat;
   }
 
-  public ChatMessage getChatMessage() {
-    return this.chatMessage;
+  public Chat getChat() {
+    return this.chat;
   }
 }

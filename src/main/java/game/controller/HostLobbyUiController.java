@@ -402,6 +402,7 @@ public class HostLobbyUiController extends AbstractUiController {
     }
 
     if(this.gameSession.isGameStarted()){
+      gameSession.setGameOver(false);
       ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));

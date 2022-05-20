@@ -4,6 +4,7 @@ import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
 import game.model.Turn;
+import game.model.chat.Chat;
 import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
@@ -340,6 +341,7 @@ public class ClientHandler {
     GameWinPacket gameWinPacket = (GameWinPacket) wrappedPacket.getPacket();
     String winner = gameWinPacket.getUsername();
     this.client.getGameSession().endGame(winner);
+    this.client.getGameSession().setGameOver(true);
   }
 
   /**
@@ -347,8 +349,8 @@ public class ClientHandler {
    */
   public void saveChatMessage(WrappedPacket wrappedPacket) {
     ChatMessagePacket chatMessagePacket = (ChatMessagePacket) wrappedPacket.getPacket();
-    this.client.getGameSession().saveChatMessage(chatMessagePacket.getChatMessage());
-    Debug.printMessage(this,chatMessagePacket.getChatMessage().getMessage());
+    this.client.getGameSession().setChat(chatMessagePacket.getChat());
+    //Debug.printMessage(this,chatMessagePacket.getChatMessage().getMessage());
   }
 
   public void updatePlayerList(WrappedPacket wrappedPacket){
@@ -356,9 +358,9 @@ public class ClientHandler {
     this.gameSession.setPlayerList(playerListPacket.getPlayerList());
   }
 
-  public void broadcastChatMessage(ChatMessage chatMessage){
+  public void broadcastChatMessage(Chat chat){
 
-    ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chatMessage);
+    ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chat);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
 
     this.client.sendToServer(wrappedPacket);

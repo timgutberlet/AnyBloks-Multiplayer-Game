@@ -438,6 +438,14 @@ public abstract class InGameUiController extends AbstractUiController {
       }
     }
     submitRequested = false;
+
+    //check if game is over
+    if(this.gameSession.isGameOver()){
+      gameController.setActiveUiController(
+          new ScoreBoardUiController(gameController, gameSession));
+      System.out.println("GAME IS OVER");
+    }
+
   }
 
   public void paintPossibleFields(DragablePolyPane dragablePolyPane) {
@@ -490,4 +498,5 @@ public abstract class InGameUiController extends AbstractUiController {
   public void update(AbstractGameController gameController) {
 
   }
+
 }
