@@ -80,6 +80,9 @@ public class LocalLobbyUiController extends AbstractUiController {
   Label roundCount;
 
   @FXML
+  Label youPlayer;
+
+  @FXML
   private ComboBox<String> gameMode;
 
   @FXML
@@ -152,6 +155,7 @@ public class LocalLobbyUiController extends AbstractUiController {
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
+      youPlayer.setText(Config.getStringValue("HOSTPLAYER"));
     } catch (IOException e) {
       e.printStackTrace();
     }

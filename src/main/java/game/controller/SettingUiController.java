@@ -196,7 +196,7 @@ public class SettingUiController extends AbstractUiController {
           break;
       }
       saveConfirm.setText(saveMessage);
-      hostPlayerField.setText(Config.getStringValue("HOSTNAME"));
+      hostPlayerField.setText(Config.getStringValue("HOSTPLAYER"));
     } catch (IOException e) {
       e.printStackTrace();
     }

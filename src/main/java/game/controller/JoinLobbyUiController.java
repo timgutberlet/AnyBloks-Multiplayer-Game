@@ -111,7 +111,7 @@ public class JoinLobbyUiController extends AbstractUiController {
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/LocalLobbyView3.fxml"));
+      loader.setLocation(getClass().getResource("/JoinLobbyView.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());

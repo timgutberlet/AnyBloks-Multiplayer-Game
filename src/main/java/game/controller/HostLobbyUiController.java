@@ -250,6 +250,11 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   @FXML
+  public void close() {
+    gameController.setActiveUiController(new PlayUiController(gameController));
+  }
+
+  @FXML
   public void reset(){
     //TODO @tbuscher implement Reset Account Statistics
   }
