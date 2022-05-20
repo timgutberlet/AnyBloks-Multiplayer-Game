@@ -166,6 +166,19 @@ public class HostLobbyUiController extends AbstractUiController {
     }
   }
 
+  @FXML
+  public void kickPlayer1(){
+
+  }
+  @FXML
+  public void kickPlayer2(){
+
+  }
+  @FXML
+  public void kickPlayer3(){
+
+  }
+
   /**
    * Copy to Clipboard Method, for the IP
    *

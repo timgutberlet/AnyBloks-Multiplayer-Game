@@ -27,7 +27,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 /**
  * @author tgutberl
  */
-public class CreateAccountController extends AbstractUiController {
+public class EditAccountController extends AbstractUiController {
 
   private final AbstractGameController gameController;
   @FXML
@@ -45,7 +45,7 @@ public class CreateAccountController extends AbstractUiController {
   @FXML
   Text usernameError, passwordError1, passwordError2, ipError;
 
-  public CreateAccountController(AbstractGameController gameController) {
+  public EditAccountController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
     init(super.root);
@@ -60,7 +60,7 @@ public class CreateAccountController extends AbstractUiController {
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/CreateAccountView.fxml"));
+      loader.setLocation(getClass().getResource("/EditAccountView.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
