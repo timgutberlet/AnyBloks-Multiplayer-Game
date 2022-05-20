@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -40,6 +41,7 @@ public abstract class AbstractGameController extends AnimationTimer {
     Scene scene = new Scene(gameRoot, Config.getIntValue("SCREEN_WIDTH"),
         Config.getIntValue("SCREEN_HEIGHT"));
     stage.setScene(scene);
+    stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/sadFrog.jpg")));
     fpsTimer = System.currentTimeMillis();
     this.stage = stage;
     this.application = application;
