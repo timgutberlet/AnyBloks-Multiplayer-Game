@@ -245,7 +245,7 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                           <children>
-                            <Label text="Add Ai Players">
+                            <Label text="Add AI Players">
                               <font>
                                 <Font size="25.0" />
                               </font>
