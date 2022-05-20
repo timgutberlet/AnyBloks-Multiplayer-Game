@@ -269,6 +269,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   private void initializeComboBox(ComboBox<String> comboBox) {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     comboBox.setItems(list);
+    comboBox.setValue("Classic");
   }
 
   @FXML
@@ -342,6 +343,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   public void initialize() {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     gameMode.setItems(list);
+    gameMode.setValue("Classic");
     rounds.add(gameMode);
   }
 

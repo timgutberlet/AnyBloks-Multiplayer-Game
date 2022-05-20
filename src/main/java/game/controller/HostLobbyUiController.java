@@ -158,6 +158,7 @@ public class HostLobbyUiController extends AbstractUiController {
   public void registerChatMessage(){
     if(chatInput.getText().length() > 0 ){
       gameSession.addChatMessage(chatInput.getText());
+      chatInput.setText("");
     }else{
     }
   }
@@ -336,6 +337,7 @@ public class HostLobbyUiController extends AbstractUiController {
   private void initializeComboBox(ComboBox<String> comboBox) {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     comboBox.setItems(list);
+    comboBox.setValue("Classic");
   }
 
   @FXML
@@ -384,6 +386,7 @@ public class HostLobbyUiController extends AbstractUiController {
   public void initialize() {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     gameMode.setItems(list);
+    gameMode.setValue("Classic");
     rounds.add(gameMode);
   }
 
