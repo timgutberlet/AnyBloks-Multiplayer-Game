@@ -237,6 +237,14 @@ public class GameSession {
 		this.aiPlayers = aiPlayers;
 	}
 
+	/**
+	 * Method let the game know, if
+	 *
+	 * @author tgutberl
+	 */
+	public void setChatAdded(){
+
+	}
 
 	/**
 	 * add the value of the placed poly to the scoreboard.
@@ -301,7 +309,6 @@ public class GameSession {
 	 * @param msg message
 	 */
 	public void addChatMessage(String msg) {
-
 		ChatMessage chatMessage = new ChatMessage(this.localPlayer.getUsername(), msg);
 		this.saveChatMessage(chatMessage);
 
@@ -701,7 +708,6 @@ public class GameSession {
 	public void setChat(Chat chat) {
 		this.chat = chat;
 	}
-
 	/**
 	 * function that helps to output the most relevant information of a session.
 	 *

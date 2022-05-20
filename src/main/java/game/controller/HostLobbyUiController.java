@@ -50,74 +50,58 @@ import net.transmission.EndpointClient;
 /**
  * Class to Control Inputs for the HostLobby
  *
- *
  * @author tgutberl
  */
 public class HostLobbyUiController extends AbstractUiController {
 
+  //Italic Font
+  public static final Font ITALIC_FONT =
+      Font.font(
+          "Serif",
+          FontPosture.ITALIC,
+          Font.getDefault().getSize()
+      );
   private final AbstractGameController gameController;
-
   private final String nameAiPlayer1 = "AlphaGo";
   private final String nameAiPlayer2 = "DeepMind";
   private final String nameAiPlayer3 = "Stockfish";
-
   private final GameSession gameSession;
-
-
-  private ObservableList<String> list;
-
-  private int chatMessageLength = 0;
-
-  private EndpointClient client;
-  private ClientHandler clientHandler;
-
-  private List<ComboBox<String>> rounds = new ArrayList<>();
-  private int round = 1;
-
-  @FXML
-  private TextArea chat;
-
-  @FXML
-  private TextField chatInput;
-
-  @FXML
-  private VBox box;
-
-  @FXML
-  private AnchorPane mainPane;
-
-
-  @FXML
-  private Label player1;
-
-  @FXML
-  private Label aiDefault;
-
-  @FXML
-  private ComboBox<String> gameMode;
-
-  private LinkedList<GameMode> gameModes = new LinkedList<>();
-
-  @FXML
-  private Label nameHostPlayer;
-
-  @FXML
-  private Label playerName1;
-
-  @FXML
-  private Label playerName2;
-
-  @FXML
-  private Label playerName3;
-
-  @FXML
-  private Label informationIP;
-
   @FXML
   Text gamemodeError;
-
   @FXML
   Label roundCount;
+  private ObservableList<String> list;
+  private int chatMessageLength = 0;
+  private EndpointClient client;
+  private ClientHandler clientHandler;
+  private List<ComboBox<String>> rounds = new ArrayList<>();
+  private int round = 1;
+  private ArrayList<String> alreadyInChat;
+  @FXML
+  private TextArea chat;
+  @FXML
+  private TextField chatInput;
+  @FXML
+  private VBox box;
+  @FXML
+  private AnchorPane mainPane;
+  @FXML
+  private Label player1;
+  @FXML
+  private Label aiDefault;
+  @FXML
+  private ComboBox<String> gameMode;
+  private LinkedList<GameMode> gameModes = new LinkedList<>();
+  @FXML
+  private Label nameHostPlayer;
+  @FXML
+  private Label playerName1;
+  @FXML
+  private Label playerName2;
+  @FXML
+  private Label playerName3;
+  @FXML
+  private Label informationIP;
 
   /**
    * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize
@@ -130,7 +114,7 @@ public class HostLobbyUiController extends AbstractUiController {
     //this.gameSession = new GameSession(new Player("You", PlayerType.HOST_PLAYER));
     this.gameController = gameController;
     this.init(super.root);
-
+    alreadyInChat = new ArrayList<>();
     HostServer hostServer = new HostServer();
     try {
       org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
@@ -141,12 +125,8 @@ public class HostLobbyUiController extends AbstractUiController {
       e.printStackTrace();
     }
 
-
-
-    Player player = new Player(Config.getStringValue("HOSTPLAYER"),PlayerType.REMOTE_PLAYER);
-    this.client = new EndpointClient(this,player);
-
-
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.REMOTE_PLAYER);
+    this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();
     this.gameSession.setLocalPlayer(player);
@@ -154,11 +134,11 @@ public class HostLobbyUiController extends AbstractUiController {
     gameSession.setClientHandler(this.clientHandler);
   }
 
-  public void registerChatMessage(){
-    if(chatInput.getText().length() > 0 ){
+  public void registerChatMessage() {
+    if (chatInput.getText().length() > 0) {
       gameSession.addChatMessage(chatInput.getText());
       chatInput.setText("");
-    }else{
+    } else {
     }
   }
 
@@ -171,43 +151,40 @@ public class HostLobbyUiController extends AbstractUiController {
       updateSize(mainPane, gameController.getStage());
       gamemodeError.setText("");
       chatInput.setOnKeyPressed(event -> {
-        if(event.getCode().equals(KeyCode.ENTER)){
+        if (event.getCode().equals(KeyCode.ENTER)) {
           registerChatMessage();
         }
       });
       setIP();
       //Sets the Theme, according to the settings
-      switch (Config.getStringValue("THEME")){
+      switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
           mainPane.setStyle("-fx-background-color:#E7E7E0;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
           mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
         case "THINK":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
-  //Italic Font
-  public static final Font ITALIC_FONT =
-      Font.font(
-          "Serif",
-          FontPosture.ITALIC,
-          Font.getDefault().getSize()
-      );
 
-  public void setIP(){
+  public void setIP() {
     try {
       this.informationIP.setText(Inet4Address.getLocalHost().getHostAddress());
     } catch (UnknownHostException e) {
@@ -217,15 +194,17 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   @FXML
-  public void kickPlayer1(){
+  public void kickPlayer1() {
 
   }
+
   @FXML
-  public void kickPlayer2(){
+  public void kickPlayer2() {
 
   }
+
   @FXML
-  public void kickPlayer3(){
+  public void kickPlayer3() {
 
   }
 
@@ -235,7 +214,7 @@ public class HostLobbyUiController extends AbstractUiController {
    * @author tgutberl
    */
   @FXML
-  public void copyToClipboard(){
+  public void copyToClipboard() {
     String clipBoardString = informationIP.getText();
     StringSelection stringSelection = new StringSelection(clipBoardString);
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -253,7 +232,7 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   @FXML
-  public void reset(){
+  public void reset() {
     //TODO @tbuscher implement Reset Account Statistics
   }
 
@@ -263,21 +242,21 @@ public class HostLobbyUiController extends AbstractUiController {
     ArrayList<Player> players = this.gameSession.getPlayerList();
     boolean error = false;
 
-      switch (aiDefault.getText()) {
-        case "Easy":
-          this.gameSession.setDefaultAI(PlayerType.AI_EASY);
-          break;
-        case "Middle":
-          this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
-          break;
-        case "Hard":
-          this.gameSession.setDefaultAI(PlayerType.AI_HARD);
-          break;
-        case "Godlike":
-          this.gameSession.setDefaultAI(PlayerType.AI_GODLIKE);
-          break;
-      }
-      Debug.printMessage("" + this.gameSession.getPlayerList().size());
+    switch (aiDefault.getText()) {
+      case "Easy":
+        this.gameSession.setDefaultAI(PlayerType.AI_EASY);
+        break;
+      case "Middle":
+        this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+        break;
+      case "Hard":
+        this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+        break;
+      case "Godlike":
+        this.gameSession.setDefaultAI(PlayerType.AI_GODLIKE);
+        break;
+    }
+    Debug.printMessage("" + this.gameSession.getPlayerList().size());
 
     List<String> gameModes = new ArrayList<>();
 
@@ -316,12 +295,10 @@ public class HostLobbyUiController extends AbstractUiController {
     }
     if (!error) {
 
-
       LinkedList<GameMode> gameList = this.gameModes;
       this.gameSession.setGameList(gameList);
 
       this.clientHandler.startLocalGame(gameList);
-
 
       try {
         TimeUnit.SECONDS.sleep(3);
@@ -331,7 +308,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
       this.gameSession.startGame(this.gameModes.get(0));
 
-      if(this.gameSession.getPlayerList().size()==4){
+      if (this.gameSession.getPlayerList().size() == 4) {
         playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
         playerName2.setText(this.gameSession.getPlayerList().get(2).getUsername());
         playerName3.setText(this.gameSession.getPlayerList().get(3).getUsername());
@@ -349,7 +326,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
   @FXML
   public void addRound() {
-    if(gamemodeError.getText().length() > 0){
+    if (gamemodeError.getText().length() > 0) {
       gamemodeError.setText("");
     }
     round++;
@@ -359,7 +336,7 @@ public class HostLobbyUiController extends AbstractUiController {
     comboBox.setPrefWidth(150);
     comboBox.setPrefHeight(25);
     initializeComboBox(comboBox);
-    roundCount.setText(""+round);
+    roundCount.setText("" + round);
     hBox.getChildren().add(comboBox);
     rounds.add(comboBox);
     box.getChildren().add(hBox);
@@ -367,12 +344,12 @@ public class HostLobbyUiController extends AbstractUiController {
 
   @FXML
   public void deleteRound() {
-    if(round > 1){
+    if (round > 1) {
       round--;
-      roundCount.setText(""+round);
+      roundCount.setText("" + round);
       box.getChildren().remove(box.getChildren().get(round));
       rounds.remove(round);
-    }else{
+    } else {
       gamemodeError.setText("You need to have at least one Round!");
     }
   }
@@ -398,19 +375,19 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   private void increaseAi(Label difficultyPlayer) {
-      switch (difficultyPlayer.getText()) {
-        case "Easy":
-          difficultyPlayer.setText("Middle");
-          break;
-        case "Middle":
-          difficultyPlayer.setText("Hard");
-          break;
-        case "Hard":
-          difficultyPlayer.setText("Godlike");
-          break;
-        case "Godlike":
-          difficultyPlayer.setText("Easy");
-          break;
+    switch (difficultyPlayer.getText()) {
+      case "Easy":
+        difficultyPlayer.setText("Middle");
+        break;
+      case "Middle":
+        difficultyPlayer.setText("Hard");
+        break;
+      case "Hard":
+        difficultyPlayer.setText("Godlike");
+        break;
+      case "Godlike":
+        difficultyPlayer.setText("Easy");
+        break;
     }
   }
 
@@ -422,10 +399,10 @@ public class HostLobbyUiController extends AbstractUiController {
       case "Middle":
         difficultyPlayer.setText("Easy");
         break;
-     case "Hard":
+      case "Hard":
         difficultyPlayer.setText("Middle");
         break;
-    case "Godlike":
+      case "Godlike":
         difficultyPlayer.setText("Hard");
         break;
     }
@@ -439,25 +416,31 @@ public class HostLobbyUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
-    if(this.gameSession.getPlayerList().size()>1){
+    if (this.gameSession.getPlayerList().size() > 1) {
       playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
     }
 
-    if(this.gameSession.isGameStarted()){
+    if (this.gameSession.isGameStarted()) {
       gameSession.setGameOver(false);
       ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
       gameController.setActiveUiController(
-          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
+          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession,
+              threadHelp));
       //this.gameSession.setGameStarted();
     } else {
-      Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
+      Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }
     String help = "";
-      for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
-        help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getHours() + " "
-                + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
+    for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
+      if(!alreadyInChat.contains(chatMessage.getTime() + " "
+          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")){
+        alreadyInChat.add(chatMessage.getTime() + " "
+            + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
+        help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
+            + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
       }
-      chat.setText(help);
+    }
+    this.chat.appendText(help);
   }
 
   @Override

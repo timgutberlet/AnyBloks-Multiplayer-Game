@@ -8,6 +8,7 @@ import game.model.Debug;
 import game.model.GameSession;
 import game.model.chat.ChatMessage;
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -29,6 +30,8 @@ public class JoinLobbyUiController extends AbstractUiController {
   private final GameSession gameSession;
 
   private int chatMessageLength = 0;
+
+  ArrayList<String> alreadyInChat;
 
   @FXML
   private TextArea chat;
@@ -55,6 +58,8 @@ public class JoinLobbyUiController extends AbstractUiController {
     this.gameController = gameController;
     this.init(super.root);
     this.gameSession = gameSession;
+    alreadyInChat = new ArrayList<>();
+    this.chat.setText("");
   }
 
   public void init(Group root) {
@@ -134,10 +139,15 @@ public class JoinLobbyUiController extends AbstractUiController {
     }
     String help = "";
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
-      help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getHours() + " "
-          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
+      if(!alreadyInChat.contains(chatMessage.getTime() + " "
+          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")){
+        alreadyInChat.add(chatMessage.getTime() + " "
+            + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
+        help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
+            + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
+      }
     }
-    chat.setText(help);
+    this.chat.appendText(help);
   }
 
   @Override
