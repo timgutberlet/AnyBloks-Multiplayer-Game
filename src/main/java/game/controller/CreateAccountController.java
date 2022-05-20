@@ -63,6 +63,7 @@ public class CreateAccountController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
+      usernameField.setText(Config.getStringValue("HOSTPLAYER"));
       usernameError.setText("");
       passwordError1.setText("");
       passwordError2.setText("");

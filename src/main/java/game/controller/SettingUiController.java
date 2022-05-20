@@ -120,6 +120,7 @@ public class SettingUiController extends AbstractUiController {
           break;
       }
     }
+    Config.set("HOSTPLAYER", hostPlayerField.getText());
     Config.saveProperty();
     updateSize(mainPane, gameController.getStage());
     // set alert type

@@ -176,7 +176,7 @@ public class DbServer extends DbHandler {
       e.printStackTrace();
     }
 
-    return userHasToken || username.equals(Config.getStringValue(Config.getStringValue("HOST"))) || username.equals("Bot 1") || username.equals(
+    return userHasToken || username.equals(Config.getStringValue(Config.getStringValue("HOSTPLAYER"))) || username.equals("Bot 1") || username.equals(
         "Bot 2") || username.equals("Bot 3");
   }
 
@@ -243,7 +243,7 @@ public class DbServer extends DbHandler {
       authSucess = true;
     }
 
-    return authSucess || username.equals(Config.getStringValue("HOST"));
+    return authSucess || username.equals(Config.getStringValue("HOSTPLAYER"));
   }
 
   /**

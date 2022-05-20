@@ -95,7 +95,7 @@ public class MainMenuUiController extends AbstractUiController {
   public void tutorial() {
     GameSession gameSession = new GameSession();
     GameMode gameMode = new GMTutorial();
-    Player player = new Player(Config.getStringValue("HOST"), PlayerType.HOST_PLAYER);
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.HOST_PLAYER);
     Player opponentAiPlayer = new Player("Opponent(Ai)", PlayerType.AI_EASY);
     gameSession.addPlayer(player);
     gameSession.addPlayer(opponentAiPlayer);
