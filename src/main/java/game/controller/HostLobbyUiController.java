@@ -57,9 +57,9 @@ public class HostLobbyUiController extends AbstractUiController {
 
   private final AbstractGameController gameController;
 
-  private final String nameAiPlayer1 = "Bob";
-  private final String nameAiPlayer2 = "Anna";
-  private final String nameAiPlayer3 = "Tom";
+  private final String nameAiPlayer1 = "AlphaGo";
+  private final String nameAiPlayer2 = "DeepMind";
+  private final String nameAiPlayer3 = "Stockfish";
 
   private final GameSession gameSession;
 
@@ -272,6 +272,10 @@ public class HostLobbyUiController extends AbstractUiController {
           break;
         case "Hard":
           this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+          break;
+        case "Godlike":
+          this.gameSession.setDefaultAI(PlayerType.AI_GODLIKE);
+          break;
       }
       Debug.printMessage("" + this.gameSession.getPlayerList().size());
 
@@ -402,6 +406,9 @@ public class HostLobbyUiController extends AbstractUiController {
           difficultyPlayer.setText("Hard");
           break;
         case "Hard":
+          difficultyPlayer.setText("Godlike");
+          break;
+        case "Godlike":
           difficultyPlayer.setText("Easy");
           break;
     }
@@ -410,13 +417,17 @@ public class HostLobbyUiController extends AbstractUiController {
   private void decreaseAi(Label difficultyPlayer) {
     switch (difficultyPlayer.getText()) {
       case "Easy":
-        difficultyPlayer.setText("Hard");
+        difficultyPlayer.setText("Godlike");
         break;
       case "Middle":
         difficultyPlayer.setText("Easy");
         break;
      case "Hard":
         difficultyPlayer.setText("Middle");
+        break;
+    case "Godlike":
+        difficultyPlayer.setText("Hard");
+        break;
     }
   }
 

@@ -45,9 +45,9 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   private final AbstractGameController gameController;
 
-  private final String nameAiPlayer1 = "Tobi";
-  private final String nameAiPlayer2 = "Janik";
-  private final String nameAiPlayer3 = "Tore";
+  private final String nameAiPlayer1 = "AlphaGo";
+  private final String nameAiPlayer2 = "DeepMind";
+  private final String nameAiPlayer3 = "Stockfish";
 
   private final GameSession gameSession;
 
@@ -181,6 +181,10 @@ public class LocalLobbyUiController extends AbstractUiController {
           break;
         case "Hard":
           aiPlayers.add(PlayerType.AI_HARD);
+          break;
+        case "Godlike":
+          aiPlayers.add(PlayerType.AI_GODLIKE);
+          break;
       }
     }
     if (!player2.getText().equals("-")) {
@@ -193,6 +197,10 @@ public class LocalLobbyUiController extends AbstractUiController {
           break;
         case "Hard":
           aiPlayers.add(PlayerType.AI_HARD);
+          break;
+        case "Godlike":
+          aiPlayers.add(PlayerType.AI_GODLIKE);
+          break;
       }
     }
 
@@ -206,6 +214,10 @@ public class LocalLobbyUiController extends AbstractUiController {
           break;
         case "Hard":
           aiPlayers.add(PlayerType.AI_HARD);
+          break;
+        case "Godlike":
+          aiPlayers.add(PlayerType.AI_GODLIKE);
+          break;
       }
     }
     this.gameSession.setAiPlayers(aiPlayers);
@@ -366,8 +378,13 @@ public class LocalLobbyUiController extends AbstractUiController {
           player.setText(name);
           break;
         case "Hard":
+          difficultyPlayer.setText("Godlike");
+          player.setText(name);
+          break;
+        case "Godlike":
           difficultyPlayer.setText("None");
           player.setText("-");
+          break;
       }
     }
   }
@@ -385,6 +402,11 @@ public class LocalLobbyUiController extends AbstractUiController {
       case "Hard":
         difficultyPlayer.setText("Middle");
         player.setText(name);
+        break;
+      case "Godlike":
+        difficultyPlayer.setText("Hard");
+        player.setText(name);
+        break;
     }
   }
 
