@@ -115,7 +115,7 @@ public class LocalLobbyUiController extends AbstractUiController {
       e.printStackTrace();
     }
 
-    Player player = new Player("Tilman", PlayerType.REMOTE_PLAYER);
+    Player player = new Player(Config.getStringValue("HOST"), PlayerType.REMOTE_PLAYER);
     this.client = new EndpointClient(this,player);
 
     this.gameSession = client.getGameSession();

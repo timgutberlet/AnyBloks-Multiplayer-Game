@@ -143,7 +143,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
 
 
-    Player player = new Player("HOST",PlayerType.REMOTE_PLAYER);
+    Player player = new Player(Config.getStringValue("HOST"),PlayerType.REMOTE_PLAYER);
     this.client = new EndpointClient(this,player);
 
 
