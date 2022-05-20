@@ -167,7 +167,11 @@ public class JoinAuthController extends AbstractUiController {
         this.client = new EndpointClient(this, player, ipField.getText(), token);
         this.gameSession = client.getGameSession();
         this.gameSession.setLocalPlayer(player);
+        System.out.println(token);
+        this.gameSession.setAuthToken(token);
         this.clientHandler = client.getClientHandler();
+
+
 
         this.ipError.setText("");
         this.passwordError.setText("");

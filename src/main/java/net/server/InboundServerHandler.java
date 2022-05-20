@@ -64,11 +64,13 @@ public class InboundServerHandler {
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
     String token = loginPacket.getToken();
-
+    System.out.println(username);
+    System.out.println(token);
     //Checking the credentials against the database
     boolean loginSuccess = false;
     //only check with db if not a bot
     if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
+      System.out.println(username + "Delete me in verify Login");
       try {
         DbServer dbServer = DbServer.getInstance();
         if (!dbServer.doesUserHaveAuthToken(username)) {
@@ -102,6 +104,7 @@ public class InboundServerHandler {
   public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
+    System.out.println(username);
     //check if username has been connected before
     if (this.server.getUsername2Session().keySet().contains(username)) {
 
@@ -142,6 +145,9 @@ public class InboundServerHandler {
 //            loginResponsePacket);
 //        this.server.sendMessage(wrappedPacketLoginResponse, session);
 //      } else
+      System.out.println(gameSession.getPlayerList().size());
+      System.out.println(gameSession.getPlayerList());
+      System.out.println(gameSession.getPlayerList().get(0));
         if (gameSession.getPlayerList().size() < 4) {
 
         Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");

@@ -73,6 +73,8 @@ public class GameSession {
 
 	private LinkedList<PlayerType> aiPlayers;
 
+	private String authToken = "";
+
 	/**
 	 * used to change the view to InGameController.
 	 */
@@ -95,13 +97,13 @@ public class GameSession {
 		this.localPlayer = this.hostPlayer;
 
 		this.defaultAI = PlayerType.AI_EASY;
-
+/*
 		try {
 			hostServer.startWebsocket(8080);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
   /**
@@ -131,6 +133,7 @@ public class GameSession {
 	 * @author tgutberl
 	 */
 	public void addPlayer(Player player) {
+		System.out.println(player.getUsername() + " ttry to add to playerlist");
 		this.playerList.add(player);
 		if (this.playerList.size() == 1) {
 			this.localPlayer = player;
@@ -642,6 +645,24 @@ public class GameSession {
   public void setIp(String ip) {
     this.ip = ip;
   }
+
+	/**
+	 * Setter.
+	 *
+	 * @param authToken String
+	 */
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+
+	/**
+	 * Getter.
+	 *
+	 * @return authToken String
+	 */
+	public String getAuthToken(){
+		return this.authToken;
+	}
 
 	/**
 	 * function that helps to output the most relevant information of a session.

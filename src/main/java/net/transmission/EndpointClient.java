@@ -95,6 +95,8 @@ public class EndpointClient {
 		this.player = player;
 		this.gameSession = new GameSession(player);
 		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+		this.gameSession.setAuthToken(token);
+
 		this.gameSession.setLocalPlayer(player);
 		this.player.setGameSession(this.gameSession);
 		this.clientHandler = new ClientHandler(this);
@@ -196,6 +198,10 @@ public class EndpointClient {
    * @author tgeilen
    */
   public void sendToServer(WrappedPacket wrappedPacket) {
+
+		wrappedPacket.setToken(this.gameSession.getAuthToken());
+		wrappedPacket.setUsername(this.gameSession.getLocalPlayer().getUsername());
+
     Debug.printMessage(this, "I am sending something to the server...");
     try {
       this.server.getBasicRemote().sendObject(wrappedPacket);

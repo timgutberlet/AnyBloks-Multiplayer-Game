@@ -65,14 +65,14 @@ public class WrappedPacket implements Serializable {
   }
 
   /**
-   * Setter
+   * Setter.
    */
   public void setPacket(Packet packet) {
     this.packet = packet;
   }
 
   /**
-   * Getter
+   * Getter.
    *
    * @return PacketType type
    */
@@ -81,23 +81,43 @@ public class WrappedPacket implements Serializable {
   }
 
   /**
-   * Getter
+   * Getter.
    */
   public String getUsername() {
     return username;
   }
 
   /**
-   * Getter
+   * Getter.
    */
   public String getToken() {
     return token;
   }
 
   /**
-   * Setter
+   * Setter.
+   *
+   * @param type PacketType
    */
   public void setPacketType(PacketType type) {
     this.type = type;
+  }
+
+  /**
+   * Setter.
+   *
+   * @param token String
+   */
+  public void setToken(String token) {
+    this.token = token;
+  }
+
+  /**
+   * Setter.
+   *
+   * @param  username String
+   */
+  public void setUsername(String username) {
+    this.username = username;
   }
 }

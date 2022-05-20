@@ -234,6 +234,10 @@ public class DbServer extends DbHandler {
         e.printStackTrace();
       }
     }
+    //TODO remove! this is only for testing
+    if(username.equals("HOST")){
+      authSucess = true;
+    }
     return authSucess;
   }
 

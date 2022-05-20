@@ -215,6 +215,8 @@ public class ClientHandler {
       Debug.printMessage("LoginRequestPacket has been sent to the server");
       WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
           loginRequestPacket, localPlayer.getUsername(), token);
+      wrappedPacket.setUsername(this.client.getGameSession().getLocalPlayer().getUsername());
+      wrappedPacket.setToken(this.client.getGameSession().getAuthToken());
       ses.getBasicRemote().sendObject(wrappedPacket);
 
     } catch (UnknownHostException e) {
