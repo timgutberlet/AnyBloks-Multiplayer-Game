@@ -31,6 +31,8 @@ public class AI {
    */
   public static Turn calculateNextMove(GameState gameState, Player player) {
     switch (player.getType()) {
+      case AI_GODLIKE:
+        return calculateNextGodlikeMove(gameState, player);
       case AI_HARD:
         return calculateNextHardMove(gameState, player);
       case AI_MIDDLE:
@@ -68,14 +70,34 @@ public class AI {
   }
 
   /**
-   * calculates the next easy move through sorting the possible moves after the size of the poly.
+   * generates the next easy move. 80 % it's random and 20 % it's a middle move, means the poly with the biggest possible size.
+   *
+   * @param board          considered board
+   * @param remainingPolys remaining polys of the player which the calculation is for
+   * @param isFirstRound   boolean, if they are in the first round
+   * @return random turn
+   */
+  public static Turn calculateNextEasyMove(Board board, ArrayList<Poly> remainingPolys,
+      boolean isFirstRound) {
+    int rand = (int) (Math.random() * 5);
+    if ( rand == 0){
+      return calculateNextMiddleMove(board,remainingPolys, isFirstRound);
+    } else{
+      return calculateNextRandomMove(board, remainingPolys, isFirstRound);
+    }
+  }
+
+
+
+  /**
+   * calculates the next middle move through sorting the possible moves after the size of the poly.
    *
    * @param board          considered board
    * @param remainingPolys remaining polys of the player which the calculation is for
    * @param isFirstRound   boolean, if they are in the first round
    * @return "best" turn
    */
-  public static Turn calculateNextEasyMove(Board board, ArrayList<Poly> remainingPolys,
+  public static Turn calculateNextMiddleMove(Board board, ArrayList<Poly> remainingPolys,
       boolean isFirstRound) {
     Debug.printMessage(remainingPolys.size() + " remaining Polys when calculating the next move");
     Debug.printMessage(board.toString());
@@ -101,17 +123,14 @@ public class AI {
    * calculates the next move through sorting the possible moves after the blocked fields of the
    * opponents as the first criteria and the size of the poly as the second criteria.
    *
-   * @param board          considered board
-   * @param remainingPolys remaining polys of the player which the calculation is for
-   * @param isFirstRound   boolean, if they are in the first round
+   * @param gameState current gameState
+   * @param player    player, for whom the next move is calculated
    * @return "best" turn
    */
-
-  public static Turn calculateNextMiddleMove(Board board, ArrayList<Poly> remainingPolys,
-      boolean isFirstRound) {
-    ArrayList<Turn> possibleMoves = board.getPossibleMoves(remainingPolys, isFirstRound);
+  public static Turn calculateNextHardMove(GameState gameState, Player player) {
+    ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
     for (Turn turn : possibleMoves) {
-      board.assignNumberBlockedFields(turn);
+      gameState.getBoard().assignNumberBlockedFields(turn);
     }
     possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
     possibleMoves.sort((o1, o2) -> o2.getNumberBlockedFields() - o1.getNumberBlockedFields());
@@ -140,7 +159,7 @@ public class AI {
    * @param player    player, for whom the next move is calculated
    * @return the next "best" move
    */
-  public static Turn calculateNextHardMove(GameState gameState, Player player) {
+  public static Turn calculateNextGodlikeMove(GameState gameState, Player player){
     int gameModeNumber = 0;
     switch (gameState.getGameMode().getName()) {
       case "CLASSIC":
