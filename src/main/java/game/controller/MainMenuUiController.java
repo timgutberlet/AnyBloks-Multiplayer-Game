@@ -67,7 +67,7 @@ public class MainMenuUiController extends AbstractUiController {
           break;
         case "THINK":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {

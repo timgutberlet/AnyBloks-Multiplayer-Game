@@ -25,7 +25,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -150,7 +149,7 @@ public class LocalLobbyUiController extends AbstractUiController {
           break;
         case "THINK":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {

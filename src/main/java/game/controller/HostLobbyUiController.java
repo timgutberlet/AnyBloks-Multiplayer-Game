@@ -7,6 +7,7 @@ import engine.handler.ThreadHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
+import game.model.chat.ChatMessage;
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
 import game.model.gamemodes.GMJunior;
@@ -32,13 +33,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import net.server.ClientHandler;
 import net.server.HostServer;
 import net.tests.NoLogging;
@@ -60,13 +63,22 @@ public class HostLobbyUiController extends AbstractUiController {
 
   private final GameSession gameSession;
 
+
   private ObservableList<String> list;
+
+  private int chatMessageLength = 0;
 
   private EndpointClient client;
   private ClientHandler clientHandler;
 
   private List<ComboBox<String>> rounds = new ArrayList<>();
   private int round = 1;
+
+  @FXML
+  private TextArea chat;
+
+  @FXML
+  private TextField chatInput;
 
   @FXML
   private VBox box;
@@ -143,6 +155,13 @@ public class HostLobbyUiController extends AbstractUiController {
     this.clientHandler = client.getClientHandler();
   }
 
+  public void registerChatMessage(){
+    if(chatInput.getText().length() > 0 ){
+      gameSession.addChatMessage(chatInput.getText());
+    }else{
+    }
+  }
+
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -151,6 +170,11 @@ public class HostLobbyUiController extends AbstractUiController {
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
       gamemodeError.setText("");
+      chatInput.setOnKeyPressed(event -> {
+        if(event.getCode().equals(KeyCode.ENTER)){
+          registerChatMessage();
+        }
+      });
       setIP();
       //Sets the Theme, according to the settings
       switch (Config.getStringValue("THEME")){
@@ -168,9 +192,10 @@ public class HostLobbyUiController extends AbstractUiController {
           break;
         case "THINK":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
+
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -409,6 +434,16 @@ public class HostLobbyUiController extends AbstractUiController {
       //this.gameSession.setGameStarted();
     } else {
       Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
+    }
+
+    if (gameSession.getChat().getChatMessages().size() > chatMessageLength) {
+      chat.setText("");
+      for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
+        chat.appendText(
+            chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getHours() + " "
+                + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
+      }
+      chatMessageLength = gameSession.getChat().getChatMessages().size();
     }
   }
 

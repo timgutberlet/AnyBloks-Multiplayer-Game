@@ -1,6 +1,5 @@
 package game.controller;
 
-import com.sun.tools.javac.Main;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
@@ -10,8 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -114,8 +111,8 @@ public class SettingUiController extends AbstractUiController {
         case "INTEGRA":
           Config.set("THEME", "INTEGRA");
           break;
-        case "THINK":
-          Config.set("THEME", "THINK");
+        case "THINC!":
+          Config.set("THEME", "THINC!");
           break;
       }
     }
@@ -163,7 +160,7 @@ public class SettingUiController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       loadSettings();
-      themes = FXCollections.observableArrayList("BRIGHT", "DARK", "INTEGRA", "THINK");
+      themes = FXCollections.observableArrayList("BRIGHT", "DARK", "INTEGRA", "THINC!");
       updateSize(mainPane, gameController.getStage());
       themeBox.setItems(themes);
       //Sets the Theme, according to the settings
@@ -186,11 +183,11 @@ public class SettingUiController extends AbstractUiController {
               .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           themeBox.setValue("INTEGRA");
           break;
-        case "THINK":
+        case "THINC!":
           mainPane.setStyle("-fx-background-color: #ffffff;");
           mainPane.getStylesheets()
-              .add(getClass().getResource("/styles/styleThink.css").toExternalForm());
-          themeBox.setValue("THINK");
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          themeBox.setValue("THINC!");
           break;
       }
       saveConfirm.setText(saveMessage);

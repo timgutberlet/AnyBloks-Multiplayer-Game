@@ -7,6 +7,7 @@ import engine.handler.ThreadHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
+import game.model.chat.ChatMessage;
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
 import game.model.gamemodes.GMJunior;
@@ -25,6 +26,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -45,6 +49,14 @@ public class JoinLobbyUiController extends AbstractUiController {
   private GameMode gameMode;
   private ObservableList<String> list;
 
+
+  private int chatMessageLength = 0;
+
+  @FXML
+  private TextArea chat;
+
+  @FXML
+  private TextField chatInput;
 
   @FXML
   private Label player1;
@@ -119,9 +131,14 @@ public class JoinLobbyUiController extends AbstractUiController {
           break;
         case "THINK":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThink.css").toExternalForm());
+          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
+      chatInput.setOnKeyPressed(event -> {
+        if(event.getCode().equals(KeyCode.ENTER)){
+          registerChatMessage();
+        }
+      });
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -238,39 +255,13 @@ public class JoinLobbyUiController extends AbstractUiController {
       //gameController.setActiveUiController(
       //    new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
     }
-
-
-
   }
 
-  @FXML
-  private void increaseDifficulty1() {
-    increaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1, player1);
-  }
-
-  @FXML
-  private void increaseDifficulty2() {
-    increaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2, player2);
-  }
-
-  @FXML
-  private void increaseDifficulty3() {
-    increaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3, player3);
-  }
-
-  @FXML
-  private void decreaseDifficulty1() {
-    decreaseAi(namePlayer1, difficultyPlayer1, nameAiPlayer1, player1);
-  }
-
-  @FXML
-  private void decreaseDifficulty2() {
-    decreaseAi(namePlayer2, difficultyPlayer2, nameAiPlayer2, player2);
-  }
-
-  @FXML
-  private void decreaseDifficulty3() {
-    decreaseAi(namePlayer3, difficultyPlayer3, nameAiPlayer3, player3);
+  public void registerChatMessage() {
+    if (chatInput.getText().length() > 0) {
+      gameSession.addChatMessage(chatInput.getText());
+    } else {
+    }
   }
 
   @FXML
@@ -279,44 +270,6 @@ public class JoinLobbyUiController extends AbstractUiController {
     gameModes.setItems(list);
   }
 
-  private void increaseAi(Label namePlayer, Label difficultyPlayer, String name, Label player) {
-    if (namePlayer.getText().equals("-") || difficultyPlayer.getText().equals("-")) {
-      namePlayer.setText(name);
-      difficultyPlayer.setText("Easy");
-      player.setText("Easy");
-    } else {
-      switch (difficultyPlayer.getText()) {
-        case "Easy":
-          difficultyPlayer.setText("Middle");
-          player.setText("Middle");
-          break;
-        case "Middle":
-          difficultyPlayer.setText("-");
-          namePlayer.setText("-");
-          player.setText("None");
-          break;
-        /*case "Hard":
-          difficultyPlayer.setText("-");
-          namePlayer.setText("-");*/
-      }
-    }
-  }
-
-  private void decreaseAi(Label namePlayer, Label difficultyPlayer, String name, Label player) {
-    switch (difficultyPlayer.getText()) {
-      case "Easy":
-        difficultyPlayer.setText("-");
-        namePlayer.setText("-");
-        player.setText("None");
-        break;
-      case "Middle":
-        difficultyPlayer.setText("Easy");
-        player.setText("Easy");
-        break;
-     /* case "Hard":
-        difficultyPlayer.setText("Middle");*/
-    }
-  }
 
   @Override
   public void onExit() {
@@ -334,6 +287,16 @@ public class JoinLobbyUiController extends AbstractUiController {
     } else {
       Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
     }
+
+      if (gameSession.getChat().getChatMessages().size() > chatMessageLength) {
+        chat.setText("");
+        for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
+          chat.appendText(
+              chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getHours() + " "
+                  + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
+        }
+        chatMessageLength = gameSession.getChat().getChatMessages().size();
+      }
 
   }
 

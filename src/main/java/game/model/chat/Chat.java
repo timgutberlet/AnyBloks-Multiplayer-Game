@@ -70,7 +70,7 @@ public class Chat {
    * returns all the chat messages.
    * @return returns a list with all chatMessages
    */
-  public ArrayList<ChatMessage> getChat() {
+  public ArrayList<ChatMessage> getChatMessages() {
     return chatMessages;
   }
 

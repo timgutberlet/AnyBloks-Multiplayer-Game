@@ -107,7 +107,7 @@ public class RemoteChatTest {
 		client.sendToServer(wrappedPacket);
 
 
-		assertEquals(1,client.getGameSession().getChat().getChat().size());
+		assertEquals(1,client.getGameSession().getChat().getChatMessages().size());
 
 
 
