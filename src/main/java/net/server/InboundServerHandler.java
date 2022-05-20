@@ -173,28 +173,30 @@ public class InboundServerHandler {
     return toReturn;
   }
 
-	/**
-	 * Method called after receiving a CreateAccountReqeustPacket. This tries to save the account in
-	 * the Database, depending on the result of the attempted DB Insertion the reponse message for the
-	 * createAccountResponsePacket is set.
-	 *
-	 * @param packet that contains a createAccountRequestPacket
-	 */
-	public String createAccount(WrappedPacket packet) {
-		CreateAccountRequestPacket carp = (CreateAccountRequestPacket) packet.getPacket();
-		String username = carp.getUsername();
-		String passwordHash = carp.getPasswordHash();
-		String errorMessage = "";
-		DbServer dbServer = null;
-		boolean success = false;
-		try {
-			dbServer = DbServer.getInstance();
-			//Check if the username is already in DB, return with errorMessage
-			if (dbServer.doesUsernameExist(username)) {
-				return "The requested username already exists. Please choose another one!";
-			}
-			//Try to create account if the username is still available
-			success = dbServer.newAccount(username, passwordHash);
+  /**
+   * //TODO check if still needed @tobi & tore
+   * <p>
+   * Method called after receiving a CreateAccountRequestPacket. This tries to save the account in
+   * the Database, depending on the result of the attempted DB Insertion the reponse message for the
+   * createAccountResponsePacket is set.
+   *
+   * @param packet that contains a createAccountRequestPacket
+   */
+  public String createAccount(WrappedPacket packet) {
+    CreateAccountRequestPacket carp = (CreateAccountRequestPacket) packet.getPacket();
+    String username = carp.getUsername();
+    String passwordHash = carp.getPasswordHash();
+    String errorMessage = "";
+    DbServer dbServer = null;
+    boolean success = false;
+    try {
+      dbServer = DbServer.getInstance();
+      //Check if the username is already in DB, return with errorMessage
+      if (dbServer.doesUsernameExist(username)) {
+        return "The requested username already exists. Please choose another one!";
+      }
+      //Try to create account if the username is still available
+      success = dbServer.newAccount(username, passwordHash);
 
     } catch (Exception e) {
       e.printStackTrace();

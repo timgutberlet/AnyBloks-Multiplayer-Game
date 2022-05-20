@@ -121,7 +121,14 @@ public class ClientHandler {
 
 
   }
+
+  //TODO DELETE JUST FOR TESTING @tobi
   public void initLocalGame(Player localPlayer, String ip){
+    String token = "";
+    this.initLocalGame(player, ip, token);
+  }
+
+  public void initLocalGame(Player localPlayer, String ip, String token){
 
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 
@@ -148,14 +155,16 @@ public class ClientHandler {
 //      ses.getBasicRemote().sendObject(wrappedPacket);
 
       //Create Account
-      String passwordHash = HashingHandler.sha256encode("123456");
-      CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
-          localPlayer.getUsername(),
-          passwordHash);
-      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-          createAccReq);
-      //... and send it
-      client.sendToServer(wrappedPacket);
+
+      //TODO check if can be deleted @ tobi & tore
+//      String passwordHash = HashingHandler.sha256encode("123456");
+//      CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
+//          localPlayer.getUsername(),
+//          passwordHash);
+//      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+//          createAccReq);
+//      //... and send it
+//      client.sendToServer(wrappedPacket);
 
       //Sleep so updates can be made in DB
       try {
@@ -166,10 +175,10 @@ public class ClientHandler {
 
       //Login
       LoginRequestPacket loginRequestPacket = new LoginRequestPacket(localPlayer.getUsername(),
-          passwordHash, localPlayer.getType());
+          token, localPlayer.getType());
       Debug.printMessage("LoginRequestPacket has been sent to the server");
-      wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
-          loginRequestPacket);
+      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
+          loginRequestPacket, localPlayer.getUsername(), token);
       ses.getBasicRemote().sendObject(wrappedPacket);
 
     } catch (UnknownHostException e) {
@@ -317,4 +326,10 @@ public class ClientHandler {
     this.client.sendToServer(wrappedPacket);
   }
 
+  public void denyLogin(WrappedPacket packet) {
+
+    LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet.getPacket();
+    this.gameSession.setLoginStatus(loginResponsePacket.getLoginStatus());
+
+  }
 }

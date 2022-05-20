@@ -60,6 +60,14 @@ public class JoinAuthController extends AbstractUiController {
     init(super.root);
   }
 
+  public JoinAuthController(AbstractGameController gameController, String Ip, String username) {
+    super(gameController);
+    this.gameController = gameController;
+    init(super.root);
+    this.ipField.setText(Ip);
+    this.usernameField.setText(username);
+  }
+
   /**
    * Method to initialize the FXML
    *
@@ -95,15 +103,51 @@ public class JoinAuthController extends AbstractUiController {
    */
   @FXML
   public void joinLobby() {
-    if(this.ipField.getText().length() >= 7 && this.usernameField.getText().length() >= 2){
-      Player player = new Player(this.usernameField.getText() ,PlayerType.REMOTE_PLAYER);
-      this.client = new EndpointClient(this, player, ipField.getText());
-      this.gameSession = client.getGameSession();
-      this.gameSession.setLocalPlayer(player);
-      this.clientHandler = client.getClientHandler();
-    }
-    else{
-      if(this.ipField.getText().length() < 7){
+    if (this.ipField.getText().length() >= 7 && this.usernameField.getText().length() >= 2) {
+
+
+      String ip = this.ipField.getText();
+      String username = this.usernameField.getText();
+      String password = this.passwordField.getText();
+
+      Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+
+      String targetAddress = "http://" + ip + ":8082/";
+
+      String passwordHash = HashingHandler.sha256encode(password);
+
+      RestfulLoginPacket restfulLoginPacket = new RestfulLoginPacket(username,
+          passwordHash);
+      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.RESTFUL_LOGIN_PACKET,
+          restfulLoginPacket);
+
+      WebTarget targetPath = testClient.target(targetAddress).path("/authentication/");
+      Response receivedToken = targetPath.request(MediaType.APPLICATION_JSON)
+          .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
+
+      if (receivedToken.getStatus() != 200) {
+        System.out.println("Unexpected answer!");
+        passwordError.setText(
+            "You seem to have entered an invalid username or password. "
+                + "Please make sure you enter a valid username & password or create an account!");
+      } else {
+        String token = receivedToken.readEntity(String.class);
+
+        Player player = new Player(this.usernameField.getText(), PlayerType.REMOTE_PLAYER);
+        this.client = new EndpointClient(this, player, ipField.getText(), token);
+        this.gameSession = client.getGameSession();
+        this.gameSession.setLocalPlayer(player);
+        this.clientHandler = client.getClientHandler();
+
+        this.ipError.setText("");
+        this.passwordError.setText("");
+        this.usernameError.setText("");
+
+      }
+
+
+    } else {
+      if (this.ipField.getText().length() < 7) {
         this.ipField.setText("IP to short, please reEnter!");
       }
       if (this.usernameField.getText().length() < 2) {
@@ -163,8 +207,47 @@ public class JoinAuthController extends AbstractUiController {
     }
   }
 
+  @Override
+  public void update(AbstractGameController gameController, double deltaTime) {
+
+    if(this.gameSession != null){
+
+    if (!this.gameSession.getLoginStatus().equals("")) {
+
+      if(this.gameSession.getLoginStatus().equals("password")) {
+        usernameError.setText(
+            "THE USERNAME DOES NOT EXIST ON THE SERVER - PLEASE CREATE A NEW ACCOUNT ");
+      }
+
+      if(this.gameSession.getLoginStatus().equals("ipAddress")){
+        ipError.setText(
+            "THE LOBBY YOU ARE TRYING TO JOIN IS ALREADY FULL");
+      }
+
+      if(this.gameSession.getLoginStatus().equals("ipAddress")){
+        ipError.setText("THE LOBBY YOU ARE TRYING TO JOIN IS CURRENTLY IN A GAME");
+      }
+
+    } else {
+
+      if (this.gameSession.isGameStarted()) {
+        ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
+        gameController.setActiveUiController(
+            new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession,
+                threadHelp));
+        this.gameSession.setGameStarted(false);
+      } else {
+        Debug.printMessage(this, "GameSession Controller " + this.gameSession);
+      }
+    }
+    }
+
+  }
+
   @FXML
   public void initialize() {
     updateSize(mainPane, gameController.getStage());
   }
+
+
 }

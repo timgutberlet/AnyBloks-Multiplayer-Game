@@ -34,13 +34,16 @@ public class CreateAccountController extends AbstractUiController {
   AnchorPane mainPane;
 
   @FXML
+  TextField ipField;
+
+  @FXML
   TextField usernameField;
 
   @FXML
   PasswordField passwordField1, passwordField2;
 
   @FXML
-  Text usernameError, passwordError1, passwordError2;
+  Text usernameError, passwordError1, passwordError2, ipError;
 
   public CreateAccountController(AbstractGameController gameController) {
     super(gameController);
@@ -119,7 +122,7 @@ public class CreateAccountController extends AbstractUiController {
     passwordError1.setText("");
     passwordError2.setText("");
     if(passwordField1.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() > 3 && passwordField1.getText().equals(passwordField2.getText())){
-      serverCreateAccount(usernameField.getText(), passwordField1.getText());
+      serverCreateAccount(usernameField.getText(), passwordField1.getText(),this.ipField.getText());
       gameController.setActiveUiController(new JoinAuthController(gameController));
     }else{
       if(usernameField.getText().length() < 3) {

@@ -90,7 +90,7 @@ public class EndpointClient {
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
 
-	public EndpointClient(JoinAuthController joinAuthController, Player player, String ip) {
+	public EndpointClient(JoinAuthController joinAuthController, Player player, String ip, String token) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);
@@ -99,7 +99,7 @@ public class EndpointClient {
 		this.player.setGameSession(this.gameSession);
 		this.clientHandler = new ClientHandler(this);
 		Debug.printMessage(this, "EndpointClient created from GUI 1");
-		this.clientHandler.initLocalGame(player, ip);
+		this.clientHandler.initLocalGame(player, ip, token);
 
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
@@ -179,7 +179,10 @@ public class EndpointClient {
 
       case PLAYER_LIST_PACKET:
         this.clientHandler.updatePlayerList(packet);
+				break;
 
+			case LOGIN_RESPONSE_PACKET:
+					this.clientHandler.denyLogin(packet);
 
       //
     }

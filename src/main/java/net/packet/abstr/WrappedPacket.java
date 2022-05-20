@@ -31,6 +31,21 @@ public class WrappedPacket implements Serializable {
   public WrappedPacket(PacketType type, Packet packet) {
     this.type = type;
     this.packet = packet;
+    this.username = "";
+    this.token = "";
+  }
+
+  /**
+   * Constructor
+   *
+   * @param type   of packet
+   * @param packet to be sent
+   */
+  public WrappedPacket(PacketType type, Packet packet, String username, String token) {
+    this.type = type;
+    this.packet = packet;
+    this.username = username;
+    this.token = token;
   }
 
   /**

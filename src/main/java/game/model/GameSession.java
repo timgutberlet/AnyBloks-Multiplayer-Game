@@ -66,7 +66,11 @@ public class GameSession {
 
 	private Boolean localPlayerTurn = false;
 
-	private Boolean updatingGameState = false;
+  private Boolean updatingGameState = false;
+
+  private String loginStatus = "";
+
+  private String ip = "";
 
 	/**
 	 * used to change the view to InGameController.
@@ -610,6 +614,18 @@ public class GameSession {
 	public Boolean isUpdatingGameState() {
 		return updatingGameState;
 	}
+
+  public String getLoginStatus() {
+    return this.loginStatus;
+  }
+
+  public void setLoginStatus(String loginStatus) {
+    this.loginStatus = loginStatus;
+  }
+
+  public String getIp() {
+    return this.ip;
+  }
 
   public void setIp(String ip) {
     this.ip = ip;
