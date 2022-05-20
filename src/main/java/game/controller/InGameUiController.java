@@ -287,6 +287,7 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+    root.requestFocus();
     boardPane.repaint(game.getGameState().getBoard());
 
     localPlayer = gameSession.getLocalPlayer();
