@@ -108,16 +108,16 @@ public class GameSession {
 		}*/
 	}
 
-  /**
-   * a Session is created.
-   *
-   * @param
-   * @author tgeilen
-   */
-  public GameSession() {
-    //create chatThread and start it
-    this.chat = new Chat();
-    //this.chat.run();
+	/**
+	 * a Session is created.
+	 *
+	 * @param
+	 * @author tgeilen
+	 */
+	public GameSession() {
+		//create chatThread and start it
+		this.chat = new Chat();
+		//this.chat.run();
 
 		this.playerList = new ArrayList<>();
 
@@ -196,18 +196,23 @@ public class GameSession {
 	 */
 	public Game startGameServer() {
 
+		//System.out.println("DAS GAME WIRD HIER GESTARTET");
+
 		//while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
 		GameMode gameMode = this.gameList.pop();
-
-		while (this.getPlayerList().size()
-				< gameMode.getNeededPlayers() - 1) {
+		System.out.println("Needed players: " + gameMode.getNeededPlayers());
+		System.out.println("Current player size: " + this.getPlayerList().size());
+		int numPlayersToAdd = gameMode.getNeededPlayers() - this.getPlayerList().size();
+		System.out.println("Players to be added:" + numPlayersToAdd);
+		for(int i=0; i<numPlayersToAdd; i++) {
+			System.out.println("Adding player :" + (this.getPlayerList().size()+1));
 			if (this.aiPlayers != null) {
 				if (this.aiPlayers.size() > 0) {
 					this.addBot(this.aiPlayers.pop());
 				} else {
 					this.addBot(this.defaultAI);
 				}
-			}else{
+			} else {
 				this.addBot(this.defaultAI);
 			}
 		}
@@ -260,12 +265,12 @@ public class GameSession {
 		this.updatingGameState = true;
 		this.game.updateGameState(gameState);
 		this.playerList = gameState.getPlayerList();
-		for(Player p: playerList){
-			if(p.equals(this.localPlayer)){
-				Debug.printMessage(this,"Local player currently " + this.localPlayer);
-				Debug.printMessage(this,"Local player new " + p);
+		for (Player p : playerList) {
+			if (p.equals(this.localPlayer)) {
+				Debug.printMessage(this, "Local player currently " + this.localPlayer);
+				Debug.printMessage(this, "Local player new " + p);
 				this.localPlayer = p;
-				Debug.printMessage(this,"Local player changed to " + this.localPlayer);
+				Debug.printMessage(this, "Local player changed to " + this.localPlayer);
 			}
 		}
 		this.updatingGameState = false;
@@ -288,21 +293,18 @@ public class GameSession {
 	 */
 	public void addChatMessage(String msg) {
 
-		ChatMessage chatMessage = new ChatMessage(this.localPlayer.getUsername(),msg);
+		ChatMessage chatMessage = new ChatMessage(this.localPlayer.getUsername(), msg);
 		this.saveChatMessage(chatMessage);
-
 
 		this.clientHandler.broadcastChatMessage(chat);
 
 	}
 
 	/**
-	 *
 	 * function to save a msg from remote in the local chat
-	 *
 	 */
 
-	public void saveChatMessage(ChatMessage chatMessage){
+	public void saveChatMessage(ChatMessage chatMessage) {
 		this.chat.addMessage(chatMessage);
 	}
 
@@ -328,7 +330,7 @@ public class GameSession {
 	 * @param player player
 	 */
 	public void addToSession(Player player) {
-
+		System.out.println("Adding a new player from add to session");
 		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 		EndpointClient endpointClient = new EndpointClient(player);
 		Session session;
@@ -344,7 +346,6 @@ public class GameSession {
 
 			endpointClient.sendToServer(wrappedPacket, player.getUsername());
 			//session.getBasicRemote().sendObject(wrappedPacket);
-
 
 		} catch (DeploymentException e) {
 			e.printStackTrace();
@@ -570,15 +571,15 @@ public class GameSession {
 		return inboundServerHandler;
 	}
 
-  /**
-   * sets the InboundServerHandler.
-   *
-   * @param inboundServerHandler
-   */
+	/**
+	 * sets the InboundServerHandler.
+	 *
+	 * @param inboundServerHandler
+	 */
 
-  public void setInboundServerHandler(InboundServerHandler inboundServerHandler) {
-    this.inboundServerHandler = inboundServerHandler;
-  }
+	public void setInboundServerHandler(InboundServerHandler inboundServerHandler) {
+		this.inboundServerHandler = inboundServerHandler;
+	}
 
 	/**
 	 * returns the list of games that will be played in the tournament.
@@ -636,21 +637,21 @@ public class GameSession {
 		return updatingGameState;
 	}
 
-  public String getLoginStatus() {
-    return this.loginStatus;
-  }
+	public String getLoginStatus() {
+		return this.loginStatus;
+	}
 
-  public void setLoginStatus(String loginStatus) {
-    this.loginStatus = loginStatus;
-  }
+	public void setLoginStatus(String loginStatus) {
+		this.loginStatus = loginStatus;
+	}
 
-  public String getIp() {
-    return this.ip;
-  }
+	public String getIp() {
+		return this.ip;
+	}
 
-  public void setIp(String ip) {
-    this.ip = ip;
-  }
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
 
 	/**
 	 * Setter.
@@ -666,12 +667,13 @@ public class GameSession {
 	 *
 	 * @return authToken String
 	 */
-	public String getAuthToken(){
+	public String getAuthToken() {
 		return this.authToken;
 	}
 
 	/**
 	 * getter.
+	 *
 	 * @return gameOver
 	 */
 	public Boolean isGameOver() {
@@ -680,13 +682,14 @@ public class GameSession {
 
 	/**
 	 * setter.
+	 *
 	 * @param gameOver gameOver
 	 */
 	public void setGameOver(Boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
-	public void setChat(Chat chat){
+	public void setChat(Chat chat) {
 		this.chat = chat;
 	}
 

@@ -40,6 +40,7 @@ public class EndpointClient {
   private ClientHandler clientHandler;
   private Player player;
 
+	//used to add the bots, therefore initLocalGame() not needed
 	public EndpointClient(Player player){
 		super();
 		this.player = player;
