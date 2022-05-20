@@ -81,7 +81,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="83.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
-                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createAccount" prefHeight="66.0" prefWidth="279.0" text="Edit Account">
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#editAccount" prefHeight="66.0" prefWidth="279.0" text="Edit Account">
                                  <font>
                                     <Font size="35.0" />
                                  </font>

@@ -99,7 +99,7 @@ public class DeleteAccountController extends AbstractUiController {
 
 
 
-  public void serverCreateAccount(String username, String password, String ip){
+  public void serverDeleteAccount(String username, String password, String ip){
     //TODO remove
     try {
       ip = Inet4Address.getLocalHost().getHostAddress();
@@ -110,16 +110,16 @@ public class DeleteAccountController extends AbstractUiController {
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
-    password = HashingHandler.sha256encode("123456");
-    CreateAccountRequestPacket carp = new CreateAccountRequestPacket("testuser", password);
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-        carp);
+		String passwordHash = HashingHandler.sha256encode(password);
 
-    String targetAddress = "http://" + ip + ":8082/";
+		CreateAccountRequestPacket carp = new CreateAccountRequestPacket(username, passwordHash);
+		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
+				carp);
 
-    WebTarget targetPath = testClient.target(targetAddress).path("/register/");
-    Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
+		String targetAddress = "http://" + ip + ":8082/";
+		WebTarget targetPath = testClient.target(targetAddress).path("/register/");
+		Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
+				.put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
     if (receivedAnswer.getStatus() != 200) {
       System.out.println("Something went wrong");
@@ -137,11 +137,11 @@ public class DeleteAccountController extends AbstractUiController {
    * @author tgutberl
    */
   @FXML
-  public void createAccount() {
+  public void deleteAccount() {
     usernameError.setText("");
     passwordError.setText("");
     if(passwordField.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() >= 2 ){
-      //TODO
+      serverDeleteAccount(usernameField.getText(),passwordField.getText(),ipField.getText());
     }else{
       if(usernameField.getText().length() < 2) {
         usernameError.setText("Please enter a username with at least two Characters");

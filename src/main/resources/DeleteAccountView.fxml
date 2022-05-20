@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.EditAccountController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.DeleteAccountController">
    <children>
       <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -70,7 +70,7 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="83.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
-                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createAccount" prefHeight="66.0" prefWidth="279.0" text="Delete Account">
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="66.0" prefWidth="279.0" text="Delete Account">
                                  <font>
                                     <Font size="35.0" />
                                  </font>

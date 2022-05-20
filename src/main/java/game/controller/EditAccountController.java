@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
+import net.packet.account.UpdateAccountRequestPacket;
 import net.server.HashingHandler;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
@@ -92,35 +93,33 @@ public class EditAccountController extends AbstractUiController {
       e.printStackTrace();
     }
   }
+
+
   /**
    * Method to give the Server the username and Password of user
    *
    * @author tgutberl
    */
 
-
-
-  public void serverCreateAccount(String username, String password, String ip){
-    //TODO remove
-    try {
-      ip = Inet4Address.getLocalHost().getHostAddress();
-    } catch (UnknownHostException e) {
-      e.printStackTrace();
-    }
+  public void serverEditAccount(String username,String oldPassword, String updatedPassword, String ip){
 
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
-    password = HashingHandler.sha256encode("123456");
-    CreateAccountRequestPacket carp = new CreateAccountRequestPacket("testuser", password);
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-        carp);
+    String passwordHash = HashingHandler.sha256encode(oldPassword);
+    String updatedPasswordHash = HashingHandler.sha256encode(updatedPassword);
 
     String targetAddress = "http://" + ip + ":8082/";
 
-    WebTarget targetPath = testClient.target(targetAddress).path("/register/");
-    Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
-        .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
+    UpdateAccountRequestPacket updateAccountRequestPacket = new UpdateAccountRequestPacket(
+        passwordHash, username, updatedPasswordHash);
+    WrappedPacket wrappedUpdateAccountRequestPacket = new WrappedPacket(
+        PacketType.UPDATE_ACCOUNT_REQUEST_PACKET, updateAccountRequestPacket, username,
+        passwordHash);
+    WebTarget targetPathUpdate = testClient.target(targetAddress).path("/updateAccount/");
+    Response receivedAnswer = targetPathUpdate.request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(wrappedUpdateAccountRequestPacket, MediaType.APPLICATION_JSON));
+
 
     if (receivedAnswer.getStatus() != 200) {
       System.out.println("Something went wrong");
@@ -138,12 +137,12 @@ public class EditAccountController extends AbstractUiController {
    * @author tgutberl
    */
   @FXML
-  public void createAccount() {
+  public void editAccount() {
     usernameError.setText("");
     oldPasswordError.setText("");
     newPasswordError.setText("");
     if(oldPasswordField.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() >= 2 ){
-      //TODO
+      serverEditAccount(usernameField.getText(),oldPasswordField.getText(),newPasswordField.getText(),ipField.getText());
     }else{
       if(usernameField.getText().length() < 2) {
         usernameError.setText("Please enter a username with at least two Characters");
