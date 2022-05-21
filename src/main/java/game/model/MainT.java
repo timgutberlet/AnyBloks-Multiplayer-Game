@@ -64,20 +64,19 @@ public class MainT {
     System.out.println(game.getGameState().getRound());
     gameSession.stopSession();*/
 
-//    AI.setRoundSections(0,new int[]{0,24});
-//    int[] result = playClassicGame(true);
-//    System.out.println(result);
-//    AI.setRoundSections(1,new int[]{0,24});
-//    result = playDuoGame(true);
-//    System.out.println(result);
-//    AI.setRoundSections(2,new int[]{0,24});
-//    result = playJuniorGame(true);
-//    System.out.println(result);
-//    AI.setRoundSections(3,new int[]{0,24});
-    int[] result = playTrigonGame(true);
+    AI.setRoundSections(0,new int[]{0,24});
+    int[] result = playClassicGame(true);
+    System.out.println(result);
+    AI.setRoundSections(1,new int[]{0,24});
+    result = playDuoGame(true);
+    System.out.println(result);
+    AI.setRoundSections(2,new int[]{0,24});
+    result = playJuniorGame(true);
+    System.out.println(result);
+    AI.setRoundSections(3,new int[]{0,24});
+    result = playTrigonGame(true);
     System.out.println(result);
 
-    System.exit(0);
 
 
     System.out.println("Everything works");
@@ -235,35 +234,40 @@ public class MainT {
   static int[] playTrigonGame(boolean print){
     GameSession gameSession = new GameSession();
 
-    gameSession.addPlayer(new Player("BOT1", PlayerType.AI_EASY));
+    gameSession.addPlayer(new Player("BOT1", PlayerType.AI_HARD));
     gameSession.addPlayer(new Player("BOT2", PlayerType.AI_MIDDLE));
     gameSession.addPlayer(new Player("BOT3", PlayerType.AI_HARD));
-    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_GODLIKE));
+    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_MIDDLE));
 
     Game game = gameSession.startGame(new GMTrigon());
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
-      long begin = System.currentTimeMillis();
-//      for (Turn t : game.getGameState().getBoard().getPossibleMoves(game.getGameState().getRemainingPolys(game.getCurrentPlayer()),game.getGameState().isFirstRound())){
-//        if (t.getPoly().getSize() > 6){
-//          System.out.println("Groeße: " + t.getPoly().size);
-//        }
-//      }
-      for (Poly p : game.getGameState().getRemainingPolys(game.getCurrentPlayer())){
+      Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      game.getGameState().playTurn(t1);
+      if (print) {
+        System.out.println(t1);
+        System.out.println(game.getGameState().getBoard());
       }
 
-      Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-
-
-
-      long end = System.currentTimeMillis();
-
+      Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      game.getGameState().playTurn(t2);
       if (print) {
-        System.out.println("Player " + game.getGameState().getPlayerCurrent().getUsername() +  "(" + game.getCurrentPlayer().getType().name() + ")");
-        System.out.println(t1);
-        game.getGameState().playTurn(t1);
-        System.out.println("Time: " + (end - begin) / 1000);
+        System.out.println(t2);
+        System.out.println(game.getGameState().getBoard());
+      }
+
+      Turn t3 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      game.getGameState().playTurn(t3);
+      if (print) {
+        System.out.println(t3);
+        System.out.println(game.getGameState().getBoard());
+      }
+
+      Turn t4 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      game.getGameState().playTurn(t4);
+      if (print) {
+        System.out.println(t4);
         System.out.println(game.getGameState().getBoard());
       }
     }

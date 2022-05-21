@@ -408,7 +408,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
           res.addAll(getMovesForPoly((PolyTrigon) p, isFirstRound));
           p.rotateLeft();
           if (p.equalsReal(pClone)){
-            break A;
+            continue A;
           }
         }
         p.mirror();
@@ -429,8 +429,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     for (int[] pos : getPossibleFields(p.getColor(), isFirstRound)){
       for(FieldTrigon ft : p.getShape()){
         if(isPolyPossible(pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2],p, isFirstRound)){
-          Turn t = new Turn(p.clone(), new int[] {pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2]});
-          res.add(t);
+          res.add(new Turn(p.clone(), new int[] {pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2]}));
         }
       }
     }

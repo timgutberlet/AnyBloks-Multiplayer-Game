@@ -45,7 +45,6 @@ class PolyTrigonTest {
   @Test
   void testClone(){
     assertTrue(pt1.equalsReal(pt1.clone()));
-    assertEquals(pt1.clone().getShape().size(), 6);
   }
 
   @Test
