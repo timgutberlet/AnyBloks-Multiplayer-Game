@@ -13,10 +13,15 @@ import net.tests.NoLogging;
 public class ThreadHandlerRestful extends Thread{
 
   private HostServer hostServer;
-
+  /**
+   * Construcotr for setting the gamession
+   */
   public ThreadHandlerRestful(){
     this.hostServer = null;
   }
+  /**
+   * Run Method for thread
+   */
   @Override
   public void run() {
     try {

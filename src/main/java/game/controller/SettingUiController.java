@@ -16,44 +16,63 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Ui Controller Class, used for Controlling the Settings View
+ * Ui Controller Class, used for Controlling the Settings View.
  *
  * @author tgutberl
  */
 public class SettingUiController extends AbstractUiController {
 
+  /**
+   * Gamecontroller used in Application.
+   */
   private final AbstractGameController gameController;
 
   /**
-   * Themes that are available
+   * Themes that are available.
    */
   ObservableList<String> themes;
-
+  /**
+   * Savemasse used for messaging when save was successful.
+   */
   private String saveMessage = "";
-
+  /**
+   * Textfield for hostPlayer name setting.
+   */
   @FXML
   TextField hostPlayerField;
-
+  /**
+   * Main Anchorpane used for resizing.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Label for informing user of saveconfirm.
+   */
   @FXML
   Label saveConfirm;
-
-  @FXML
-  AnchorPane settingsPane;
-
+  /**
+   * Box that has themes in it.
+   */
   @FXML
   ChoiceBox themeBox;
 
+  /**
+   * Method to get back to MainMenu by Button.
+   */
   @FXML
   public void back() {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
+  /**
+   * Label to set Window width and window Height.
+   */
   @FXML
   private Label windowWidth, windowHeight;
 
+  /**
+   * Method to increase the window width.
+   */
   @FXML
   private void increaseWidth() {
     windowWidth.setText(String.valueOf(Integer.parseInt(windowWidth.getText()) + 10));
@@ -62,6 +81,9 @@ public class SettingUiController extends AbstractUiController {
     saveConfirm.setText("");
   }
 
+  /**
+   * Method to decrease the Window width.
+   */
   @FXML
   private void decreaseWidth() {
     if (!(Integer.parseInt(windowWidth.getText()) - 10 < 1280)) {
@@ -72,13 +94,18 @@ public class SettingUiController extends AbstractUiController {
     saveConfirm.setText("");
   }
 
+  /**
+   * Method to increase Height.
+   */
   @FXML
   private void increaseHeight() {
     windowHeight.setText(String.valueOf(Integer.parseInt(windowHeight.getText()) + 10));
     Config.set("SCREEN_HEIGHT", windowHeight.getText());
     saveConfirm.setText("");
   }
-
+  /**
+   * Method to decrease Window Height.
+   */
   @FXML
   private void decreaseHeight() {
     if (!(Integer.parseInt(windowHeight.getText()) - 10 < 720)) {
@@ -89,7 +116,7 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Method to reset the the config to the standard Parameters
+   * Method to reset the the config to the standard Parameters.
    */
   @FXML
   private void reset() {
@@ -101,7 +128,7 @@ public class SettingUiController extends AbstractUiController {
 
 
   /**
-   * Method to save the changes into the config
+   * Method to save the changes into the config.
    */
   @FXML
   public void save() {
@@ -129,6 +156,11 @@ public class SettingUiController extends AbstractUiController {
     gameController.setActiveUiController(new SettingUiController(gameController, "Successfully saved!"));
     saveConfirm.setText("Successfully saved!");
   }
+
+  /**
+   * Method to save the changes.
+   * @param reset check if reset was called before
+   */
   @FXML
   public void save(String reset) {
     if(!Config.getStringValue("THEME").equals(themeBox.getValue())){
@@ -156,7 +188,7 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Init Method declaring the FXML loader and connecting to the Settingsview FXML
+   * Init Method declaring the FXML loader and connecting to the Settingsview FXML.
    *
    * @param root Group Element from the AbstractUIController
    */
@@ -206,7 +238,7 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Sets Gamecontroller and calls init Method
+   * Sets Gamecontroller and calls init Method.
    *
    * @param gameController AbstractGameController Object
    */
@@ -217,7 +249,7 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Sets Gamecontroller and calls init Method
+   * Sets Gamecontroller and calls init Method.
    *
    * @param gameController AbstractGameController Object
    */
@@ -229,7 +261,7 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * load Settings from Config File
+   * load Settings from Config File.
    */
   private void loadSettings() {
     Config.loadProperty();
@@ -237,16 +269,26 @@ public class SettingUiController extends AbstractUiController {
     windowHeight.setText(Config.getStringValue("SCREEN_HEIGHT"));
   }
 
+  /**
+   * Override for onExit Method.
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Override for update Method.
+   * @param gameController GameController of game
+   */
   @Override
   public void update(AbstractGameController gameController) {
 
   }
 
+  /**
+   * Override for init Method.
+   */
   @FXML
   public void initialize() {
   }

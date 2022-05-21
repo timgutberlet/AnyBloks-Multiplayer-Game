@@ -6,11 +6,9 @@ import engine.handler.ThreadHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -33,36 +31,74 @@ import net.transmission.EndpointClient;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
+ * Method used for controlling the joining of remote Games.
+ *
  * @author tgutberl
  */
 public class JoinAuthController extends AbstractUiController {
 
+  /**
+   * Gamecontroller used throughout the game.
+   */
   private final AbstractGameController gameController;
+  /**
+   * Main anchorpane used for resizing.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Textfield for username Input.
+   */
   @FXML
   TextField usernameField;
+  /**
+   * Textfield for ipField input.
+   */
   @FXML
   TextField ipField;
+  /**
+   * Passwordfield with password protection used for password input.
+   */
   @FXML
   PasswordField passwordField;
+  /**
+   * Textmessages to inform user of errors.
+   */
   @FXML
   Text ipError, passwordError, usernameError;
-  private GameMode gameMode;
-  private ObservableList<String> list;
+  /**
+   * Endpoint client used for server connection.
+   */
   private EndpointClient client;
+  /**
+   * Clienthandler used for server handling.
+   */
   private ClientHandler clientHandler;
+  /**
+   * Gessesion Method used for controllin playing.
+   */
   private GameSession gameSession;
-
+  /**
+   * Used for checking if join was successfull.
+   */
   private Boolean joinSuccesful;
 
+  /**
+   * Contstructor initiating class.
+   * @param gameController Gamecontroller Method
+   */
   public JoinAuthController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
     init(super.root);
   }
 
+  /**
+   * Second constrctor with ip and username, when user comes from CreateAcccount Window.
+   * @param gameController Gamecontroller Method
+   * @param ip ip String
+   * @param username username String
+   */
   public JoinAuthController(AbstractGameController gameController, String ip, String username) {
     super(gameController);
     this.gameController = gameController;
@@ -73,7 +109,7 @@ public class JoinAuthController extends AbstractUiController {
 
 
   /**
-   * Method to initialize the FXML
+   * Method to initialize the FXML.
    *
    * @param root Group Object
    * @author tgutberl
@@ -89,22 +125,26 @@ public class JoinAuthController extends AbstractUiController {
       this.passwordError.setText("");
       this.usernameError.setText("");
       //Sets the Theme, according to the settings
-      switch (Config.getStringValue("THEME")){
+      switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
           mainPane.setStyle("-fx-background-color:#ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
           mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {
@@ -113,7 +153,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the the createAccountController
+   * Method to Start the the createAccountController.
    *
    * @author tgutberl
    */
@@ -123,7 +163,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the the EditAccountController
+   * Method to Start the the EditAccountController.
    *
    * @author tgutberl
    */
@@ -133,7 +173,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the the DeleteAccountController
+   * Method to Start the the DeleteAccountController.
    *
    * @author tgutberl
    */
@@ -143,14 +183,13 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to Join a Lobby
+   * Method to Join a Lobby.
    *
    * @author tgutberl
    */
   @FXML
   public void joinLobby() {
     if (this.ipField.getText().length() >= 7 && this.usernameField.getText().length() >= 2) {
-
 
       String ip = this.ipField.getText();
       String username = this.usernameField.getText();
@@ -178,7 +217,6 @@ public class JoinAuthController extends AbstractUiController {
         System.out.println(receivedToken.getStatus());
         System.out.println(receivedToken.getStatusInfo());
 
-
         passwordError.setText(
             "You seem to have entered an invalid username or password. "
                 + "Please make sure you enter a valid username & password or create an account!");
@@ -193,8 +231,6 @@ public class JoinAuthController extends AbstractUiController {
         this.gameSession.setAuthToken(token);
         this.clientHandler = client.getClientHandler();
         this.gameSession.setClientHandler(this.clientHandler);
-
-
 
         this.ipError.setText("");
         this.passwordError.setText("");
@@ -215,7 +251,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to Host a Lobby
+   * Method to Host a Lobby.
    *
    * @author tgutberl
    */
@@ -225,7 +261,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to get back to the MainMenu
+   * Method to get back to the MainMenu.
    *
    * @author tgutberl
    */
@@ -235,7 +271,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Method to get Quit Menu - to End the Program
+   * Method to get Quit Menu - to End the Program.
    *
    * @author tgutberl
    */
@@ -248,60 +284,74 @@ public class JoinAuthController extends AbstractUiController {
     }
   }
 
+  /**
+   * Override on Exit.
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Update Method used for starting Gamessesion, when palyer is connected
+   * @param gameController GameController of game
+   */
   @Override
   public void update(AbstractGameController gameController) {
 
     if (this.gameSession.getLocalPlayer().isPlayerConnected()) {
       gameController.setActiveUiController(
           new JoinLobbyUiController(gameController, gameSession));
-      //this.gameSession.setGameStarted();
     } else {
       Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }
   }
 
+  /**
+   * Update Method used for error messages and joining
+   * @param gameController Gamecontroller class
+   * @param deltaTime used for Frames
+   */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
-    if(this.gameSession != null){
+    if (this.gameSession != null) {
 
-    if (!this.gameSession.getLoginStatus().equals("")) {
+      if (!this.gameSession.getLoginStatus().equals("")) {
 
-      if(this.gameSession.getLoginStatus().equals("password")) {
-        usernameError.setText(
-            "THE USERNAME DOES NOT EXIST ON THE SERVER - PLEASE CREATE A NEW ACCOUNT ");
-      }
+        if (this.gameSession.getLoginStatus().equals("password")) {
+          usernameError.setText(
+              "THE USERNAME DOES NOT EXIST ON THE SERVER - PLEASE CREATE A NEW ACCOUNT ");
+        }
 
-      if(this.gameSession.getLoginStatus().equals("ipAddress")){
-        ipError.setText(
-            "THE LOBBY YOU ARE TRYING TO JOIN IS ALREADY FULL");
-      }
+        if (this.gameSession.getLoginStatus().equals("ipAddress")) {
+          ipError.setText(
+              "THE LOBBY YOU ARE TRYING TO JOIN IS ALREADY FULL");
+        }
 
-      if(this.gameSession.getLoginStatus().equals("ipAddress")){
-        ipError.setText("THE LOBBY YOU ARE TRYING TO JOIN IS CURRENTLY IN A GAME");
-      }
+        if (this.gameSession.getLoginStatus().equals("ipAddress")) {
+          ipError.setText("THE LOBBY YOU ARE TRYING TO JOIN IS CURRENTLY IN A GAME");
+        }
 
-    } else {
-
-      if (this.joinSuccesful) {
-        ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
-        gameController.setActiveUiController(
-            new JoinLobbyUiController(gameController, gameSession));
-        this.gameSession.setGameStarted(false);
-        this.joinSuccesful = false;
       } else {
-        Debug.printMessage(this, "GameSession Controller " + this.gameSession);
+
+        if (this.joinSuccesful) {
+          ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
+          gameController.setActiveUiController(
+              new JoinLobbyUiController(gameController, gameSession));
+          this.gameSession.setGameStarted(false);
+          this.joinSuccesful = false;
+        } else {
+          Debug.printMessage(this, "GameSession Controller " + this.gameSession);
+        }
       }
-    }
     }
 
   }
 
+  /**
+   * Override Initialize
+   */
   @FXML
   public void initialize() {
     updateSize(mainPane, gameController.getStage());

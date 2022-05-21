@@ -21,6 +21,9 @@ public class Config {
    * Path of config.properties path
    */
   private static final String configPath = "./bloks3/config.properties";
+  /**
+   * Folderpath to build Folder
+   */
   private static final String folderPath = "./bloks3/";
   /**
    * Properties Object, which will be used locally in the Class
@@ -67,10 +70,20 @@ public class Config {
     }
   }
 
+  /**
+   * Getter for intValues
+   * @param name
+   * @return
+   */
   public static Integer getIntValue(String name) {
     return Integer.parseInt(getStringValue(name));
   }
 
+  /**
+   * Getter for BooleanValues
+   * @param name
+   * @return
+   */
   public static Boolean getBooleanValue(String name) {
     return Boolean.parseBoolean(getStringValue(name));
   }

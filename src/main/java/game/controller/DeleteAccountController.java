@@ -26,26 +26,47 @@ import net.server.HashingHandler;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
+ * Class that controls the DeleteAccount View and lets the user delete his account.
+ *
  * @author tgutberl
  */
 public class DeleteAccountController extends AbstractUiController {
 
+  /**
+   * Gamecontroller class used throughout the application.
+   */
   private final AbstractGameController gameController;
+  /**
+   * Main Anchorpane used for resizing.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Textfield used for inputting of IP.
+   */
   @FXML
   TextField ipField;
-
+  /**
+   * Textfield used for inputting the username.
+   */
   @FXML
   TextField usernameField;
-
+  /**
+   * Textfield used for inputting the password.
+   */
   @FXML
   PasswordField passwordField;
-
+  /**
+   * Error Textfield used for informing the user of errors.
+   */
   @FXML
   Text usernameError, passwordError,  ipError;
 
+  /**
+   * Constructor used for setting the gamecontroller and initating.
+   *
+   * @param gameController Gamecontroller class
+   */
   public DeleteAccountController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
@@ -53,7 +74,7 @@ public class DeleteAccountController extends AbstractUiController {
   }
 
   /**
-   * Method to initialize the FXML
+   * Method to initialize the FXML.
    *
    * @param root Group Object
    * @author tgutberl
@@ -91,14 +112,12 @@ public class DeleteAccountController extends AbstractUiController {
       e.printStackTrace();
     }
   }
+
   /**
-   * Method to give the Server the username and Password of user
+   * Method to give the Server the username and Password of user.
    *
    * @author tgutberl
    */
-
-
-
   public void serverDeleteAccount(String username, String password, String ip){
     //TODO remove
     try {
@@ -131,8 +150,9 @@ public class DeleteAccountController extends AbstractUiController {
 
     }
   }
+
   /**
-   * Method to create an Account, go Back to JoinAuthController and be logged in
+   * Method to create an Account, go Back to JoinAuthController and be logged in.
    *
    * @author tgutberl
    */
@@ -153,7 +173,7 @@ public class DeleteAccountController extends AbstractUiController {
   }
 
   /**
-   * Method to get back to the MainMenu
+   * Method to get back to the MainMenu.
    *
    * @author tgutberl
    */
@@ -163,7 +183,7 @@ public class DeleteAccountController extends AbstractUiController {
   }
 
   /**
-   * Method to get Quit Menu - to End the Program
+   * Method to get Quit Menu - to End the Program.
    *
    * @author tgutberl
    */
@@ -176,16 +196,26 @@ public class DeleteAccountController extends AbstractUiController {
     }
   }
 
+  /**
+   * Override onExit Method
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Override Update Method
+   * @param gameController GameController of game
+   */
   @Override
   public void update(AbstractGameController gameController) {
 
   }
 
+  /**
+   * Override Intialize Class
+   */
   @FXML
   public void initialize() {
     updateSize(mainPane, gameController.getStage());

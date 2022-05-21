@@ -19,35 +19,45 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 /**
+ * JoinLobby Controller used when player already joined a Hostlobby.
+ *
  * @author lbaudenb
  * @author tgutberl
  */
 
 public class JoinLobbyUiController extends AbstractUiController {
 
+  /**
+   * Gamecontroller method used in application.
+   */
   private final AbstractGameController gameController;
-
+  /**
+   * Gamessession controlling the game.
+   */
   private final GameSession gameSession;
-
-  private int chatMessageLength = 0;
-
+  /**
+   * Arraylist saving what is already in Chat.
+   */
   ArrayList<String> alreadyInChat;
-
+  /**
+   *Textarea with Chat messages.
+   */
   @FXML
   private TextArea chat;
-
+  /**
+   * Textfield for input of chat messages.
+   */
   @FXML
   private TextField chatInput;
-
-  @FXML
-  private Label player1;
-
+  /**
+   * Main Anchorpane used for resizing.
+   */
   @FXML
   private AnchorPane mainPane;
 
 
   /**
-   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize
+   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.
    *
    * @param gameController Gamecontroller Object currently used
    * @author tgutberl
@@ -62,6 +72,11 @@ public class JoinLobbyUiController extends AbstractUiController {
     this.chat.setText("");
   }
 
+  /**
+   * Initalizing UI.
+   * @param root Root parameter
+   * @author tgutberl
+   */
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -105,12 +120,20 @@ public class JoinLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method to get Back the MainMenuView.
+   *
+   * @author tgutberl
+   */
   @FXML
   public void back() {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
-
+  /**
+   * Method getting called when chat message is entered and sends it to server.
+   * @author tgutberl
+   */
   public void registerChatMessage() {
     if (chatInput.getText().length() > 0) {
       gameSession.addChatMessage(chatInput.getText());
@@ -119,16 +142,29 @@ public class JoinLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Override initialize.
+   * @author tgutberl
+   */
   @FXML
   public void initialize() {
   }
 
-
+  /**
+   * Override onExit .
+   * @author tgutberl
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Update Method used for Chat Messages and starting the game.
+   * @param gameController Gamecontroller method
+   * @param deltaTime used for frame
+   * @author tgutberl
+   */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
     System.out.println("Gamesession: " + this.gameSession);
@@ -153,6 +189,10 @@ public class JoinLobbyUiController extends AbstractUiController {
     this.chat.appendText(help);
   }
 
+  /**
+   * Override update Method.
+   * @param gameController GameController of game
+   */
   @Override
   public void update(AbstractGameController gameController) {
 

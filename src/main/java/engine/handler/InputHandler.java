@@ -12,40 +12,90 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
 /**
- * This class enables elements to be draggable
+ * This class enables elements to be draggable and handles inputs.
  *
  * @author tgutberl
  */
 public class InputHandler {
 
+  /**
+   * Sets for Pressed Keys and Pressed Keys while the Frame repainted.
+   */
   private final Set<KeyCode> keysPressed;
+  /**
+   * Sets for Pressed Keys and Pressed Keys while the Frame repainted.
+   */
   private final Set<KeyCode> keysPressedSaved;
+  /**
+   * Sets for Pressed Keys and Pressed Keys while the Frame repainted.
+   */
   private final Set<KeyCode> keysReleased;
+  /**
+   * Sets for Pressed Keys and Pressed Keys while the Frame repainted.
+   */
   private final Set<KeyCode> keysReleasedSaved;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldClickedSaved;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldPressedSaved;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldHoveredSaved;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldReleasedSaved;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<PolyPane> polyClickedSaved;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldClicked;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldPressed;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldHovered;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<Field> fieldReleased;
+  /**
+   * Sets for Pressed Fields and Pressed Fields while the Frame repainted.
+   */
   private final Set<PolyPane> polyClicked;
-  private final AbstractGameController gameController;
-  private final Set<DragablePolyPane> fieldDragged;
+  /**
+   * Mousepos for dragging.
+   */
   private double mouseAnchorX;
+  /**
+   * Mousepos for dragging.
+   */
   private double mouseAnchorY;
+  /**
+   * blockInput for input handling.
+   */
   private boolean blockInput;
 
-
+  /**
+   * Consturcor for setting Hashsets and gamecontrollers.
+   * @param gameController Gamecontroller used in appl.
+   */
   public InputHandler(AbstractGameController gameController) {
-    this.gameController = gameController;
     fieldClickedSaved = new HashSet<>();
     fieldPressedSaved = new HashSet<>();
     fieldHoveredSaved = new HashSet<>();
     fieldReleasedSaved = new HashSet<>();
-    fieldDragged = new HashSet<>();
     fieldClicked = new HashSet<>();
     fieldPressed = new HashSet<>();
     fieldHovered = new HashSet<>();
@@ -65,6 +115,7 @@ public class InputHandler {
    * Element should be put
    *
    * @param node JavaFx Element that should be made Draggable
+   * @author tgutberl
    */
   public void makeDraggable(Node node) {
     node.setOnMousePressed(mouseEvent -> {
@@ -78,6 +129,10 @@ public class InputHandler {
     });
   }
 
+  /**
+   * Method to regiser Keys
+   * @param scene Scene that is given
+   */
   public void registerKeys(Scene scene) {
     scene.setOnKeyPressed(event -> {
       if (blockInput) {
@@ -95,10 +150,20 @@ public class InputHandler {
     });
   }
 
+  /**
+   * Method to check if key is pressed
+   * @param keyCode
+   * @return boolean
+   */
   public boolean isKeyPressed(KeyCode keyCode) {
     return this.keysPressed.contains(keyCode);
   }
 
+  /**
+   * Method to check if key is released
+   * @param keyCode
+   * @return
+   */
   public boolean isKeyReleased(KeyCode keyCode) {
     return this.keysReleased.contains(keyCode);
   }
@@ -144,7 +209,9 @@ public class InputHandler {
     blockInput = false;
   }
 
-
+  /**
+   * Method to clear all keys
+   */
   private void clearKeys() {
     fieldClickedSaved.clear();
     fieldHoveredSaved.clear();
@@ -227,6 +294,12 @@ public class InputHandler {
     }
     return false;
   }
+
+  /**
+   * Method to check for an Field array if one of it was pressed
+   * @param fieldArray
+   * @return
+   */
   public boolean isFieldArrayPressed(List<Field> fieldArray) {
     for (Field field : fieldArray) {
       if (fieldPressed.contains(field)) {

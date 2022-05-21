@@ -48,66 +48,139 @@ import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**
- * Class to Control Inputs for the HostLobby
+ * Class to Control Inputs for the HostLobby.
  *
  * @author tgutberl
  */
 public class HostLobbyUiController extends AbstractUiController {
 
-  //Italic Font
+  /**
+   * Italic Font build.
+   */
   public static final Font ITALIC_FONT =
       Font.font(
           "Serif",
           FontPosture.ITALIC,
           Font.getDefault().getSize()
       );
+  /**
+   * Abstract gamecontroller class used for whole application.
+   */
   private final AbstractGameController gameController;
+  /**
+   * cool Ai Player names.
+   */
   private final String nameAiPlayer1 = "AlphaGo";
+  /**
+   * cool Ai Player names.
+   */
   private final String nameAiPlayer2 = "DeepMind";
+  /**
+   * cool Ai Player names.
+   */
   private final String nameAiPlayer3 = "Stockfish";
+  /**
+   * Gamesession variable used for server communication.
+   */
   private final GameSession gameSession;
+  /**
+   * Error Textmessage.
+   */
   @FXML
   Text gamemodeError;
+  /**
+   * roundcount text.
+   */
   @FXML
   Label roundCount;
+  /**
+   * List for gamemodes to choose.
+   */
   private ObservableList<String> list;
-  private int chatMessageLength = 0;
+  /**
+   * Endpoint client variable used for server establish.
+   */
   private EndpointClient client;
+  /**
+   * client handling used for communication handling.
+   */
   private ClientHandler clientHandler;
+  /**
+   * rounds gathered for multi round game.
+   */
   private List<ComboBox<String>> rounds = new ArrayList<>();
+  /**
+   * count of chosen rounds.
+   */
   private int round = 1;
+  /**
+   * used for comparing already in chat messages to chat Object.
+   */
   private ArrayList<String> alreadyInChat;
+  /**
+   * Chat area.
+   */
   @FXML
   private TextArea chat;
+  /**
+   * Text field for chat input.
+   */
   @FXML
   private TextField chatInput;
+  /**
+   * Vbox for gamemodes.
+   */
   @FXML
   private VBox box;
+  /**
+   * Anchorpane used for resizing.
+   */
   @FXML
   private AnchorPane mainPane;
-  @FXML
-  private Label player1;
+  /**
+   * default ai that the player can set.
+   */
   @FXML
   private Label aiDefault;
+  /**
+   * gamemodes to choose from.
+   */
   @FXML
   private ComboBox<String> gameMode;
+  /**
+   * gamemodes that were chosen.
+   */
   private LinkedList<GameMode> gameModes = new LinkedList<>();
+  /**
+   * name of Hostplayer.
+   */
   @FXML
   private Label nameHostPlayer;
+  /**
+   * Name of Player one.
+   */
   @FXML
   private Label playerName1;
+  /**
+   * Name of Player one.
+   */
   @FXML
   private Label playerName2;
+  /**
+   * Name of Player one.
+   */
   @FXML
   private Label playerName3;
+  /**
+   * Label that shows IP
+   */
   @FXML
   private Label informationIP;
 
   /**
-   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize
+   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.
    *
    * @param gameController Gamecontroller Object currently used
-   * @author tgutberl
    */
   public HostLobbyUiController(AbstractGameController gameController) {
     super(gameController);
@@ -134,6 +207,9 @@ public class HostLobbyUiController extends AbstractUiController {
     gameSession.setClientHandler(this.clientHandler);
   }
 
+  /**
+   * Method that is called when chatInput Enter was done. Sends Chatmessage to Server.
+   */
   public void registerChatMessage() {
     if (chatInput.getText().length() > 0) {
       gameSession.addChatMessage(chatInput.getText());
@@ -141,7 +217,9 @@ public class HostLobbyUiController extends AbstractUiController {
     } else {
     }
   }
-
+  /**
+   * Initalizing UI.
+   */
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -187,6 +265,9 @@ public class HostLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * sets the IP label, so that users can get Join Info.
+   */
   public void setIP() {
     try {
       this.informationIP.setText(Inet4Address.getLocalHost().getHostAddress());
@@ -196,16 +277,25 @@ public class HostLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Kicks first Player
+   */
   @FXML
   public void kickPlayer1() {
 
   }
 
+  /**
+   * kicks second player
+   */
   @FXML
   public void kickPlayer2() {
 
   }
 
+  /**
+   * Kicks third player
+   */
   @FXML
   public void kickPlayer3() {
 
@@ -224,22 +314,33 @@ public class HostLobbyUiController extends AbstractUiController {
     clipboard.setContents(stringSelection, null);
   }
 
+  /**
+   * method to get back PlayView.
+   */
   @FXML
   public void back() {
     gameController.setActiveUiController(new PlayUiController(gameController));
   }
 
+  /**
+   * Method to close the whole game
+   */
   @FXML
   public void close() {
     gameController.setActiveUiController(new PlayUiController(gameController));
   }
 
+  /**
+   * Method to reset the account statistics
+   */
   @FXML
   public void reset() {
     //TODO @tbuscher implement Reset Account Statistics
   }
 
-
+  /**
+   * Method that is called when the playGame Button was pushed. Starts the game.
+   */
   @FXML
   public void playGame() {
     ArrayList<Player> players = this.gameSession.getPlayerList();
@@ -317,16 +418,20 @@ public class HostLobbyUiController extends AbstractUiController {
         playerName3.setText(this.gameSession.getPlayerList().get(3).getUsername());
       }
     }
-
-
   }
 
+  /**
+   * Initalizes the Gamemode Combobox.
+   */
   private void initializeComboBox(ComboBox<String> comboBox) {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     comboBox.setItems(list);
     comboBox.setValue("Classic");
   }
 
+  /**
+   * Method to add a round.
+   */
   @FXML
   public void addRound() {
     if (gamemodeError.getText().length() > 0) {
@@ -345,6 +450,9 @@ public class HostLobbyUiController extends AbstractUiController {
     box.getChildren().add(hBox);
   }
 
+  /**
+   * Method to delete the round.
+   */
   @FXML
   public void deleteRound() {
     if (round > 1) {
@@ -357,18 +465,25 @@ public class HostLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method the increase the default AI difficulty.
+   */
   @FXML
   private void increaseDifficulty() {
     increaseAi(aiDefault);
   }
 
-
+  /**
+   * Method the decrease the default AI difficulty.
+   */
   @FXML
   private void decreaseDifficulty() {
     decreaseAi(aiDefault);
   }
 
-
+  /**
+   * Method to initalize the Gamemodes.
+   */
   @FXML
   public void initialize() {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
@@ -377,6 +492,10 @@ public class HostLobbyUiController extends AbstractUiController {
     rounds.add(gameMode);
   }
 
+  /**
+   * Method to increase the Ai Difficulty.
+   * @param difficultyPlayer chosen Label of Player
+   */
   private void increaseAi(Label difficultyPlayer) {
     switch (difficultyPlayer.getText()) {
       case "Easy":
@@ -394,6 +513,10 @@ public class HostLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method to decrease the Ai Difficulty.
+   * @param difficultyPlayer chosen Label of Player
+   */
   private void decreaseAi(Label difficultyPlayer) {
     switch (difficultyPlayer.getText()) {
       case "Easy":
@@ -411,11 +534,19 @@ public class HostLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Override to Exit.
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Method to update Playerlist and Chat.
+   * @param gameController gamecontroller class
+   * @param deltaTime for Frames
+   */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
@@ -446,6 +577,10 @@ public class HostLobbyUiController extends AbstractUiController {
     this.chat.appendText(help);
   }
 
+  /**
+   * override update Method.
+   * @param gameController GameController of game
+   */
   @Override
   public void update(AbstractGameController gameController) {
 

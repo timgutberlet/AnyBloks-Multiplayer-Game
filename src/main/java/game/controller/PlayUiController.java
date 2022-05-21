@@ -11,17 +11,28 @@ import javafx.scene.layout.AnchorPane;
 
 /**
  * Controller that lets the user choose, what Game he wants to play. He can choose between
- * "PlayVsAi", "Joinlobby"  and "Hostlobby"
+ * "PlayVsAi", "Joinlobby"  and "Hostlobby".
  *
  * @author tgutberl
  */
 public class PlayUiController extends AbstractUiController {
 
+  /**
+   * Main Anchorpane for setting resize.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Gamecontroller used in Application.
+   */
   private final AbstractGameController gameController;
 
+  /**
+   * Constructor used for setting the gamecontroller.
+   * @param gameController
+   *
+   * @author tgutberl
+   */
   public PlayUiController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
@@ -29,7 +40,7 @@ public class PlayUiController extends AbstractUiController {
   }
 
   /**
-   * Method to initialize the FXML
+   * Method to initialize the FXML.
    *
    * @param root Group Object
    * @author tgutberl
@@ -66,7 +77,7 @@ public class PlayUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the the LocalLobbyView
+   * Method to Start the the LocalLobbyView.
    *
    * @author tgutberl
    */
@@ -76,7 +87,7 @@ public class PlayUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Join a Lobby
+   * Method to Join a Lobby.
    *
    * @author tgutberl
    */
@@ -86,7 +97,7 @@ public class PlayUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Host a Lobby
+   * Method to Host a Lobby.
    *
    * @author tgutberl
    */
@@ -96,7 +107,7 @@ public class PlayUiController extends AbstractUiController {
   }
 
   /**
-   * Method to get back to the MainMenu
+   * Method to get back to the MainMenu.
    *
    * @author tgutberl
    */
@@ -106,7 +117,7 @@ public class PlayUiController extends AbstractUiController {
   }
 
   /**
-   * Method to get Quit Menu - to End the Program
+   * Method to get Quit Menu - to End the Program.
    *
    * @author tgutberl
    */
@@ -118,17 +129,32 @@ public class PlayUiController extends AbstractUiController {
       e.printStackTrace();
     }
   }
-
+  /**
+   * Method for override onExit.
+   *
+   * @author tgutberl
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Method for override onUpdate.
+   * @param gameController GameController of game
+   *
+   * @author tgutberl
+   */
   @Override
   public void update(AbstractGameController gameController) {
 
   }
 
+  /**
+   * Method for override on initialize.
+   *
+   * @author tgutberl
+   */
   @FXML
   public void initialize() {
     updateSize(mainPane, gameController.getStage());

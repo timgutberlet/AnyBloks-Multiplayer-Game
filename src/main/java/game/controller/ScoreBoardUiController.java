@@ -24,6 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
 /**
+ * Class that controls the Scoreboard View
+ *
  * @author lbaudenb
  */
 public class ScoreBoardUiController extends AbstractUiController {

@@ -21,6 +21,9 @@ public class StandardConfig {
       {"HOSTPLAYER", "HOST"},
   };
 
+  /**
+   * Constructor
+   */
   private StandardConfig() {
 
   }

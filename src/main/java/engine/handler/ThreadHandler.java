@@ -10,11 +10,22 @@ import game.model.GameSession;
  */
 public class ThreadHandler extends Thread{
 
+  /**
+   * Gamessesion used for setting moves
+   */
   private GameSession gameSession;
 
+  /**
+   * Construcotr for setting the gamession
+   * @param gameSession session
+   */
   public ThreadHandler(GameSession gameSession){
     this.gameSession = gameSession;
   }
+
+  /**
+   * Run Method for thread
+   */
   @Override
   public void run() {
     while (!Thread.currentThread().isInterrupted()){

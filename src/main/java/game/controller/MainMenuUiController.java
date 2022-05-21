@@ -19,17 +19,30 @@ import javafx.scene.layout.AnchorPane;
 import javax.swing.text.html.ImageView;
 
 /**
+ * Main Menu Ui Controller that is used first when the game is started.
+ *
  * @author lbaudenb
  * @author tgutberl
  */
 
 public class MainMenuUiController extends AbstractUiController {
 
+  /**
+   * Main Anchorpane used for resizing.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Anbstract Game controller used in Application.
+   */
   private final AbstractGameController gameController;
 
+  /**
+   * Construcotr used for setting gamecontroller.
+   * @param gameController
+   *
+   * @author tgutberl
+   */
   public MainMenuUiController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
@@ -41,7 +54,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to initialize the FXML
+   * Method to initialize the FXML.
    *
    * @param root Group Object
    * @author tgutberl
@@ -77,7 +90,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the PlayView
+   * Method to Start the PlayView.
    *
    * @author tgutberl
    */
@@ -87,7 +100,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Start Tutuorial
+   * Method to Start Tutuorial.
    *
    * @author tgutberl
    */
@@ -106,7 +119,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to get into SettingController - to get into SettingUI
+   * Method to get into SettingController - to get into SettingUI.
    *
    * @author tgutberl
    */
@@ -116,7 +129,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to get Quit Menu - to End the Program
+   * Method to get Quit Menu - to End the Program.
    *
    * @author tgutberl
    */
@@ -130,25 +143,28 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to get get into the credits view
+   * Method for override on Exit
    *
    * @author tgutberl
    */
-  @FXML
-  public void credits() {
-
-  }
-
   @Override
   public void onExit() {
 
   }
-
+  /**
+   * Method for override on update
+   *
+   * @author tgutberl
+   */
   @Override
   public void update(AbstractGameController gameController) {
 
   }
-
+  /**
+   * Method for override on initalize
+   *
+   * @author tgutberl
+   */
   @FXML
   public void initialize() {
     updateSize(mainPane, gameController.getStage());

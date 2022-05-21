@@ -27,26 +27,47 @@ import net.server.HashingHandler;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
+ * Class that controls the EditAccount View and lets the user Edut his account.
+ *
  * @author tgutberl
  */
 public class EditAccountController extends AbstractUiController {
 
+  /**
+   * Abstract Gamecontroller Variable used throughout the application.
+   */
   private final AbstractGameController gameController;
+  /**
+   * Main Anchorpane used for resizing.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Textfield used for ipInput.
+   */
   @FXML
   TextField ipField;
-
+  /**
+   * Textfield used for username Input.
+   */
   @FXML
   TextField usernameField;
-
+  /**
+   * Textfield used for password input and comparing.
+   */
   @FXML
   PasswordField oldPasswordField, newPasswordField;
-
+  /**
+   * Error Labels used for informing user of errors.
+   */
   @FXML
   Text usernameError, oldPasswordError, newPasswordError, ipError;
 
+  /**
+   * Constructor used for initalizg the controller and UI.
+   *
+   * @param gameController used in whole application
+   */
   public EditAccountController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
@@ -54,7 +75,7 @@ public class EditAccountController extends AbstractUiController {
   }
 
   /**
-   * Method to initialize the FXML
+   * Method to initialize the FXML.
    *
    * @param root Group Object
    * @author tgutberl
@@ -96,7 +117,7 @@ public class EditAccountController extends AbstractUiController {
 
 
   /**
-   * Method to give the Server the username and Password of user
+   * Method to give the Server the username and Password of user.
    *
    * @author tgutberl
    */
@@ -131,8 +152,9 @@ public class EditAccountController extends AbstractUiController {
 
     }
   }
+
   /**
-   * Method to create an Account, go Back to JoinAuthController and be logged in
+   * Method to create an Account, go Back to JoinAuthController and be logged in.
    *
    * @author tgutberl
    */
@@ -154,7 +176,7 @@ public class EditAccountController extends AbstractUiController {
   }
 
   /**
-   * Method to get back to the MainMenu
+   * Method to get back to the MainMenu.
    *
    * @author tgutberl
    */
@@ -164,7 +186,7 @@ public class EditAccountController extends AbstractUiController {
   }
 
   /**
-   * Method to get Quit Menu - to End the Program
+   * Method to get Quit Menu - to End the Program.
    *
    * @author tgutberl
    */
@@ -177,11 +199,19 @@ public class EditAccountController extends AbstractUiController {
     }
   }
 
+  /**
+   * Overried on Exit Method.
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Update Method used for checking the password input.
+   *
+   * @param gameController GameController of game
+   */
   @Override
   public void update(AbstractGameController gameController) {
     if(oldPasswordField.getText().length() < 6 && oldPasswordField.getText().length() > 0){
@@ -192,6 +222,9 @@ public class EditAccountController extends AbstractUiController {
     }
   }
 
+  /**
+   * Initalizing override Method.
+   */
   @FXML
   public void initialize() {
     updateSize(mainPane, gameController.getStage());

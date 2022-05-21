@@ -37,68 +37,124 @@ import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**
+ * Controller used to let the user start a local Game and set all AIs.
+ *
  * @author lbaudenb
  * @author tgutberl
  */
-
 public class LocalLobbyUiController extends AbstractUiController {
 
+  /**
+   * Gamecontroller used in Application.
+   */
   private final AbstractGameController gameController;
-
+  /**
+   * Cool AI name.
+   */
   private final String nameAiPlayer1 = "AlphaGo";
+  /**
+   * Cool AI name.
+   */
   private final String nameAiPlayer2 = "DeepMind";
+  /**
+   * Cool AI name.
+   */
   private final String nameAiPlayer3 = "Stockfish";
-
+  /**
+   * Gamesession for setting players.
+   */
   private final GameSession gameSession;
-
+  /**
+   * Gamemode list.
+   */
   private LinkedList<GameMode> gameModes = new LinkedList<>();
+  /**
+   * Set Ai players List.
+   */
   private LinkedList<PlayerType> aiPlayers = new LinkedList<>();
+  /**
+   * List where the gamemodes are set in.
+   */
   private ObservableList<String> list;
-
+  /**
+   * Combobox where user can choose gamemode.
+   */
   private List<ComboBox<String>> rounds = new ArrayList<>();
+  /**
+   * Round count.
+   */
   private int round = 1;
-
+  /**
+   * Endpoint for server-client communication.
+   */
   private EndpointClient client;
+  /**
+   * Clienthandler for input to Server.
+   */
   private ClientHandler clientHandler;
-
+  /**
+   * Main Anchorpane used for resizing.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Player one name.
+   */
   @FXML
   private Label player1;
-
+  /**
+   * Player two name.
+   */
   @FXML
   private Label player2;
-
+  /**
+   * Player three name.
+   */
   @FXML
   private Label player3;
-
+  /**
+   * Vbox containing Gamemodes.
+   */
   @FXML
   private VBox box;
-
+  /**
+   * Count of rounds.
+   */
   @FXML
   Label roundCount;
-
+  /**
+   * Name of the user that is controlling game.
+   */
   @FXML
   Label youPlayer;
-
+  /**
+   * List of Gamemodes.
+   */
   @FXML
   private ComboBox<String> gameMode;
-
+  /**
+   * Text to inform player of errors.
+   */
   @FXML
   Text gamemodeError;
-
+  /**
+   * Name of AI1.
+   */
   @FXML
   private Label difficultyPlayer1;
-
+  /**
+   * Difficulty of AI2.
+   */
   @FXML
   private Label difficultyPlayer2;
-
+  /**
+   * Difficulty of AI3.
+   */
   @FXML
   private Label difficultyPlayer3;
 
   /**
-   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize
+   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.
    *
    * @param gameController Gamecontroller Object currently used
    * @author tgutberl
@@ -128,6 +184,12 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   }
 
+  /**
+   * Initalizing UI.
+   *
+   * @param root Root parameter
+   * @author tgutberl
+   */
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -161,11 +223,21 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method to get back to PlayView.
+   *
+   * @author tgutberl
+   */
   @FXML
   public void back() {
     gameController.setActiveUiController(new PlayUiController(gameController));
   }
 
+  /**
+   * Method that is called when game is started.
+   *
+   * @author tgutberl
+   */
   @FXML
   public void playGame() {
     this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
@@ -282,12 +354,23 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method to initializing Gamemode Combobox
+   * @param comboBox box
+   *
+   * @author tgutberl
+   */
   private void initializeComboBox(ComboBox<String> comboBox) {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
     comboBox.setItems(list);
     comboBox.setValue("Classic");
   }
 
+  /**
+   * Method to add a round
+   *
+   * @author tgutberl
+   */
   @FXML
   public void addRound() {
     if(gamemodeError.getText().length() > 0){
@@ -306,7 +389,11 @@ public class LocalLobbyUiController extends AbstractUiController {
     box.getChildren().add(hBox);
   }
 
-
+  /**
+   * Method to delete a round
+   *
+   * @author tgutberl
+   */
   @FXML
   public void deleteRound() {
     if(round > 1){
@@ -319,42 +406,72 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method to increase difficulty of first Ai
+   *
+   * @author tgutberl
+   */
   @FXML
   private void increaseDifficulty1() {
     System.out.println("increase!!!!");
     increaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
-
+  /**
+   * Method to increase difficulty of second Ai
+   *
+   * @author tgutberl
+   */
   @FXML
   private void increaseDifficulty2() {
     System.out.println("increase!!!!");
     increaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
-
+  /**
+   * Method to increase difficulty of third Ai
+   *
+   * @author tgutberl
+   */
   @FXML
   private void increaseDifficulty3() {
     System.out.println("increase!!!!");
     increaseAi(difficultyPlayer3, nameAiPlayer3, player3);
   }
-
+  /**
+   * Method to decrease difficulty of first Ai
+   *
+   * @author tgutberl
+   */
   @FXML
   private void decreaseDifficulty1() {
     System.out.println("decrease!!!!");
     decreaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
-
+  /**
+   * Method to decrease difficulty of second Ai
+   *
+   * @author tgutberl
+   */
   @FXML
   private void decreaseDifficulty2() {
     System.out.println("decrease!!!!");
     decreaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
-
+  /**
+   * Method to decrease difficulty of third Ai
+   *
+   * @author tgutberl
+   */
   @FXML
   private void decreaseDifficulty3() {
     System.out.println("decrease!!!!!");
     decreaseAi(difficultyPlayer3, nameAiPlayer3, player3);
   }
 
+  /**
+   * Method to initialize Gamemodes
+   *
+   * @author tgutberl
+   */
   @FXML
   public void initialize() {
     list = FXCollections.observableArrayList("Classic", "Duo", "Junior", "Trigon");
@@ -363,6 +480,15 @@ public class LocalLobbyUiController extends AbstractUiController {
     rounds.add(gameMode);
   }
 
+  /**
+   * Method to increase Ai difficulty
+   *
+   * @param difficultyPlayer difficulty
+   * @param name name of Ai
+   * @param player playerType
+   *
+   * @author tgutberl
+   */
   private void increaseAi(Label difficultyPlayer, String name, Label player) {
     if (difficultyPlayer.getText().equals("None")) {
       difficultyPlayer.setText("Easy");
@@ -389,6 +515,15 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method to decrease Ai difficulty
+   *
+   * @param difficultyPlayer difficulty
+   * @param name name of Ai
+   * @param player playerType
+   *
+   * @author tgutberl
+   */
   private void decreaseAi(Label difficultyPlayer, String name, Label player) {
     switch (difficultyPlayer.getText()) {
       case "Easy":
@@ -410,12 +545,22 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
   }
 
-
+  /**
+   * override Exit Method
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Update Method used for starting game when server messages
+   *
+   * @param gameController
+   * @param deltaTime
+   *
+   * @author tgutberl
+   */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
@@ -429,6 +574,10 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   }
 
+  /**
+   * Override Update Method
+   * @param gameController GameController of game
+   */
   @Override
   public void update(AbstractGameController gameController) {
 

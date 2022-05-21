@@ -10,18 +10,29 @@ import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 
 /**
- * Class that shows up, when a player is Kicked from a Hostlobby
+ * Class that shows up, when a player is Kicked from a Hostlobby.
  *
  * @author tgutberl
  */
 
 public class KickInfoUiController extends AbstractUiController {
 
+  /**
+   * Main Anchorpane used for resizing.
+   */
   @FXML
   AnchorPane mainPane;
-
+  /**
+   * Gamecontroller used in Application.
+   *
+   */
   private final AbstractGameController gameController;
 
+  /**
+   * Contstructor used for initiating.
+   * @param gameController Gamecontroller
+   * @author tgutberl
+   */
   public KickInfoUiController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
@@ -29,7 +40,7 @@ public class KickInfoUiController extends AbstractUiController {
   }
 
   /**
-   * Method to initialize the FXML
+   * Method to initialize the FXML.
    *
    * @param root Group Object
    * @author tgutberl
@@ -66,7 +77,7 @@ public class KickInfoUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Start the PlayView
+   * Method to Start the PlayView.
    *
    * @author tgutberl
    */
@@ -76,7 +87,7 @@ public class KickInfoUiController extends AbstractUiController {
   }
 
   /**
-   * Method to get Quit Menu - to End the Program
+   * Method to get Quit Menu - to End the Program.
    *
    * @author tgutberl
    */
@@ -89,17 +100,32 @@ public class KickInfoUiController extends AbstractUiController {
     }
   }
 
-
+  /**
+   * Override onExit Method
+   *
+   * @author tgutberl
+   */
   @Override
   public void onExit() {
 
   }
 
+  /**
+   * Override Update Method
+   * @param gameController GameController of game
+   *
+   * @author tgutberl
+   */
   @Override
   public void update(AbstractGameController gameController) {
 
   }
 
+  /**
+   * Override Initalize
+   *
+   * @author tgutberl
+   */
   @FXML
   public void initialize() {
     updateSize(mainPane, gameController.getStage());

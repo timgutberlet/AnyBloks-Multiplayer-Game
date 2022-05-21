@@ -4,6 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 /**
+ * Class to handle Error Messages
+ *
  * @author lbaudenb
  */
 
