@@ -409,16 +409,13 @@ public class GameState implements Serializable, Cloneable {
 
     boolean end = true;
     for (Player p : playerList) {
-      /*Debug.printMessage(
-          board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-              + " möglichkeiten Steine zu legen");
+      int sizeRestPossibleMoves = board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size();
+      Debug.printMessage(sizeRestPossibleMoves + " möglichkeiten Steine zu legen");
       Debug.printMessage(this,
           "(TURN) Remaining Polys for : " + p.getUsername() + " : " + this.getRemainingPolys(p)
-              .size());*/
-      if (getRemainingPolys(p).size() > 0 && (
-          board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-              > 0)) {
-        end = false;
+              .size());
+      if (getRemainingPolys(p).size() > 0 && (sizeRestPossibleMoves > 0)) {
+        return false;
       }
     }
 
@@ -443,7 +440,6 @@ public class GameState implements Serializable, Cloneable {
                   + ")");
         }
       }
-
       return true;
     }
     return false;

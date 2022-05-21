@@ -17,7 +17,7 @@ public class Turn {
 	public Poly poly;
 
 	/**
-	 * represents the move in the form {column, row, rotation, mirrored}.
+	 * represents the move in the form {column, row, (isRight), rotation, mirrored}.
 	 */
 	public int[] turn = new int[6];
 
@@ -80,12 +80,8 @@ public class Turn {
 	}
 
 	public PolyTrigon getPolyTrigon() {
-		if(poly.getPolyType().equals("Trigon")) {
 			return (PolyTrigon) poly;
-		} else {
-			return null;
-		}
-		}
+	}
 
 		public Poly getPoly() {
 		return poly;

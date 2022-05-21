@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import game.model.Color;
+import game.model.field.FieldTrigon;
+import java.util.ArrayList;
 
 /**
  * @author tiotto
@@ -163,4 +165,7 @@ public abstract class Poly implements Cloneable {
    */
   public abstract String toCode();
 
+  public ArrayList<FieldTrigon> getShapeTrigon(){
+    return ((PolyTrigon) this).getShape();
+  }
 }

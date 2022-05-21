@@ -258,7 +258,7 @@ public class PolyTrigon extends Poly {
    */
   public void mirror() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
-    for (FieldTrigon ft : getShape()) {
+    A: for (FieldTrigon ft : getShape()) {
       switch (ft.getPos()[0]){
         case 0: {
           switch (ft.getPos()[1]) {
@@ -268,6 +268,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(1, 3, 0, getColor()));
               }
+              continue A;
             }
             case 1 -> {
               if (ft.getPos()[2] == 0) {
@@ -275,6 +276,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(2, 2, 0, getColor()));
               }
+              continue A;
             }
             case 2 -> {
               if (ft.getPos()[2] == 0) {
@@ -282,6 +284,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(3, 1, 0, getColor()));
               }
+              continue A;
             }
             case 3 -> {
               if (ft.getPos()[2] == 0) {
@@ -289,6 +292,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(0, 0, 0, getColor()));
               }
+              continue A;
             }
           }
         }
@@ -300,6 +304,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(2, 3, 0, getColor()));
               }
+              continue A;
             }
             case 1 -> {
               if (ft.getPos()[2] == 0) {
@@ -307,6 +312,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(3, 2, 0, getColor()));
               }
+              continue A;
             }
             case 2 -> {
               if (ft.getPos()[2] == 0) {
@@ -314,6 +320,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(0, 1, 0, getColor()));
               }
+              continue A;
             }
             case 3 -> {
               if (ft.getPos()[2] == 0) {
@@ -321,6 +328,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(1, 0, 0, getColor()));
               }
+              continue A;
             }
           }
         }
@@ -332,6 +340,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(3, 3, 0, getColor()));
               }
+              continue A;
             }
             case 1 -> {
               if (ft.getPos()[2] == 0) {
@@ -339,6 +348,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(0, 2, 0, getColor()));
               }
+              continue A;
             }
             case 2 -> {
               if (ft.getPos()[2] == 0) {
@@ -346,6 +356,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(1, 1, 0, getColor()));
               }
+              continue A;
             }
             case 3 -> {
               if (ft.getPos()[2] == 0) {
@@ -353,6 +364,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(2, 0, 0, getColor()));
               }
+              continue A;
             }
           }
         }
@@ -364,6 +376,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(0, 3, 0, getColor()));
               }
+              continue A;
             }
             case 1 -> {
               if (ft.getPos()[2] == 0) {
@@ -371,6 +384,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(1, 2, 0, getColor()));
               }
+              continue A;
             }
             case 2 -> {
               if (ft.getPos()[2] == 0) {
@@ -378,6 +392,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(2, 1, 0, getColor()));
               }
+              continue A;
             }
             case 3 -> {
               if (ft.getPos()[2] == 0) {
@@ -385,6 +400,7 @@ public class PolyTrigon extends Poly {
               } else {
                 newShape.add(new FieldTrigon(3, 0, 0, getColor()));
               }
+              continue A;
             }
           }
         }
@@ -409,9 +425,11 @@ public class PolyTrigon extends Poly {
   @Override
   public PolyTrigon clone() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
-    for (FieldTrigon ft : this.shape) {
+    //System.out.println("shape " + shape.size());
+    for (FieldTrigon ft : shape) {
       newShape.add(ft.clone());
     }
+    //System.out.println("shapeCopy " + newShape.size());
     return new PolyTrigon(newShape, color, rotation, isMirrored);
   }
 
