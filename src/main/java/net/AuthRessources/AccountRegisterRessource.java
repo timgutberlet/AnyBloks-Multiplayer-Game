@@ -27,8 +27,8 @@ public class AccountRegisterRessource {
     System.out.println("Hi from reg method");
     String errorMessage = "";
     try {
-      String username ="";
-      String  passwordHash = "";
+      String username = "";
+      String passwordHash = "";
       if (wrappedPacket.getPacketType() != PacketType.CREATE_ACCOUNT_REQUEST_PACKET) {
         errorMessage = "This packet is not of the correct type";
         throw new Exception();

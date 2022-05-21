@@ -1,7 +1,6 @@
 package net.server;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -13,49 +12,37 @@ import java.sql.SQLException;
  *
  * @author tbuscher
  */
-public abstract class DbHandler {
+public abstract class AbstractDB {
 
-  /**
-   * Connection to Db
-   */
+  private final String path = "./bloks3/sqliteDb/Server.db";
   protected Connection con;
 
   /**
    * Constructor. Connects to DB in location of argument.
-   *
-   * @param location of the DB
    */
-  public DbHandler(String location) throws Exception {
-    if (!new File(location).exists()) {
+  public AbstractDB() throws Exception {
+    if (!new File(path).exists()) {
+      //In this case the DB has never existed, so it is put to the correct path
       try {
-        Files.createDirectories(Paths.get("./blocks3/sqliteDb"));
-      } catch (IOException e) {
+        Files.createDirectories(Paths.get("./bloks3/sqliteDb"));
+        setupDb(true);
+      } catch (Exception e) {
         e.printStackTrace();
       }
-      setupDb(true);
     } else {
-      if (!connect(location)) {
-        disconnect();
-      }
-      try {
-        Files.createDirectories(Paths.get("./blocks3/sqliteDb"));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-      setupDb(true);
-      if (!connect(location)) {
+      //In this case, the DB exists at the proper location,
+      boolean connectSuccess = connect();
+      if (!connectSuccess) {
         throw new Exception("Failed to connect to DB");
       }
+      setupDb(false);
     }
   }
 
   /**
    * Open connection to Db.
-   *
-   * @param location of Db.
    */
-
-  protected boolean connect(String location) {
+  protected boolean connect() {
     try {
       Class.forName("org.sqlite.JDBC");
     } catch (ClassNotFoundException e) {
@@ -64,13 +51,20 @@ public abstract class DbHandler {
     }
     //if driver exists, try to connect
     try {
-      con = DriverManager.getConnection("jdbc:sqlite:" + location);
+      con = DriverManager.getConnection("jdbc:sqlite:" + path);
     } catch (SQLException e) {
       e.printStackTrace();
       return false;
     }
     return true;
   }
+
+  /**
+   * create db file if not already in correct location (sqliteDB/Server.db).
+   *
+   * @param overwrite if existing DBs are to be deleted
+   */
+  protected abstract boolean setupDb(boolean overwrite);
 
   /**
    * Close con to the Db.
@@ -89,18 +83,5 @@ public abstract class DbHandler {
     return true;
   }
 
-  /**
-   * create db file.
-   */
-  protected boolean setupDb() {
-    return setupDb(false);
-  }
-
-  /**
-   * create db file.
-   *
-   * @param forceReset to force rebuild.
-   */
-  protected abstract boolean setupDb(boolean forceReset);
 
 }

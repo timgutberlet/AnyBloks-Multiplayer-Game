@@ -13,12 +13,12 @@ import java.util.HashMap;
  *
  * @author tbuscher
  */
-public class DbServer extends DbHandler {
+public class DbServer extends AbstractDB {
 
   /**
    * Location of Db file.
    */
-  private static final String location = "./blocks3/sqliteDb/Server.db";
+  private static final String location = "./bloks3/sqliteDb/Server.db";
   /**
    * Instance that can be provided.
    */
@@ -30,7 +30,7 @@ public class DbServer extends DbHandler {
    * @throws Exception if init fails.
    */
   private DbServer() throws Exception {
-    super(location);
+    super();
   }
 
   /**
@@ -53,7 +53,7 @@ public class DbServer extends DbHandler {
    */
   protected synchronized boolean setupDb(boolean forceReset) {
     if (forceReset) {
-      super.connect(location);
+      super.connect();
       resetDb();
     }
     return true;
@@ -75,6 +75,21 @@ public class DbServer extends DbHandler {
       Statement statementDropPlayers = con.createStatement();
       statementDropPlayers.execute("DROP TABLE IF EXISTS players");
       statementDropPlayers.close();
+      Statement statementDropGames = con.createStatement();
+      statementDropGames.execute("DROP TABLE IF EXISTS games");
+      statementDropGames.close();
+      Statement statementDropScores = con.createStatement();
+      statementDropScores.execute("DROP TABLE IF EXISTS scores");
+      statementDropScores.close();
+      Statement statementDropGameSessionScore = con.createStatement();
+      statementDropGameSessionScore.execute("DROP TABLE IF EXISTS gameSessionScore");
+      statementDropGameSessionScore.close();
+      Statement statementDropGameSessionScores2Game = con.createStatement();
+      statementDropGameSessionScores2Game.execute("DROP TABLE IF EXISTS gameSessionScores2Game");
+      statementDropGameSessionScores2Game.close();
+      Statement statementDropAuthTokens = con.createStatement();
+      statementDropAuthTokens.execute("DROP TABLE IF EXISTS authTokens");
+      statementDropAuthTokens.close();
 
     } catch (SQLException e) {
       e.printStackTrace();

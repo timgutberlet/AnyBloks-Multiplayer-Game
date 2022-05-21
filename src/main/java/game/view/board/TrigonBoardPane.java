@@ -13,9 +13,9 @@ import javafx.scene.paint.Color;
  */
 public class TrigonBoardPane extends BoardPane {
 
+  private final double shift;
   private double xOfSet;
   private double yOfSet;
-  private final double shift;
 
   public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);

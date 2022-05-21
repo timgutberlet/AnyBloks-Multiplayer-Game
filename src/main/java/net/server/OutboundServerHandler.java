@@ -1,11 +1,8 @@
 package net.server;
 
-import game.model.Color;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
-import game.model.chat.ChatMessage;
-import game.model.player.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +12,6 @@ import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountResponsePacket;
-import net.packet.chat.ChatMessagePacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
@@ -133,8 +129,8 @@ public class OutboundServerHandler {
   }
 
   /**
-   * broadcast GAME_WIN_PACKET to all clients.
-   * save the gameScore, and if a gameSession ends, connect all gameScores to it.
+   * broadcast GAME_WIN_PACKET to all clients. save the gameScore, and if a gameSession ends,
+   * connect all gameScores to it.
    *
    * @param usernameWinner
    * @author tgeilen
@@ -156,13 +152,13 @@ public class OutboundServerHandler {
       //Insert the game and save its gameId
       gameId = dbServer.insertGame(gameMode);
       //Add the scores of the different players
-      for(String username : scorebaord.keySet()){
+      for (String username : scorebaord.keySet()) {
         dbServer.insertScore(gameId, username, scorebaord.get(username));
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
-    gameSession.currentGameIds.add(gameId);
+    GameSession.currentGameIds.add(gameId);
 
     this.server.broadcastMessage(wrappedPacket);
 
@@ -185,15 +181,15 @@ public class OutboundServerHandler {
         String gameSessionScoreId = dbServer.insertGameSessionScore();
 
         //Save ids of GameScores from List in GameSession into GameScore to GameSessionScore
-        for(int i = 0; i < gameSession.currentGameIds.size(); i++){
-          dbServer.insertGameSessionScore2Game(gameSessionScoreId, gameSession.currentGameIds.get(i));
+        for (int i = 0; i < GameSession.currentGameIds.size(); i++) {
+          dbServer.insertGameSessionScore2Game(gameSessionScoreId,
+              GameSession.currentGameIds.get(i));
         }
         //And remove the gameIds from it after they have been saved to GameSessionScore
-        gameSession.currentGameIds = new ArrayList<>();
+        GameSession.currentGameIds = new ArrayList<>();
       } catch (Exception e) {
         e.printStackTrace();
       }
-
 
 
     }
@@ -203,8 +199,6 @@ public class OutboundServerHandler {
   public void broadcastChatMessage(WrappedPacket wrappedPacket) {
     this.server.broadcastMessage(wrappedPacket);
   }
-
-
 
 
 }

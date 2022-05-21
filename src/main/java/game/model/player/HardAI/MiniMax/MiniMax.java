@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * all minimax algorithms
+ *
  * @author tiotto
  * @date 18.05.2022
  */
@@ -29,7 +30,7 @@ public class MiniMax {
    * @param player    player, for whom the next move is calculated
    * @return the next "best" move
    */
-  public static Turn calculateNextHardMoveMiniMax(GameState gameState, Player player){
+  public static Turn calculateNextHardMoveMiniMax(GameState gameState, Player player) {
     long start = System.currentTimeMillis();
     int bestVal = MIN;
     Turn bestTurn = null;

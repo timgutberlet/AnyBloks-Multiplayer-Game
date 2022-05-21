@@ -36,6 +36,10 @@ public class GameState implements Serializable, Cloneable {
    */
   private final ArrayList<ArrayList<Turn>> history = new ArrayList<>();
   /**
+   *
+   */
+  private final ArrayList<Color> winners = new ArrayList<>();
+  /**
    * used game mode.
    */
   private GameMode gameMode;
@@ -59,17 +63,10 @@ public class GameState implements Serializable, Cloneable {
    * states if the game is currently running.
    */
   private boolean running;
-
   /**
    * states if the game has already started.
    */
   private boolean started;
-
-  /**
-   *
-   */
-  private final ArrayList<Color> winners = new ArrayList<>();
-
   /**
    * if the game state currently plays a turn.
    */

@@ -1,13 +1,17 @@
 package net;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import net.server.DbServer;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author tbuscher
  */
 public class DBReader {
 
-  public static void main(String[] args) {
+  @Test
+  public void test() {
     DbServer dbServer = null;
     try {
       dbServer = DbServer.getInstance();
@@ -16,6 +20,8 @@ public class DBReader {
     }
     dbServer.newAccount("172.19.112.1", "123456");
     System.out.println(dbServer.doesUsernameExist("172.19.112.1"));
+    assertTrue(dbServer.doesUsernameExist("172.19.112.1"));
+
   }
 
 }

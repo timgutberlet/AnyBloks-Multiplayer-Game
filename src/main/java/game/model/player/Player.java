@@ -13,54 +13,49 @@ import java.util.concurrent.TimeUnit;
  */
 public class Player implements Serializable {
 
+  private final String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?",
+      "n00b",
+      "How can become as good as yoU?"};
   /**
    * Name of the player.
    */
   private String username;
-
   /**
    * Type of the player.
    */
   private PlayerType type;
-
   /**
    * Boolean if player is Connected
    */
   private boolean isPlayerConnected;
 
   /**
-   * Current score of the player.
-   */
-  private int score;
-
-  /**
    * current session of player
    */
   //private GameSession gameSession;
-
+  /**
+   * Current score of the player.
+   */
+  private int score;
   /**
    * tells wether player is played by AI or not
    */
   private Boolean isAI;
-
   /**
    * tells whether player is the host of a session
    */
   private Boolean isHost;
-
+  /**
+   * word list for automated chat messages
+   */
   /**
    * number in range (0,3) stating the order of the player
    */
   private int orderNum;
   /**
-   * word list for automated chat messages
-   */
-
-  /**
    * Check if AI Calc is currently running
    */
   private boolean aiCalcRunning;
-
   /**
    * Poly the Player has Selected in the UI
    */
@@ -69,17 +64,9 @@ public class Player implements Serializable {
    * Boolean saying if the player has active turn or not
    */
   private boolean hasTurn;
-
   private Turn selectedTurn;
-
   private Turn setTurn;
-
-
   private Boolean threadIsActive = false;
-
-  private final String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?",
-      "n00b",
-      "How can become as good as yoU?"};
 
   //public EndpointClient endpointClient;
   //public Session session;
@@ -99,22 +86,10 @@ public class Player implements Serializable {
         type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
     this.isHost = false;
     this.selectedTurn = null;
-    if(!this.isAI) {
+    if (!this.isAI) {
       this.aiCalcRunning = false;
 
     }
-  }
-  /**
-   *
-   * @return returns if boolean connected
-   * @author tgutberl
-   */
-  public boolean isPlayerConnected(){
-    return this.isPlayerConnected;
-  }
-
-  public void setPlayerConnected(boolean playerConnected){
-    this.isPlayerConnected = playerConnected;
   }
 
   /**
@@ -125,7 +100,7 @@ public class Player implements Serializable {
    * @author tbuscher
    */
   public Player(String username, PlayerType type, boolean isHost) {
-    this(username,type);
+    this(username, type);
     this.isHost = isHost;
   }
 
@@ -135,6 +110,18 @@ public class Player implements Serializable {
 
   public Player() {
 
+  }
+
+  /**
+   * @return returns if boolean connected
+   * @author tgutberl
+   */
+  public boolean isPlayerConnected() {
+    return this.isPlayerConnected;
+  }
+
+  public void setPlayerConnected(boolean playerConnected) {
+    this.isPlayerConnected = playerConnected;
   }
 
   public void run() {
@@ -192,12 +179,12 @@ public class Player implements Serializable {
       return AI.calculateNextMove(gameState, this);
     } else {
       this.aiCalcRunning = false;
-      while (this.selectedTurn == null){
+      while (this.selectedTurn == null) {
         try {
-          Debug.printMessage(this,this.getUsername()+" " + this);
-         // Debug.printMessage(this, "A TURN NEEDS TO BE MADE");
+          Debug.printMessage(this, this.getUsername() + " " + this);
+          // Debug.printMessage(this, "A TURN NEEDS TO BE MADE");
           Thread.sleep(10);
-          Debug.printMessage(this, "Waiting for PlayerInput from this "+ this);
+          Debug.printMessage(this, "Waiting for PlayerInput from this " + this);
         } catch (InterruptedException e) {
         }
       }
@@ -208,7 +195,8 @@ public class Player implements Serializable {
       return returnTurn;
     }
   }
-  public void setSelectedTurn(Turn turn){
+
+  public void setSelectedTurn(Turn turn) {
     this.selectedTurn = turn;
   }
 
@@ -246,13 +234,17 @@ public class Player implements Serializable {
     return type;
   }
 
-  public String getUsername() {
-    return username;
+  public void setType(PlayerType type) {
+    this.type = type;
   }
 
   //public String toString() {
   //  return username;
   //}
+
+  public String getUsername() {
+    return username;
+  }
 
   public int getOrderNum() {
     return this.orderNum;
@@ -266,12 +258,8 @@ public class Player implements Serializable {
     return isAI;
   }
 
-  public void setType(PlayerType type) {
-    this.type = type;
-  }
-
   @Override
-  public boolean equals(Object object){
+  public boolean equals(Object object) {
     Player p = (Player) object;
     return this.username.equals(p.getUsername());
   }

@@ -60,6 +60,7 @@ public class Chat {
 
   /**
    * adds a given chat message.
+   *
    * @param chatMessage given chat message
    */
   public void addMessage(ChatMessage chatMessage) {
@@ -68,6 +69,7 @@ public class Chat {
 
   /**
    * returns all the chat messages.
+   *
    * @return returns a list with all chatMessages
    */
   public ArrayList<ChatMessage> getChatMessages() {
@@ -76,6 +78,7 @@ public class Chat {
 
   /**
    * String representation of the chat.
+   *
    * @return string representation of the chat
    */
   @Override

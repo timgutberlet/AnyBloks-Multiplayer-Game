@@ -2,7 +2,6 @@ package token;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,13 +32,12 @@ public class AccountManagementTest {
   @Test
   public void testUpdateAccount() {
     DbServer dbServer = null;
-    try{
+    try {
       dbServer = DbServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }
     assertNotNull(dbServer);
-
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
     String username = "testuserUpdate1";
@@ -88,7 +86,6 @@ public class AccountManagementTest {
     assertEquals(200, receivedUpdateAnswer.getStatus());
     assertEquals(updatedPasswordHash, dbServer.getUserPasswordHash(username));
 
-
     System.out.println("--------- Below the line the account is deleted ------------");
 
     Client deleteClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
@@ -106,7 +103,6 @@ public class AccountManagementTest {
             + ": " + receivedDeleteAnswer.getStatusInfo());
     assertEquals(200, receivedDeleteAnswer.getStatus());
     assertFalse(dbServer.doesUsernameExist(username));
-
 
 
   }

@@ -15,16 +15,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class Game {
 
+  private final HashMap<String, Integer> passedTurns = new HashMap<String, Integer>();
   private GameSession gameSession;
   private GameState gameState;
   private Board board;
   private GameMode gamemode;
   private ArrayList<Player> players;
-
   private Boolean isServer = false;
-
-
-  private final HashMap<String, Integer> passedTurns = new HashMap<String, Integer>();
 
 
   public Game(GameSession gameSession, GameMode gamemode) {

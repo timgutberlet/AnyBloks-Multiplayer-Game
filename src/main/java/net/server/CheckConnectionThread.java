@@ -15,74 +15,72 @@ import net.transmission.EndpointServer;
  */
 public class CheckConnectionThread extends Thread {
 
-	private int requestCounter;
-
-	private CheckConnectionPacket checkConnectionPacket;
-
-	private Session session;
-
-	private GameSession gameSession;
-
-	private String username;
-
-	private Boolean connectionCrashed = false;
-
-	public static boolean turnReceived;
+  public static boolean turnReceived;
+  private int requestCounter;
+  private CheckConnectionPacket checkConnectionPacket;
+  private final Session session;
+  private final GameSession gameSession;
+  private final String username;
+  private Boolean connectionCrashed = false;
 
 
-	public CheckConnectionThread(GameSession gameSession, String username, EndpointServer serverEndpoint) {
+  public CheckConnectionThread(GameSession gameSession, String username,
+      EndpointServer serverEndpoint) {
 
-		this.requestCounter = 0;
+    this.requestCounter = 0;
 
-		turnReceived = false;
+    turnReceived = false;
 
-		this.session = serverEndpoint.getUsername2Session().get(username);
+    this.session = serverEndpoint.getUsername2Session().get(username);
 
-		this.gameSession = gameSession;
+    this.gameSession = gameSession;
 
-		this.username = username;
+    this.username = username;
 
 
-	}
+  }
 
-	public void run() {
-		int threshold = 10;
+  public void run() {
+    int threshold = 10;
 
-		turnReceived = false;
+    turnReceived = false;
 
-		while (this.requestCounter < threshold && !this.connectionCrashed && !turnReceived) {
-			this.checkConnectionPacket = new CheckConnectionPacket();
+    while (this.requestCounter < threshold && !this.connectionCrashed && !turnReceived) {
+      this.checkConnectionPacket = new CheckConnectionPacket();
 
-			WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHECK_CONNECTION_PACKET,
-					this.checkConnectionPacket);
+      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHECK_CONNECTION_PACKET,
+          this.checkConnectionPacket);
 
-			try {
-				Debug.printMessage(this,"_________Sending CheckConnection message to " + this.username + "_________  " + this.requestCounter);
-				this.session.getBasicRemote().sendObject(wrappedPacket);
+      try {
+        Debug.printMessage(this,
+            "_________Sending CheckConnection message to " + this.username + "_________  "
+                + this.requestCounter);
+        this.session.getBasicRemote().sendObject(wrappedPacket);
 
-			} catch (Exception e) {
-				this.connectionCrashed = true;
-				Debug.printMessage(this, "THE SERVER LOST CONNECTION TO " + this.username);
-				this.gameSession.changePlayer2AI(this.username);
-				e.printStackTrace();
+      } catch (Exception e) {
+        this.connectionCrashed = true;
+        Debug.printMessage(this, "THE SERVER LOST CONNECTION TO " + this.username);
+        this.gameSession.changePlayer2AI(this.username);
+        e.printStackTrace();
 
-			}
+      }
 
-			try {
-				TimeUnit.SECONDS.sleep(6);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+      try {
+        TimeUnit.SECONDS.sleep(6);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
 
-			this.requestCounter++;
+      this.requestCounter++;
 
-		}
+    }
 
-		if(this.requestCounter >= threshold){
-			Debug.printMessage(this, "THE SERVER LOST CONNECTION TO " + this.username + "WITHOUT EXCEPTION");
-			this.gameSession.changePlayer2AI(this.username);
-		}
+    if (this.requestCounter >= threshold) {
+      Debug.printMessage(this,
+          "THE SERVER LOST CONNECTION TO " + this.username + "WITHOUT EXCEPTION");
+      this.gameSession.changePlayer2AI(this.username);
+    }
 
-	}
+  }
 
 }

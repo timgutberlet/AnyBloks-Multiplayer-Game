@@ -1,7 +1,6 @@
 package net.packet.chat;
 
 import game.model.chat.Chat;
-import game.model.chat.ChatMessage;
 import net.packet.abstr.Packet;
 
 /**

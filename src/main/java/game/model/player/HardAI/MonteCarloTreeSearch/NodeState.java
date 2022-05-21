@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * represents the node state.
+ *
  * @author tiotto
  * @date 16.05.2022
  */
@@ -32,48 +33,52 @@ public class NodeState {
 
   /**
    * creating a new node out of the turn and the resulting game stae.
+   *
    * @param state game state
-   * @param turn turn
+   * @param turn  turn
    */
-  public NodeState(GameState state, Turn turn){
+  public NodeState(GameState state, Turn turn) {
     this.gameState = state;
     this.playedTurn = turn;
     visitCount = 0;
     winScore = 0;
   }
 
-  GameState getGameState(){
+  GameState getGameState() {
     return this.gameState;
   }
 
-  Turn getPlayedTurn(){
+  Turn getPlayedTurn() {
     return playedTurn;
   }
 
-  int getVisitCount(){
+  int getVisitCount() {
     return visitCount;
   }
 
-  double getWinScore(){
+  double getWinScore() {
     return winScore;
   }
 
-  void incrementVisit(){
+  void incrementVisit() {
     visitCount++;
   }
 
-  void addScore(int score){
+  void addScore(int score) {
     winScore += score;
   }
 
   /**
    * generates a list for possible child node states.
+   *
    * @return list of possible child node states
    */
-  public ArrayList<NodeState> getAllPossibleStates(){
+  public ArrayList<NodeState> getAllPossibleStates() {
     ArrayList<NodeState> res = new ArrayList<>();
-    ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerCurrent()),gameState.isFirstRound());
-    for (Turn t : possibleMoves){
+    ArrayList<Turn> possibleMoves = gameState.getBoard()
+        .getPossibleMoves(gameState.getRemainingPolys(gameState.getPlayerCurrent()),
+            gameState.isFirstRound());
+    for (Turn t : possibleMoves) {
       GameState newGameState = gameState.tryTurn(t);
       res.add(new NodeState(newGameState, t));
     }
@@ -83,8 +88,9 @@ public class NodeState {
   /**
    * a random play is played within the game state.
    */
-  public void randomPlay(){
-    gameState.playTurn(AI.calculateNextRandomMove(gameState.getBoard(), gameState.getRemainingPolys(gameState.getPlayerCurrent()),gameState.isFirstRound()));
+  public void randomPlay() {
+    gameState.playTurn(AI.calculateNextRandomMove(gameState.getBoard(),
+        gameState.getRemainingPolys(gameState.getPlayerCurrent()), gameState.isFirstRound()));
   }
 
 

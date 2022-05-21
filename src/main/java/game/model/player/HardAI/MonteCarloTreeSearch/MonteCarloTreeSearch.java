@@ -15,33 +15,35 @@ import java.util.ArrayList;
  * central class of the representation of the monte carlo tree search.
  */
 public class MonteCarloTreeSearch {
+
   static final int MAX_DEPTH = 5;
   static final int MAX_TIME_MILLI = 3000;
 
   /**
    * finds based on the current game state the next potentially best move.
+   *
    * @param state current game state
    * @return returns the potentially best move for the current player
    */
-  public static Turn findNextMove(GameState state){
+  public static Turn findNextMove(GameState state) {
     long end = System.currentTimeMillis() + MAX_TIME_MILLI;
     Tree tree = new Tree(state);
     Node rootNode = tree.getRoot();
 
-    while (System.currentTimeMillis() < end){
+    while (System.currentTimeMillis() < end) {
       Node promisingNode = selectPromisingNode(rootNode);
-      if (!promisingNode.getState().getGameState().checkEnd()){
+      if (!promisingNode.getState().getGameState().checkEnd()) {
         expandNode(promisingNode);
       }
       Node nodeToExplore = promisingNode;
-      if (promisingNode.getChildArray().size() > 0){
+      if (promisingNode.getChildArray().size() > 0) {
         nodeToExplore = promisingNode.getRandomChildNode();
       }
       int[] result = simulateRandomPlayout(nodeToExplore);
       backPropagation(nodeToExplore, result);
     }
     Node winnerNode = rootNode.getChildWithMaxScore();
-    if(winnerNode != null){
+    if (winnerNode != null) {
       return winnerNode.getState().getPlayedTurn();
     }
     return null;
@@ -49,12 +51,13 @@ public class MonteCarloTreeSearch {
 
   /**
    * selects the next most promising node based on the upper confidence tree.
+   *
    * @param rootNode root node
    * @return most promising next node
    */
-  private static Node selectPromisingNode(Node rootNode){
+  private static Node selectPromisingNode(Node rootNode) {
     Node node = rootNode;
-    while(node.getChildArray().size() != 0){
+    while (node.getChildArray().size() != 0) {
       node = UpperConfidenceTree.findBestNodeWithUCT(node);
     }
     return node;
@@ -62,11 +65,13 @@ public class MonteCarloTreeSearch {
 
   /**
    * expands the new node with the generation of all its possible child nodes.
+   *
    * @param node
    */
-  private static void expandNode(Node node){
+  private static void expandNode(Node node) {
     ArrayList<NodeState> possibleStates = node.getState().getAllPossibleStates();
-    possibleStates.forEach(state -> {Node newNode = new Node(node, state.getGameState(), state.playedTurn);
+    possibleStates.forEach(state -> {
+      Node newNode = new Node(node, state.getGameState(), state.playedTurn);
       newNode.setParent(node);
       node.getChildArray().add(newNode);
     });
@@ -74,35 +79,38 @@ public class MonteCarloTreeSearch {
 
   /**
    * through back propagation a given result will be transferred to all involved nodes.
+   *
    * @param nodeToExplore leave node
-   * @param result given result
+   * @param result        given result
    */
-  private static void backPropagation(Node nodeToExplore, int[] result){
+  private static void backPropagation(Node nodeToExplore, int[] result) {
     Node tempNode = nodeToExplore;
-    while (tempNode.getParent() != null){
+    while (tempNode.getParent() != null) {
       tempNode.getState().incrementVisit();
-      tempNode.getState().addScore(result[colorToInt(tempNode.getState().getPlayedTurn().getColor())]);
+      tempNode.getState()
+          .addScore(result[colorToInt(tempNode.getState().getPlayedTurn().getColor())]);
       tempNode = tempNode.getParent();
     }
   }
 
   /**
    * simulates a random play till the end of the game or a given maximal depth.
+   *
    * @param node given node from the state of which the game will be played randomly
    * @return results of the playout
    */
-  private static int[] simulateRandomPlayout(Node node){
+  private static int[] simulateRandomPlayout(Node node) {
     int depth = 1;
     Node tempNode = node.clone();
     NodeState tempState = tempNode.getState();
     boolean gameEnded = tempState.getGameState().checkEnd();
-    if(gameEnded){
+    if (gameEnded) {
       int[] result = tempState.getGameState().getScores();
-      for (Color c : tempState.getGameState().getWinners()){
+      for (Color c : tempState.getGameState().getWinners()) {
         result[colorToInt(c)] = getMaxScore(tempState.gameState);
       }
     }
-    while (!gameEnded && depth < MAX_DEPTH){
+    while (!gameEnded && depth < MAX_DEPTH) {
       depth++;
       tempState.randomPlay();
       gameEnded = tempState.getGameState().checkEnd();
@@ -112,15 +120,20 @@ public class MonteCarloTreeSearch {
 
   /**
    * returns the maximum possible score for the game state based on the game mode.
+   *
    * @param gameState given gameState
    * @return maximum possible score as the int
    */
-  private static int getMaxScore(GameState gameState){
-    switch(gameState.getGameMode().getName()){
-      case "CLASSIC": return 89;
-      case "DUO": return 89;
-      case "JUNIOR": return 88;
-      case "TRIGON": return 98;
+  private static int getMaxScore(GameState gameState) {
+    switch (gameState.getGameMode().getName()) {
+      case "CLASSIC":
+        return 89;
+      case "DUO":
+        return 89;
+      case "JUNIOR":
+        return 88;
+      case "TRIGON":
+        return 98;
       default:
         Debug.printMessage("falscher Gamemode bei AIHard");
         return 0;
@@ -129,11 +142,12 @@ public class MonteCarloTreeSearch {
 
   /**
    * converts a color into the corresponding integer.
+   *
    * @param c color
    * @return integer
    */
-  private static int colorToInt(Color c){
-    switch (c){
+  private static int colorToInt(Color c) {
+    switch (c) {
       case RED -> {
         return 0;
       }
@@ -146,7 +160,8 @@ public class MonteCarloTreeSearch {
       case YELLOW -> {
         return 3;
       }
-      default ->{ return 4;
+      default -> {
+        return 4;
       }
     }
   }

@@ -29,19 +29,18 @@ public class SquareBoardPane extends BoardPane {
 
     CheckField checkField = new CheckField(i, j);
     double sizeHelp = size * 0.5;
-    double move = size/2 - sizeHelp/2;
+    double move = size / 2 - sizeHelp / 2;
     checkField.getPoints().addAll(0 + j * size + move, 0 + i * size + move,
         sizeHelp + j * size + move, 0 + i * size + move,
         sizeHelp + j * size + move, sizeHelp + i * size + move,
         0 + j * size + move, sizeHelp + i * size + move);
-    if(checkFieldColor.containsKey(""+i*1000+j)){
-      checkField.setFill(checkFieldColor.get(""+i*1000+j));
-    }else{
+    if (checkFieldColor.containsKey("" + i * 1000 + j)) {
+      checkField.setFill(checkFieldColor.get("" + i * 1000 + j));
+    } else {
       checkField.setFill(color);
     }
     checkFields.add(checkField);
     this.getChildren().add(checkField);
-
 
     ClassicField field = new ClassicField(i, j);
     field.getPoints().addAll(

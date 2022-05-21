@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * represents one node of a monte carlo tree search.
+ *
  * @author tiotto
  * @date 16.05.2022
  */
@@ -28,11 +29,12 @@ public class Node {
 
   /**
    * creates a node out of the parent node and the initializing components of the node state.
-   * @param parent parent
-   * @param state gameState
+   *
+   * @param parent     parent
+   * @param state      gameState
    * @param playedTurn last played turn to get to the gameState
    */
-  public Node(Node parent, GameState state, Turn playedTurn){
+  public Node(Node parent, GameState state, Turn playedTurn) {
     this.parent = parent;
     this.state = new NodeState(state, playedTurn);
     this.childArray = new ArrayList<>();
@@ -64,27 +66,29 @@ public class Node {
 
   /**
    * gives back a random picked child.
+   *
    * @return random picked child.
    */
-  public Node getRandomChildNode(){
+  public Node getRandomChildNode() {
     return childArray.get((int) (Math.random() * childArray.size()));
   }
 
   /**
    * gives back the child with the highest score.
+   *
    * @return child with the highest score.
    */
-  public Node getChildWithMaxScore(){
+  public Node getChildWithMaxScore() {
     double max = Integer.MIN_VALUE;
     Node winner = null;
-    for (Node child: childArray){
-      if (child.getState().getWinScore() > max){
+    for (Node child : childArray) {
+      if (child.getState().getWinScore() > max) {
         max = child.getState().getWinScore();
         winner = child;
       }
     }
-    System.out.println("Max Score: "+ max);
-    if (winner != null){
+    System.out.println("Max Score: " + max);
+    if (winner != null) {
       System.out.println("Visits: " + winner.getState().getVisitCount());
     }
     return winner;
@@ -92,10 +96,11 @@ public class Node {
 
   /**
    * deep clones a node.
+   *
    * @return clones node
    */
-  public Node clone(){
-    if (getState().getPlayedTurn() == null){
+  public Node clone() {
+    if (getState().getPlayedTurn() == null) {
       return new Node(parent, getState().getGameState().clone(), null);
     }
     return new Node(parent, getState().getGameState().clone(), getState().getPlayedTurn().clone());
