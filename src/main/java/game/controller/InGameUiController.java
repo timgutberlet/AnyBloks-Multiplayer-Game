@@ -22,24 +22,32 @@ import game.view.board.BoardPane;
 import game.view.board.SquareBoardPane;
 import game.view.board.TrigonBoardPane;
 import game.view.poly.PolyPane;
+import game.view.poly.SquarePolyPane;
+import game.view.poly.TrigonPolyPane;
 import game.view.stack.StackPane;
 import game.view.stack.StackSquarePane;
 import game.view.stack.StackTrigonPane;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -63,13 +71,14 @@ public abstract class InGameUiController extends AbstractUiController {
   private ArrayList<int[]> possibleFields;
   private Boolean submitRequested;
 
-  private BorderPane pane;
+  private VBox container;
+  private HBox content;
   private BoardPane boardPane;
   private final List<StackPane> stackPanes;
   private DragablePolyPane dragablePolyPane;
   private VBox stacks;
-  private VBox right;
 
+  private Button infoButton;
   private Button quitButton;
   private HBox buttonBox;
 
@@ -78,6 +87,7 @@ public abstract class InGameUiController extends AbstractUiController {
   private Label hintLabel3;
   private VBox labelBox;
 
+  private Pane topPane;
   private GridPane scorePane;
   private List<Label> scores;
   private List<Label> names;
@@ -101,7 +111,6 @@ public abstract class InGameUiController extends AbstractUiController {
     submitRequested = false;
     threadHelp.start();
     setUpUi();
-    createBoard();
   }
 
   public void createBoard() {
@@ -117,31 +126,56 @@ public abstract class InGameUiController extends AbstractUiController {
             stage.getWidth());
         break;
     }
-    pane.setCenter(boardPane);
+
+    content.getChildren().add(boardPane);
   }
 
   private void setUpUi() {
+    double width = stage.getWidth();
+    double height = stage.getHeight();
 
-    pane = new BorderPane();
-    pane.setTranslateY(100);
-    super.root.getChildren().add(pane);
+    container = new VBox();
+    container.setTranslateY(110);
+    container.setPrefWidth(width);
+    container.setSpacing(10);
+    container.setAlignment(Pos.CENTER);
+    super.root.getChildren().add(container);
+
+    content = new HBox();
+    content.setPrefWidth(width);
+    content.setSpacing(10);
+    content.setAlignment(Pos.CENTER);
+    container.getChildren().add(content);
+
+    createBoard();
+
+    topPane = new Pane();
+    topPane.setStyle("-fx-background-color: #eeeeee");
+    topPane.setEffect(new DropShadow());
+    topPane.setPrefWidth(width);
+    topPane.setPrefHeight(100);
+    topPane.setMaxHeight(100);
+    super.root.getChildren().add(topPane);
 
     scores = new ArrayList<>();
     names = new ArrayList<>();
-    int playerSize = game.getPlayers().size();
     scorePane = new GridPane();
-    scorePane.setPrefWidth(stage.getWidth());
+    scorePane.setPrefWidth(width);
     scorePane.setPrefHeight(100);
     scorePane.setMaxHeight(100);
     super.root.getChildren().add(scorePane);
+
     int i = 0;
+    int playerSize = game.getPlayers().size();
     for (Player p : this.gameSession.getPlayerList()) {
       VBox vbox = new VBox();
-      Label score = new Label("0");
       Label name = new Label(p.getUsername());
       name.setTextFill(ColorHandler.getJavaColor(game.getGameState().getColorFromPlayer(p)));
-      scores.add(score);
+      name.setFont(Font.font("System", 20));
+      Label score = new Label("0");
+      score.setFont(Font.font("System", 30));
       names.add(name);
+      scores.add(score);
       vbox.getChildren().add(name);
       vbox.getChildren().add(score);
       vbox.setAlignment(Pos.CENTER);
@@ -166,27 +200,23 @@ public abstract class InGameUiController extends AbstractUiController {
 
     VBox vbox = new VBox();
     turn = new Label("");
+    turn.setFont(Font.font("System", 30));
+    turn.setStyle("-fx-background-color: ##ffffff; -fx-background-radius: 10;");
+    turn.setPadding(new Insets(0, 10, 0, 10));
     vbox.getChildren().add(turn);
     vbox.setAlignment(Pos.CENTER);
     scorePane.addColumn(playerSize / 2, vbox);
 
-    labelBox = new VBox();
-    labelBox.setSpacing(20);
-    hintLabel1 = new Label("Set Poly: Push 'P'-Button, ENTER or SPACE");
-    hintLabel2 = new Label("Mirror: Push 'M'-Button");
-    hintLabel3 = new Label("Left/Right Rotate: Push 'L' or 'M' Button");
-    labelBox.getChildren().addAll(hintLabel1, hintLabel2, hintLabel3);
-    pane.setTop(labelBox);
-
-    right = new VBox();
     stacks = new VBox();
+    stacks.setSpacing(10);
+
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
       case "CLASSIC":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -194,26 +224,42 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : this.gameSession.getPlayerList()) {
           StackPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
         break;
     }
-    right.getChildren().add(stacks);
-    pane.setRight(right);
+    content.getChildren().add(stacks);
 
     buttonBox = new HBox();
+    buttonBox.setAlignment(Pos.CENTER);
+    buttonBox.setSpacing(20);
+
+    infoButton = new Button("?");
     quitButton = new Button("Quit");
     testButton = new Button("ScoreBoard");
+
+    infoButton.setOnMouseClicked(mouseEvent -> {
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Information");
+      alert.setContentText(
+          "Set Poly: Push 'P'-Button, ENTER or SPACE \n Mirror: Push 'M'-Button \n Left/Right Rotate: Push 'L' or 'M' Button");
+      alert.setHeaderText(null);
+      alert.initModality(Modality.APPLICATION_MODAL);
+      alert.initOwner(stage);
+      alert.show();
+    });
+
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
     testButton.setOnMouseClicked(mouseEvent -> {
       this.handleTestButtonClicked();
     });
+
+    buttonBox.getChildren().add(infoButton);
     buttonBox.getChildren().add(quitButton);
     buttonBox.getChildren().add(testButton);
-    pane.setBottom(buttonBox);
-    inputHandler.makeDraggable(testButton);
+    container.getChildren().add(buttonBox);
   }
 
   private void handleTestButtonClicked() {
@@ -229,15 +275,20 @@ public abstract class InGameUiController extends AbstractUiController {
   private void refreshUi() {
     int playerSize = game.getPlayers().size();
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-      //makes board resizable
-      boardPane.resize(stage.getWidth());
-      //makes scores resizable
+
+      topPane.setPrefWidth(stage.getWidth());
+
+      container.setPrefWidth(stage.getWidth());
+      content.setPrefWidth(stage.getWidth());
+      buttonBox.setPrefWidth(stage.getWidth());
+
       ColumnConstraints coll = new ColumnConstraints();
       coll.setMinWidth(stage.getWidth() / (playerSize + 1));
       for (int i = 0; i <= playerSize; i++) {
         scorePane.getColumnConstraints().set(i, coll);
       }
-      pane.getChildren().remove(dragablePolyPane);
+
+      root.getChildren().remove(dragablePolyPane);
       dragablePolyPane = null;
     });
 
@@ -248,7 +299,7 @@ public abstract class InGameUiController extends AbstractUiController {
     if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
       turn.setText("Your Turn");
     } else {
-      turn.setText(game.getGameState().getPlayerCurrent().getUsername());
+      turn.setText(game.getGameState().getPlayerCurrent().getUsername() + " 's Turn");
     }
 
     stackPanes.clear();
@@ -259,7 +310,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "CLASSIC":
         for (Player p : game.getPlayers()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -267,7 +318,7 @@ public abstract class InGameUiController extends AbstractUiController {
       case "TRIGON":
         for (Player p : game.getPlayers()) {
           StackTrigonPane stackPane = new StackTrigonPane(p, inputHandler,
-              game.getGameState().getRemainingPolysClone(p), stage.getWidth());
+              game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
@@ -307,30 +358,54 @@ public abstract class InGameUiController extends AbstractUiController {
       //Check if Player has Turn
       Debug.printMessage(this, this.localPlayer.getUsername() + " " + this.localPlayer);
       if (this.gameSession.isLocalPlayerTurn()) {
-        hintLabel1.setText("Erkannt");
+        //hintLabel1.setText("Erkannt");
         Debug.printMessage(this, "GUI ready for input");
         boolean action = false;
 
         if (!this.gameSession.isUpdatingGameState()) {
           for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer)).getPolyPanes()) {
             if (inputHandler.isPolyClicked(polyPane)) {
-              if (dragablePolyPane == null) {
-                switch (game.getGamemode().getName()) {
-                  case "JUNIOR":
-                  case "DUO":
-                  case "CLASSIC":
-                    dragablePolyPane = new DragableSuarePane(polyPane, boardPane.getSize(),
-                        inputHandler, this);
-                    break;
-                  case "TRIGON":
-                    dragablePolyPane = new DragableTrigonPane(polyPane, boardPane.getSize(),
-                        inputHandler, this);
-                    break;
-                }
-                pane.setLeft(dragablePolyPane);
-              } else {
-                dragablePolyPane.setPoly(polyPane);
+              if (dragablePolyPane != null) {
+                root.getChildren().remove(dragablePolyPane);
+                dragablePolyPane = null;
               }
+
+              switch (game.getGamemode().getName()) {
+                case "JUNIOR":
+                case "DUO":
+                case "CLASSIC":
+                  dragablePolyPane = new DragableSuarePane(
+                      new SquarePolyPane(polyPane.getPoly().clone(), inputHandler,
+                          stage.getWidth()), boardPane.getSize(),
+                      inputHandler, this);
+                  break;
+                case "TRIGON":
+                  dragablePolyPane = new DragableTrigonPane(
+                      new TrigonPolyPane(polyPane.getPoly().clone(), inputHandler,
+                          stage.getWidth()), boardPane.getSize(),
+                      inputHandler, this);
+                  break;
+              }
+
+              stacks.layout();
+
+              double centerX = 0;
+              double centerY = 0;
+
+              for (Field field : polyPane.getFields()) {
+                Bounds bounds = field.localToScene(field.getBoundsInLocal());
+                centerX += bounds.getCenterX();
+                centerY += bounds.getCenterY();
+              }
+              centerX /= polyPane.getPoly().getSize();
+              centerY /= polyPane.getPoly().getSize();
+
+              double ofSetX = centerX - dragablePolyPane.getCircleX();
+              double ofSetY = centerY - dragablePolyPane.getCircleY();
+
+              dragablePolyPane.relocate(ofSetX, ofSetY);
+              root.getChildren().add(dragablePolyPane);
+
               localPlayer.setSelectedPoly(polyPane.getPoly());
               possibleFields = game.getGameState().getBoard()
                   .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
@@ -339,7 +414,7 @@ public abstract class InGameUiController extends AbstractUiController {
           }
 
           if (inputHandler.isKeyPressed(KeyCode.ESCAPE)) {
-            pane.getChildren().remove(dragablePolyPane);
+            root.getChildren().remove(dragablePolyPane);
             boardPane.resetAllCheckFields();
             dragablePolyPane = null;
             possibleFields = null;
@@ -392,7 +467,7 @@ public abstract class InGameUiController extends AbstractUiController {
                       boardPane.resetAllCheckFields();
                       Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
                       System.out.println(turn.getPoly());
-                      pane.getChildren().remove(dragablePolyPane);
+                      root.getChildren().remove(dragablePolyPane);
                       dragablePolyPane = null;
                       localPlayer.setSelectedTurn(turn);
                     }
@@ -435,7 +510,7 @@ public abstract class InGameUiController extends AbstractUiController {
         }
       } else {
         //Debug.printMessage(this, "The two players are NOT the same");
-        hintLabel1.setText("Nicht erkannt");
+        //hintLabel1.setText("Nicht erkannt");
       }
     }
     submitRequested = false;

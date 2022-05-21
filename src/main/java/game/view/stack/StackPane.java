@@ -13,7 +13,7 @@ import javafx.scene.layout.GridPane;
  */
 public class StackPane extends GridPane {
 
-  private final int MAX_NB_POLYS = 8;
+  private final int MAX_NB_POLYS = 12;
 
   protected List<PolyPane> polyPanes;
 

@@ -15,12 +15,14 @@ public class TrigonBoardPane extends BoardPane {
 
   private double xOfSet;
   private double yOfSet;
+  private double shift;
 
   public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
     size = 0.4 * width / 18;
     xOfSet = Math.sin(Math.toRadians(30)) * size;
     yOfSet = Math.sin(Math.toRadians(60)) * size;
+    shift = 9 * size * 0.5;
     setBoard();
   }
 
@@ -32,7 +34,6 @@ public class TrigonBoardPane extends BoardPane {
    * @param color
    */
   private void setTriangleRight(int i, int j, Color color) {
-
     CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 1);
     double sizeHelp = size * 0.4;
     double move = size / 2 - sizeHelp / 2;
@@ -41,9 +42,10 @@ public class TrigonBoardPane extends BoardPane {
     double moveYOfSet = yOfSet/2 - yOfSetHelp/2;
 
     checkTrigonField.getPoints()
-        .addAll(xOfSet + size + j * size + i * xOfSet - move, yOfSet + i * yOfSet - moveYOfSet, //right vertex
-            size + j * size + i * xOfSet, 0.0 + i * yOfSet + moveYOfSet, // top vertex
-            xOfSet + j * size + i * xOfSet + move, yOfSet + i * yOfSet - moveYOfSet);
+        .addAll(xOfSet + size + j * size + i * xOfSet - move - shift,
+            yOfSet + i * yOfSet - moveYOfSet, //right vertex
+            size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet + moveYOfSet, // top vertex
+            xOfSet + j * size + i * xOfSet + move - shift, yOfSet + i * yOfSet - moveYOfSet);
     if(checkFieldColor.containsKey(""+(i*1000)+j+1)){
       checkTrigonField.setFill(checkFieldColor.get(""+(i*1000)+j+1));
     }else{
@@ -51,12 +53,11 @@ public class TrigonBoardPane extends BoardPane {
     }
     checkFields.add(checkTrigonField);
     this.getChildren().add(checkTrigonField);
-
     Field triangleRight = new TrigonField(i, j, 1);
     triangleRight.getPoints().addAll(
-        xOfSet + size + j * size + i * xOfSet, yOfSet + i * yOfSet, //right vertex
-        size + j * size + i * xOfSet, 0.0 + i * yOfSet, // top vertex
-        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet); // left vertex
+        xOfSet + size + j * size + i * xOfSet - shift, yOfSet + i * yOfSet, //right vertex
+        size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet, // top vertex
+        xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet); // left vertex
     triangleRight.setFill(color);
     triangleRight.setStroke(Color.BLACK);
     this.getChildren().add(triangleRight);
@@ -80,9 +81,11 @@ public class TrigonBoardPane extends BoardPane {
     double moveYOfSet = yOfSet/2 - yOfSetHelp/2;
 
     checkTrigonField.getPoints()
-        .addAll(xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet - moveYOfSet, // top vertex
-            size + j * size + i * xOfSet - move, 0.0 + i * yOfSet + moveYOfSet, // right vertex
-            0.0 + j * size + i * xOfSet + move, 0.0 + i * yOfSet + moveYOfSet);
+        .addAll(xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet - moveYOfSet,
+            // top vertex
+            size + j * size + i * xOfSet - move - shift, 0.0 + i * yOfSet + moveYOfSet,
+            // right vertex
+            0.0 + j * size + i * xOfSet + move - shift, 0.0 + i * yOfSet + moveYOfSet);
     if(checkFieldColor.containsKey(""+(i*1000)+j+0)){
       checkTrigonField.setFill(checkFieldColor.get(""+(i*1000)+j+0));
     }else{
@@ -93,9 +96,9 @@ public class TrigonBoardPane extends BoardPane {
 
     Field triangleLeft = new TrigonField(i, j, 0);
     triangleLeft.getPoints().addAll(
-        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex
-        size + j * size + i * xOfSet, 0.0 + i * yOfSet, // right vertex
-        0.0 + j * size + i * xOfSet, 0.0 + i * yOfSet);  // left vertex
+        xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet, // top vertex
+        size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet, // right vertex
+        0.0 + j * size + i * xOfSet - shift, 0.0 + i * yOfSet);  // left vertex
     triangleLeft.setFill(color);
     triangleLeft.setStroke(Color.BLACK);
     this.getChildren().add(triangleLeft);

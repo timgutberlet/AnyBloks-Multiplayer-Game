@@ -24,7 +24,6 @@ public class PolyPane extends Pane {
     this.poly = poly;
     fields = new ArrayList<>();
     this.inputHandler = inputHandler;
-    this.size = width * 0.0128;
   }
 
   public void setPoly() {
@@ -46,7 +45,7 @@ public class PolyPane extends Pane {
   }
 
   public void resize(double width) {
-    this.size = width * 0.0128;
+    this.size = width * 0.00128;
     this.fields.clear();
     this.getChildren().clear();
     setPoly();

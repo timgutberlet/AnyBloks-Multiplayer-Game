@@ -15,6 +15,7 @@ public class SquarePolyPane extends PolyPane {
 
   public SquarePolyPane(Poly poly, InputHandler inputHandler, double width) {
     super(poly, inputHandler, width);
+    this.size = width / 115;
     setPoly();
   }
 
@@ -47,8 +48,9 @@ public class SquarePolyPane extends PolyPane {
         size + j * size, size + i * size,
         0 + j * size, size + i * size);
     field.setFill(color);
-
-    fields.add(field);
+    if (!color.equals(Color.TRANSPARENT)) {
+      fields.add(field);
+    }
     this.getChildren().add(field);
   }
 

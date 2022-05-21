@@ -136,5 +136,12 @@ public class DragablePolyPane extends Pane {
     submit.toFront();
   }
 
+  public double getCircleX() {
+    return circleX;
+  }
+
+  public double getCircleY() {
+    return circleY;
+  }
 }
 

@@ -30,6 +30,7 @@ public class TrigonPolyPane extends PolyPane {
 
   public TrigonPolyPane(Poly poly, InputHandler inputHandler, double width) {
     super(poly, inputHandler, width);
+    this.size = width / 132;
     xOfSet = Math.sin(Math.toRadians(30)) * size;
     yOfSet = Math.sin(Math.toRadians(60)) * size;
     setPoly();
@@ -54,9 +55,8 @@ public class TrigonPolyPane extends PolyPane {
     triangleRight.setFill(color);
     triangleRight.setStroke(Color.TRANSPARENT);
     if (!color.equals(Color.TRANSPARENT)) {
-      triangleRight.setStroke(Color.BLACK);
+      fields.add(triangleRight);
     }
-    fields.add(triangleRight);
     this.getChildren().add(triangleRight);
   }
 
@@ -92,9 +92,8 @@ public class TrigonPolyPane extends PolyPane {
     triangleLeft.setFill(color);
     triangleLeft.setStroke(Color.TRANSPARENT);
     if (!color.equals(Color.TRANSPARENT)) {
-      triangleLeft.setStroke(Color.BLACK);
+      fields.add(triangleLeft);
     }
-    fields.add(triangleLeft);
     this.getChildren().add(triangleLeft);
   }
 

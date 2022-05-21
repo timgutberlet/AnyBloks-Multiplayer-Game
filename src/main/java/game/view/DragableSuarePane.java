@@ -1,5 +1,6 @@
 package game.view;
 
+import engine.component.Field;
 import engine.handler.InputHandler;
 import game.controller.InGameUiController;
 import game.view.poly.PolyPane;
@@ -39,10 +40,23 @@ public class DragableSuarePane extends DragablePolyPane {
     donut.setFill(Color.GRAY);
 
     polyPane.setSize(size);
+    /*double polyX = 0;
+    double polyY = 0;
+    for(Field field : polyPane.getFields()){
+      polyX += field.getX();
+      polyY += field.getY();
+    }
+    polyX /= polyPane.getFields().size();
+    polyY /= polyPane.getFields().size();
+
+    polyX *= polyPane.getSize();
+    polyY *= polyPane.getSize();*/
     double polyX = polyPane.getSize() * (polyPane.getPoly().getHeight() / 2.0);
     double polyY = polyPane.getSize() * (polyPane.getPoly().getWidth() / 2.0);
+
     double xOfSet = circleX - polyX;
     double yOfSet = circleY - polyY;
+
     polyPane.relocate(xOfSet, yOfSet);
 
     this.getChildren().add(donut);
