@@ -26,6 +26,7 @@ public class UpdateAccountRessource {
   public Response update(WrappedPacket wrappedPacket) {
     System.out.println("Hi from updateAcc method");
     String errorMessage = "";
+
     try {
       if (wrappedPacket.getPacketType() != PacketType.UPDATE_ACCOUNT_REQUEST_PACKET) {
         errorMessage = "This packet is not of the correct type";
@@ -36,6 +37,9 @@ public class UpdateAccountRessource {
         String username = updateAccountRequestPacket.getUsername();
         String passwordHash = updateAccountRequestPacket.getPasswordHash();
         String updatedPasswordHash = updateAccountRequestPacket.getUpdatedPasswordHash();
+        System.out.println("oldPW: " + passwordHash);
+        System.out.println("newPW: " + updatedPasswordHash);
+        System.out.println("username : " + username);
 
         DbServer dbServer = DbServer.getInstance();
         //Make sure the is a user with that username

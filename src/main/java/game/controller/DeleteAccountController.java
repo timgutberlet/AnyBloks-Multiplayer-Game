@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.CreateAccountRequestPacket;
+import net.packet.account.DeleteAccountRequestPacket;
 import net.server.HashingHandler;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
@@ -60,7 +60,7 @@ public class DeleteAccountController extends AbstractUiController {
    * Error Textfield used for informing the user of errors.
    */
   @FXML
-  Text usernameError, passwordError,  ipError;
+  Text usernameError, passwordError, ipError;
 
   /**
    * Constructor used for setting the gamecontroller and initating.
@@ -90,22 +90,26 @@ public class DeleteAccountController extends AbstractUiController {
       passwordError.setText("");
       ipError.setText("");
       //Sets the Theme, according to the settings
-      switch (Config.getStringValue("THEME")){
+      switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
           mainPane.setStyle("-fx-background-color:#ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
           mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {
@@ -118,7 +122,7 @@ public class DeleteAccountController extends AbstractUiController {
    *
    * @author tgutberl
    */
-  public void serverDeleteAccount(String username, String password, String ip){
+  public void serverDeleteAccount(String username, String password, String ip) {
     //TODO remove
     try {
       ip = Inet4Address.getLocalHost().getHostAddress();
@@ -126,19 +130,19 @@ public class DeleteAccountController extends AbstractUiController {
       e.printStackTrace();
     }
 
-
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
-		String passwordHash = HashingHandler.sha256encode(password);
+    String passwordHash = HashingHandler.sha256encode(password);
 
-		CreateAccountRequestPacket carp = new CreateAccountRequestPacket(username, passwordHash);
-		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-				carp);
+    DeleteAccountRequestPacket deleteAccountRequestPacket = new DeleteAccountRequestPacket(username,
+        passwordHash);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.DELETE_ACCOUNT_REQUEST_PACKET,
+        deleteAccountRequestPacket);
 
-		String targetAddress = "http://" + ip + ":8082/";
-		WebTarget targetPath = testClient.target(targetAddress).path("/register/");
-		Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
-				.put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
+    String targetAddress = "http://" + ip + ":8082/";
+    WebTarget targetPath = testClient.target(targetAddress).path("/deleteAccount/");
+    Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
+        .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
     if (receivedAnswer.getStatus() != 200) {
       System.out.println("Something went wrong");
@@ -146,7 +150,7 @@ public class DeleteAccountController extends AbstractUiController {
     } else {
       System.out.println(receivedAnswer.getStatus());
       System.out.println("Everything worked");
-      gameController.setActiveUiController(new JoinAuthController(gameController,ip, username));
+      gameController.setActiveUiController(new JoinAuthController(gameController, ip, username));
 
     }
   }
@@ -160,13 +164,14 @@ public class DeleteAccountController extends AbstractUiController {
   public void deleteAccount() {
     usernameError.setText("");
     passwordError.setText("");
-    if(passwordField.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() >= 2 ){
-      serverDeleteAccount(usernameField.getText(),passwordField.getText(),ipField.getText());
-    }else{
-      if(usernameField.getText().length() < 2) {
+    if (passwordField.getText().length() >= 6 && !usernameField.getText().equals("")
+        && usernameField.getText().length() >= 2) {
+      serverDeleteAccount(usernameField.getText(), passwordField.getText(), ipField.getText());
+    } else {
+      if (usernameField.getText().length() < 2) {
         usernameError.setText("Please enter a username with at least two Characters");
       }
-      if(passwordField.getText().length() < 6){
+      if (passwordField.getText().length() < 6) {
         passwordError.setText("The Password has to be at least 6 Characters!");
       }
     }
@@ -206,6 +211,7 @@ public class DeleteAccountController extends AbstractUiController {
 
   /**
    * Override Update Method
+   *
    * @param gameController GameController of game
    */
   @Override

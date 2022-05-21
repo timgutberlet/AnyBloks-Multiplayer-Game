@@ -137,6 +137,7 @@ public class EditAccountController extends AbstractUiController {
     WrappedPacket wrappedUpdateAccountRequestPacket = new WrappedPacket(
         PacketType.UPDATE_ACCOUNT_REQUEST_PACKET, updateAccountRequestPacket, username,
         passwordHash);
+
     WebTarget targetPathUpdate = testClient.target(targetAddress).path("/updateAccount/");
     Response receivedAnswer = targetPathUpdate.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(wrappedUpdateAccountRequestPacket, MediaType.APPLICATION_JSON));
