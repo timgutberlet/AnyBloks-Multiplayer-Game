@@ -22,6 +22,8 @@
 
 .label {
   -fx-text-fill: #000000;
+  -fx-background-insets: 0;
+  -fx-background-radius: 4px;
 }
 
 .text-field {

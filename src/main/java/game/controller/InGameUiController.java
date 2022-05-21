@@ -44,6 +44,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -229,15 +230,20 @@ public abstract class InGameUiController extends AbstractUiController {
     for (Player p : this.gameSession.getPlayerList()) {
       VBox vbox = new VBox();
       Label name = new Label(p.getUsername());
+      name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5;");
       name.setTextFill(ColorHandler.getJavaColor(game.getGameState().getColorFromPlayer(p)));
       name.setFont(Font.font("System", 20));
+      name.setPadding(new Insets(0, 10, 0, 10));
       Label score = new Label("0");
+      score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5;");
+      score.setPadding(new Insets(0, 10, 0, 10));
       score.setFont(Font.font("System", 30));
       names.add(name);
       scores.add(score);
       vbox.getChildren().add(name);
       vbox.getChildren().add(score);
       vbox.setAlignment(Pos.CENTER);
+      vbox.setSpacing(5);
       if (i < playerSize / 2) {
         scorePane.add(vbox, i, 0);
       } else {
