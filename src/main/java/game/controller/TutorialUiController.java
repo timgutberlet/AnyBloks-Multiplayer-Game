@@ -1,7 +1,6 @@
 package game.controller;
 
 import engine.controller.AbstractGameController;
-import engine.handler.ThreadHandler;
 import game.model.GameSession;
 import java.util.ArrayList;
 
@@ -26,11 +25,10 @@ public class TutorialUiController extends InGameUiController {
    *
    * @param gameController gamecontroler
    * @param gameSession    gamesession
-   * @param threadHelp     threadhelp
    */
   public TutorialUiController(AbstractGameController gameController,
-      GameSession gameSession, ThreadHandler threadHelp) {
-    super(gameController, gameSession.getGame(), gameSession, threadHelp);
+      GameSession gameSession) {
+    super(gameController, gameSession.getGame(), gameSession);
     hints = new ArrayList<>();
   }
 }

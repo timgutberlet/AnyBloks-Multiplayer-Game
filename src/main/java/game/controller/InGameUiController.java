@@ -6,7 +6,6 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
-import engine.handler.ThreadHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.Game;
@@ -135,13 +134,12 @@ public abstract class InGameUiController extends AbstractUiController {
   private List<Label> names;
   private Label turn;
 
-  private final ThreadHandler threadHelp;
+
 
 
   public InGameUiController(AbstractGameController gameController, Game game,
-      GameSession gameSession, ThreadHandler threadHelp) {
+      GameSession gameSession) {
     super(gameController);
-    this.threadHelp = threadHelp;
     this.inputHandler = gameController.getInputHandler();
     this.gameSession = gameSession;
     this.game = gameSession.getGame();
@@ -152,7 +150,6 @@ public abstract class InGameUiController extends AbstractUiController {
     stackPanes = new ArrayList<>();
     possibleFields = new ArrayList<>();
     submitRequested = false;
-    threadHelp.start();
     setUpUi();
   }
 
@@ -708,7 +705,6 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   protected void gameEnd() {
-    threadHelp.interrupt();
     this.gameSession.endGame(null);
   }
 
@@ -719,7 +715,6 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-    threadHelp.interrupt();
   }
 
   /**

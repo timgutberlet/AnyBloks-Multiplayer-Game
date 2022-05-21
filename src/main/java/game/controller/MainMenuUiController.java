@@ -2,7 +2,6 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
-import engine.handler.ThreadHandler;
 import engine.handler.ThreadHandlerRestful;
 import game.config.Config;
 import game.model.Game;
@@ -117,9 +116,8 @@ public class MainMenuUiController extends AbstractUiController {
     gameSession.addPlayer(opponentAiPlayer);
     gameSession.setGame(new Game(gameSession, gameMode));
     gameSession.startGame(gameMode);
-    ThreadHandler threadHelp = new ThreadHandler(gameSession);
     gameController.setActiveUiController(
-        new TutorialUiController(gameController, gameSession, threadHelp));
+        new TutorialUiController(gameController, gameSession));
   }
 
   /**

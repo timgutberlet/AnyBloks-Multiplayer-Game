@@ -2,7 +2,6 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
-import engine.handler.ThreadHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
@@ -174,10 +173,9 @@ public class JoinLobbyUiController extends AbstractUiController {
   public void update(AbstractGameController gameController, double deltaTime) {
     System.out.println("Gamesession: " + this.gameSession);
     if (this.gameSession.isGameStarted()) {
-      ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
+
       gameController.setActiveUiController(
-          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession,
-              threadHelp));
+          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
     } else {
       Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }

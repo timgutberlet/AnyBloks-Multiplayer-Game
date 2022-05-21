@@ -58,27 +58,6 @@ public class Game {
 
 
 
-  /**
-   * OLD DO NOT USE ANYMORE!! //TODO delete when all usages are changed function that calls the next
-   * move to be made
-   *
-   * @author tgeilen
-   */
-
-  public void makeMoveServer() {
-    if (this.gameState.isStateRunning()) {
-
-      Player currentPlayer = this.gameState.getPlayerCurrent();
-      Debug.printMessage(
-          "[GAMECONSOLE] " + currentPlayer.getUsername() + " is now the active player");
-
-      Turn turn = currentPlayer.makeTurn(this.gameState);
-      if (this.gameState.playTurn(turn)) {
-        this.gameSession.increaseScore(currentPlayer, turn.getValue());
-        currentPlayer.talk();
-      }
-    }
-  }
 
   /**
    * function used by the server to make a turn either call s the next player to make a move or

@@ -3,7 +3,6 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import engine.handler.ErrorMessageHandler;
-import engine.handler.ThreadHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
@@ -562,10 +561,9 @@ public class HostLobbyUiController extends AbstractUiController {
 
     if (this.gameSession.isGameStarted() && this.gameSession.isLocalPlayerTurn()) {
       gameSession.setGameOver(false);
-      ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
+
       gameController.setActiveUiController(
-          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession,
-              threadHelp));
+          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
       //this.gameSession.setGameStarted();
     } else {
       Debug.printMessage(this, "GameSession Controller " + this.gameSession);

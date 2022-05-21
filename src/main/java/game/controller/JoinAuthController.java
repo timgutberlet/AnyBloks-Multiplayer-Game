@@ -2,7 +2,6 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
-import engine.handler.ThreadHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
@@ -340,7 +339,6 @@ public class JoinAuthController extends AbstractUiController {
       } else {
 
         if (this.joinSuccesful) {
-          ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
           gameController.setActiveUiController(
               new JoinLobbyUiController(gameController, gameSession));
           this.gameSession.setGameStarted(false);
