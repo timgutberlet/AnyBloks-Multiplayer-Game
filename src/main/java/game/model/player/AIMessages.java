@@ -35,9 +35,11 @@ public class AIMessages {
    */
   public static void getAfterTurnAIComment(GameSession gameSession) {
     if (gameSession.getLocalPlayer().isAI()) {
-      String message = afterTurnComments[(int) Math.round(
-          Math.random() * afterTurnComments.length)];
-      gameSession.addChatMessage(message);
+      if (Math.round(Math.random() * 4) < 0) {
+        String message = afterTurnComments[(int) Math.round(
+            Math.random() * afterTurnComments.length)];
+        gameSession.addChatMessage(message);
+      }
     }
   }
 
