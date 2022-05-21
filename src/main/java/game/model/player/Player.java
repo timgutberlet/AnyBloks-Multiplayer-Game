@@ -199,7 +199,6 @@ public class Player implements Serializable {
           Thread.sleep(10);
           Debug.printMessage(this, "Waiting for PlayerInput from this "+ this);
         } catch (InterruptedException e) {
-          e.printStackTrace();
         }
       }
       System.out.println("Turn Selected from player " + this);

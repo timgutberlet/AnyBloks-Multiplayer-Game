@@ -17,7 +17,6 @@ import javafx.scene.input.KeyCode;
  * @author tgutberl
  */
 public class InputHandler {
-
   /**
    * Sets for Pressed Keys and Pressed Keys while the Frame repainted.
    */

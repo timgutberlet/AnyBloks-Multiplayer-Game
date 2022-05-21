@@ -347,9 +347,15 @@ public class LocalLobbyUiController extends AbstractUiController {
       Debug.printMessage("Laenge der Liste: "+this.gameSession.getPlayerList().size());
 
       if(this.gameSession.getPlayerList().size()==4){
-        player1.setText(this.gameSession.getPlayerList().get(1).getUsername());
-        player2.setText(this.gameSession.getPlayerList().get(2).getUsername());
-        player3.setText(this.gameSession.getPlayerList().get(3).getUsername());
+        if(player1.getText().equals("-")){
+          player1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+        }
+        if(player2.getText().equals("-")){
+          player2.setText(this.gameSession.getPlayerList().get(2).getUsername());
+        }
+        if(player3.getText().equals("-")){
+          player3.setText(this.gameSession.getPlayerList().get(3).getUsername());
+        }
       }
     }
   }
