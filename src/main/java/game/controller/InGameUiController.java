@@ -7,6 +7,7 @@ import engine.controller.AbstractUiController;
 import engine.handler.ColorHandler;
 import engine.handler.InputHandler;
 import engine.handler.ThreadHandler;
+import game.config.Config;
 import game.model.Debug;
 import game.model.Game;
 import game.model.GameSession;
@@ -144,6 +145,7 @@ public abstract class InGameUiController extends AbstractUiController {
     this.gameController = gameController;
     this.stage = gameController.getStage();
     this.alreadyInChat = new ArrayList<>();
+    this.anchorPane = new AnchorPane();
     stackPanes = new ArrayList<>();
     possibleFields = new ArrayList<>();
     submitRequested = false;
@@ -156,8 +158,9 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   public void registerChatMessage() {
     if (chatInput.getText().length() > 0) {
-      gameSession.addChatMessage(chatInput.getText());
+      String text = chatInput.getText();
       chatInput.setText("");
+      gameSession.addChatMessage(text);
       chatSelected = false;
     } else {
       chatSelected = false;
@@ -191,7 +194,9 @@ public abstract class InGameUiController extends AbstractUiController {
     container.setPrefWidth(width);
     container.setSpacing(10);
     container.setAlignment(Pos.CENTER);
-    super.root.getChildren().add(container);
+    anchorPane.getChildren().add(container);
+
+    this.root.getChildren().add(anchorPane);
 
     content = new HBox();
     content.setPrefWidth(width);
@@ -207,7 +212,7 @@ public abstract class InGameUiController extends AbstractUiController {
     topPane.setPrefWidth(width);
     topPane.setPrefHeight(100);
     topPane.setMaxHeight(100);
-    super.root.getChildren().add(topPane);
+    anchorPane.getChildren().add(topPane);
 
     scores = new ArrayList<>();
     names = new ArrayList<>();
@@ -215,7 +220,7 @@ public abstract class InGameUiController extends AbstractUiController {
     scorePane.setPrefWidth(width);
     scorePane.setPrefHeight(100);
     scorePane.setMaxHeight(100);
-    super.root.getChildren().add(scorePane);
+    anchorPane.getChildren().add(scorePane);
 
 
     int i = 0;
@@ -308,14 +313,15 @@ public abstract class InGameUiController extends AbstractUiController {
     inputHandler.makeDraggable(chatPane);
     double chatHeight  = gameController.getStage().getScene().getHeight();
     double chatWidth  = gameController.getStage().getScene().getWidth();
-    chatPane.setTranslateX(chatWidth - 300 - 100);
+    chatPane.setTranslateX(chatWidth - 300 - 50);
     chatPane.setTranslateY(chatHeight - height/6 - 15);
-    this.root.getChildren().add(chatPane);
+    anchorPane.getChildren().add(chatPane);
 
 
     buttonBox = new HBox();
-    buttonBox.setAlignment(Pos.CENTER);
-    buttonBox.setSpacing(20);
+    buttonBox.setAlignment(Pos.BOTTOM_CENTER);
+    buttonBox.setMinHeight(50);
+    buttonBox.setSpacing(40);
 
     infoButton = new Button("Help");
     quitButton = new Button("Quit");
@@ -359,6 +365,26 @@ public abstract class InGameUiController extends AbstractUiController {
     buttonBox.getChildren().add(testButton);
     buttonBox.getChildren().add(chatButton);
     container.getChildren().add(buttonBox);
+
+    switch (Config.getStringValue("THEME")){
+      case "BRIGHT":
+        topPane.setStyle("-fx-background-color:#FF4B4B;");
+        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+        break;
+      case "DARK":
+        topPane.setStyle("-fx-background-color:#F0B27A;");
+        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+        break;
+      case "INTEGRA":
+        topPane.setStyle("-fx-background-color:#FF8000;");
+        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+        break;
+      case "THINC!":
+        topPane.setStyle("-fx-background-color:#0A123D;");
+        this.root.setStyle("-fx-background-color:#0A123D;");
+        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+        break;
+    }
   }
 
   private void handleTestButtonClicked() {
