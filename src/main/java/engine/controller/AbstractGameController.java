@@ -19,13 +19,12 @@ public abstract class AbstractGameController extends AnimationTimer {
   private final Group gameRoot;
   private final Application application;
   private final InputHandler inputHandler;
+  private final boolean printFps = Config.getBooleanValue("SHOW_FPS");
   private AbstractUiController activeUiController;
   private int frameCount;
   private long newTime;
   private long waitTime;
   private long fpsTimer;
-  private final boolean printFps = Config.getBooleanValue("SHOW_FPS");
-
   private long lastNanoTime;
 
   /**

@@ -72,6 +72,7 @@ public class Config {
 
   /**
    * Getter for intValues
+   *
    * @param name
    * @return
    */
@@ -81,6 +82,7 @@ public class Config {
 
   /**
    * Getter for BooleanValues
+   *
    * @param name
    * @return
    */

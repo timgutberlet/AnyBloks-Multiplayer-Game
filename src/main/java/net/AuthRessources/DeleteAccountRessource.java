@@ -9,7 +9,6 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.DeleteAccountRequestPacket;
-import net.packet.account.UpdateAccountRequestPacket;
 import net.server.DbServer;
 
 /**
@@ -39,7 +38,7 @@ public class DeleteAccountRessource {
 
         DbServer dbServer = DbServer.getInstance();
         //Make sure there is a user with that username
-        if(!dbServer.doesUsernameExist(username)){
+        if (!dbServer.doesUsernameExist(username)) {
           throw new Exception("The provided credentials appear to be false.");
         }
         //Ensure the user entered the right password
@@ -48,7 +47,7 @@ public class DeleteAccountRessource {
           throw new Exception();
         } else {
           //With the proper credentials the user is deleted.
-          if(dbServer.deleteAccount(username)){
+          if (dbServer.deleteAccount(username)) {
             // Return ok is the update works.
             return Response.ok().build();
           } else {

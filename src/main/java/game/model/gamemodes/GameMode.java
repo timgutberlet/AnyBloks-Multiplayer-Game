@@ -18,8 +18,9 @@ public class GameMode {
 
   /**
    * creates a new game mode.
+   *
    * @param name of the game mode
-   * @param num number of needed players
+   * @param num  number of needed players
    */
   public GameMode(String name, int num) {
     this.name = name;
@@ -29,6 +30,7 @@ public class GameMode {
 
   /**
    * gets the name of the game mode.
+   *
    * @return name of the game mode
    */
   public String getName() {
@@ -37,6 +39,7 @@ public class GameMode {
 
   /**
    * gets the number of needed player.
+   *
    * @return number of needed player
    */
   public int getNeededPlayers() {

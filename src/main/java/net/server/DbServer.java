@@ -20,7 +20,7 @@ public class DbServer extends DbHandler {
    */
   private static final String location = "./blocks3/sqliteDb/Server.db";
   /**
-   * Instance that can be provided
+   * Instance that can be provided.
    */
   private static DbServer instance;
 
@@ -176,7 +176,8 @@ public class DbServer extends DbHandler {
       e.printStackTrace();
     }
 
-    return userHasToken || username.equals(Config.getStringValue("HOSTPLAYER")) || username.equals("Bot 1") || username.equals(
+    return userHasToken || username.equals(Config.getStringValue("HOSTPLAYER")) || username.equals(
+        "Bot 1") || username.equals(
         "Bot 2") || username.equals("Bot 3");
   }
 
@@ -432,7 +433,7 @@ public class DbServer extends DbHandler {
    * Gat all Scores of games associated with a gameSession(Score)
    *
    * @param gameSessionScoreId id of relevant gameSession
-   * @return ArrayList<GameScoreBoard>
+   * @return ArrayList<GameScoreBoard></GameScoreBoard>
    */
   public synchronized ArrayList<GameScoreBoard> getGameSessionScores(String gameSessionScoreId) {
     ArrayList<GameScoreBoard> gameScores = new ArrayList<>();
@@ -478,21 +479,22 @@ public class DbServer extends DbHandler {
   }
 
   /**
-   * Delete an account along with any stored tokens.
-   * Only call this once the request has been authenticated!
+   * Delete an account along with any stored tokens. Only call this once the request has been
+   * authenticated!
    *
    * @param username of user to be deleted.
    * @return boolean whether the deletion was successful or not
    */
-  public synchronized boolean deleteAccount(String username){
+  public synchronized boolean deleteAccount(String username) {
     boolean passed = false;
-    if(!doesUsernameExist(username)){
+    if (!doesUsernameExist(username)) {
       passed = false;
     } else {
       deleteAuthToken(username);
       try {
         Statement deleteAccountStatement = con.createStatement();
-        deleteAccountStatement.executeUpdate("DELETE FROM players WHERE username = '" +  username + "'");
+        deleteAccountStatement.executeUpdate(
+            "DELETE FROM players WHERE username = '" + username + "'");
         passed = true;
       } catch (SQLException e) {
         e.printStackTrace();

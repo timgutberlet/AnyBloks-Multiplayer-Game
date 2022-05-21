@@ -3,8 +3,6 @@ package net.transmission;
 
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.player.Player;
-import game.model.player.PlayerType;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -111,7 +109,8 @@ public class EndpointServer {
     //Validate the token sent with the packet, only if it is valid, the request is handled
     System.out.println(username);
     System.out.println(authToken);
-System.out.println(dbServer.testAuthToken(username, authToken) + " In endpoint server verfiy login");
+    System.out.println(
+        dbServer.testAuthToken(username, authToken) + " In endpoint server verfiy login");
     if (dbServer.testAuthToken(username, authToken)) {
       System.out.println("Passed if testAuth");
       switch (type) {

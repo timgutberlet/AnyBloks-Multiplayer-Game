@@ -4,8 +4,6 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -21,7 +19,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.UpdateAccountRequestPacket;
 import net.server.HashingHandler;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -92,22 +89,26 @@ public class EditAccountController extends AbstractUiController {
       oldPasswordError.setText("");
       newPasswordError.setText("");
       //Sets the Theme, according to the settings
-      switch (Config.getStringValue("THEME")){
+      switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
           mainPane.setStyle("-fx-background-color:#ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
           mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {
@@ -122,8 +123,8 @@ public class EditAccountController extends AbstractUiController {
    * @author tgutberl
    */
 
-  public void serverEditAccount(String username,String oldPassword, String updatedPassword, String ip){
-
+  public void serverEditAccount(String username, String oldPassword, String updatedPassword,
+      String ip) {
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
@@ -142,14 +143,13 @@ public class EditAccountController extends AbstractUiController {
     Response receivedAnswer = targetPathUpdate.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(wrappedUpdateAccountRequestPacket, MediaType.APPLICATION_JSON));
 
-
     if (receivedAnswer.getStatus() != 200) {
       System.out.println("Something went wrong");
       usernameError.setText(String.valueOf(receivedAnswer.getStatusInfo()));
     } else {
       System.out.println(receivedAnswer.getStatus());
       System.out.println("Everything worked");
-      gameController.setActiveUiController(new JoinAuthController(gameController,ip, username));
+      gameController.setActiveUiController(new JoinAuthController(gameController, ip, username));
 
     }
   }
@@ -164,13 +164,15 @@ public class EditAccountController extends AbstractUiController {
     usernameError.setText("");
     oldPasswordError.setText("");
     newPasswordError.setText("");
-    if(oldPasswordField.getText().length() >= 6 && !usernameField.getText().equals("") && usernameField.getText().length() >= 2 ){
-      serverEditAccount(usernameField.getText(),oldPasswordField.getText(),newPasswordField.getText(),ipField.getText());
-    }else{
-      if(usernameField.getText().length() < 2) {
+    if (oldPasswordField.getText().length() >= 6 && !usernameField.getText().equals("")
+        && usernameField.getText().length() >= 2) {
+      serverEditAccount(usernameField.getText(), oldPasswordField.getText(),
+          newPasswordField.getText(), ipField.getText());
+    } else {
+      if (usernameField.getText().length() < 2) {
         usernameError.setText("Please enter a username with at least two Characters");
       }
-      if(oldPasswordField.getText().length() < 6){
+      if (oldPasswordField.getText().length() < 6) {
         oldPasswordError.setText("The Password has to be at least 6 Characters!");
       }
     }
@@ -215,10 +217,10 @@ public class EditAccountController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController) {
-    if(oldPasswordField.getText().length() < 6 && oldPasswordField.getText().length() > 0){
+    if (oldPasswordField.getText().length() < 6 && oldPasswordField.getText().length() > 0) {
       oldPasswordError.setText("The Password has to be at least 6 Characters!");
     }
-    if(usernameField.getText().length() < 2 && usernameField.getText().length() > 0){
+    if (usernameField.getText().length() < 2 && usernameField.getText().length() > 0) {
       usernameError.setText("The username has to be at least 2 Characters!");
     }
   }

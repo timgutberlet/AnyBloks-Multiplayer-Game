@@ -2,25 +2,22 @@ package net.transmission;
 
 //import game.controller.JoinGameLobbyController;
 //import game.controller.LocalGameLobbyController;
+
 import game.controller.HostLobbyUiController;
 import game.controller.JoinAuthController;
 import game.controller.JoinLobbyUiController;
 import game.controller.LocalLobbyUiController;
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.EncodeException;
-import javax.websocket.Endpoint;
-import javax.websocket.EndpointConfig;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.chat.ChatMessagePacket;
 import net.server.ClientHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,94 +32,96 @@ import org.slf4j.LoggerFactory;
 
 public class EndpointClient {
 
+  private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
   private Session server;
   private GameSession gameSession;
   private ClientHandler clientHandler;
   private Player player;
 
-	//used to add the bots, therefore initLocalGame() not needed
-	public EndpointClient(Player player){
-		super();
-		this.player = player;
-		this.gameSession = new GameSession();
-		this.gameSession.setLocalPlayer(player);
-		this.player.setGameSession(this.gameSession);
-		this.clientHandler = new ClientHandler(this);
-	}
+  //used to add the bots, therefore initLocalGame() not needed
+  public EndpointClient(Player player) {
+    super();
+    this.player = player;
+    this.gameSession = new GameSession();
+    this.gameSession.setLocalPlayer(player);
+    this.player.setGameSession(this.gameSession);
+    this.clientHandler = new ClientHandler(this);
+    this.gameSession.setClientHandler(this.clientHandler);
+  }
 
-	public EndpointClient(LocalLobbyUiController localLobbyUiController, Player player) {
-		super();
-		this.player = player;
-		this.gameSession = new GameSession(player);
-		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
-		this.gameSession.setLocalPlayer(player);
-		this.player.setGameSession(this.gameSession);
-		this.clientHandler = new ClientHandler(this);
-		Debug.printMessage(this, "EndpointClient created from GUI 1");
-		this.clientHandler.initLocalGame(player);
+  public EndpointClient(LocalLobbyUiController localLobbyUiController, Player player) {
+    super();
+    this.player = player;
+    this.gameSession = new GameSession(player);
+    Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+    this.gameSession.setLocalPlayer(player);
+    this.player.setGameSession(this.gameSession);
+    this.clientHandler = new ClientHandler(this);
+    Debug.printMessage(this, "EndpointClient created from GUI 1");
+    this.clientHandler.initLocalGame(player);
 
-		Debug.printMessage(this, "EndpointClient created from GUI 2");
-	}
-	public EndpointClient(HostLobbyUiController localLobbyUiController, Player player) {
-		super();
-		this.player = player;
-		this.gameSession = new GameSession(player);
-		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
-		this.gameSession.setLocalPlayer(player);
-		this.player.setGameSession(this.gameSession);
-		this.clientHandler = new ClientHandler(this);
-		Debug.printMessage(this, "EndpointClient created from GUI 1");
-		this.clientHandler.initLocalGame(player);
+    Debug.printMessage(this, "EndpointClient created from GUI 2");
+  }
 
-		Debug.printMessage(this, "EndpointClient created from GUI 2");
-	}
+  public EndpointClient(HostLobbyUiController localLobbyUiController, Player player) {
+    super();
+    this.player = player;
+    this.gameSession = new GameSession(player);
+    Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+    this.gameSession.setLocalPlayer(player);
+    this.player.setGameSession(this.gameSession);
+    this.clientHandler = new ClientHandler(this);
+    Debug.printMessage(this, "EndpointClient created from GUI 1");
+    this.clientHandler.initLocalGame(player);
 
-	public EndpointClient(JoinLobbyUiController joinLobbyUiController, Player player, String ip) {
-		super();
-		this.player = player;
-		this.gameSession = new GameSession(player);
-		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
-		this.gameSession.setLocalPlayer(player);
-		this.player.setGameSession(this.gameSession);
-		this.clientHandler = new ClientHandler(this);
-		Debug.printMessage(this, "EndpointClient created from GUI 1");
-		this.clientHandler.initLocalGame(player, ip);
+    Debug.printMessage(this, "EndpointClient created from GUI 2");
+  }
 
-		Debug.printMessage(this, "EndpointClient created from GUI 2");
-	}
+  public EndpointClient(JoinLobbyUiController joinLobbyUiController, Player player, String ip) {
+    super();
+    this.player = player;
+    this.gameSession = new GameSession(player);
+    Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+    this.gameSession.setLocalPlayer(player);
+    this.player.setGameSession(this.gameSession);
+    this.clientHandler = new ClientHandler(this);
+    Debug.printMessage(this, "EndpointClient created from GUI 1");
+    this.clientHandler.initLocalGame(player, ip);
 
-	public EndpointClient(JoinAuthController joinAuthController, Player player, String ip, String token) {
-		super();
-		this.player = player;
-		this.gameSession = new GameSession(player);
-		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
-		this.gameSession.setAuthToken(token);
+    Debug.printMessage(this, "EndpointClient created from GUI 2");
+  }
 
-		this.gameSession.setLocalPlayer(player);
-		this.player.setGameSession(this.gameSession);
-		this.clientHandler = new ClientHandler(this);
-		Debug.printMessage(this, "EndpointClient created from GUI 1");
-		this.clientHandler.initLocalGame(player, ip, token);
+  public EndpointClient(JoinAuthController joinAuthController, Player player, String ip,
+      String token) {
+    super();
+    this.player = player;
+    this.gameSession = new GameSession(player);
+    Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+    this.gameSession.setAuthToken(token);
 
-		Debug.printMessage(this, "EndpointClient created from GUI 2");
-	}
+    this.gameSession.setLocalPlayer(player);
+    this.player.setGameSession(this.gameSession);
+    this.clientHandler = new ClientHandler(this);
+    Debug.printMessage(this, "EndpointClient created from GUI 1");
+    this.clientHandler.initLocalGame(player, ip, token);
 
-	public EndpointClient() {
+    Debug.printMessage(this, "EndpointClient created from GUI 2");
+  }
 
-	}
+  public EndpointClient() {
 
-	private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
+  }
 
-	/**
-	 * Method used to connect to server. TODO : evaluate createAccount / Login
-	 *
-	 * @param ses Session in use
-	 * @throws IOException     is thrown
-	 * @throws EncodeException is thrown
-	 */
-	@OnOpen
-	public void onOpen(final Session ses)
-			throws IOException, EncodeException {
+  /**
+   * Method used to connect to server. TODO : evaluate createAccount / Login
+   *
+   * @param ses Session in use
+   * @throws IOException     is thrown
+   * @throws EncodeException is thrown
+   */
+  @OnOpen
+  public void onOpen(final Session ses)
+      throws IOException, EncodeException {
 //        ses.getBasicRemote().sendObject(new CreateAccountRequestPacket("testuser", "testPW"));
 
 /*
@@ -130,15 +129,15 @@ public class EndpointClient {
       new CreateAccountRequestPacket("testuser", "testPW")));
    Debug.printMessage(this,"CREATE_ACCOUNT_REQUEST sent to " + ses.getId());
 */
-		this.server = ses;
-		//this.clientHandler = new ClientHandler(this);
-		//this.gameSession = new GameSession();
-		//this.player.setGameSession(this.gameSession);
-		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
-		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
+    this.server = ses;
+    //this.clientHandler = new ClientHandler(this);
+    //this.gameSession = new GameSession();
+    //this.player.setGameSession(this.gameSession);
+    ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
+    ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
 
 
-	}
+  }
 
   @OnMessage
   public void onMessage(final WrappedPacket packet, Session ses) {
@@ -182,39 +181,39 @@ public class EndpointClient {
 
       case PLAYER_LIST_PACKET:
         this.clientHandler.updatePlayerList(packet);
-				break;
+        break;
 
-			case LOGIN_RESPONSE_PACKET:
-					this.clientHandler.denyLogin(packet);
+      case LOGIN_RESPONSE_PACKET:
+        this.clientHandler.denyLogin(packet);
 
-      //
+        //
     }
 
   }
 
 
+  /**
+   * function to easily send packets to server from bot
+   *
+   * @param wrappedPacket
+   * @author tgeilen
+   */
+  public void sendToServer(WrappedPacket wrappedPacket, String botUsername) {
 
-	/**
-	 * function to easily send packets to server from bot
-	 *
-	 * @param wrappedPacket
-	 * @author tgeilen
-	 */
-	public void sendToServer(WrappedPacket wrappedPacket, String botUsername) {
+    wrappedPacket.setToken("");
+    wrappedPacket.setUsername(botUsername);
 
-		wrappedPacket.setToken("");
-		wrappedPacket.setUsername(botUsername);
+    Debug.printMessage(this, "I am sending something to the server...");
+    try {
+      this.server.getBasicRemote().sendObject(wrappedPacket);
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (EncodeException e) {
+      e.printStackTrace();
+    }
+    Debug.printMessage(this, "I have sent something to the server...");
+  }
 
-		Debug.printMessage(this, "I am sending something to the server...");
-		try {
-			this.server.getBasicRemote().sendObject(wrappedPacket);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (EncodeException e) {
-			e.printStackTrace();
-		}
-		Debug.printMessage(this, "I have sent something to the server...");
-	}
   /**
    * function to easily send packets to server
    *
@@ -223,8 +222,8 @@ public class EndpointClient {
    */
   public void sendToServer(WrappedPacket wrappedPacket) {
 
-		wrappedPacket.setToken(this.gameSession.getAuthToken());
-		wrappedPacket.setUsername(this.gameSession.getLocalPlayer().getUsername());
+    wrappedPacket.setToken(this.gameSession.getAuthToken());
+    wrappedPacket.setUsername(this.gameSession.getLocalPlayer().getUsername());
 
     Debug.printMessage(this, "I am sending something to the server...");
     try {
@@ -245,9 +244,9 @@ public class EndpointClient {
     return player;
   }
 
-	public ClientHandler getClientHandler() {
-		return this.clientHandler;
-	}
+  public ClientHandler getClientHandler() {
+    return this.clientHandler;
+  }
 }
 
 

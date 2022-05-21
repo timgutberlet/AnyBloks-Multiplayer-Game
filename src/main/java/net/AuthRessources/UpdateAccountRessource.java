@@ -43,7 +43,7 @@ public class UpdateAccountRessource {
 
         DbServer dbServer = DbServer.getInstance();
         //Make sure the is a user with that username
-        if(!dbServer.doesUsernameExist(username)){
+        if (!dbServer.doesUsernameExist(username)) {
           throw new Exception("The provided credentials appear to be false.");
         }
 
@@ -53,7 +53,7 @@ public class UpdateAccountRessource {
           throw new Exception();
         } else {
           //Save changes in DB with updatePassword()
-          if(dbServer.updatePassword(username,updatedPasswordHash)){
+          if (dbServer.updatePassword(username, updatedPasswordHash)) {
             // Return ok is the update works.
             return Response.ok().build();
           } else {

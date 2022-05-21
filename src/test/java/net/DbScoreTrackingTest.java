@@ -9,8 +9,8 @@ import net.server.DbServer;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests that gameScores & gameSessionScores are put in, and read out of the DB correctly.
- * That is done by inserting 2 gameScores in one GameSessionScore and verifying them.
+ * Tests that gameScores & gameSessionScores are put in, and read out of the DB correctly. That is
+ * done by inserting 2 gameScores in one GameSessionScore and verifying them.
  *
  * @author tbuscher
  */

@@ -12,117 +12,147 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.DeleteAccountController">
-   <children>
-      <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <GridPane GridPane.rowIndex="1">
-               <children>
-                  <GridPane prefHeight="93.0" prefWidth="1280.0" GridPane.rowIndex="1">
-                     <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="110.0" text="BACK">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="110.0" text="QUIT" GridPane.columnIndex="2">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Button>
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0" prefWidth="1348.2804870605469" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-                  <GridPane alignment="CENTER">
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <Label text="Username">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="usernameField" />
-                              <Text fx:id="usernameError" fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0" text="Username Error" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="84.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <children>
-                              <Label prefHeight="59.0" prefWidth="108.0" text="Password">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                              </Label>
-                              <PasswordField fx:id="passwordField" />
-                              <Text fx:id="passwordError" fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0" text="Password Error" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="83.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <children>
-                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#deleteAccount" prefHeight="66.0" prefWidth="279.0" text="Delete Account">
-                                 <font>
-                                    <Font size="35.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="92.0" prefWidth="480.0" GridPane.columnIndex="1">
-                           <children>
-                              <Label text="IP of Server">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="ipField" />
-                              <Text fx:id="ipError" fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0" text="IP Error" />
-                           </children>
-                        </VBox>
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0" prefWidth="443.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0" prefWidth="400.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="156.410888671875" minHeight="100.0" prefHeight="47.5" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-               </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
+  minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
+  xmlns="http://javafx.com/javafx/18" fx:controller="game.controller.DeleteAccountController"
+  fx:id="mainPane">
+  <children>
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+      AnchorPane.topAnchor="0.0" alignment="CENTER" gridLinesVisible="true">
+      <children>
+        <GridPane GridPane.rowIndex="1">
+          <children>
+            <GridPane GridPane.rowIndex="1" prefHeight="93.0" prefWidth="1280.0">
+              <children>
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                  onAction="#back" prefHeight="50.0" prefWidth="110.0" text="BACK">
+                  <GridPane.margin>
+                    <Insets/>
+                  </GridPane.margin>
+                  <font>
+                    <Font size="25.0"/>
+                  </font>
+                </Button>
+                <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#close"
+                  prefHeight="50.0" prefWidth="110.0" text="QUIT">
+                  <font>
+                    <Font size="25.0"/>
+                  </font>
+                </Button>
+              </children>
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0"
+                  minWidth="160.0" prefWidth="160.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0"
+                  prefWidth="1348.2804870605469"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0"
+                  minWidth="150.0" prefWidth="150.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
+                  vgrow="SOMETIMES"/>
+              </rowConstraints>
             </GridPane>
-            <Label alignment="CENTER" graphicTextGap="20.0" text="Delete Account" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <font>
-                  <Font size="50.0" />
-               </font>
-            </Label>
-         </children>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="524.7535400390625" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-   </children>
+            <GridPane alignment="CENTER">
+              <children>
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="CENTER"
+                  prefHeight="100.0" prefWidth="480.0">
+                  <children>
+                    <Label text="Username">
+                      <font>
+                        <Font size="25.0"/>
+                      </font>
+                    </Label>
+                    <Text fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Username Error" fx:id="usernameError"/>
+                    <TextField fx:id="usernameField"/>
+                  </children>
+                </VBox>
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER"
+                  prefHeight="84.0" prefWidth="480.0">
+                  <children>
+                    <Label prefHeight="59.0" prefWidth="108.0" text="Password">
+                      <font>
+                        <Font size="25.0"/>
+                      </font>
+                    </Label>
+                    <PasswordField fx:id="passwordField"/>
+                    <Text fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0"
+                      text="Password Error" fx:id="passwordError"/>
+                  </children>
+                </VBox>
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="3" alignment="CENTER"
+                  prefHeight="83.0" prefWidth="480.0">
+                  <children>
+                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                      onAction="#deleteAccount" prefHeight="66.0" prefWidth="279.0"
+                      text="Delete Account">
+                      <font>
+                        <Font size="35.0"/>
+                      </font>
+                    </Button>
+                  </children>
+                </VBox>
+                <VBox GridPane.columnIndex="1" alignment="CENTER" prefHeight="92.0"
+                  prefWidth="480.0">
+                  <children>
+                    <Label text="IP of Server">
+                      <font>
+                        <Font size="25.0"/>
+                      </font>
+                    </Label>
+                    <Text fill="#ff0606" strokeType="OUTSIDE" strokeWidth="0.0" text="IP Error"
+                      fx:id="ipError"/>
+                    <TextField fx:id="ipField"/>
+                  </children>
+                </VBox>
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0"
+                  prefWidth="400.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0" minWidth="10.0"
+                  prefWidth="443.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="400.0"
+                  prefWidth="400.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
+                  vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="100.0"
+                  vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
+                  vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="156.410888671875" minHeight="100.0" prefHeight="47.5"
+                  vgrow="SOMETIMES"/>
+              </rowConstraints>
+            </GridPane>
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5"
+              vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
+              vgrow="SOMETIMES"/>
+          </rowConstraints>
+        </GridPane>
+        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" alignment="CENTER"
+          graphicTextGap="20.0" text="Delete Account">
+          <font>
+            <Font size="50.0"/>
+          </font>
+        </Label>
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="524.7535400390625" minHeight="10.0" prefHeight="100.0"
+          vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5"
+          vgrow="SOMETIMES"/>
+      </rowConstraints>
+    </GridPane>
+  </children>
 </AnchorPane>

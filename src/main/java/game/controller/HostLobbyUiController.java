@@ -31,6 +31,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -84,6 +85,11 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   private final GameSession gameSession;
   /**
+   * Button to play the game
+   */
+  @FXML
+  Button playButton;
+  /**
    * Error Textmessage.
    */
   @FXML
@@ -100,15 +106,15 @@ public class HostLobbyUiController extends AbstractUiController {
   /**
    * Endpoint client variable used for server establish.
    */
-  private EndpointClient client;
+  private final EndpointClient client;
   /**
    * client handling used for communication handling.
    */
-  private ClientHandler clientHandler;
+  private final ClientHandler clientHandler;
   /**
    * rounds gathered for multi round game.
    */
-  private List<ComboBox<String>> rounds = new ArrayList<>();
+  private final List<ComboBox<String>> rounds = new ArrayList<>();
   /**
    * count of chosen rounds.
    */
@@ -116,7 +122,7 @@ public class HostLobbyUiController extends AbstractUiController {
   /**
    * used for comparing already in chat messages to chat Object.
    */
-  private ArrayList<String> alreadyInChat;
+  private final ArrayList<String> alreadyInChat;
   /**
    * Chat area.
    */
@@ -150,7 +156,7 @@ public class HostLobbyUiController extends AbstractUiController {
   /**
    * gamemodes that were chosen.
    */
-  private LinkedList<GameMode> gameModes = new LinkedList<>();
+  private final LinkedList<GameMode> gameModes = new LinkedList<>();
   /**
    * name of Hostplayer.
    */
@@ -197,13 +203,13 @@ public class HostLobbyUiController extends AbstractUiController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
     Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.REMOTE_PLAYER);
     this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();
     this.gameSession.setLocalPlayer(player);
     this.clientHandler = client.getClientHandler();
+    gameSession.setHostServer(hostServer);
     gameSession.setClientHandler(this.clientHandler);
   }
 
@@ -217,6 +223,7 @@ public class HostLobbyUiController extends AbstractUiController {
     } else {
     }
   }
+
   /**
    * Initalizing UI.
    */
@@ -327,6 +334,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void close() {
+    gameSession.stopSession();
     gameController.setActiveUiController(new PlayUiController(gameController));
   }
 
@@ -343,6 +351,8 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void playGame() {
+    playButton.setText("Waiting for game to start");
+    playButton.setDisable(true);
     ArrayList<Player> players = this.gameSession.getPlayerList();
     boolean error = false;
 
@@ -494,6 +504,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
   /**
    * Method to increase the Ai Difficulty.
+   *
    * @param difficultyPlayer chosen Label of Player
    */
   private void increaseAi(Label difficultyPlayer) {
@@ -515,6 +526,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
   /**
    * Method to decrease the Ai Difficulty.
+   *
    * @param difficultyPlayer chosen Label of Player
    */
   private void decreaseAi(Label difficultyPlayer) {
@@ -544,8 +556,9 @@ public class HostLobbyUiController extends AbstractUiController {
 
   /**
    * Method to update Playerlist and Chat.
+   *
    * @param gameController gamecontroller class
-   * @param deltaTime for Frames
+   * @param deltaTime      for Frames
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
@@ -554,7 +567,7 @@ public class HostLobbyUiController extends AbstractUiController {
       playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
     }
 
-    if (this.gameSession.isGameStarted()) {
+    if (this.gameSession.isGameStarted() && this.gameSession.isLocalPlayerTurn()) {
       gameSession.setGameOver(false);
       ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
       gameController.setActiveUiController(
@@ -566,8 +579,8 @@ public class HostLobbyUiController extends AbstractUiController {
     }
     String help = "";
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
-      if(!alreadyInChat.contains(chatMessage.getTime() + " "
-          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")){
+      if (!alreadyInChat.contains(chatMessage.getTime() + " "
+          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")) {
         alreadyInChat.add(chatMessage.getTime() + " "
             + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
         help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
@@ -579,6 +592,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
   /**
    * override update Method.
+   *
    * @param gameController GameController of game
    */
   @Override

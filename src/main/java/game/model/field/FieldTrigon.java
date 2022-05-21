@@ -15,7 +15,7 @@ public class FieldTrigon extends Field implements Cloneable {
   /**
    * empty constructor for jackson.
    */
-  public FieldTrigon(){
+  public FieldTrigon() {
 
   }
 
@@ -74,14 +74,17 @@ public class FieldTrigon extends Field implements Cloneable {
 
   /**
    * converts the board into code, which creates the board.
+   *
    * @return string containing the creating code
    */
-  public String toCode(){
-    return "new game.model.field.FieldTrigon(" + pos[0] + "," + pos[1] +"," + pos[2] + "," + "game.model.Color." + getColor() + ")";
+  public String toCode() {
+    return "new game.model.field.FieldTrigon(" + pos[0] + "," + pos[1] + "," + pos[2] + ","
+        + "game.model.Color." + getColor() + ")";
   }
 
   /**
    * override of function.
+   *
    * @return
    */
   @Override
@@ -91,6 +94,7 @@ public class FieldTrigon extends Field implements Cloneable {
 
   /**
    * override of function.
+   *
    * @return
    */
   @Override

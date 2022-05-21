@@ -1,24 +1,25 @@
 package engine.handler;
 
-import game.model.GameSession;
 import net.server.HostServer;
 import net.tests.NoLogging;
 
 /**
- * @author tgutberl
- * The Basic Thread can look like this
- *
- * Sollte im folgenden dann noch durch weitere Threadhandler erweiter werden, bitte aber lassen, bis eine Funktionierende Version mit Server steht
+ * @author tgutberl The Basic Thread can look like this
+ * <p>
+ * Sollte im folgenden dann noch durch weitere Threadhandler erweiter werden, bitte aber lassen, bis
+ * eine Funktionierende Version mit Server steht
  */
-public class ThreadHandlerRestful extends Thread{
+public class ThreadHandlerRestful extends Thread {
 
   private HostServer hostServer;
+
   /**
    * Construcotr for setting the gamession
    */
-  public ThreadHandlerRestful(){
+  public ThreadHandlerRestful() {
     this.hostServer = null;
   }
+
   /**
    * Run Method for thread
    */
@@ -31,7 +32,7 @@ public class ThreadHandlerRestful extends Thread{
     } catch (Exception e) {
       e.printStackTrace();
     }
-    while (!Thread.currentThread().isInterrupted()){
+    while (!Thread.currentThread().isInterrupted()) {
     }
     System.out.println("Restful Server Interrupted");
     hostServer.stop();

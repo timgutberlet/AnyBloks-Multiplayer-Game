@@ -2,7 +2,6 @@ package game.model.polygon;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.Color;
-import game.model.field.FieldSquare;
 import game.model.field.FieldTrigon;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +15,6 @@ import java.util.Arrays;
 public class PolyTrigon extends Poly {
 
   public static ArrayList<ArrayList<FieldTrigon>> shapeListTrigon = new ArrayList<>();
-
-  private String polyType = "Trigon";
-
 
   /**
    * Initializing all pieces of the trigon game.
@@ -105,11 +101,12 @@ public class PolyTrigon extends Poly {
    * the polygon or not
    */
   public ArrayList<FieldTrigon> shape;
+  private String polyType = "Trigon";
 
   /**
    * empty constructor for jackson.
    */
-  public PolyTrigon(){
+  public PolyTrigon() {
 
   }
 
@@ -126,14 +123,15 @@ public class PolyTrigon extends Poly {
     for (FieldTrigon ft : shape) {
       ft.setColor(color);
     }
-    this.polyType  = "Trigon";
+    this.polyType = "Trigon";
   }
 
   /**
    * initializes all values of a poly, so it can be used to clone a poly.
-   * @param shape shape of the poly
-   * @param color color of the poly
-   * @param rotation rotation of the poly
+   *
+   * @param shape      shape of the poly
+   * @param color      color of the poly
+   * @param rotation   rotation of the poly
    * @param isMirrored if the poly is mirrored
    */
   public PolyTrigon(ArrayList<FieldTrigon> shape, Color color, int rotation, boolean isMirrored) {
@@ -144,6 +142,7 @@ public class PolyTrigon extends Poly {
 
   /**
    * compares two shapes and evaluates if they are equal independent of rotation and mirroring.
+   *
    * @param s1 shape 1
    * @param s2 shape 2
    * @return if they are the same
@@ -258,8 +257,9 @@ public class PolyTrigon extends Poly {
    */
   public void mirror() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
-    A: for (FieldTrigon ft : getShape()) {
-      switch (ft.getPos()[0]){
+    A:
+    for (FieldTrigon ft : getShape()) {
+      switch (ft.getPos()[0]) {
         case 0: {
           switch (ft.getPos()[1]) {
             case 0 -> {
@@ -296,7 +296,7 @@ public class PolyTrigon extends Poly {
             }
           }
         }
-        case 1:{
+        case 1: {
           switch (ft.getPos()[1]) {
             case 0 -> {
               if (ft.getPos()[2] == 0) {
@@ -332,7 +332,7 @@ public class PolyTrigon extends Poly {
             }
           }
         }
-        case 2:{
+        case 2: {
           switch (ft.getPos()[1]) {
             case 0 -> {
               if (ft.getPos()[2] == 0) {
@@ -368,7 +368,7 @@ public class PolyTrigon extends Poly {
             }
           }
         }
-        case 3:{
+        case 3: {
           switch (ft.getPos()[1]) {
             case 0 -> {
               if (ft.getPos()[2] == 0) {
@@ -412,6 +412,7 @@ public class PolyTrigon extends Poly {
 
   /**
    * gets the shape of the poly.
+   *
    * @return shape of the poly
    */
   public ArrayList<FieldTrigon> getShape() {
@@ -420,6 +421,7 @@ public class PolyTrigon extends Poly {
 
   /**
    * gets deep clone of the poly.
+   *
    * @return deep clone of the poly
    */
   @Override
@@ -433,6 +435,7 @@ public class PolyTrigon extends Poly {
 
   /**
    * evaluates if o is the same poly but maybe in another rotation or mirroring.
+   *
    * @param o other object
    * @return if they are the same
    */
@@ -462,6 +465,7 @@ public class PolyTrigon extends Poly {
 
   /**
    * evaluates if o is exactly the same poly.
+   *
    * @param o other object
    * @return if they are exactly the same
    */
@@ -510,6 +514,7 @@ public class PolyTrigon extends Poly {
 
   /**
    * returns the height of the poly.
+   *
    * @return height of the poly
    */
   @Override
@@ -525,6 +530,7 @@ public class PolyTrigon extends Poly {
 
   /**
    * returns the width of the poly.
+   *
    * @return width of the poly
    */
   @Override
@@ -541,8 +547,9 @@ public class PolyTrigon extends Poly {
 
   /**
    * checks if the poly contains the given field
-   * @param x coordinate
-   * @param y coordinate
+   *
+   * @param x       coordinate
+   * @param y       coordinate
    * @param isRight coordinate
    * @return boolean if the poly contains the field
    */
@@ -557,26 +564,28 @@ public class PolyTrigon extends Poly {
 
   /**
    * returns the type of the poly.
+   *
    * @return
    */
-  public String getPolyType(){
+  public String getPolyType() {
     return this.polyType;
-  }
-
-  /**
-   * converts the board into code, which creates the board.
-   * @return string containing the creating code
-   */
-  public String toCode(){
-    StringBuffer res = new StringBuffer("ArrayList<FieldTrigon> shape = new ArrayList<>();\n");
-    for (FieldTrigon ft : shape){
-      res.append("shape.add(" + ft.toCode() + ");\n");
-    }
-    res.append("PolyTrigon p = new PolyTrigon(shape, Color.Blue);\n");
-    return res.toString();
   }
 
   public void setPolyType(String polyType) {
     this.polyType = polyType;
+  }
+
+  /**
+   * converts the board into code, which creates the board.
+   *
+   * @return string containing the creating code
+   */
+  public String toCode() {
+    StringBuffer res = new StringBuffer("ArrayList<FieldTrigon> shape = new ArrayList<>();\n");
+    for (FieldTrigon ft : shape) {
+      res.append("shape.add(" + ft.toCode() + ");\n");
+    }
+    res.append("PolyTrigon p = new PolyTrigon(shape, Color.Blue);\n");
+    return res.toString();
   }
 }

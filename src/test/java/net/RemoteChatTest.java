@@ -33,84 +33,84 @@ import org.junit.jupiter.api.Test;
  */
 public class RemoteChatTest {
 
-	static HostServer hostServer = new HostServer();
-	static EndpointClient client;
+  static HostServer hostServer = new HostServer();
+  static EndpointClient client;
 
 
+  @BeforeAll
+  public static void beforeAll() {
+    org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+    try {
+      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      hostServer.startWebsocket(8081);
+      Debug.printMessage("[testChatServer] Server is running");
+      TimeUnit.SECONDS.sleep(3);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    //Create and connect client
+    try {
 
-	@BeforeAll
-	public static void beforeAll(){
-		org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-		try {
-			//org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-			hostServer.startWebsocket(8081);
-			Debug.printMessage("[testChatServer] Server is running");
-			TimeUnit.SECONDS.sleep(3);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		//Create and connect client
-		try {
+      final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+      Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
+      client = new EndpointClient(localPlayer);
 
-			final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-			Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
-			client = new EndpointClient(localPlayer);
+      Session session;
 
-			Session session;
+      String IPAdress = Inet4Address.getLocalHost().getHostAddress();
 
-			String IPAdress = Inet4Address.getLocalHost().getHostAddress();
+      session = container.connectToServer(client, URI.create("ws://" + IPAdress + ":8081/packet"));
 
-			session = container.connectToServer(client, URI.create("ws://" + IPAdress + ":8081/packet"));
+      TimeUnit.SECONDS.sleep(1);
 
-			TimeUnit.SECONDS.sleep(1);
+    } catch (
+        UnknownHostException e) {
+      e.printStackTrace();
+    } catch (
+        DeploymentException e) {
+      e.printStackTrace();
+    } catch (
+        IOException e) {
+      e.printStackTrace();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    InitSessionPacket initSessionPacket = new InitSessionPacket();
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_SESSION_PACKET,
+        initSessionPacket);
 
-		} catch (
-				UnknownHostException e) {
-			e.printStackTrace();
-		} catch (
-				DeploymentException e) {
-			e.printStackTrace();
-		} catch (
-				IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		InitSessionPacket initSessionPacket = new InitSessionPacket();
-		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_SESSION_PACKET,initSessionPacket);
+    client.sendToServer(wrappedPacket);
 
-		client.sendToServer(wrappedPacket);
+    //send login request
+    LoginRequestPacket loginRequestPacket = new LoginRequestPacket("username", "password",
+        PlayerType.REMOTE_PLAYER);
+    wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET, loginRequestPacket);
+    client.sendToServer(wrappedPacket);
 
-		//send login request
-		LoginRequestPacket loginRequestPacket = new LoginRequestPacket("username","password",PlayerType.REMOTE_PLAYER);
-		wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,loginRequestPacket);
-		client.sendToServer(wrappedPacket);
-
-	}
-
-
-	@Test
-	public void connectAndSend(){
-
-		try {
-			TimeUnit.SECONDS.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		ChatMessage chatMessage= new ChatMessage("testUser", "Hallo Janik");
-		Chat chat = new Chat();
-		chat.addMessage(chatMessage);
-		ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chat);
-		WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET,chatMessagePacket);
-
-		client.sendToServer(wrappedPacket);
+  }
 
 
-		assertEquals(1,client.getGameSession().getChat().getChatMessages().size());
+  @Test
+  public void connectAndSend() {
+
+    try {
+      TimeUnit.SECONDS.sleep(10);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    ChatMessage chatMessage = new ChatMessage("testUser", "Hallo Janik");
+    Chat chat = new Chat();
+    chat.addMessage(chatMessage);
+    ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chat);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET,
+        chatMessagePacket);
+
+    client.sendToServer(wrappedPacket);
+
+    assertEquals(1, client.getGameSession().getChat().getChatMessages().size());
 
 
-
-	}
+  }
 
 }

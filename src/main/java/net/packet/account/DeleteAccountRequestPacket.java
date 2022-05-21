@@ -21,10 +21,10 @@ public class DeleteAccountRequestPacket extends Packet {
   /**
    * Constructor to used.
    *
-   * @param username as String
+   * @param username     as String
    * @param passwordHash of user as String (sha256 hashed)
    */
-  public DeleteAccountRequestPacket(String username, String passwordHash){
+  public DeleteAccountRequestPacket(String username, String passwordHash) {
     this.username = username;
     this.passwordHash = passwordHash;
   }
@@ -39,21 +39,21 @@ public class DeleteAccountRequestPacket extends Packet {
   }
 
   /**
-   * Getter.
-   *
-   * @return passwordHash as String
-   */
-  public String getPasswordHash() {
-    return passwordHash;
-  }
-
-  /**
    * Setter.
    *
    * @param username to set
    */
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return passwordHash as String
+   */
+  public String getPasswordHash() {
+    return passwordHash;
   }
 
   /**

@@ -1,7 +1,6 @@
 package net.packet.game;
 
 import game.model.Turn;
-import game.model.polygon.Poly;
 import net.packet.abstr.Packet;
 
 /**
@@ -13,7 +12,7 @@ import net.packet.abstr.Packet;
 public class TurnPacket extends Packet {
 
   public String username;
- public Turn turn;
+  public Turn turn;
 
   public TurnPacket() {
     this.username = null;

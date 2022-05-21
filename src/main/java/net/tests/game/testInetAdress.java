@@ -2,7 +2,6 @@ package net.tests.game;
 
 import game.model.Debug;
 import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import net.server.DbServer;
 
@@ -12,20 +11,20 @@ import net.server.DbServer;
  */
 public class testInetAdress {
 
-	public static void main(String[] args) throws UnknownHostException {
-		Debug.printMessage( Inet4Address.getLocalHost().getHostAddress());
+  public static void main(String[] args) throws UnknownHostException {
+    Debug.printMessage(Inet4Address.getLocalHost().getHostAddress());
 
-		DbServer dbServer = null;
-		try {
-			dbServer = DbServer.getInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		dbServer.newAccount("testuser", "123456");
-		String passwordHash = dbServer.getUserPasswordHash("testuser");
+    DbServer dbServer = null;
+    try {
+      dbServer = DbServer.getInstance();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    dbServer.newAccount("testuser", "123456");
+    String passwordHash = dbServer.getUserPasswordHash("testuser");
 
-		System.out.println(dbServer.doesUsernameExist("testuser"));
-		System.out.println(passwordHash);
-	}
+    System.out.println(dbServer.doesUsernameExist("testuser"));
+    System.out.println(passwordHash);
+  }
 
 }

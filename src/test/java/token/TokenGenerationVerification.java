@@ -33,7 +33,6 @@ public class TokenGenerationVerification {
 
     System.out.println(token);
 
-
     try {
       Algorithm algorithm = Algorithm.HMAC256("notblocks3");
       JWTVerifier verifier = JWT.require(algorithm)

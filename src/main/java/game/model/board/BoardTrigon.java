@@ -20,16 +20,15 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   /**
    * List with the fields of the board.
    */
-  private ArrayList<FieldTrigon> board = new ArrayList<>();
+  private final ArrayList<FieldTrigon> board = new ArrayList<>();
 
   /**
    * list with the fields of the board, where player can start the game.
    */
-  private ArrayList<FieldTrigon> startFields = new ArrayList<>();
+  private final ArrayList<FieldTrigon> startFields = new ArrayList<>();
 
   /**
    * creates a new and empty trigon board. Stores as well the right start fields.
-   *
    */
   public BoardTrigon() {
     for (int i = 0; i < 18; i++) {
@@ -58,7 +57,8 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * creates a new trigon board as a copy of the given parameters.
-   * @param board given board as a list of fields
+   *
+   * @param board       given board as a list of fields
    * @param startFields given start fields
    */
   public BoardTrigon(ArrayList<FieldTrigon> board, ArrayList<FieldTrigon> startFields) {
@@ -78,6 +78,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * gives back the board
+   *
    * @return board
    */
   public ArrayList<FieldTrigon> getBoard() {
@@ -86,6 +87,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * returns the color of a field identified by the given coordinates.
+   *
    * @param pos given coordinates
    * @return the specific field
    */
@@ -96,6 +98,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * returns the color of a field identified by the given coordinates.
+   *
    * @param x       x value of the field.
    * @param y       y value of the field
    * @param isRight isRight value of the field
@@ -110,6 +113,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * checks if a field identified by the given coordinates is part of the board.
+   *
    * @param pos given coordinates
    * @return boolean, if the field is part of the board
    */
@@ -120,18 +124,21 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * checks if a field identified by the given coordinates is part of the board.
-   * @param x coordinate
-   * @param y coordinate
+   *
+   * @param x       coordinate
+   * @param y       coordinate
    * @param isRight value of the field
    * @return boolean, if the field is part of the board
    */
   public boolean isOnTheBoard(int x, int y, int isRight) {
     return x >= 0 && x < 18 && y >= 0 && y < 18 && (x + y > 8 && x + y < SIZE
-        || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0) && (isRight == 0 || isRight == 1);
+        || x + y == 8 && isRight == 1 || x + y == SIZE && isRight == 0) && (isRight == 0
+        || isRight == 1);
   }
 
   /**
    * returns the field identified by the given coordinates.
+   *
    * @param pos given coordinates
    * @return the specific field
    */
@@ -142,8 +149,9 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * returns the field identified by the given coordinates.
-   * @param x coordinate
-   * @param y coordinate
+   *
+   * @param x       coordinate
+   * @param y       coordinate
    * @param isRight value of the field
    * @return the specific field
    */
@@ -159,6 +167,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * returns the fields, where player can start their game.
+   *
    * @return list of the fields, where can be started
    */
   public ArrayList<FieldTrigon> getStartFields() {
@@ -170,9 +179,11 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   // ======================================================================
 
   /**
-   * checks if a field identified by the given coordinates has the given color as a direct neighbor, means with a shared edge.
+   * checks if a field identified by the given coordinates has the given color as a direct neighbor,
+   * means with a shared edge.
+   *
    * @param pos given coordinates
-   * @param c given color
+   * @param c   given color
    * @return boolean, if one of the direct neighbor fields has this color
    */
   @Override
@@ -205,9 +216,11 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * checks if a field identified by the given coordinates has the given color as an indirect neighbor, means with a shared corner.
+   * checks if a field identified by the given coordinates has the given color as an indirect
+   * neighbor, means with a shared corner.
+   *
    * @param pos given coordinates
-   * @param c given color
+   * @param c   given color
    * @return boolean, if one of the indirect neighbor fields has this color
    */
   @Override
@@ -270,8 +283,9 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * checks if the given poly is possible at the given position on the field.
-   * @param pos given position (coordinates)
-   * @param poly given poly
+   *
+   * @param pos          given position (coordinates)
+   * @param poly         given poly
    * @param isFirstRound if it is the first round
    * @return boolean, if the poly is possible at the position
    */
@@ -360,23 +374,27 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * gets the coordinates of all fields, where the given poly can be placed (the field with the indirect color neighbor).
-   * @param poly given poly
+   * gets the coordinates of all fields, where the given poly can be placed (the field with the
+   * indirect color neighbor).
+   *
+   * @param poly         given poly
    * @param isFirstRound if it is the first round
    * @return list of coordinates, where the poly can be placed
    */
   @Override
-  public ArrayList<int[]> getPossibleFieldsForPoly(Poly poly, boolean isFirstRound){
+  public ArrayList<int[]> getPossibleFieldsForPoly(Poly poly, boolean isFirstRound) {
     ArrayList<int[]> res = new ArrayList<>();
-    A: for (int[] pos : getPossibleFields(poly.getColor(), isFirstRound)){
-      for (Turn t : getMovesForPoly((PolyTrigon) poly,isFirstRound)){
-        int xRef = ((PolyTrigon)poly).shape.get(0).getPos()[0];
-        int yRef = ((PolyTrigon)poly).shape.get(0).getPos()[1];
+    A:
+    for (int[] pos : getPossibleFields(poly.getColor(), isFirstRound)) {
+      for (Turn t : getMovesForPoly((PolyTrigon) poly, isFirstRound)) {
+        int xRef = ((PolyTrigon) poly).shape.get(0).getPos()[0];
+        int yRef = ((PolyTrigon) poly).shape.get(0).getPos()[1];
         int x = t.getX();
         int y = t.getY();
 
-        for (FieldTrigon fs: ((PolyTrigon) t.getPoly()).getShape()){
-          if (fs.getPos()[0] + x - xRef == pos[0] && fs.getPos()[1] + y - yRef == pos[1] && fs.getPos()[2] == pos[2]){
+        for (FieldTrigon fs : ((PolyTrigon) t.getPoly()).getShape()) {
+          if (fs.getPos()[0] + x - xRef == pos[0] && fs.getPos()[1] + y - yRef == pos[1]
+              && fs.getPos()[2] == pos[2]) {
             res.add(pos);
             continue A;
           }
@@ -399,15 +417,16 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    * if the polygon has to be mirrored.
    */
   @Override
-  public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound){
+  public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
-    for (Poly p : remainingPolys){
+    for (Poly p : remainingPolys) {
       Poly pClone = p.clone();
-      for (boolean mirrored : new boolean[] {true, false}){
-        A: for (int i = 0; i < 6; i++){
+      for (boolean mirrored : new boolean[]{true, false}) {
+        A:
+        for (int i = 0; i < 6; i++) {
           res.addAll(getMovesForPoly((PolyTrigon) p, isFirstRound));
           p.rotateLeft();
-          if (p.equalsReal(pClone)){
+          if (p.equalsReal(pClone)) {
             continue A;
           }
         }
@@ -418,18 +437,24 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * Method gives back a list of all possible moves for one specific poly (without rotation or mirror).
+   * Method gives back a list of all possible moves for one specific poly (without rotation or
+   * mirror).
    *
-   * @param p considered poly
-   * @param isFirstRound   boolean, if it is the first round
+   * @param p            considered poly
+   * @param isFirstRound boolean, if it is the first round
    * @return returns a List with all the possible moves for p
    */
-  public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound){
+  public ArrayList<Turn> getMovesForPoly(PolyTrigon p, boolean isFirstRound) {
     ArrayList<Turn> res = new ArrayList<>();
-    for (int[] pos : getPossibleFields(p.getColor(), isFirstRound)){
-      for(FieldTrigon ft : p.getShape()){
-        if(isPolyPossible(pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2],p, isFirstRound)){
-          res.add(new Turn(p.clone(), new int[] {pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0], pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1], + p.getShape().get(0).getPos()[2]}));
+    for (int[] pos : getPossibleFields(p.getColor(), isFirstRound)) {
+      for (FieldTrigon ft : p.getShape()) {
+        if (isPolyPossible(pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0],
+            pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1],
+            +p.getShape().get(0).getPos()[2], p, isFirstRound)) {
+          res.add(new Turn(p.clone(),
+              new int[]{pos[0] - ft.getPos()[0] + p.getShape().get(0).getPos()[0],
+                  pos[1] - ft.getPos()[1] + p.getShape().get(0).getPos()[1],
+                  +p.getShape().get(0).getPos()[2]}));
         }
       }
     }
@@ -437,9 +462,11 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * gets a list of moves, that are possible with the given poly at one position (considering rotation and mirroring as well).
-   * @param pos given position
-   * @param poly given poly
+   * gets a list of moves, that are possible with the given poly at one position (considering
+   * rotation and mirroring as well).
+   *
+   * @param pos          given position
+   * @param poly         given poly
    * @param isFirstRound if it is the first round
    * @return list of turns, that are possible with that poly at the given position
    */
@@ -518,7 +545,8 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * method to play a given turn.
-   * @param turn given turn
+   *
+   * @param turn         given turn
    * @param isFirstRound if it is the first round
    * @return boolean, if the turn was executed successful
    */
@@ -591,43 +619,44 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   /**
    * this method returns the maximum width a color has occupied measured from the starting edge.
    *
-   * @param c      Color, which is looked for
+   * @param c Color, which is looked for
    * @return maximum width
    */
   @Override
-  public int occupiedWidth(Color c){
+  public int occupiedWidth(Color c) {
     double maxWidth = -1;
     double minWidth = SIZE;
-    for (FieldTrigon ft : board){
-      if(ft.getColor().equals(c)){
+    for (FieldTrigon ft : board) {
+      if (ft.getColor().equals(c)) {
         maxWidth = Math.max(maxWidth, ft.getPos()[0] + 0.5 * ft.getPos()[1] + 0.5 * ft.getPos()[2]);
         minWidth = Math.max(maxWidth, ft.getPos()[0] + 0.5 * ft.getPos()[1] + 0.5 * ft.getPos()[2]);
       }
     }
-    return (int) Math.round(maxWidth-minWidth);
+    return (int) Math.round(maxWidth - minWidth);
   }
 
   /**
    * this method returns the maximum height a color has occupied measured from the starting edge.
    *
-   * @param c      Color, which is looked for
+   * @param c Color, which is looked for
    * @return maximum height
    */
   @Override
-  public int occupiedHeight(Color c){
+  public int occupiedHeight(Color c) {
     int maxHeight = -1;
     int minHeight = SIZE;
-    for (FieldTrigon ft : board){
-      if(ft.getColor().equals(c)){
+    for (FieldTrigon ft : board) {
+      if (ft.getColor().equals(c)) {
         maxHeight = Math.max(maxHeight, ft.getPos()[1]);
         minHeight = Math.max(maxHeight, ft.getPos()[1]);
       }
     }
-    return maxHeight-minHeight;
+    return maxHeight - minHeight;
   }
 
   /**
    * evaluates the current score for a given color.
+   *
    * @param c given color
    * @return score as int
    */
@@ -644,6 +673,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * evaluates the current score for a given color reduced by the score of the other colors.
+   *
    * @param c given color
    * @return score as int
    */
@@ -666,6 +696,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * method to deep clone a board.
+   *
    * @return returns the deep clone of the board
    */
   @Override
@@ -675,17 +706,18 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
 
   /**
    * converts to board to a string.
+   *
    * @return the string representation of the board
    */
   @Override
-  public String toCode(){
+  public String toCode() {
     StringBuffer res = new StringBuffer();
     res.append("BoardTrigon bt = new BoardTrigon(new GMTrigon());\nbt.getBoard().clear();\n");
-    for (FieldTrigon ft : board){
+    for (FieldTrigon ft : board) {
       res.append("bt.getBoard().add(" + ft.toCode() + "); ");
     }
     res.append("\nbt.getStartFields().clear;\n");
-    for (FieldTrigon ft : startFields){
+    for (FieldTrigon ft : startFields) {
       res.append("bt.getStartFields().add(" + ft.toCode() + ");");
     }
     return res.toString();

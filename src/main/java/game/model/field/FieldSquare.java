@@ -66,10 +66,12 @@ public class FieldSquare extends Field implements Cloneable {
 
   /**
    * converts the board into code, which creates the board.
+   *
    * @return string containing the creating code
    */
-  public String toCode(){
-    return "new game.model.field.FieldSquare(" + pos[0] + "," + pos[1] +"," + "game.model.Color." + getColor() + ")";
+  public String toCode() {
+    return "new game.model.field.FieldSquare(" + pos[0] + "," + pos[1] + "," + "game.model.Color."
+        + getColor() + ")";
   }
 
 }

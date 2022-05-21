@@ -7,7 +7,7 @@ import net.server.DbServer;
  */
 public class DBReader {
 
-  public static void main(String[] args){
+  public static void main(String[] args) {
     DbServer dbServer = null;
     try {
       dbServer = DbServer.getInstance();

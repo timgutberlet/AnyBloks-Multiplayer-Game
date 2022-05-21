@@ -30,7 +30,7 @@ public class TokenGenerationRessource {
     System.out.println("Hi from auth method");
 
     try {
-      String username ="";
+      String username = "";
       String passwordHash = "";
       RestfulLoginPacket restfulLoginPacket = null;
       if (wrappedPacket.getPacketType() != PacketType.RESTFUL_LOGIN_PACKET) {
@@ -42,8 +42,8 @@ public class TokenGenerationRessource {
       username = restfulLoginPacket.getUsername();
       passwordHash = restfulLoginPacket.getPasswordHash();
 
-
-      System.out.println(restfulLoginPacket.getUsername() + " " + restfulLoginPacket.getPasswordHash());
+      System.out.println(
+          restfulLoginPacket.getUsername() + " " + restfulLoginPacket.getPasswordHash());
 
       // Authenticate user with db
       authenticate(username, passwordHash);

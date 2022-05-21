@@ -2,11 +2,9 @@ package game.view.board;
 
 import engine.component.Field;
 import engine.handler.InputHandler;
-import game.model.Color;
 import game.model.board.Board;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
@@ -17,12 +15,9 @@ import javafx.scene.paint.Paint;
 
 public class BoardPane extends Pane {
 
-  protected Board board;
-
   protected final List<Field> fields;
-
   protected final List<Field> checkFields;
-
+  protected Board board;
   protected HashMap<String, Paint> checkFieldColor;
 
   protected double size;
@@ -36,22 +31,27 @@ public class BoardPane extends Pane {
     this.inputHandler = inputHandler;
     checkFieldColor = new HashMap<>();
   }
-  public void setCheckFieldColor(Paint color, int x, int y){
-    this.checkFieldColor.put(""+(x*1000)+y, color);
-  }
-  public void setCheckFieldColor(Paint color, int x, int y, int isRight){
-    this.checkFieldColor.put(""+(x*1000)+y+isRight, color);
-  }
-  public void resetCheckFieldColor(int x, int y){
-    this.checkFieldColor.remove(""+(x*1000)+y);
-  }
-  public void resetCheckFieldColor(int x, int y, int isRight){
-    this.checkFieldColor.remove(""+(x*1000)+y+isRight);
+
+  public void setCheckFieldColor(Paint color, int x, int y) {
+    this.checkFieldColor.put("" + (x * 1000) + y, color);
   }
 
-  public void resetAllCheckFields(){
+  public void setCheckFieldColor(Paint color, int x, int y, int isRight) {
+    this.checkFieldColor.put("" + (x * 1000) + y + isRight, color);
+  }
+
+  public void resetCheckFieldColor(int x, int y) {
+    this.checkFieldColor.remove("" + (x * 1000) + y);
+  }
+
+  public void resetCheckFieldColor(int x, int y, int isRight) {
+    this.checkFieldColor.remove("" + (x * 1000) + y + isRight);
+  }
+
+  public void resetAllCheckFields() {
     checkFieldColor = new HashMap<>();
   }
+
   /**
    * Method that returns all field Elements of the Board
    */
@@ -59,7 +59,7 @@ public class BoardPane extends Pane {
     return this.fields;
   }
 
-  public List<Field> getCheckFields(){
+  public List<Field> getCheckFields() {
     return this.checkFields;
   }
 

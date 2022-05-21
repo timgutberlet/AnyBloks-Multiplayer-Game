@@ -108,6 +108,7 @@ public abstract class Field {
 
   /**
    * returns the hash code of the field.
+   *
    * @return the hash code of the field
    */
   @Override

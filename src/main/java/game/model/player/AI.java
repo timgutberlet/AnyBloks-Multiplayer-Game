@@ -17,9 +17,9 @@ import java.util.ArrayList;
 
 public class AI {
 
-  static int[][] roundSections = new int[][] {{5, 20}, //Classic Gamemode
-      {2,16}, //Duo Gamemode
-      {2,16}, //Junior Gamemode
+  static int[][] roundSections = new int[][]{{5, 20}, //Classic Gamemode
+      {2, 16}, //Duo Gamemode
+      {2, 16}, //Junior Gamemode
       {6, 23}};   //Trigon Gamemode
 
   /**
@@ -70,7 +70,8 @@ public class AI {
   }
 
   /**
-   * generates the next easy move. 80 % it's random and 20 % it's a middle move, means the poly with the biggest possible size.
+   * generates the next easy move. 80 % it's random and 20 % it's a middle move, means the poly with
+   * the biggest possible size.
    *
    * @param board          considered board
    * @param remainingPolys remaining polys of the player which the calculation is for
@@ -80,13 +81,12 @@ public class AI {
   public static Turn calculateNextEasyMove(Board board, ArrayList<Poly> remainingPolys,
       boolean isFirstRound) {
     int rand = (int) (Math.random() * 5);
-    if ( rand == 0){
-      return calculateNextMiddleMove(board,remainingPolys, isFirstRound);
-    } else{
+    if (rand == 0) {
+      return calculateNextMiddleMove(board, remainingPolys, isFirstRound);
+    } else {
       return calculateNextRandomMove(board, remainingPolys, isFirstRound);
     }
   }
-
 
 
   /**
@@ -128,7 +128,8 @@ public class AI {
    * @return "best" turn
    */
   public static Turn calculateNextHardMove(GameState gameState, Player player) {
-    ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
+    ArrayList<Turn> possibleMoves = gameState.getBoard()
+        .getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
     for (Turn turn : possibleMoves) {
       gameState.getBoard().assignNumberBlockedFields(turn);
     }
@@ -150,16 +151,15 @@ public class AI {
   }
 
   /**
-   * calculates the next move out of different tactics through the game.
-   * First the algorithm tries to get as spread as possible with its polys.
-   * Second the algorithm tries to block the other players moves.
-   * Third it evaluates the best move till the end of the game.
+   * calculates the next move out of different tactics through the game. First the algorithm tries
+   * to get as spread as possible with its polys. Second the algorithm tries to block the other
+   * players moves. Third it evaluates the best move till the end of the game.
    *
    * @param gameState current gameState
    * @param player    player, for whom the next move is calculated
    * @return the next "best" move
    */
-  public static Turn calculateNextGodlikeMove(GameState gameState, Player player){
+  public static Turn calculateNextGodlikeMove(GameState gameState, Player player) {
     int gameModeNumber = 0;
     switch (gameState.getGameMode().getName()) {
       case "CLASSIC":
@@ -185,61 +185,68 @@ public class AI {
   }
 
   /**
-   * calculates the next move which offers the most room discovery, means is the most spread one compared to the situation before.
+   * calculates the next move which offers the most room discovery, means is the most spread one
+   * compared to the situation before.
+   *
    * @param gameState current game state
-   * @param player ai player which needs to play
+   * @param player    ai player which needs to play
    * @return "best" turn
    */
-  public static Turn calculateNextHardMoveRoomDiscovery(GameState gameState, Player player){
-      ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
-      for (Turn turn : possibleMoves) {
-        gameState.assignRoomDiscovery(turn);
-        gameState.getBoard().assignNumberBlockedFields(turn);
+  public static Turn calculateNextHardMoveRoomDiscovery(GameState gameState, Player player) {
+    ArrayList<Turn> possibleMoves = gameState.getBoard()
+        .getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
+    for (Turn turn : possibleMoves) {
+      gameState.assignRoomDiscovery(turn);
+      gameState.getBoard().assignNumberBlockedFields(turn);
+    }
+    possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
+    possibleMoves.sort((o1, o2) -> o2.getNumberBlockedFields() - o1.getNumberBlockedFields());
+    possibleMoves.sort((o1, o2) -> o2.getRoomDiscovery() - o1.getRoomDiscovery());
+    int rand = 0;
+    for (int i = 0; i < possibleMoves.size(); i++) {
+      if (possibleMoves.get(0).getRoomDiscovery() > possibleMoves.get(i)
+          .getRoomDiscovery()
+          || possibleMoves.get(0).getPoly().getSize() > possibleMoves.get(i).getPoly().getSize()) {
+        rand = (int) (Math.random() * i);
+        break;
       }
-      possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
-      possibleMoves.sort((o1, o2) -> o2.getNumberBlockedFields() - o1.getNumberBlockedFields());
-      possibleMoves.sort((o1, o2) -> o2.getRoomDiscovery() - o1.getRoomDiscovery());
-      int rand = 0;
-      for (int i = 0; i < possibleMoves.size(); i++) {
-        if (possibleMoves.get(0).getRoomDiscovery() > possibleMoves.get(i)
-            .getRoomDiscovery()
-            || possibleMoves.get(0).getPoly().getSize() > possibleMoves.get(i).getPoly().getSize()) {
-          rand = (int) (Math.random() * i);
-          break;
-        }
-      }
-      if (possibleMoves.size() == 0) {
-        return null;
-      }
-      return possibleMoves.get(rand);
+    }
+    if (possibleMoves.size() == 0) {
+      return null;
+    }
+    return possibleMoves.get(rand);
   }
 
   /**
-   * calculates the next move, which can block as most fields, where opponents can place polys in the future, as possible.
+   * calculates the next move, which can block as most fields, where opponents can place polys in
+   * the future, as possible.
+   *
    * @param gameState current state
-   * @param player ai player which needs to play
+   * @param player    ai player which needs to play
    * @return "best" turn
    */
-  public static Turn calculateNextHardMoveAggressive(GameState gameState, Player player){
+  public static Turn calculateNextHardMoveAggressive(GameState gameState, Player player) {
     return calculateNextMiddleMove(gameState.getBoard(), gameState.getRemainingPolys(player),
         gameState.isFirstRound());
   }
 
   /**
-   * calculates the next move through sorting the possible moves after the weighted blocked fields of the
-   * opponents as the first criteria and the size of the poly as the second criteria.
+   * calculates the next move through sorting the possible moves after the weighted blocked fields
+   * of the opponents as the first criteria and the size of the poly as the second criteria.
    *
    * @param gameState current state
-   * @param player ai player which needs to play
+   * @param player    ai player which needs to play
    * @return "best" turn
    */
-  public static Turn calculateNextHardMoveReallyAggressive(GameState gameState, Player player){
-    ArrayList<Turn> possibleMoves = gameState.getBoard().getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
+  public static Turn calculateNextHardMoveReallyAggressive(GameState gameState, Player player) {
+    ArrayList<Turn> possibleMoves = gameState.getBoard()
+        .getPossibleMoves(gameState.getRemainingPolys(player), gameState.isFirstRound());
     for (Turn turn : possibleMoves) {
       gameState.assignNumberBlockedFieldsWeighted(turn);
     }
     possibleMoves.sort((o1, o2) -> o2.getPoly().getSize() - o1.getPoly().getSize());
-    possibleMoves.sort((o1, o2) -> o2.getNumberBlockedFieldsWeighted() - o1.getNumberBlockedFieldsWeighted());
+    possibleMoves.sort(
+        (o1, o2) -> o2.getNumberBlockedFieldsWeighted() - o1.getNumberBlockedFieldsWeighted());
     int rand = 0;
     for (int i = 0; i < possibleMoves.size(); i++) {
       if (possibleMoves.get(0).getNumberBlockedFieldsWeighted() > possibleMoves.get(i)
@@ -257,30 +264,33 @@ public class AI {
 
   /**
    * calculates the next move, which is calculated by the monte carlo tree search
+   *
    * @param gameState current state
-   * @param player ai player which needs to play
+   * @param player    ai player which needs to play
    * @return "best" turn
    */
-  public static Turn calculateNextHardMoveMCTS(GameState gameState, Player player){
+  public static Turn calculateNextHardMoveMCTS(GameState gameState, Player player) {
     return MonteCarloTreeSearch.findNextMove(gameState);
   }
 
   /**
    * calculates the next move, which is calculated by the minimax algorithm
+   *
    * @param gameState current state
-   * @param player ai player which needs to play
+   * @param player    ai player which needs to play
    * @return "best" turn
    */
-  public static Turn calculateNextHardMoveMiniMax(GameState gameState, Player player){
-    return MiniMax.calculateNextHardMoveMiniMax(gameState,player);
+  public static Turn calculateNextHardMoveMiniMax(GameState gameState, Player player) {
+    return MiniMax.calculateNextHardMoveMiniMax(gameState, player);
   }
 
   /**
    * sets the round sections for a specific game mode
-   * @param a number of the game mode
+   *
+   * @param a     number of the game mode
    * @param value new round sections
    */
-  public static void setRoundSections(int a, int[] value){
+  public static void setRoundSections(int a, int[] value) {
     roundSections[a] = value;
   }
 

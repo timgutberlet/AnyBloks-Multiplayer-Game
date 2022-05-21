@@ -3,9 +3,9 @@ package net.packet.account;
 import net.packet.abstr.Packet;
 
 /**
- * Packet sent to server in case account is supposed to be changed.
- * Note that there is NO UpdateAccountResponsePacket, as Restful Server sets the status to
- * 200 / 403 and responds that way without sending a packet back
+ * Packet sent to server in case account is supposed to be changed. Note that there is NO
+ * UpdateAccountResponsePacket, as Restful Server sets the status to 200 / 403 and responds that way
+ * without sending a packet back
  *
  * @author tbuscher
  */

@@ -6,7 +6,6 @@ import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.URI;
 import java.net.UnknownHostException;
 import javax.websocket.ContainerProvider;
@@ -28,64 +27,64 @@ import org.junit.jupiter.api.Test;
  */
 public class ConnectToServerTest {
 
-	static HostServer hostServer = new HostServer();
+  static HostServer hostServer = new HostServer();
 
-	@BeforeAll
-	public static void beforeAll(){
+  @BeforeAll
+  public static void beforeAll() {
 
-		//Starting the server
-		try {
-			org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+    //Starting the server
+    try {
+      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
 
-			hostServer.startWebsocket(8081);
-			//Debug.printMessage("[testChatServer] Server is running");
-			//TimeUnit.SECONDS.sleep(3);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+      hostServer.startWebsocket(8081);
+      //Debug.printMessage("[testChatServer] Server is running");
+      //TimeUnit.SECONDS.sleep(3);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-		//Clear out the database
-		DbServer dbServer = null;
-		try {
-			dbServer = DbServer.getInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		dbServer.resetDb();
+    //Clear out the database
+    DbServer dbServer = null;
+    try {
+      dbServer = DbServer.getInstance();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    dbServer.resetDb();
 
-	}
+  }
 
-	@Test
-	public void joinServer(){
-		final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-		Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
-		EndpointClient client = new EndpointClient(localPlayer);
+  @Test
+  public void joinServer() {
+    final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+    Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
+    EndpointClient client = new EndpointClient(localPlayer);
 
-		Session session = null;
+    Session session = null;
 
-		try {
+    try {
 
-			String IPAdress = Inet4Address.getLocalHost().getHostAddress();
+      String IPAdress = Inet4Address.getLocalHost().getHostAddress();
 
-			session = container.connectToServer(client, URI.create("ws://"+IPAdress+":8081/packet"));
+      session = container.connectToServer(client, URI.create("ws://" + IPAdress + ":8081/packet"));
 
 
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (DeploymentException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    } catch (UnknownHostException e) {
+      e.printStackTrace();
+    } catch (DeploymentException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
-		assertNotNull(session);
+    assertNotNull(session);
 
-		try {
-			session.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    try {
+      session.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
-	}
+  }
 
 }

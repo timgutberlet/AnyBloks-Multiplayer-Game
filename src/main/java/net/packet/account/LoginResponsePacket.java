@@ -26,12 +26,13 @@ public class LoginResponsePacket extends Packet {
    * Constructor.
    *
    * @param errorMessage in case of failure
-   * @param loginStatus to which the errorMessage is supposed to be displayed
+   * @param loginStatus  to which the errorMessage is supposed to be displayed
    */
   public LoginResponsePacket(String errorMessage, String loginStatus) {
     this.errorMessage = errorMessage;
     this.loginStatus = loginStatus;
   }
+
   /**
    * Getter.
    *
