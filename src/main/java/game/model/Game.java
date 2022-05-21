@@ -55,16 +55,7 @@ public class Game {
 
   }
 
-  /**
-   * checks if a move is valid or not
-   *
-   * @author tgeilen
-   */
 
-  public Boolean checkTurn(Turn turn) {
-    //TODO this function needs to implemented @tilman
-    return true;
-  }
 
 
   /**
@@ -99,35 +90,24 @@ public class Game {
     //Debug.printMessage(this,this.board.toString());
     Player currentPlayer = this.gameState.getPlayerCurrent();
 
-    if (this.gameState.isStateRunning()) {
 
-      if (turn == null) {
-        this.increasePassedTurns(currentPlayer.getUsername());
-        Debug.printMessage(this, "Empty turn send to server");
+					this.gameState.playTurn(turn);
+					Debug.printMessage(this, "The turn has been played");
 
-      } else {
-        this.resetPassedTurns(currentPlayer.getUsername());
+					if(!gameState.checkEnd()) {
+						Debug.printMessage(this, "All players have been informed about the made turn");
+						this.gameSession.getOutboundServerHandler().broadcastGameUpdate();
+						Player nextPlayer = this.gameState.getPlayerCurrent();
+						this.gameSession.getOutboundServerHandler().requestTurn(nextPlayer.getUsername());
+						this.gameState.setStateEnding("true");
 
-      }
-      this.gameState.playTurn(turn);
-      Debug.printMessage(this, "The turn has been played");
+					} else {
 
-      this.gameSession.getOutboundServerHandler().broadcastGameUpdate();
-      Debug.printMessage(this, "All players have been informed about the made turn");
-    }
+					Debug.printMessage(this, "The game is over and all players will be informed");
+					this.gameSession.getOutboundServerHandler().broadcastGameWin(currentPlayer.getUsername());
+				}
 
-    if (!this.gameState.checkEnd()) {
-      Player nextPlayer = this.gameState.getPlayerCurrent();
-
-      this.gameSession.getOutboundServerHandler().requestTurn(nextPlayer.getUsername());
-    } else {
-      this.getGameState().setStateEnding("true");
-      Debug.printMessage(this, "The game is over and all players will be informed");
-      this.gameSession.getOutboundServerHandler().broadcastGameWin(currentPlayer.getUsername());
-    }
-
-
-  }
+	}
 
   public Player getCurrentPlayer() {
     return this.gameState.getPlayerCurrent();

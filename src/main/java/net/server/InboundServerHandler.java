@@ -249,17 +249,9 @@ public class InboundServerHandler {
 
     CheckConnectionThread.turnReceived = true;
 
-    if (gameSession.getGame().checkTurn(turn)) {
       Debug.printMessage(this, "The recieved turn is legal and will be played");
       gameSession.getGame().makeMoveServer(turn);
       //this.server.getOutboundServerHandler().broadcastGameUpdate();
-    } else {
-      IllegalTurnPacket illegalTurnPacket = new IllegalTurnPacket();
-      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.ILLEGAL_TURN_PACKET,
-          illegalTurnPacket);
-      this.server.sendMessage(wrappedPacket, client);
-    }
-
 
   }
 

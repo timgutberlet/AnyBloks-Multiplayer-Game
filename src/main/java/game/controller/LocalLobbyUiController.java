@@ -172,7 +172,7 @@ public class LocalLobbyUiController extends AbstractUiController {
 
     HostServer hostServer = new HostServer();
     try {
-      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       Debug.printMessage("[testChatServer] Server is running");
       //TimeUnit.SECONDS.sleep(3);
@@ -180,7 +180,7 @@ public class LocalLobbyUiController extends AbstractUiController {
       e.printStackTrace();
     }
 
-    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.REMOTE_PLAYER);
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.AI_EASY);
     this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();

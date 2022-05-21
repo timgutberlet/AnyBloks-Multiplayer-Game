@@ -302,8 +302,7 @@ public class ClientHandler {
     }
   }
 
-  public void sendTurn(Turn turn) {
-    Debug.printMessage(this, turn.toString());
+  public void sendTurn(Turn turn){
     TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
     WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
     this.client.sendToServer(wrPacket);

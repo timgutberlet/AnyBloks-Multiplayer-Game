@@ -192,10 +192,10 @@ public class Player implements Serializable {
       this.aiCalcRunning = false;
       while (this.selectedTurn == null && nullTurn == false) {
         try {
-          Debug.printMessage(this, this.getUsername() + " " + this);
+          //Debug.printMessage(this, this.getUsername() + " " + this);
           // Debug.printMessage(this, "A TURN NEEDS TO BE MADE");
           Thread.sleep(10);
-          Debug.printMessage(this, "Waiting for PlayerInput from this " + this);
+          //Debug.printMessage(this, "Waiting for PlayerInput from this " + this);
         } catch (InterruptedException e) {
         }
       }
@@ -246,17 +246,13 @@ public class Player implements Serializable {
     return type;
   }
 
-  public void setType(PlayerType type) {
-    this.type = type;
+  public String getUsername() {
+    return username;
   }
 
   //public String toString() {
   //  return username;
   //}
-
-  public String getUsername() {
-    return username;
-  }
 
   public int getOrderNum() {
     return this.orderNum;
@@ -270,8 +266,12 @@ public class Player implements Serializable {
     return isAI;
   }
 
+  public void setType(PlayerType type) {
+    this.type = type;
+  }
+
   @Override
-  public boolean equals(Object object) {
+  public boolean equals(Object object){
     Player p = (Player) object;
     return this.username.equals(p.getUsername());
   }

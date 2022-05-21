@@ -196,7 +196,7 @@ public class HostLobbyUiController extends AbstractUiController {
     alreadyInChat = new ArrayList<>();
     HostServer hostServer = new HostServer();
     try {
-      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       //Debug.printMessage("[testChatServer] Server is running");
       //TimeUnit.SECONDS.sleep(3);

@@ -518,14 +518,14 @@ public abstract class InGameUiController extends AbstractUiController {
         skipTurnButton.setVisible(true);
       }
       if (!game.getGameState().playsTurn()) {
-        Debug.printMessage(this, "" + game.getGameState().playsTurn());
+        //Debug.printMessage(this, "" + game.getGameState().playsTurn());
         refreshUi();
       }
       //Check if Player has Turn
-      Debug.printMessage(this, this.localPlayer.getUsername() + " " + this.localPlayer);
+      //Debug.printMessage(this, this.localPlayer.getUsername() + " " + this.localPlayer);
       if (this.gameSession.isLocalPlayerTurn()) {
         //hintLabel1.setText("Erkannt");
-        Debug.printMessage(this, "GUI ready for input");
+        //Debug.printMessage(this, "GUI ready for input");
         boolean action = false;
 
         if (!this.gameSession.isUpdatingGameState()) {
