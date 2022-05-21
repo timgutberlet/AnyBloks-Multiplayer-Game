@@ -14,11 +14,11 @@ public class LocalGameUiController extends InGameUiController {
 
   /**
    * Construcor
-   * @param gameController  Gamecontroller class
-   * @param game Game input
-   * @param gameSession gameSession used for controlling game
-   * @param threadHelp Thread for parallel input
    *
+   * @param gameController Gamecontroller class
+   * @param game           Game input
+   * @param gameSession    gameSession used for controlling game
+   * @param threadHelp     Thread for parallel input
    * @author tgutberl
    */
   public LocalGameUiController(AbstractGameController gameController,

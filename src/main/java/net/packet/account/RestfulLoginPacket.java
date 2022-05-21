@@ -8,13 +8,14 @@ import net.packet.abstr.Packet;
  * @author tbuscher
  */
 public class RestfulLoginPacket extends Packet {
+
   String username;
   String passwordHash;
 
   /**
    * Empty constructor for Jackson Encoding.
    */
-  public RestfulLoginPacket(){
+  public RestfulLoginPacket() {
     this.username = "";
     this.passwordHash = "";
   }
@@ -22,10 +23,10 @@ public class RestfulLoginPacket extends Packet {
   /**
    * Constructor.
    *
-   * @param username as String
+   * @param username     as String
    * @param passwordHash as String
    */
-  public RestfulLoginPacket(String username, String passwordHash){
+  public RestfulLoginPacket(String username, String passwordHash) {
     this.username = username;
     this.passwordHash = passwordHash;
   }
@@ -44,7 +45,7 @@ public class RestfulLoginPacket extends Packet {
    *
    * @return passwordHash
    */
-  public String getPasswordHash(){
+  public String getPasswordHash() {
     return passwordHash;
   }
 }

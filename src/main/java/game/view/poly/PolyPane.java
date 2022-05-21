@@ -33,7 +33,7 @@ public class PolyPane extends Pane {
     return this.poly;
   }
 
-  public Field getCheckPolyField(){
+  public Field getCheckPolyField() {
     return this.checkPolyField;
   }
 

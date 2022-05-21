@@ -18,9 +18,6 @@ import net.packet.abstr.Packet;
  */
 public class RequestTurnPacket extends Packet {
 
-  String username;
-
-
   public GameMode gameMode;
   public Board board;
   public ArrayList<ArrayList<Poly>> remainingPolys;
@@ -31,6 +28,7 @@ public class RequestTurnPacket extends Packet {
   public boolean running;
   public boolean started;
   public String stateEnding;
+  String username;
 
 
   /**

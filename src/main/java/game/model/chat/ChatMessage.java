@@ -27,9 +27,8 @@ public class ChatMessage {
 
   /**
    * empty constructor jackson
-   *
    */
-  public ChatMessage(){
+  public ChatMessage() {
 
   }
 

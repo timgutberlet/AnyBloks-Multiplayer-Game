@@ -12,7 +12,6 @@ import game.model.Debug;
 import game.model.Game;
 import game.model.GameSession;
 import game.model.Turn;
-import game.model.chat.Chat;
 import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import game.model.polygon.PolySquare;
@@ -64,14 +63,24 @@ import javafx.stage.Stage;
  */
 
 public abstract class InGameUiController extends AbstractUiController {
+
+  private final GameSession gameSession;
+  private final Game game;
+  private final AbstractGameController gameController;
+  private final InputHandler inputHandler;
+  private final List<StackPane> stackPanes;
+  /**
+   * Button to Skip Turns
+   */
+  Button skipTurnButton;
   /**
    * Main Anchorpane used for Style
    */
-  private AnchorPane anchorPane;
+  private final AnchorPane anchorPane;
   /**
    * String to save Input Message before repaint
    */
-  private String bufferChat = "";
+  private final String bufferChat = "";
   /**
    * Button to open Chat Window
    */
@@ -83,7 +92,7 @@ public abstract class InGameUiController extends AbstractUiController {
   /**
    * used for comparing already in chat messages to chat Object.
    */
-  private ArrayList<String> alreadyInChat;
+  private final ArrayList<String> alreadyInChat;
   /**
    * Chat area.
    */
@@ -98,22 +107,15 @@ public abstract class InGameUiController extends AbstractUiController {
    * Checks if Chat Selected
    */
   private Boolean chatSelected = false;
-
-  private final GameSession gameSession;
-  private final Game game;
-  private final AbstractGameController gameController;
-  private final InputHandler inputHandler;
-  private Stage stage;
+  private final Stage stage;
   private Button testButton;
   private boolean aiCalcRunning;
   private Player localPlayer;
   private ArrayList<int[]> possibleFields;
   private Boolean submitRequested;
-
   private VBox container;
   private HBox content;
   private BoardPane boardPane;
-  private final List<StackPane> stackPanes;
   private DragablePolyPane dragablePolyPane;
   private VBox stacks;
 
@@ -132,7 +134,7 @@ public abstract class InGameUiController extends AbstractUiController {
   private List<Label> names;
   private Label turn;
 
-  private ThreadHandler threadHelp;
+  private final ThreadHandler threadHelp;
 
 
   public InGameUiController(AbstractGameController gameController, Game game,
@@ -222,7 +224,6 @@ public abstract class InGameUiController extends AbstractUiController {
     scorePane.setMaxHeight(100);
     anchorPane.getChildren().add(scorePane);
 
-
     int i = 0;
     int playerSize = game.getPlayers().size();
     for (Player p : this.gameSession.getPlayerList()) {
@@ -291,7 +292,7 @@ public abstract class InGameUiController extends AbstractUiController {
     content.getChildren().add(stacks);
 
     chat = new TextArea();
-    chat.setPrefHeight(height/7);
+    chat.setPrefHeight(height / 7);
     chat.setPrefWidth(300);
     chatInput = new TextField();
     chatInput.setText("Write an Message and press Enter...");
@@ -304,25 +305,25 @@ public abstract class InGameUiController extends AbstractUiController {
     chatPane = new VBox();
     chatPane.setSpacing(5);
     chatPane.setVisible(true);
-    chatPane.setPrefHeight(height/6);
+    chatPane.setPrefHeight(height / 6);
     chatPane.setMinWidth(300);
     chatPane.setMaxWidth(300);
     chatPane.getChildren().add(chat);
     chatPane.getChildren().add(chatInput);
     chatPane.setAlignment(Pos.BOTTOM_RIGHT);
     inputHandler.makeDraggable(chatPane);
-    double chatHeight  = gameController.getStage().getScene().getHeight();
-    double chatWidth  = gameController.getStage().getScene().getWidth();
+    double chatHeight = gameController.getStage().getScene().getHeight();
+    double chatWidth = gameController.getStage().getScene().getWidth();
     chatPane.setTranslateX(chatWidth - 300 - 50);
-    chatPane.setTranslateY(chatHeight - height/6 - 15);
+    chatPane.setTranslateY(chatHeight - height / 6 - 15);
     anchorPane.getChildren().add(chatPane);
-
 
     buttonBox = new HBox();
     buttonBox.setAlignment(Pos.BOTTOM_CENTER);
     buttonBox.setMinHeight(50);
     buttonBox.setSpacing(40);
 
+    skipTurnButton = new Button("Skip Turn");
     infoButton = new Button("Help");
     quitButton = new Button("Quit");
     testButton = new Button("ScoreBoard");
@@ -330,15 +331,16 @@ public abstract class InGameUiController extends AbstractUiController {
 
     //Event to start Chat Window
     chatButton.setOnMouseClicked(event -> {
-      if(this.chatPane.isVisible()){
-        this.chatPane.setVisible(false);
-      }else{
-        this.chatPane.setVisible(true);
-      }
+      this.chatPane.setVisible(!this.chatPane.isVisible());
+    });
+
+    //Set Event for Skip Turn Button
+    skipTurnButton.setOnMouseClicked(event -> {
+      this.localPlayer.setSelectedTurn(null);
     });
 
     chatInput.setOnKeyPressed(event -> {
-      if(event.getCode().equals(KeyCode.ENTER)){
+      if (event.getCode().equals(KeyCode.ENTER)) {
         registerChatMessage();
         chatInput.setText("");
       }
@@ -366,28 +368,33 @@ public abstract class InGameUiController extends AbstractUiController {
     buttonBox.getChildren().add(chatButton);
     container.getChildren().add(buttonBox);
 
-    switch (Config.getStringValue("THEME")){
+    switch (Config.getStringValue("THEME")) {
       case "BRIGHT":
         topPane.setStyle("-fx-background-color:#FF4B4B;");
-        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+        anchorPane.getStylesheets()
+            .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
         break;
       case "DARK":
         topPane.setStyle("-fx-background-color:#F0B27A;");
-        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+        anchorPane.getStylesheets()
+            .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
         break;
       case "INTEGRA":
         topPane.setStyle("-fx-background-color:#FF8000;");
-        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+        anchorPane.getStylesheets()
+            .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
         break;
       case "THINC!":
         topPane.setStyle("-fx-background-color:#0A123D;");
         this.root.setStyle("-fx-background-color:#0A123D;");
-        anchorPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+        anchorPane.getStylesheets()
+            .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
         break;
     }
   }
 
   private void handleTestButtonClicked() {
+    gameSession.stopSession();
     ScoreBoardUiController.sortScoreBoard(gameSession);
     gameController.setActiveUiController(new ScoreBoardUiController(gameController, gameSession));
   }
@@ -464,14 +471,14 @@ public abstract class InGameUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
-    if(!chatSelected) {
+    if (!chatSelected) {
       root.requestFocus();
     }
 
     String help = "";
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
-      if(!alreadyInChat.contains(chatMessage.getTime() + " "
-          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")){
+      if (!alreadyInChat.contains(chatMessage.getTime() + " "
+          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")) {
         alreadyInChat.add(chatMessage.getTime() + " "
             + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
         help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
@@ -505,7 +512,8 @@ public abstract class InGameUiController extends AbstractUiController {
         boolean action = false;
 
         if (!this.gameSession.isUpdatingGameState()) {
-          for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer)).getPolyPanes()) {
+          for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
+              .getPolyPanes()) {
             if (inputHandler.isPolyClicked(polyPane)) {
               chatSelected = false;
               if (dragablePolyPane != null) {
@@ -580,7 +588,7 @@ public abstract class InGameUiController extends AbstractUiController {
                   int addX;
                   int addY;
                   int addIsRight = 0;
-                  int pos[];
+                  int[] pos;
                   if (game.getGamemode().getName().equals("TRIGON") && dragablePolyPane != null) {
 
                     addX = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[0];
@@ -659,7 +667,7 @@ public abstract class InGameUiController extends AbstractUiController {
     submitRequested = false;
 
     //check if game is over
-    if(this.gameSession.isGameOver()){
+    if (this.gameSession.isGameOver()) {
       gameController.setActiveUiController(
           new ScoreBoardUiController(gameController, gameSession));
       System.out.println("GAME IS OVER");

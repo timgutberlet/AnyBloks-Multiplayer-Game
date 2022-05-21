@@ -1,6 +1,5 @@
 package game.view;
 
-import engine.component.Field;
 import engine.handler.InputHandler;
 import game.controller.InGameUiController;
 import game.view.poly.PolyPane;

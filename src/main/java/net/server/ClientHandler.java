@@ -8,15 +8,12 @@ import game.model.GameSession;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.chat.Chat;
-import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
-import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URI;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.ContainerProvider;
@@ -27,7 +24,6 @@ import javax.websocket.WebSocketContainer;
 import net.AuthRessources.TokenGenerationRessource;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.account.LoginResponsePacket;
 import net.packet.chat.ChatMessagePacket;
@@ -35,7 +31,6 @@ import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
 import net.packet.game.InitGamePacket;
-import net.packet.game.InitSessionPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.RequestTurnPacket;
 import net.packet.game.TurnPacket;
@@ -61,7 +56,7 @@ public class ClientHandler {
   }
 
 
-  public void initLocalGame(Player localPlayer){
+  public void initLocalGame(Player localPlayer) {
 
     TokenGenerationRessource tokenGenerationRessource = new TokenGenerationRessource();
 
@@ -74,8 +69,8 @@ public class ClientHandler {
       e.printStackTrace();
     }
 
-    if(!db.doesUsernameExist(localPlayer.getUsername())){
-      db.newAccount(localPlayer.getUsername(),"");
+    if (!db.doesUsernameExist(localPlayer.getUsername())) {
+      db.newAccount(localPlayer.getUsername(), "");
     }
 
     if (db.doesUserHaveAuthToken(localPlayer.getUsername())) {
@@ -84,19 +79,12 @@ public class ClientHandler {
 
     db.insertAuthToken(localPlayer.getUsername(), token);
 
-
     try {
       String ip = Inet4Address.getLocalHost().getHostAddress();
-      this.initLocalGame(localPlayer,ip,token);
+      this.initLocalGame(localPlayer, ip, token);
     } catch (UnknownHostException e) {
       e.printStackTrace();
     }
-
-
-
-
-
-
 
     //TODO CHECK IF STILL NEEDED @tore & tobi
 //   final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -159,16 +147,15 @@ public class ClientHandler {
 //      e.printStackTrace();
 //    }
 
-
   }
 
   //TODO DELETE JUST FOR TESTING @tobi
-  public void initLocalGame(Player localPlayer, String ip){
+  public void initLocalGame(Player localPlayer, String ip) {
     String token = "";
     this.initLocalGame(player, ip, token);
   }
 
-  public void initLocalGame(Player localPlayer, String ip, String token){
+  public void initLocalGame(Player localPlayer, String ip, String token) {
 
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 
@@ -243,7 +230,7 @@ public class ClientHandler {
    *
    * @param gameModes
    */
-  public void startLocalGame(LinkedList<GameMode> gameModes){
+  public void startLocalGame(LinkedList<GameMode> gameModes) {
     InitGamePacket initGamePacket = new InitGamePacket(gameModes);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
 
@@ -294,13 +281,14 @@ public class ClientHandler {
 
     if (this.player.getUsername().equals(requestTurnPacket.getUsername())) {
       Debug.printMessage(this, player.getUsername() + ": It is my turn...");
-      Debug.printMessage(this,"Runde: " + gameState.getRound());
-      Debug.printMessage(this,gameState.isFirstRound()?"FIRST ROUND!!!":"___NOT___ FIRST ROUND");
+      Debug.printMessage(this, "Runde: " + gameState.getRound());
+      Debug.printMessage(this,
+          gameState.isFirstRound() ? "FIRST ROUND!!!" : "___NOT___ FIRST ROUND");
 
       // flag for UI to enable input
       this.gameSession.setLocalPlayerTurn(true);
 
-      Turn turn = this.gameSession.getLocalPlayer().makeTurn(gameState);;
+      Turn turn = this.gameSession.getLocalPlayer().makeTurn(gameState);
       if (turn == null) {
         Debug.printMessage(this, "I don't know what to do!!!");
       } else {
@@ -314,8 +302,8 @@ public class ClientHandler {
     }
   }
 
-  public void sendTurn(Turn turn){
-    Debug.printMessage(this,turn.toString());
+  public void sendTurn(Turn turn) {
+    Debug.printMessage(this, turn.toString());
     TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
     WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
     this.client.sendToServer(wrPacket);
@@ -358,15 +346,16 @@ public class ClientHandler {
     //Debug.printMessage(this,chatMessagePacket.getChatMessage().getMessage());
   }
 
-  public void updatePlayerList(WrappedPacket wrappedPacket){
+  public void updatePlayerList(WrappedPacket wrappedPacket) {
     PlayerListPacket playerListPacket = (PlayerListPacket) wrappedPacket.getPacket();
     this.gameSession.setPlayerList(playerListPacket.getPlayerList());
   }
 
-  public void broadcastChatMessage(Chat chat){
+  public void broadcastChatMessage(Chat chat) {
 
     ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chat);
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET, chatMessagePacket);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CHAT_MESSAGE_PACKET,
+        chatMessagePacket);
 
     this.client.sendToServer(wrappedPacket);
   }

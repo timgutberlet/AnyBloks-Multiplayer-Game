@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
-import javax.swing.text.html.ImageView;
 
 /**
  * Main Menu Ui Controller that is used first when the game is started.
@@ -28,19 +27,19 @@ import javax.swing.text.html.ImageView;
 public class MainMenuUiController extends AbstractUiController {
 
   /**
+   * Anbstract Game controller used in Application.
+   */
+  private final AbstractGameController gameController;
+  /**
    * Main Anchorpane used for resizing.
    */
   @FXML
   AnchorPane mainPane;
-  /**
-   * Anbstract Game controller used in Application.
-   */
-  private final AbstractGameController gameController;
 
   /**
    * Construcotr used for setting gamecontroller.
-   * @param gameController
    *
+   * @param gameController
    * @author tgutberl
    */
   public MainMenuUiController(AbstractGameController gameController) {
@@ -66,22 +65,26 @@ public class MainMenuUiController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
-      switch (Config.getStringValue("THEME")){
+      switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
           mainPane.setStyle("-fx-background-color:#ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
           mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {
@@ -115,7 +118,8 @@ public class MainMenuUiController extends AbstractUiController {
     gameSession.setGame(new Game(gameSession, gameMode));
     gameSession.startGame(gameMode);
     ThreadHandler threadHelp = new ThreadHandler(gameSession);
-    gameController.setActiveUiController(new TutorialUiController(gameController, gameSession, threadHelp));
+    gameController.setActiveUiController(
+        new TutorialUiController(gameController, gameSession, threadHelp));
   }
 
   /**
@@ -151,6 +155,7 @@ public class MainMenuUiController extends AbstractUiController {
   public void onExit() {
 
   }
+
   /**
    * Method for override on update
    *
@@ -160,6 +165,7 @@ public class MainMenuUiController extends AbstractUiController {
   public void update(AbstractGameController gameController) {
 
   }
+
   /**
    * Method for override on initalize
    *

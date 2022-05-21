@@ -76,21 +76,21 @@ public class GameUpdatePacket extends Packet {
 
     ArrayList<ArrayList<Poly>> remPoly = this.remainingPolys;
     ArrayList<ArrayList<Turn>> hist = new ArrayList<ArrayList<Turn>>();
-    for(ArrayList<Turn> turns : this.history){
+    for (ArrayList<Turn> turns : this.history) {
       hist.add(turns);
     }
 
     int rnd = this.round;
 
-    Debug.printMessage(this,this.gameMode.toString());
+    Debug.printMessage(this, this.gameMode.toString());
     //Debug.printMessage(this,this.board.toString());
-    Debug.printMessage(this, "Rem poly size: " +remPoly.size());
-    Debug.printMessage(this,"Playerlist: " + this.playerList.toString());
-    Debug.printMessage(this, "Round: "+ rnd);
-    Debug.printMessage(this, "Turn: "+ this.turn);
-    Debug.printMessage(this, "Running: " + (this.running?"true":"false"));
+    Debug.printMessage(this, "Rem poly size: " + remPoly.size());
+    Debug.printMessage(this, "Playerlist: " + this.playerList.toString());
+    Debug.printMessage(this, "Round: " + rnd);
+    Debug.printMessage(this, "Turn: " + this.turn);
+    Debug.printMessage(this, "Running: " + (this.running ? "true" : "false"));
     Debug.printMessage(this, "Started: " + this.started);
-    Debug.printMessage(this, "StateEnding: "+ this.stateEnding);
+    Debug.printMessage(this, "StateEnding: " + this.stateEnding);
     Debug.printMessage(this, "Hist size" + this.history.size());
 
     return new GameState(

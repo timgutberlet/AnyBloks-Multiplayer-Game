@@ -30,14 +30,11 @@ import javafx.scene.shape.Line;
  */
 public class ScoreBoardUiController extends AbstractUiController {
 
-  private AbstractGameController gameController;
-  private GameSession gameSession;
-
-  private static List<String> players = new ArrayList<>();
-  private static List<String> scores = new ArrayList<>();
-
-  private static List<String> sessionScores = new ArrayList<>();
-
+  private static final List<String> players = new ArrayList<>();
+  private static final List<String> scores = new ArrayList<>();
+  private static final List<String> sessionScores = new ArrayList<>();
+  private final AbstractGameController gameController;
+  private final GameSession gameSession;
   @FXML
   private AnchorPane mainPane;
 
@@ -86,48 +83,6 @@ public class ScoreBoardUiController extends AbstractUiController {
     this.init(super.root);
   }
 
-  public void init(Group root) {
-    try {
-      FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/ScoreBoardView.fxml"));
-      loader.setControllerFactory(e -> this);
-      root.getChildren().add(loader.load());
-      updateSize(mainPane, gameController.getStage());
-      //Sets the Theme, according to the settings
-      switch (Config.getStringValue("THEME")){
-        case "BRIGHT":
-          mainPane.setStyle("-fx-background-color:#ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
-          break;
-        case "DARK":
-          mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
-          break;
-        case "INTEGRA":
-          mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
-          break;
-        case "THINC!":
-          mainPane.setStyle("-fx-background-color: #D8EFFF;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
-          break;
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
-  @FXML
-  public void initialize() {
-    setLabels();
-    setMessage();
-  }
-
-  @FXML
-  public void backMainMenu() {
-    gameController.setActiveUiController(new MainMenuUiController(gameController));
-  }
-
   public static void sortScoreBoard(GameSession gameSession) {
     HashMap<String, Integer> sortedScores = gameSession.getScoreboard().entrySet().stream()
         .sorted(Entry.comparingByValue())
@@ -146,6 +101,52 @@ public class ScoreBoardUiController extends AbstractUiController {
       sessionScores.add(entry.getValue() + "");
     }*/
 
+  }
+
+  public void init(Group root) {
+    try {
+      FXMLLoader loader = new FXMLLoader();
+      loader.setLocation(getClass().getResource("/ScoreBoardView.fxml"));
+      loader.setControllerFactory(e -> this);
+      root.getChildren().add(loader.load());
+      updateSize(mainPane, gameController.getStage());
+      //Sets the Theme, according to the settings
+      switch (Config.getStringValue("THEME")) {
+        case "BRIGHT":
+          mainPane.setStyle("-fx-background-color:#ffffff;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          break;
+        case "DARK":
+          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          break;
+        case "INTEGRA":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          break;
+        case "THINC!":
+          mainPane.setStyle("-fx-background-color: #D8EFFF;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          break;
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
+  public void initialize() {
+    setLabels();
+    setMessage();
+  }
+
+  @FXML
+  public void backMainMenu() {
+    gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
   public void setLabels() {

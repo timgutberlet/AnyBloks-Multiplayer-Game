@@ -2,7 +2,6 @@ package engine.handler;
 
 import engine.component.Field;
 import engine.controller.AbstractGameController;
-import game.view.DragablePolyPane;
 import game.view.poly.PolyPane;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +16,7 @@ import javafx.scene.input.KeyCode;
  * @author tgutberl
  */
 public class InputHandler {
+
   /**
    * Sets for Pressed Keys and Pressed Keys while the Frame repainted.
    */
@@ -88,6 +88,7 @@ public class InputHandler {
 
   /**
    * Consturcor for setting Hashsets and gamecontrollers.
+   *
    * @param gameController Gamecontroller used in appl.
    */
   public InputHandler(AbstractGameController gameController) {
@@ -130,6 +131,7 @@ public class InputHandler {
 
   /**
    * Method to regiser Keys
+   *
    * @param scene Scene that is given
    */
   public void registerKeys(Scene scene) {
@@ -151,6 +153,7 @@ public class InputHandler {
 
   /**
    * Method to check if key is pressed
+   *
    * @param keyCode
    * @return boolean
    */
@@ -160,6 +163,7 @@ public class InputHandler {
 
   /**
    * Method to check if key is released
+   *
    * @param keyCode
    * @return
    */
@@ -296,6 +300,7 @@ public class InputHandler {
 
   /**
    * Method to check for an Field array if one of it was pressed
+   *
    * @param fieldArray
    * @return
    */

@@ -3,11 +3,9 @@ package game.view;
 import engine.component.Field;
 import engine.handler.InputHandler;
 import game.controller.InGameUiController;
-import game.core.GameController;
 import game.model.polygon.Poly;
 import game.view.poly.PolyPane;
 import java.util.List;
-import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -19,12 +17,10 @@ import javafx.scene.shape.Shape;
  */
 public class DragablePolyPane extends Pane {
 
-  protected PolyPane polyPane;
   protected final double size;
   protected final InputHandler inputHandler;
   protected final InGameUiController inGameUiController;
-
-
+  protected PolyPane polyPane;
   protected Button rotateRight;
   protected Button rotateLeft;
   protected Button mirror;
@@ -39,7 +35,8 @@ public class DragablePolyPane extends Pane {
   protected double circleY;
 
 
-  public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler, InGameUiController inGameUiController) {
+  public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler,
+      InGameUiController inGameUiController) {
     this.polyPane = polyPane;
     this.size = size;
     this.inputHandler = inputHandler;
@@ -52,22 +49,31 @@ public class DragablePolyPane extends Pane {
     buttons();
   }
 
-  public void inncerCircleSetColor(){
+  public void inncerCircleSetColor() {
     this.innerCircleColor = Color.YELLOW;
   }
-  public void inncerCircleResetColor(){
+
+  public void inncerCircleResetColor() {
     this.innerCircleColor = Color.GRAY;
   }
 
 
-  public List<Field> getField(){
+  public List<Field> getField() {
     return this.polyPane.getFields();
   }
 
-  public Poly getPoly(){
+  public Poly getPoly() {
     return polyPane.getPoly();
   }
-  public Field getCheckPolyField(){
+
+  public void setPoly(PolyPane polyPane) {
+    this.getChildren().clear();
+    this.polyPane = polyPane;
+    build();
+    buttons();
+  }
+
+  public Field getCheckPolyField() {
     return this.polyPane.getCheckPolyField();
   }
 
@@ -110,19 +116,12 @@ public class DragablePolyPane extends Pane {
     mirror.relocate(circleX - size * 0.5, 0);
     rotateLeft.relocate(0, circleX - size * 0.5);
     rotateRight.relocate(2 * circleX - size, circleY - size * 0.5);
-    submit.relocate(circleX-size * 0.5, 2* (circleY - size * 0.5));
+    submit.relocate(circleX - size * 0.5, 2 * (circleY - size * 0.5));
 
     this.getChildren().add(mirror);
     this.getChildren().add(rotateLeft);
     this.getChildren().add(rotateRight);
     this.getChildren().add(submit);
-  }
-
-  public void setPoly(PolyPane polyPane) {
-    this.getChildren().clear();
-    this.polyPane = polyPane;
-    build();
-    buttons();
   }
 
   public void rerender() {

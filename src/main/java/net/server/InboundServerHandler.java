@@ -60,7 +60,7 @@ public class InboundServerHandler {
    */
   public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
     Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
-    System.out.println( "LOGIN_REQUEST_PACKET recieved in Handler");
+    System.out.println("LOGIN_REQUEST_PACKET recieved in Handler");
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
     String token = loginPacket.getToken();
@@ -108,7 +108,7 @@ public class InboundServerHandler {
     String username = loginPacket.getUsername();
     System.out.println(username + " addVerfiedUser");
     //check if username has been connected before
-    if (this.server.getUsername2Session().keySet().contains(username)) {
+    if (this.server.getUsername2Session().containsKey(username)) {
       System.out.println(username + " in keyset");
       //find existing player with the username
       for (Player player : gameSession.getPlayerList()) {
@@ -161,7 +161,7 @@ public class InboundServerHandler {
         System.out.println(
             "Username2Session size: " + this.server.getUsername2Session().size());
         System.out.println(
-            "Gamesession size: " + this.server.getGameSession().getPlayerList().size());
+            "Gamesession size: " + EndpointServer.getGameSession().getPlayerList().size());
       } else {
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
             "This Lobby is full. Try again at another time.", "ipAddress");
@@ -172,16 +172,16 @@ public class InboundServerHandler {
 
       }
     }
-      PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
-      wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET, playerListPacket);
-      this.server.broadcastMessage(wrappedPacket);
+    PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
+    wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET, playerListPacket);
+    this.server.broadcastMessage(wrappedPacket);
 
-      String[] toReturn = {"true", username};
+    String[] toReturn = {"true", username};
 
-      //this.server.addUsernameSession(username, session);
-      Debug.printMessage(this,
-          "New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
-      return toReturn;
+    //this.server.addUsernameSession(username, session);
+    Debug.printMessage(this,
+        "New Length of KeySet: " + this.server.getUsername2Session().keySet().size());
+    return toReturn;
 
   }
 

@@ -25,6 +25,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -65,13 +66,38 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   private final GameSession gameSession;
   /**
+   * Button to start Game
+   */
+  @FXML
+  Button playButton;
+  /**
+   * Main Anchorpane used for resizing.
+   */
+  @FXML
+  AnchorPane mainPane;
+  /**
+   * Count of rounds.
+   */
+  @FXML
+  Label roundCount;
+  /**
+   * Name of the user that is controlling game.
+   */
+  @FXML
+  Label youPlayer;
+  /**
+   * Text to inform player of errors.
+   */
+  @FXML
+  Text gamemodeError;
+  /**
    * Gamemode list.
    */
-  private LinkedList<GameMode> gameModes = new LinkedList<>();
+  private final LinkedList<GameMode> gameModes = new LinkedList<>();
   /**
    * Set Ai players List.
    */
-  private LinkedList<PlayerType> aiPlayers = new LinkedList<>();
+  private final LinkedList<PlayerType> aiPlayers = new LinkedList<>();
   /**
    * List where the gamemodes are set in.
    */
@@ -79,7 +105,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   /**
    * Combobox where user can choose gamemode.
    */
-  private List<ComboBox<String>> rounds = new ArrayList<>();
+  private final List<ComboBox<String>> rounds = new ArrayList<>();
   /**
    * Round count.
    */
@@ -87,16 +113,11 @@ public class LocalLobbyUiController extends AbstractUiController {
   /**
    * Endpoint for server-client communication.
    */
-  private EndpointClient client;
+  private final EndpointClient client;
   /**
    * Clienthandler for input to Server.
    */
-  private ClientHandler clientHandler;
-  /**
-   * Main Anchorpane used for resizing.
-   */
-  @FXML
-  AnchorPane mainPane;
+  private final ClientHandler clientHandler;
   /**
    * Player one name.
    */
@@ -118,25 +139,10 @@ public class LocalLobbyUiController extends AbstractUiController {
   @FXML
   private VBox box;
   /**
-   * Count of rounds.
-   */
-  @FXML
-  Label roundCount;
-  /**
-   * Name of the user that is controlling game.
-   */
-  @FXML
-  Label youPlayer;
-  /**
    * List of Gamemodes.
    */
   @FXML
   private ComboBox<String> gameMode;
-  /**
-   * Text to inform player of errors.
-   */
-  @FXML
-  Text gamemodeError;
   /**
    * Name of AI1.
    */
@@ -175,12 +181,13 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
 
     Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.REMOTE_PLAYER);
-    this.client = new EndpointClient(this,player);
+    this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();
     this.gameSession.setLocalPlayer(player);
 
     this.clientHandler = client.getClientHandler();
+    gameSession.setClientHandler(this.clientHandler);
 
   }
 
@@ -199,22 +206,26 @@ public class LocalLobbyUiController extends AbstractUiController {
       gamemodeError.setText("");
       updateSize(mainPane, gameController.getStage());
       //Sets the Theme, according to the settings
-      switch (Config.getStringValue("THEME")){
+      switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
           mainPane.setStyle("-fx-background-color:#ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
           mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
       youPlayer.setText(Config.getStringValue("HOSTPLAYER"));
@@ -240,6 +251,8 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void playGame() {
+    playButton.setText("Waiting for game to start!");
+    playButton.setDisable(true);
     this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
     boolean error = false;
 
@@ -342,18 +355,18 @@ public class LocalLobbyUiController extends AbstractUiController {
         e.printStackTrace();
       }
 
-      Debug.printMessage(this,"Game has been set");
+      Debug.printMessage(this, "Game has been set");
       Debug.printMessage("Hallo3");
-      Debug.printMessage("Laenge der Liste: "+this.gameSession.getPlayerList().size());
+      Debug.printMessage("Laenge der Liste: " + this.gameSession.getPlayerList().size());
 
-      if(this.gameSession.getPlayerList().size()==4){
-        if(player1.getText().equals("-")){
+      if (this.gameSession.getPlayerList().size() == 4) {
+        if (player1.getText().equals("-")) {
           player1.setText(this.gameSession.getPlayerList().get(1).getUsername());
         }
-        if(player2.getText().equals("-")){
+        if (player2.getText().equals("-")) {
           player2.setText(this.gameSession.getPlayerList().get(2).getUsername());
         }
-        if(player3.getText().equals("-")){
+        if (player3.getText().equals("-")) {
           player3.setText(this.gameSession.getPlayerList().get(3).getUsername());
         }
       }
@@ -362,8 +375,8 @@ public class LocalLobbyUiController extends AbstractUiController {
 
   /**
    * Method to initializing Gamemode Combobox
-   * @param comboBox box
    *
+   * @param comboBox box
    * @author tgutberl
    */
   private void initializeComboBox(ComboBox<String> comboBox) {
@@ -379,7 +392,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void addRound() {
-    if(gamemodeError.getText().length() > 0){
+    if (gamemodeError.getText().length() > 0) {
       gamemodeError.setText("");
     }
     round++;
@@ -389,7 +402,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     comboBox.setPrefWidth(150);
     comboBox.setPrefHeight(25);
     initializeComboBox(comboBox);
-    roundCount.setText(""+round);
+    roundCount.setText("" + round);
     hBox.getChildren().add(comboBox);
     rounds.add(comboBox);
     box.getChildren().add(hBox);
@@ -402,12 +415,12 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void deleteRound() {
-    if(round > 1){
+    if (round > 1) {
       round--;
-      roundCount.setText(""+round);
+      roundCount.setText("" + round);
       box.getChildren().remove(box.getChildren().get(round));
       rounds.remove(round);
-    }else{
+    } else {
       gamemodeError.setText("You need to have at least one Round!");
     }
   }
@@ -422,6 +435,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     System.out.println("increase!!!!");
     increaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
+
   /**
    * Method to increase difficulty of second Ai
    *
@@ -432,6 +446,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     System.out.println("increase!!!!");
     increaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
+
   /**
    * Method to increase difficulty of third Ai
    *
@@ -442,6 +457,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     System.out.println("increase!!!!");
     increaseAi(difficultyPlayer3, nameAiPlayer3, player3);
   }
+
   /**
    * Method to decrease difficulty of first Ai
    *
@@ -452,6 +468,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     System.out.println("decrease!!!!");
     decreaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
+
   /**
    * Method to decrease difficulty of second Ai
    *
@@ -462,6 +479,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     System.out.println("decrease!!!!");
     decreaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
+
   /**
    * Method to decrease difficulty of third Ai
    *
@@ -490,9 +508,8 @@ public class LocalLobbyUiController extends AbstractUiController {
    * Method to increase Ai difficulty
    *
    * @param difficultyPlayer difficulty
-   * @param name name of Ai
-   * @param player playerType
-   *
+   * @param name             name of Ai
+   * @param player           playerType
    * @author tgutberl
    */
   private void increaseAi(Label difficultyPlayer, String name, Label player) {
@@ -525,9 +542,8 @@ public class LocalLobbyUiController extends AbstractUiController {
    * Method to decrease Ai difficulty
    *
    * @param difficultyPlayer difficulty
-   * @param name name of Ai
-   * @param player playerType
-   *
+   * @param name             name of Ai
+   * @param player           playerType
    * @author tgutberl
    */
   private void decreaseAi(Label difficultyPlayer, String name, Label player) {
@@ -564,24 +580,25 @@ public class LocalLobbyUiController extends AbstractUiController {
    *
    * @param gameController
    * @param deltaTime
-   *
    * @author tgutberl
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
-    if(this.gameSession.isGameStarted()){
+    if (this.gameSession.isGameStarted() && this.gameSession.isLocalPlayerTurn()) {
       ThreadHandler threadHelp = new ThreadHandler(this.gameSession);
       gameController.setActiveUiController(
-          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession, threadHelp));
+          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession,
+              threadHelp));
     } else {
-      Debug.printMessage(this, "GameSession Controller "+ this.gameSession);
+      Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }
 
   }
 
   /**
    * Override Update Method
+   *
    * @param gameController GameController of game
    */
   @Override

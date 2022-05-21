@@ -10,31 +10,31 @@ import net.packet.abstr.Packet;
  */
 public class PlayerListPacket extends Packet {
 
-	ArrayList<Player> playerList;
+  ArrayList<Player> playerList;
 
-	/**
-	 * empty constructor for jackson.
-	 *
-	 */
-	public PlayerListPacket(){}
+  /**
+   * empty constructor for jackson.
+   */
+  public PlayerListPacket() {
+  }
 
-	/**
-	 * constructor.
-	 *
-	 * @param playerList
-	 */
-	public PlayerListPacket(ArrayList<Player> playerList){
-		this.playerList = playerList;
-	}
+  /**
+   * constructor.
+   *
+   * @param playerList
+   */
+  public PlayerListPacket(ArrayList<Player> playerList) {
+    this.playerList = playerList;
+  }
 
-	/**
-	 * getter.
-	 *
-	 * @return
-	 */
-	public ArrayList<Player> getPlayerList(){
-		ArrayList playerList = this.playerList;
-		return playerList;
-	}
+  /**
+   * getter.
+   *
+   * @return
+   */
+  public ArrayList<Player> getPlayerList() {
+    ArrayList playerList = this.playerList;
+    return playerList;
+  }
 
 }

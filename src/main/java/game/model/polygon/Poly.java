@@ -60,8 +60,9 @@ public abstract class Poly implements Cloneable {
 
   /**
    * initializes all values of a poly, so it can be used to clone a poly.
-   * @param color color of the poly
-   * @param rotation rotation of the poly
+   *
+   * @param color      color of the poly
+   * @param rotation   rotation of the poly
    * @param isMirrored if the poly is mirrored
    */
   public Poly(Color color, int rotation, boolean isMirrored) {
@@ -87,12 +88,14 @@ public abstract class Poly implements Cloneable {
 
   /**
    * gets deep clone of the poly.
+   *
    * @return deep clone of the poly
    */
   public abstract Poly clone();
 
   /**
    * evaluates if o is the same poly but maybe in another rotation or mirroring.
+   *
    * @param o other object
    * @return if they are the same
    */
@@ -108,6 +111,7 @@ public abstract class Poly implements Cloneable {
 
   /**
    * evaluates if o is exactly the same poly.
+   *
    * @param o other object
    * @return if they are exactly the same
    */
@@ -141,24 +145,28 @@ public abstract class Poly implements Cloneable {
 
   /**
    * returns the height of the poly.
+   *
    * @return height of the poly
    */
   public abstract int getHeight();
 
   /**
    * returns the width of the poly.
+   *
    * @return width of the poly
    */
   public abstract int getWidth();
 
   /**
    * returns the type of the poly.
+   *
    * @return
    */
   public abstract String getPolyType();
 
   /**
    * converts the board into code, which creates the board.
+   *
    * @return string containing the creating code
    */
   public abstract String toCode();

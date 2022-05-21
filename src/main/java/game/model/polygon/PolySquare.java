@@ -18,8 +18,6 @@ public class PolySquare extends Poly {
   public static ArrayList<ArrayList<FieldSquare>> shapeListDuo;
   public static ArrayList<ArrayList<FieldSquare>> shapeListJunior = new ArrayList<>();
 
-  private String polyType = "Square";
-
   /**
    * Initializing all pieces of the basic Game modes.
    *
@@ -126,6 +124,7 @@ public class PolySquare extends Poly {
    * the polygon or not.
    */
   public ArrayList<FieldSquare> shape;
+  private String polyType = "Square";
 
   /**
    * empty constructor for jackson.
@@ -153,9 +152,10 @@ public class PolySquare extends Poly {
 
   /**
    * initializes all values of a poly, so it can be used to clone a poly.
-   * @param shape shape of the poly
-   * @param color color of the poly
-   * @param rotation rotation of the poly
+   *
+   * @param shape      shape of the poly
+   * @param color      color of the poly
+   * @param rotation   rotation of the poly
    * @param isMirrored if the poly is mirrored
    */
   public PolySquare(ArrayList<FieldSquare> shape, Color color, int rotation, boolean isMirrored) {
@@ -166,6 +166,7 @@ public class PolySquare extends Poly {
 
   /**
    * compares two shapes and evaluates if they are equal independent of rotation and mirroring.
+   *
    * @param s1 shape 1
    * @param s2 shape 2
    * @return if they are the same
@@ -190,6 +191,7 @@ public class PolySquare extends Poly {
 
   /**
    * returns the height of the poly.
+   *
    * @return height of the poly
    */
   @Override
@@ -205,6 +207,7 @@ public class PolySquare extends Poly {
 
   /**
    * returns the width of the poly.
+   *
    * @return width of the poly
    */
   @Override
@@ -256,6 +259,7 @@ public class PolySquare extends Poly {
 
   /**
    * gets the shape of the poly.
+   *
    * @return shape of the poly
    */
   public ArrayList<FieldSquare> getShape() {
@@ -264,6 +268,7 @@ public class PolySquare extends Poly {
 
   /**
    * gets deep clone of the poly.
+   *
    * @return deep clone of the poly
    */
   @Override
@@ -277,6 +282,7 @@ public class PolySquare extends Poly {
 
   /**
    * evaluates if o is the same poly but maybe in another rotation or mirroring.
+   *
    * @param o other object
    * @return if they are the same
    */
@@ -306,6 +312,7 @@ public class PolySquare extends Poly {
 
   /**
    * evaluates if o is exactly the same poly.
+   *
    * @param o other object
    * @return if they are exactly the same
    */
@@ -354,6 +361,7 @@ public class PolySquare extends Poly {
 
   /**
    * checks if the poly contains the given field
+   *
    * @param x coordinate
    * @param y coordinate
    * @return boolean if the poly contains the field
@@ -369,6 +377,7 @@ public class PolySquare extends Poly {
 
   /**
    * converts to board to a string.
+   *
    * @return the string representation of the board
    */
   @Override
@@ -404,26 +413,28 @@ public class PolySquare extends Poly {
 
   /**
    * returns the type of the poly.
+   *
    * @return
    */
-  public String getPolyType(){
+  public String getPolyType() {
     return this.polyType;
-  }
-
-  /**
-   * converts the board into code, which creates the board.
-   * @return string containing the creating code
-   */
-  public String toCode(){
-    StringBuffer res = new StringBuffer("ArrayList<FieldSquare> shape = new ArrayList<>();\n");
-    for (FieldSquare fs : shape){
-      res.append("shape.add(" + fs.toCode() + ");\n");
-    }
-    res.append("PolySquare p = new PolySquare(shape, Color.Blue);\n");
-    return res.toString();
   }
 
   public void setPolyType(String polyType) {
     this.polyType = polyType;
+  }
+
+  /**
+   * converts the board into code, which creates the board.
+   *
+   * @return string containing the creating code
+   */
+  public String toCode() {
+    StringBuffer res = new StringBuffer("ArrayList<FieldSquare> shape = new ArrayList<>();\n");
+    for (FieldSquare fs : shape) {
+      res.append("shape.add(" + fs.toCode() + ");\n");
+    }
+    res.append("PolySquare p = new PolySquare(shape, Color.Blue);\n");
+    return res.toString();
   }
 }
