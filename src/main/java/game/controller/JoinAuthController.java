@@ -85,6 +85,7 @@ public class JoinAuthController extends AbstractUiController {
 
   /**
    * Contstructor initiating class.
+   *
    * @param gameController Gamecontroller Method
    */
   public JoinAuthController(AbstractGameController gameController) {
@@ -95,9 +96,10 @@ public class JoinAuthController extends AbstractUiController {
 
   /**
    * Second constrctor with ip and username, when user comes from CreateAcccount Window.
+   *
    * @param gameController Gamecontroller Method
-   * @param ip ip String
-   * @param username username String
+   * @param ip             ip String
+   * @param username       username String
    */
   public JoinAuthController(AbstractGameController gameController, String ip, String username) {
     super(gameController);
@@ -294,6 +296,7 @@ public class JoinAuthController extends AbstractUiController {
 
   /**
    * Update Method used for starting Gamessesion, when palyer is connected
+   *
    * @param gameController GameController of game
    */
   @Override
@@ -309,8 +312,9 @@ public class JoinAuthController extends AbstractUiController {
 
   /**
    * Update Method used for error messages and joining
+   *
    * @param gameController Gamecontroller class
-   * @param deltaTime used for Frames
+   * @param deltaTime      used for Frames
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {

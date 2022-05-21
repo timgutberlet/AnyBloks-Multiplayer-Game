@@ -32,10 +32,6 @@ public class SettingUiController extends AbstractUiController {
    */
   ObservableList<String> themes;
   /**
-   * Savemasse used for messaging when save was successful.
-   */
-  private String saveMessage = "";
-  /**
    * Textfield for hostPlayer name setting.
    */
   @FXML
@@ -55,6 +51,38 @@ public class SettingUiController extends AbstractUiController {
    */
   @FXML
   ChoiceBox themeBox;
+  /**
+   * Savemasse used for messaging when save was successful.
+   */
+  private String saveMessage = "";
+  /**
+   * Label to set Window width and window Height.
+   */
+  @FXML
+  private Label windowWidth, windowHeight;
+
+  /**
+   * Sets Gamecontroller and calls init Method.
+   *
+   * @param gameController AbstractGameController Object
+   */
+  public SettingUiController(AbstractGameController gameController) {
+    super(gameController);
+    this.gameController = gameController;
+    init(super.root);
+  }
+
+  /**
+   * Sets Gamecontroller and calls init Method.
+   *
+   * @param gameController AbstractGameController Object
+   */
+  public SettingUiController(AbstractGameController gameController, String saveMessage) {
+    super(gameController);
+    this.gameController = gameController;
+    this.saveMessage = saveMessage;
+    init(super.root);
+  }
 
   /**
    * Method to get back to MainMenu by Button.
@@ -63,12 +91,6 @@ public class SettingUiController extends AbstractUiController {
   public void back() {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
-
-  /**
-   * Label to set Window width and window Height.
-   */
-  @FXML
-  private Label windowWidth, windowHeight;
 
   /**
    * Method to increase the window width.
@@ -103,6 +125,7 @@ public class SettingUiController extends AbstractUiController {
     Config.set("SCREEN_HEIGHT", windowHeight.getText());
     saveConfirm.setText("");
   }
+
   /**
    * Method to decrease Window Height.
    */
@@ -126,13 +149,12 @@ public class SettingUiController extends AbstractUiController {
     save("Successfully Resettet");
   }
 
-
   /**
    * Method to save the changes into the config.
    */
   @FXML
   public void save() {
-    if(!Config.getStringValue("THEME").equals(themeBox.getValue())){
+    if (!Config.getStringValue("THEME").equals(themeBox.getValue())) {
       switch (themeBox.getValue().toString()) {
         case "BRIGHT":
           Config.set("THEME", "BRIGHT");
@@ -153,17 +175,19 @@ public class SettingUiController extends AbstractUiController {
     updateSize(mainPane, gameController.getStage());
     // set alert type
     gameController.setActiveUiController(new MainMenuUiController(gameController));
-    gameController.setActiveUiController(new SettingUiController(gameController, "Successfully saved!"));
+    gameController.setActiveUiController(
+        new SettingUiController(gameController, "Successfully saved!"));
     saveConfirm.setText("Successfully saved!");
   }
 
   /**
    * Method to save the changes.
+   *
    * @param reset check if reset was called before
    */
   @FXML
   public void save(String reset) {
-    if(!Config.getStringValue("THEME").equals(themeBox.getValue())){
+    if (!Config.getStringValue("THEME").equals(themeBox.getValue())) {
       switch (themeBox.getValue().toString()) {
         case "BRIGHT":
           Config.set("THEME", "BRIGHT");
@@ -238,29 +262,6 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Sets Gamecontroller and calls init Method.
-   *
-   * @param gameController AbstractGameController Object
-   */
-  public SettingUiController(AbstractGameController gameController) {
-    super(gameController);
-    this.gameController = gameController;
-    init(super.root);
-  }
-
-  /**
-   * Sets Gamecontroller and calls init Method.
-   *
-   * @param gameController AbstractGameController Object
-   */
-  public SettingUiController(AbstractGameController gameController, String saveMessage) {
-    super(gameController);
-    this.gameController = gameController;
-    this.saveMessage = saveMessage;
-    init(super.root);
-  }
-
-  /**
    * load Settings from Config File.
    */
   private void loadSettings() {
@@ -279,6 +280,7 @@ public class SettingUiController extends AbstractUiController {
 
   /**
    * Override for update Method.
+   *
    * @param gameController GameController of game
    */
   @Override

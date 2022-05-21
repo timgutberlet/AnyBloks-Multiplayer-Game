@@ -15,7 +15,7 @@ public class TrigonBoardPane extends BoardPane {
 
   private double xOfSet;
   private double yOfSet;
-  private double shift;
+  private final double shift;
 
   public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
@@ -39,16 +39,16 @@ public class TrigonBoardPane extends BoardPane {
     double move = size / 2 - sizeHelp / 2;
 
     double yOfSetHelp = yOfSet * 0.4;
-    double moveYOfSet = yOfSet/2 - yOfSetHelp/2;
+    double moveYOfSet = yOfSet / 2 - yOfSetHelp / 2;
 
     checkTrigonField.getPoints()
         .addAll(xOfSet + size + j * size + i * xOfSet - move - shift,
             yOfSet + i * yOfSet - moveYOfSet, //right vertex
             size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet + moveYOfSet, // top vertex
             xOfSet + j * size + i * xOfSet + move - shift, yOfSet + i * yOfSet - moveYOfSet);
-    if(checkFieldColor.containsKey(""+(i*1000)+j+1)){
-      checkTrigonField.setFill(checkFieldColor.get(""+(i*1000)+j+1));
-    }else{
+    if (checkFieldColor.containsKey("" + (i * 1000) + j + 1)) {
+      checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 1));
+    } else {
       checkTrigonField.setFill(color);
     }
     checkFields.add(checkTrigonField);
@@ -78,7 +78,7 @@ public class TrigonBoardPane extends BoardPane {
     double move = size / 2 - sizeHelp / 2;
 
     double yOfSetHelp = yOfSet * 0.4;
-    double moveYOfSet = yOfSet/2 - yOfSetHelp/2;
+    double moveYOfSet = yOfSet / 2 - yOfSetHelp / 2;
 
     checkTrigonField.getPoints()
         .addAll(xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet - moveYOfSet,
@@ -86,9 +86,9 @@ public class TrigonBoardPane extends BoardPane {
             size + j * size + i * xOfSet - move - shift, 0.0 + i * yOfSet + moveYOfSet,
             // right vertex
             0.0 + j * size + i * xOfSet + move - shift, 0.0 + i * yOfSet + moveYOfSet);
-    if(checkFieldColor.containsKey(""+(i*1000)+j+0)){
-      checkTrigonField.setFill(checkFieldColor.get(""+(i*1000)+j+0));
-    }else{
+    if (checkFieldColor.containsKey("" + (i * 1000) + j + 0)) {
+      checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
+    } else {
       checkTrigonField.setFill(color);
     }
     checkFields.add(checkTrigonField);
