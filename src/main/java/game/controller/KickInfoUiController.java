@@ -18,18 +18,18 @@ import javafx.scene.layout.AnchorPane;
 public class KickInfoUiController extends AbstractUiController {
 
   /**
+   * Gamecontroller used in Application.
+   */
+  private final AbstractGameController gameController;
+  /**
    * Main Anchorpane used for resizing.
    */
   @FXML
   AnchorPane mainPane;
-  /**
-   * Gamecontroller used in Application.
-   *
-   */
-  private final AbstractGameController gameController;
 
   /**
    * Contstructor used for initiating.
+   *
    * @param gameController Gamecontroller
    * @author tgutberl
    */
@@ -53,22 +53,26 @@ public class KickInfoUiController extends AbstractUiController {
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
       //Sets the Theme, according to the settings
-      switch (Config.getStringValue("THEME")){
+      switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
           mainPane.setStyle("-fx-background-color:#ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
           mainPane.setStyle("-fx-background-color: #383837;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
-          mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
     } catch (IOException e) {
@@ -112,8 +116,8 @@ public class KickInfoUiController extends AbstractUiController {
 
   /**
    * Override Update Method
-   * @param gameController GameController of game
    *
+   * @param gameController GameController of game
    * @author tgutberl
    */
   @Override

@@ -5,7 +5,6 @@ import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
@@ -35,12 +34,9 @@ public class testChatClient {
 
   public static void main(String[] args) {
 
-    Player player = new Player("user1",PlayerType.REMOTE_PLAYER);
+    Player player = new Player("user1", PlayerType.REMOTE_PLAYER);
 
     org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
-
-
-
 
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
     EndpointClient client = new EndpointClient(player);

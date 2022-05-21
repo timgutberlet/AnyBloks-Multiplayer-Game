@@ -1,7 +1,5 @@
 package net.tests.game;
 
-import static com.fasterxml.jackson.databind.type.LogicalType.Map;
-
 import game.model.Debug;
 import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMTrigon;
@@ -11,28 +9,18 @@ import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URI;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import javax.websocket.ClientEndpointConfig;
-import javax.websocket.ClientEndpointConfig.Configurator;
 import javax.websocket.ContainerProvider;
-import javax.websocket.DeploymentException;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
-import net.packet.chat.ChatMessagePacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.InitSessionPacket;
 import net.server.HashingHandler;
-import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**
@@ -56,7 +44,7 @@ public class testGameClient {
     Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
     EndpointClient client = new EndpointClient(localPlayer);
 
-    Session ses ;
+    Session ses;
 
     try {
 

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -40,7 +39,7 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   ArrayList<String> alreadyInChat;
   /**
-   *Textarea with Chat messages.
+   * Textarea with Chat messages.
    */
   @FXML
   private TextArea chat;
@@ -74,6 +73,7 @@ public class JoinLobbyUiController extends AbstractUiController {
 
   /**
    * Initalizing UI.
+   *
    * @param root Root parameter
    * @author tgutberl
    */
@@ -127,11 +127,13 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void back() {
+    gameSession.stopSession();
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
   /**
    * Method getting called when chat message is entered and sends it to server.
+   *
    * @author tgutberl
    */
   public void registerChatMessage() {
@@ -144,6 +146,7 @@ public class JoinLobbyUiController extends AbstractUiController {
 
   /**
    * Override initialize.
+   *
    * @author tgutberl
    */
   @FXML
@@ -152,6 +155,7 @@ public class JoinLobbyUiController extends AbstractUiController {
 
   /**
    * Override onExit .
+   *
    * @author tgutberl
    */
   @Override
@@ -161,8 +165,9 @@ public class JoinLobbyUiController extends AbstractUiController {
 
   /**
    * Update Method used for Chat Messages and starting the game.
+   *
    * @param gameController Gamecontroller method
-   * @param deltaTime used for frame
+   * @param deltaTime      used for frame
    * @author tgutberl
    */
   @Override
@@ -178,8 +183,8 @@ public class JoinLobbyUiController extends AbstractUiController {
     }
     String help = "";
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
-      if(!alreadyInChat.contains(chatMessage.getTime() + " "
-          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")){
+      if (!alreadyInChat.contains(chatMessage.getTime() + " "
+          + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")) {
         alreadyInChat.add(chatMessage.getTime() + " "
             + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
         help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
@@ -191,6 +196,7 @@ public class JoinLobbyUiController extends AbstractUiController {
 
   /**
    * Override update Method.
+   *
    * @param gameController GameController of game
    */
   @Override

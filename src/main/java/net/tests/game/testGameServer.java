@@ -2,9 +2,7 @@ package net.tests.game;
 
 import game.model.Debug;
 import java.net.InetAddress;
-import java.util.concurrent.TimeUnit;
 import net.server.HostServer;
-import net.tests.NoLogging;
 
 /**
  * Tests only
