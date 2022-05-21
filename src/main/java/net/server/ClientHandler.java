@@ -86,70 +86,8 @@ public class ClientHandler {
       e.printStackTrace();
     }
 
-    //TODO CHECK IF STILL NEEDED @tore & tobi
-//   final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-//    try {
-//      TimeUnit.MILLISECONDS.sleep(200);
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
-//
-//    Session ses;
-//
-//    try {
-//
-//      String IPAdress = Inet4Address.getLocalHost().getHostAddress();
-//
-//      ses = container.connectToServer(this.client, URI.create("ws://" + IPAdress + ":8081/packet"));
-//
-//      TimeUnit.MILLISECONDS.sleep(100);
-//
-//      //Init session
-////      InitSessionPacket initSessionPacket = new InitSessionPacket();
-////      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_SESSION_PACKET,
-////          initSessionPacket);
-////      ses.getBasicRemote().sendObject(wrappedPacket);
-//
-//      //Create Account
-//      String passwordHash = HashingHandler.sha256encode("123456");
-//      CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
-//          localPlayer.getUsername(),
-//          passwordHash);
-//     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-//          createAccReq);
-//      //... and send it
-//      client.sendToServer(wrappedPacket);
-//
-//      //Sleep so updates can be made in DB
-//      try {
-//        TimeUnit.MILLISECONDS.sleep(500);
-//      } catch (InterruptedException e) {
-//        e.printStackTrace();
-//      }
-//
-//      //Login
-//      LoginRequestPacket loginRequestPacket = new LoginRequestPacket(localPlayer.getUsername(),
-//          passwordHash, localPlayer.getType());
-//      Debug.printMessage("LoginRequestPacket has been sent to the server");
-//      wrappedPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
-//          loginRequestPacket);
-//      ses.getBasicRemote().sendObject(wrappedPacket);
-//
-//    } catch (UnknownHostException e) {
-//      e.printStackTrace();
-//    } catch (DeploymentException e) {
-//      e.printStackTrace();
-//    } catch (EncodeException e) {
-//      e.printStackTrace();
-//    } catch (IOException e) {
-//      e.printStackTrace();
-//    } catch (InterruptedException e) {
-//      e.printStackTrace();
-//    }
-
   }
 
-  //TODO DELETE JUST FOR TESTING @tobi
   public void initLocalGame(Player localPlayer, String ip) {
     String token = "";
     this.initLocalGame(player, ip, token);
@@ -174,24 +112,6 @@ public class ClientHandler {
       ses = container.connectToServer(this.client, URI.create("ws://" + IPAdress + ":8081/packet"));
 
       TimeUnit.MILLISECONDS.sleep(100);
-
-      //Init session
-//      InitSessionPacket initSessionPacket = new InitSessionPacket();
-//      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_SESSION_PACKET,
-//          initSessionPacket);
-//      ses.getBasicRemote().sendObject(wrappedPacket);
-
-      //Create Account
-
-      //TODO check if can be deleted @ tobi & tore
-//      String passwordHash = HashingHandler.sha256encode("123456");
-//      CreateAccountRequestPacket createAccReq = new CreateAccountRequestPacket(
-//          localPlayer.getUsername(),
-//          passwordHash);
-//      WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-//          createAccReq);
-//      //... and send it
-//      client.sendToServer(wrappedPacket);
 
       //Sleep so updates can be made in DB
       try {

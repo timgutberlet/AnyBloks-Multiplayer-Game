@@ -49,7 +49,7 @@ public class testGameStateTransmission {
 
     while (game.getGameState().isStateRunning()) {
       Debug.printMessage(gameSession.toString());
-      game.makeMoveServer();
+      //game.makeMoveServer();
       counter++;
       if (counter == 2) {
         GameUpdatePacket gameUpdatePacket = new GameUpdatePacket(game.getGameState());

@@ -124,7 +124,7 @@ public class InboundServerHandler {
                 "" + loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER));
 
             if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
-              //TODO check whether booleans make sense
+
               Debug.printMessage(this, "AN OLD PLAYER JOINED THE SESSION AGAIN!!!!");
               player.setAI(false);
               player.setType(loginPacket.getPlayerType());
@@ -186,7 +186,7 @@ public class InboundServerHandler {
   }
 
   /**
-   * //TODO check if still needed @tobi & tore
+   *
    * <p>
    * Method called after receiving a CreateAccountRequestPacket. This tries to save the account in
    * the Database, depending on the result of the attempted DB Insertion the reponse message for the

@@ -238,7 +238,7 @@ public class DbServer extends AbstractDB {
    */
   public synchronized boolean testAuthToken(String username, String providedToken) {
     boolean authSucess = false;
-    //TODO remove! this is only for testing (maybe we will keep it)
+
     if (!(username.equals("Bot 1") || username.equals(
         "Bot 2") || username.equals("Bot 3"))) {
       if (doesUserHaveAuthToken(username)) {

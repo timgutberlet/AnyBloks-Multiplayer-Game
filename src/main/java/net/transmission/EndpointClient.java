@@ -113,7 +113,7 @@ public class EndpointClient {
 
 
 	/**
-	 * Method used to connect to server. TODO : evaluate createAccount / Login
+	 * Method used to connect to server.
 	 *
 	 * @param ses Session in use
 	 * @throws IOException     is thrown
@@ -122,17 +122,8 @@ public class EndpointClient {
 	@OnOpen
 	public void onOpen(final Session ses)
 			throws IOException, EncodeException {
-//        ses.getBasicRemote().sendObject(new CreateAccountRequestPacket("testuser", "testPW"));
 
-/*
-   ses.getBasicRemote().sendObject(new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
-      new CreateAccountRequestPacket("testuser", "testPW")));
-   Debug.printMessage(this,"CREATE_ACCOUNT_REQUEST sent to " + ses.getId());
-*/
 		this.server = ses;
-		//this.clientHandler = new ClientHandler(this);
-		//this.gameSession = new GameSession();
-		//this.player.setGameSession(this.gameSession);
 		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
 		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
 

@@ -98,9 +98,9 @@ public class EndpointServer {
 
     PacketType type = packet.getPacketType();
 
-    // Todo: remove
+
     Debug.printMessage(this, type.name());
-    System.out.println("Endpoint recieved message");
+    Debug.printMessage(this,"Endpoint recieved message");
     LOG.info("A packet has been sent here by a client, it is of the type: {} send by {}",
         packet.getPacketType().toString(), client.getId());
 
@@ -137,7 +137,7 @@ public class EndpointServer {
 
         case LOGIN_REQUEST_PACKET:
           Debug.printMessage(this, " LOGIN_REQUEST_PACKET recieved");
-          //TODO use this function in the final product
+
           this.inboundServerHandler.verifyLogin(packet, client);
           break;
 
