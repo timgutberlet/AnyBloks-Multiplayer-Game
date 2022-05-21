@@ -12,45 +12,36 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
-  minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
-  xmlns="http://javafx.com/javafx/18" fx:controller="game.controller.JoinLobbyUiController"
-  fx:id="mainPane">
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.JoinLobbyUiController">
   <children>
-    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-      AnchorPane.topAnchor="0.0" alignment="CENTER" gridLinesVisible="true">
+    <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <GridPane GridPane.rowIndex="1">
           <children>
-            <GridPane GridPane.rowIndex="1" prefHeight="93.0" prefWidth="1280.0">
+            <GridPane prefHeight="93.0" prefWidth="1280.0" GridPane.rowIndex="1">
               <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                  prefHeight="50.0" prefWidth="110.0" text="BACK">
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="110.0" text="BACK">
                   <GridPane.margin>
-                    <Insets/>
+                    <Insets />
                   </GridPane.margin>
                   <font>
-                    <Font size="25.0"/>
+                    <Font size="25.0" />
                   </font>
                 </Button>
-                <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#back" prefHeight="50.0"
-                  prefWidth="110.0" text="QUIT">
+                <Button mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="110.0" text="QUIT" GridPane.columnIndex="2">
                   <font>
-                    <Font size="25.0"/>
+                    <Font size="25.0" />
                   </font>
                 </Button>
               </children>
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0"
-                  minWidth="160.0" prefWidth="160.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0"
-                  prefWidth="1348.2804870605469"/>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0"
-                  minWidth="150.0" prefWidth="150.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0" prefWidth="1348.2804870605469" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
-                  vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
             <GridPane alignment="CENTER">
@@ -59,357 +50,192 @@
                   <children>
                     <GridPane GridPane.columnIndex="1">
                       <children>
-                        <HBox GridPane.rowIndex="2" alignment="CENTER" prefHeight="57.0" prefWidth="381.0"
-                          spacing="50.0">
+                        <HBox alignment="CENTER" prefHeight="57.0" prefWidth="381.0" spacing="50.0" GridPane.rowIndex="2">
                           <children>
-                            <Label text="-" fx:id="difficultyPlayer1">
+                            <Label fx:id="difficultyPlayer1" text="-">
                               <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                               </font>
                             </Label>
                           </children>
                         </HBox>
-                        <HBox GridPane.rowIndex="3" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
-                          spacing="50.0">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="3">
                           <children>
-                            <Label text="-" fx:id="difficultyPlayer2">
+                            <Label fx:id="difficultyPlayer2" text="-">
                               <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                               </font>
                             </Label>
                           </children>
                         </HBox>
-                        <HBox GridPane.rowIndex="4" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
-                          spacing="50.0">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="4">
                           <children>
-                            <Label text="-" fx:id="difficultyPlayer3">
+                            <Label fx:id="difficultyPlayer3" text="-">
                               <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                               </font>
                             </Label>
                           </children>
                         </HBox>
-                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0"
-                          spacing="50.0">
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                           <children>
-                            <Label text="Human Players:" fx:id="nameHostPlayer">
+                            <Label fx:id="nameHostPlayer" text="Human Players:">
                               <HBox.margin>
-                                <Insets top="20.0"/>
+                                <Insets top="20.0" />
                               </HBox.margin>
                               <font>
-                                <Font size="25.0"/>
+                                <Font size="25.0" />
                               </font>
                             </Label>
                           </children>
                         </HBox>
-                        <HBox GridPane.rowIndex="1" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
-                          spacing="50.0">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="1">
                           <children>
-                            <Label text="HOST" fx:id="difficultyPlayer11">
+                            <Label fx:id="difficultyPlayer11" text="HOST">
                               <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                               </font>
                             </Label>
                           </children>
                         </HBox>
                       </children>
                       <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       </columnConstraints>
                       <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                      </rowConstraints>
-                    </GridPane>
-                    <GridPane GridPane.columnIndex="2" alignment="TOP_CENTER">
-                      <children>
-                        <HBox GridPane.rowIndex="1" prefHeight="100.0" prefWidth="200.0">
-                          <children>
-                            <Label text="Gamecount">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="1" prefHeight="100.0"
-                          prefWidth="200.0">
-                          <children>
-                            <Label text="0,0">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.rowIndex="2" prefHeight="66.0" prefWidth="289.0">
-                          <children>
-                            <Label text="Highscore">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="2" prefHeight="100.0"
-                          prefWidth="200.0">
-                          <children>
-                            <Label text="0">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.rowIndex="3" prefHeight="100.0" prefWidth="200.0">
-                          <children>
-                            <Label text="Average Score">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" prefHeight="100.0"
-                          prefWidth="200.0">
-                          <children>
-                            <Label text="0">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.rowIndex="4" prefHeight="100.0" prefWidth="200.0">
-                          <children>
-                            <Label text="Wins">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="4" prefHeight="100.0"
-                          prefWidth="200.0">
-                          <children>
-                            <Label text="0,0000">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.rowIndex="5" prefHeight="100.0" prefWidth="200.0">
-                          <children>
-                            <Label text="Win Ratio">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.columnIndex="1" GridPane.rowIndex="5" prefHeight="100.0"
-                          prefWidth="200.0">
-                          <children>
-                            <Label text="0">
-                              <font>
-                                <Font size="20.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                          <children>
-                            <Label text="Account Statistics">
-                              <HBox.margin>
-                                <Insets top="20.0"/>
-                              </HBox.margin>
-                              <font>
-                                <Font size="25.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox GridPane.columnIndex="1" prefHeight="100.0" prefWidth="200.0">
-                          <children>
-                            <Button mnemonicParsing="false" text="Reset" fx:id="reset">
-                              <HBox.margin>
-                                <Insets top="20.0"/>
-                              </HBox.margin>
-                              <font>
-                                <Font size="15.0"/>
-                              </font>
-                            </Button>
-                          </children>
-                        </HBox>
-                      </children>
-                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                      </columnConstraints>
-                      <rowConstraints>
-                        <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="86.0"
-                          vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="40.0"
-                          vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="40.0"
-                          vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                     </GridPane>
                     <GridPane>
                       <children>
-                        <TextArea GridPane.columnIndex="1" prefHeight="200.0" prefWidth="200.0"
-                          fx:id="chat">
+                        <TextArea fx:id="chat" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                           <GridPane.margin>
-                            <Insets top="10.0"/>
+                            <Insets top="10.0" />
                           </GridPane.margin>
                         </TextArea>
-                        <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="BOTTOM_CENTER"
-                          prefHeight="12.0" prefWidth="260.0">
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="12.0" prefWidth="260.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                           <children>
-                            <TextField prefHeight="0.0" prefWidth="299.0" text="Type something and Press Enter..."
-                              fx:id="chatInput"/>
+                            <TextField fx:id="chatInput" prefHeight="0.0" prefWidth="299.0" text="Type something and Press Enter..." />
                           </children>
                         </VBox>
-                        <VBox GridPane.rowIndex="1" alignment="BOTTOM_CENTER" prefHeight="200.0"
-                          prefWidth="100.0">
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                           <children>
                             <Label text="Chat:">
                               <font>
-                                <Font size="20.0"/>
+                                <Font size="20.0" />
                               </font>
                             </Label>
                           </children>
                         </VBox>
                       </children>
                       <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0"
-                          prefWidth="78.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0"
-                          prefWidth="308.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0"
-                          prefWidth="34.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="106.0" minWidth="10.0" prefWidth="78.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="308.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="34.0" />
                       </columnConstraints>
                       <rowConstraints>
-                        <RowConstraints maxHeight="287.0" minHeight="223.0" prefHeight="287.0"
-                          vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="36.0"
-                          vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="287.0" minHeight="223.0" prefHeight="287.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                     </GridPane>
-                  </children>
-                  <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0"
-                      prefWidth="471.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0"
-                      prefWidth="457.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.0" minWidth="10.0"
-                      prefWidth="584.0"/>
-                  </columnConstraints>
-                  <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                  </rowConstraints>
-                </GridPane>
-                <GridPane GridPane.rowIndex="1" prefHeight="136.0" prefWidth="1280.0">
-                  <children>
-                    <HBox GridPane.columnIndex="1" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
-                      spacing="15.0">
-                      <children>
-                        <Label text="AI Default Strength:">
-                          <HBox.margin>
-                            <Insets/>
-                          </HBox.margin>
-                          <font>
-                            <Font size="20.0"/>
-                          </font>
-                        </Label>
-                        <Label text="None" fx:id="player1">
-                          <font>
-                            <Font size="20.0"/>
-                          </font>
-                        </Label>
-                      </children>
-                    </HBox>
-                    <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0">
+                    <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0" GridPane.columnIndex="2">
                       <children>
                         <Label text="No. of Rounds:">
                           <font>
-                            <Font size="18.0"/>
+                            <Font size="18.0" />
                           </font>
                         </Label>
                         <Label text="1">
                           <font>
-                            <Font size="18.0"/>
+                            <Font size="18.0" />
                           </font>
                         </Label>
                       </children>
                     </VBox>
-                    <VBox GridPane.columnIndex="2" alignment="CENTER" prefHeight="134.0" prefWidth="640.0"
-                      spacing="10.0"/>
                   </children>
                   <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0" prefWidth="471.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0" prefWidth="445.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="645.0" minWidth="10.0" prefWidth="442.0" />
                   </columnConstraints>
                   <rowConstraints>
-                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>
-                <HBox GridPane.rowIndex="2" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                <GridPane prefHeight="136.0" prefWidth="1280.0" GridPane.rowIndex="1">
+                  <children>
+                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1">
+                      <children>
+                        <Label text="AI Default Strength:">
+                          <HBox.margin>
+                            <Insets />
+                          </HBox.margin>
+                          <font>
+                            <Font size="20.0" />
+                          </font>
+                        </Label>
+                        <Label fx:id="player1" text="None">
+                          <font>
+                            <Font size="20.0" />
+                          </font>
+                        </Label>
+                      </children>
+                    </HBox>
+                    <VBox alignment="CENTER" prefHeight="134.0" prefWidth="640.0" spacing="10.0" GridPane.columnIndex="2" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                   <children>
                     <Label text="Waiting for Host to Start Game...">
                       <font>
-                        <Font size="24.0"/>
+                        <Font size="24.0" />
                       </font>
                     </Label>
                   </children>
                 </HBox>
               </children>
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="345.0" minHeight="10.0" prefHeight="321.0"
-                  vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="202.0" minHeight="10.0" prefHeight="137.0"
-                  vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="62.0"
-                  vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="345.0" minHeight="10.0" prefHeight="321.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="202.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
           </children>
           <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           </columnConstraints>
           <rowConstraints>
-            <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5"
-              vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
-              vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
           </rowConstraints>
         </GridPane>
-        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" alignment="CENTER" graphicTextGap="20.0"
-          text="LOBBY">
+        <Label alignment="CENTER" graphicTextGap="20.0" text="LOBBY" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
           <font>
-            <Font size="50.0"/>
+            <Font size="50.0" />
           </font>
         </Label>
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="524.7535400390625" minHeight="10.0" prefHeight="100.0"
-          vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5"
-          vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="524.7535400390625" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
   </children>

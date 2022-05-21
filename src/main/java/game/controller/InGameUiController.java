@@ -295,7 +295,7 @@ public abstract class InGameUiController extends AbstractUiController {
     chat.setPrefHeight(height / 7);
     chat.setPrefWidth(300);
     chatInput = new TextField();
-    chatInput.setText("Write an Message and press Enter...");
+    chatInput.setText("Write a Message and press Enter...");
     chatInput.setOnMousePressed(event -> {
       this.chatInput.setText("");
       chatSelected = true;
@@ -336,8 +336,11 @@ public abstract class InGameUiController extends AbstractUiController {
 
     //Set Event for Skip Turn Button
     skipTurnButton.setOnMouseClicked(event -> {
-      this.localPlayer.setSelectedTurn(null);
+      this.localPlayer.nullTurn();
+      skipTurnButton.setVisible(false);
     });
+
+    skipTurnButton.setVisible(false);
 
     chatInput.setOnKeyPressed(event -> {
       if (event.getCode().equals(KeyCode.ENTER)) {
@@ -366,6 +369,7 @@ public abstract class InGameUiController extends AbstractUiController {
     buttonBox.getChildren().add(quitButton);
     buttonBox.getChildren().add(testButton);
     buttonBox.getChildren().add(chatButton);
+    buttonBox.getChildren().add(skipTurnButton);
     container.getChildren().add(buttonBox);
 
     switch (Config.getStringValue("THEME")) {
@@ -495,11 +499,18 @@ public abstract class InGameUiController extends AbstractUiController {
 
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
+      skipTurnButton.setVisible(false);
+      if (!game.getGameState().playsTurn()) {
+        Debug.printMessage(this, "" + game.getGameState().playsTurn());
+        refreshUi();
+      }
     } else {
       if (this.game == null) {
         Debug.printMessage(this, "Game is null");
       }
-
+      if(!this.game.getGameState().isFirstRound()){
+        skipTurnButton.setVisible(true);
+      }
       if (!game.getGameState().playsTurn()) {
         Debug.printMessage(this, "" + game.getGameState().playsTurn());
         refreshUi();

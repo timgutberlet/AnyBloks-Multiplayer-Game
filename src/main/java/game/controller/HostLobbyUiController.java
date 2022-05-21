@@ -338,13 +338,6 @@ public class HostLobbyUiController extends AbstractUiController {
     gameController.setActiveUiController(new PlayUiController(gameController));
   }
 
-  /**
-   * Method to reset the account statistics
-   */
-  @FXML
-  public void reset() {
-    //TODO @tbuscher implement Reset Account Statistics
-  }
 
   /**
    * Method that is called when the playGame Button was pushed. Starts the game.

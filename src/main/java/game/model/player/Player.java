@@ -16,6 +16,11 @@ public class Player implements Serializable {
   private final String[] wordlist = {"Great Move!!", "Let's go!!", "Is that all you've got?",
       "n00b",
       "How can become as good as yoU?"};
+
+  /**
+   * Sets null turn
+   */
+  private boolean nullTurn = false;
   /**
    * Name of the player.
    */
@@ -158,7 +163,13 @@ public class Player implements Serializable {
     //this.gameSession.getChat().addMessage(this, msg);
 
   }
-
+  /**
+   * Function to set Nullturn
+   */
+  public void nullTurn(){
+    this.setSelectedTurn(null);
+    this.nullTurn = true;
+  }
   /**
    * function used to return the next turn of a player
    *
@@ -179,7 +190,7 @@ public class Player implements Serializable {
       return AI.calculateNextMove(gameState, this);
     } else {
       this.aiCalcRunning = false;
-      while (this.selectedTurn == null) {
+      while (this.selectedTurn == null && nullTurn == false) {
         try {
           Debug.printMessage(this, this.getUsername() + " " + this);
           // Debug.printMessage(this, "A TURN NEEDS TO BE MADE");
@@ -192,6 +203,7 @@ public class Player implements Serializable {
       Turn returnTurn = this.selectedTurn;
       this.selectedTurn = null;
       this.aiCalcRunning = true;
+      this.nullTurn = false;
       return returnTurn;
     }
   }
