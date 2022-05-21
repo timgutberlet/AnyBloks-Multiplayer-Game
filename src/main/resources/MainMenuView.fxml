@@ -21,14 +21,6 @@
           <children>
             <GridPane prefHeight="68.0" prefWidth="1280.0" GridPane.rowIndex="1">
               <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#help" prefHeight="50.0" prefWidth="110.0" text="HELP">
-                  <GridPane.margin>
-                    <Insets />
-                  </GridPane.margin>
-                  <font>
-                    <Font size="25.0" />
-                  </font>
-                </Button>
                 <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="110.0" text="QUIT" GridPane.columnIndex="2">
                   <font>
                     <Font size="25.0" />

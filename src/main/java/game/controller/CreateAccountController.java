@@ -75,15 +75,15 @@ public class CreateAccountController extends AbstractUiController {
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
-          mainPane.setStyle("-fx-background-color: #000000;");
+          mainPane.setStyle("-fx-background-color: #383837;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           break;
         case "INTEGRA":
           mainPane.setStyle("-fx-background-color: #ffffff;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
-        case "THINK":
-          mainPane.setStyle("-fx-background-color: #ffffff;");
+        case "THINC!":
+          mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }

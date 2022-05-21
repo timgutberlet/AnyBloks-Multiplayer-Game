@@ -72,7 +72,7 @@ public class JoinLobbyUiController extends AbstractUiController {
       //Sets the Theme, according to the settings
       switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
-          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.setStyle("-fx-background-color:#ffffff;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
@@ -86,8 +86,8 @@ public class JoinLobbyUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
-        case "THINK":
-          mainPane.setStyle("-fx-background-color: #ffffff;");
+        case "THINC!":
+          mainPane.setStyle("-fx-background-color: #C;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
@@ -96,6 +96,9 @@ public class JoinLobbyUiController extends AbstractUiController {
         if (event.getCode().equals(KeyCode.ENTER)) {
           registerChatMessage();
         }
+      });
+      chatInput.setOnMousePressed(event -> {
+        chatInput.setText("");
       });
     } catch (IOException e) {
       e.printStackTrace();

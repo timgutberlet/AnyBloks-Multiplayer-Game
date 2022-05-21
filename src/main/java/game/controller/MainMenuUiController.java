@@ -55,7 +55,7 @@ public class MainMenuUiController extends AbstractUiController {
       updateSize(mainPane, gameController.getStage());
       switch (Config.getStringValue("THEME")){
         case "BRIGHT":
-          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.setStyle("-fx-background-color:#ffffff;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           break;
         case "DARK":
@@ -66,8 +66,8 @@ public class MainMenuUiController extends AbstractUiController {
           mainPane.setStyle("-fx-background-color: #ffffff;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
           break;
-        case "THINK":
-          mainPane.setStyle("-fx-background-color: #ffffff;");
+        case "THINC!":
+          mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets().add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
       }
@@ -136,16 +136,6 @@ public class MainMenuUiController extends AbstractUiController {
    */
   @FXML
   public void credits() {
-
-  }
-
-  /**
-   * Method to get get into the help view
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void help() {
 
   }
 

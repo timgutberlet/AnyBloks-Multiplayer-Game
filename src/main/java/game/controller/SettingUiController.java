@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -172,13 +173,13 @@ public class SettingUiController extends AbstractUiController {
       //Sets the Theme, according to the settings
       switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
-          mainPane.setStyle("-fx-background-color:#E7E7E0;");
+          mainPane.setStyle("-fx-background-color:#ffffff;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
           themeBox.setValue("BRIGHT");
           break;
         case "DARK":
-          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.setStyle("-fx-background-color: #404040;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
           themeBox.setValue("DARK");
@@ -190,7 +191,7 @@ public class SettingUiController extends AbstractUiController {
           themeBox.setValue("INTEGRA");
           break;
         case "THINC!":
-          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           themeBox.setValue("THINC!");
@@ -198,6 +199,7 @@ public class SettingUiController extends AbstractUiController {
       }
       saveConfirm.setText(saveMessage);
       hostPlayerField.setText(Config.getStringValue("HOSTPLAYER"));
+      hostPlayerField.setAlignment(Pos.CENTER);
     } catch (IOException e) {
       e.printStackTrace();
     }

@@ -48,7 +48,7 @@
               <children>
                 <VBox alignment="CENTER" prefHeight="100.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                   <children>
-                    <Label text="New Username">
+                    <Label prefHeight="30.0" prefWidth="414.0" text="New Username (Set Default in Settings)">
                       <font>
                         <Font size="25.0" />
                       </font>
