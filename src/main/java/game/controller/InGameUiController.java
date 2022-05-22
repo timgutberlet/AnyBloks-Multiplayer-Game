@@ -198,11 +198,15 @@ public abstract class InGameUiController extends AbstractUiController {
   private void setUpUi() {
 
     switch (Config.getStringValue("THEME")) {
+      case "BRIGHT":
+        ColorHandler.whiteMode = true;
+        break;
       case "DARK":
         ColorHandler.darkMode = true;
         break;
       default:
         ColorHandler.darkMode = false;
+        ColorHandler.whiteMode = false;
     }
 
     double width = stage.getWidth();

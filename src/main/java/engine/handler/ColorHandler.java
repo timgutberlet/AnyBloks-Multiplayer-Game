@@ -7,6 +7,7 @@ import game.model.Color;
  */
 public class ColorHandler {
   public static boolean darkMode = false;
+  public static boolean whiteMode = false;
   /**
    * Method that converts game.model.Color objects  to javafx.scene.paint.Color objects
    *
@@ -23,7 +24,21 @@ public class ColorHandler {
         case GREEN:
           return javafx.scene.paint.Color.DARKGREEN;
         case YELLOW:
-          return javafx.scene.paint.Color.DARKORANGE;
+          return javafx.scene.paint.Color.YELLOW.darker();
+        default:
+          return javafx.scene.paint.Color.TRANSPARENT;
+      }
+    }
+    if (whiteMode) {
+      switch (color) {
+        case RED:
+          return javafx.scene.paint.Color.RED.brighter();
+        case BLUE:
+          return javafx.scene.paint.Color.BLUE.brighter();
+        case GREEN:
+          return javafx.scene.paint.Color.GREEN.brighter();
+        case YELLOW:
+          return javafx.scene.paint.Color.YELLOW.brighter();
         default:
           return javafx.scene.paint.Color.TRANSPARENT;
       }
