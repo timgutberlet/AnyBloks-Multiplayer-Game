@@ -99,8 +99,6 @@ public class Config {
       property.store(outStream, "File for Config values");
       outStream.close();
     } catch (IOException e) {
-      System.err.println("Error in Saving Property File");
-      e.printStackTrace();
     }
   }
 

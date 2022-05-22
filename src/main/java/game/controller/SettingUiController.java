@@ -312,6 +312,7 @@ public class SettingUiController extends AbstractUiController {
     } catch (Exception e) {
       e.printStackTrace();
     }
+    Config.saveProperty();
     System.exit(0);
   }
 

@@ -197,7 +197,13 @@ public class CreateAccountController extends AbstractUiController {
    */
   @FXML
   public void close() {
-    onExit();
+    try {
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    Config.saveProperty();
+    System.exit(0);
   }
 
   /**
@@ -205,12 +211,6 @@ public class CreateAccountController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-    try {
-      gameController.getApplication().stop();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    System.exit(0);
   }
 
   /**
