@@ -15,7 +15,8 @@ public class SquarePolyPane extends PolyPane {
 
   public SquarePolyPane(Poly poly, InputHandler inputHandler, double width) {
     super(poly, inputHandler, width);
-    this.size = width / 115;
+    this.size = width / 120;
+    this.setPrefWidth(5 * size + 10);
     setPoly();
   }
 

@@ -1,47 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
-  minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
-  xmlns="http://javafx.com/javafx/8" fx:controller="game.controller.ScoreBoardUiController"
-  fx:id="mainPane">
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+  minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;"
+  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="game.controller.ScoreBoardUiController">
   <children>
-    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-      AnchorPane.topAnchor="0.0" prefHeight="400.0" prefWidth="600.0">
+    <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES"/>
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="100.0" minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES"/>
+        <RowConstraints vgrow="SOMETIMES"/>
+      </rowConstraints>
       <children>
+        <Pane style="-fx-background-color: #303030;">
+          <effect>
+            <DropShadow/>
+          </effect>
+        </Pane>
+        <Label text="Results" textFill="WHITE" GridPane.halignment="CENTER"
+          GridPane.valignment="CENTER">
+          <font>
+            <Font size="50.0"/>
+          </font>
+        </Label>
         <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          </rowConstraints>
           <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
               <children>
-                <HBox alignment="CENTER" mouseTransparent="true" spacing="60.0" fx:id="board">
+                <Label fx:id="userMessage" ellipsisString="" maxHeight="170.0" text="YOU WON"
+                  textFill="WHITE">
+                  <font>
+                    <Font size="48.0"/>
+                  </font>
+                </Label>
+                <HBox fx:id="board" alignment="CENTER" mouseTransparent="true" spacing="60.0">
                   <children>
-                    <Line endX="-100.28358459472656" endY="739.663330078125" startX="-100.28353881835938"
-                      startY="395.81231689453125" stroke="WHITE" fx:id="line"/>
-                    <Line endX="-100.28358459472656" endY="739.663330078125" layoutX="824.0"
-                      layoutY="-383.0" startX="-100.28353881835938" startY="395.81231689453125"
-                      stroke="WHITE"/>
+                    <Line fx:id="line" endX="-100.28358459472656" endY="739.663330078125"
+                      startX="-100.28353881835938" startY="395.81231689453125" stroke="WHITE"/>
                     <VBox alignment="CENTER">
                       <children>
-                        <HBox alignment="CENTER" prefHeight="140.0" spacing="20.0">
+                        <Label text="Scoreboard" textFill="WHITE">
+                          <font>
+                            <Font size="40.0"/>
+                          </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
                           <children>
-                            <Label text="Name_of_winner:" textFill="GOLD" fx:id="nameWinner">
+                            <Label fx:id="nameWinner" text="Name_of_winner:" textFill="GOLD">
                               <font>
                                 <Font size="40.0"/>
                               </font>
                             </Label>
-                            <Label layoutX="127.0" layoutY="24.0" text="Points" textFill="GOLD"
-                              fx:id="pointsWinner">
+                            <Label fx:id="pointsWinner" layoutX="127.0" layoutY="24.0" text="Points"
+                              textFill="GOLD">
                               <font>
                                 <Font size="40.0"/>
                               </font>
@@ -50,28 +78,13 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="70.0" spacing="15.0">
                           <children>
-                            <Label text="2. Name_of_second:" textFill="SILVER" fx:id="nameSecond">
+                            <Label fx:id="nameSecond" text="2. Name_of_second:" textFill="SILVER">
                               <font>
                                 <Font size="30.0"/>
                               </font>
                             </Label>
-                            <Label layoutX="203.0" layoutY="10.0" text="Points" textFill="SILVER"
-                              fx:id="pointsSecond">
-                              <font>
-                                <Font size="30.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0" spacing="15.0">
-                          <children>
-                            <Label text="3. Name _of_third:" textFill="#a87000" fx:id="nameThird">
-                              <font>
-                                <Font size="30.0"/>
-                              </font>
-                            </Label>
-                            <Label layoutX="213.0" layoutY="10.0" text="Points" textFill="#a87000"
-                              fx:id="pointsThird">
+                            <Label fx:id="pointsSecond" layoutX="203.0" layoutY="10.0" text="Points"
+                              textFill="SILVER">
                               <font>
                                 <Font size="30.0"/>
                               </font>
@@ -80,13 +93,28 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0" spacing="15.0">
                           <children>
-                            <Label text="4. Name_of_fourth:" textFill="WHITE" fx:id="nameFourth">
+                            <Label fx:id="nameThird" text="3. Name _of_third:" textFill="#a87000">
                               <font>
                                 <Font size="30.0"/>
                               </font>
                             </Label>
-                            <Label layoutX="209.0" layoutY="10.0" text="Points" textFill="WHITE"
-                              fx:id="pointsFourth">
+                            <Label fx:id="pointsThird" layoutX="213.0" layoutY="10.0" text="Points"
+                              textFill="#a87000">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Label>
+                          </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0" spacing="15.0">
+                          <children>
+                            <Label fx:id="nameFourth" text="4. Name_of_fourth:" textFill="WHITE">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Label>
+                            <Label fx:id="pointsFourth" layoutX="209.0" layoutY="10.0" text="Points"
+                              textFill="WHITE">
                               <font>
                                 <Font size="30.0"/>
                               </font>
@@ -95,59 +123,32 @@
                         </HBox>
                       </children>
                     </VBox>
+                    <Line endX="-100.28358459472656" endY="739.663330078125" layoutX="824.0"
+                      layoutY="-383.0" startX="-100.28353881835938" startY="395.81231689453125"
+                      stroke="WHITE"/>
                   </children>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                   <children>
-                    <Button mnemonicParsing="false" onAction="#backMainMenu" text="BACK TO MAIN MENU"
-                      fx:id="backMainMenu">
+                    <Button fx:id="backMainMenu" mnemonicParsing="false" onAction="#backMainMenu"
+                      text="BACK TO MAIN MENU">
                       <font>
                         <Font size="20.0"/>
                       </font>
                     </Button>
-                    <Button minWidth="225.0" mnemonicParsing="false" text="BACK TO LOBBY"
-                      fx:id="nextRound">
+                    <Button fx:id="nextRound" minWidth="225.0" mnemonicParsing="false"
+                      text="BACK TO LOBBY">
                       <font>
                         <Font size="20.0"/>
                       </font>
                     </Button>
                   </children>
                 </HBox>
-                <Label ellipsisString="" maxHeight="170.0" text="YOU WON" textFill="WHITE"
-                  fx:id="userMessage">
-                  <font>
-                    <Font size="60.0"/>
-                  </font>
-                </Label>
               </children>
             </VBox>
           </children>
-          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES"/>
-          </columnConstraints>
-          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-          </rowConstraints>
         </GridPane>
-        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" text="Results"
-          textFill="WHITE">
-          <font>
-            <Font size="50.0"/>
-          </font>
-        </Label>
-        <Pane style="-fx-background-color: #303030;">
-          <effect>
-            <DropShadow/>
-          </effect>
-        </Pane>
       </children>
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES"/>
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints maxHeight="100.0" minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-        <RowConstraints vgrow="SOMETIMES"/>
-      </rowConstraints>
     </GridPane>
   </children>
 </AnchorPane>

@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.Debug;
 import game.model.GameSession;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,11 +31,15 @@ import javafx.scene.shape.Line;
  */
 public class ScoreBoardUiController extends AbstractUiController {
 
-  private static final List<String> players = new ArrayList<>();
-  private static final List<String> scores = new ArrayList<>();
-  private static final List<String> sessionScores = new ArrayList<>();
-  private final AbstractGameController gameController;
-  private final GameSession gameSession;
+  private AbstractGameController gameController;
+  private GameSession gameSession;
+
+  private static List<String> players = new ArrayList<>();
+  private static List<String> scores = new ArrayList<>();
+
+  private static List<String> sessionPlayers = new ArrayList<>();
+  private static List<String> sessionScores = new ArrayList<>();
+
   @FXML
   private AnchorPane mainPane;
 
@@ -83,26 +88,6 @@ public class ScoreBoardUiController extends AbstractUiController {
     this.init(super.root);
   }
 
-  public static void sortScoreBoard(GameSession gameSession) {
-    HashMap<String, Integer> sortedScores = gameSession.getScoreboard().entrySet().stream()
-        .sorted(Entry.comparingByValue())
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-            (e1, e2) -> e1, LinkedHashMap::new));
-    for (Map.Entry<String, Integer> entry : sortedScores.entrySet()) {
-      players.add(entry.getKey());
-      scores.add(entry.getValue() + "");
-    }
-
-    /*HashMap<String, Integer> sortedSessionScores = gameSession.getGameSessionScoreboard().entrySet().stream()
-        .sorted(Entry.comparingByValue())
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-            (e1, e2) -> e1, LinkedHashMap::new));
-    for (Map.Entry<String, Integer> entry : sortedSessionScores.entrySet()) {
-      sessionScores.add(entry.getValue() + "");
-    }*/
-
-  }
-
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -141,7 +126,7 @@ public class ScoreBoardUiController extends AbstractUiController {
   @FXML
   public void initialize() {
     setLabels();
-    setMessage();
+    setUserMessage();
   }
 
   @FXML
@@ -149,8 +134,30 @@ public class ScoreBoardUiController extends AbstractUiController {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
+  public static void sortScoreBoard(GameSession gameSession) {
+    HashMap<String, Integer> sortedScores = gameSession.getScoreboard().entrySet().stream()
+        .sorted(Entry.comparingByValue())
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+            (e1, e2) -> e1, LinkedHashMap::new));
+    for (Map.Entry<String, Integer> entry : sortedScores.entrySet()) {
+      players.add(entry.getKey());
+      scores.add(entry.getValue() + "");
+    }
+
+    HashMap<String, Integer> sortedSessionScores = gameSession.getGameSessionScoreboard().entrySet()
+        .stream()
+        .sorted(Entry.comparingByValue())
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+            (e1, e2) -> e1, LinkedHashMap::new));
+    for (Map.Entry<String, Integer> entry : sortedSessionScores.entrySet()) {
+      sessionPlayers.add(entry.getKey());
+      sessionScores.add(entry.getValue() + "");
+    }
+
+  }
+
   public void setLabels() {
-    switch (gameSession.getPlayerList().size()) {
+    switch (gameSession.getScoreboard().size()) {
       case 2:
         nameWinner.setText(players.get(0));
         nameSecond.setText(players.get(1));
@@ -181,14 +188,17 @@ public class ScoreBoardUiController extends AbstractUiController {
         pointsThird.setText(scores.get(2));
         pointsFourth.setText(scores.get(3));
         break;
+      default:
+        Debug.printMessage("Scoreboard is empty");
     }
+
     if (false) {
       VBox vBox = new VBox();
       vBox.setAlignment(Pos.CENTER);
-      for (int i = 0; i < players.size(); i++) {
+      for (int i = 0; i < sessionPlayers.size(); i++) {
         HBox hBox = new HBox();
         Label name = new Label();
-        name.setText(players.get(i));
+        name.setText(sessionPlayers.get(i));
         Label score = new Label();
         score.setText(sessionScores.get(i));
         hBox.getChildren().add(name);
@@ -200,20 +210,37 @@ public class ScoreBoardUiController extends AbstractUiController {
     }
   }
 
-  public void setMessage() {
+  public void setUserMessage() {
     String username = gameSession.getLocalPlayer().getUsername();
-    int index = players.indexOf(username);
-    switch (index) {
-      case 1:
-        userMessage.setText("YOU WON!!!");
-        break;
-      case 2:
-      case 3:
-        userMessage.setText("More luck next time");
-        break;
-      case 4:
-        userMessage.setText("Keep your head up");
-        break;
+    int place = players.indexOf(username);
+    int overall = sessionPlayers.indexOf(username);
+
+    if (gameSession.getGameList().size() > 0) {
+      switch (place) {
+        case 0:
+          userMessage.setText("Strong performance!");
+          break;
+        case 1:
+        case 2:
+          userMessage.setText("Not great, not terrible");
+          break;
+        case 3:
+          userMessage.setText("Keep going!");
+          break;
+      }
+    } else {
+      switch (overall) {
+        case 0:
+          userMessage.setText("Strong performance!");
+          break;
+        case 1:
+        case 2:
+          userMessage.setText("Not great, not terrible");
+          break;
+        case 3:
+          userMessage.setText("Keep going!");
+          break;
+      }
     }
   }
 
