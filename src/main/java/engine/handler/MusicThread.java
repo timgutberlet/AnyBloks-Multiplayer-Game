@@ -3,7 +3,6 @@ package engine.handler;
 import game.config.Config;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import net.server.HostServer;
 
 /**
  * Thread controlling the music play

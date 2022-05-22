@@ -142,20 +142,7 @@
                         <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                     </GridPane>
-                    <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0" GridPane.columnIndex="2">
-                      <children>
-                        <Label text="No. of Rounds:">
-                          <font>
-                            <Font size="18.0" />
-                          </font>
-                        </Label>
-                        <Label text="1">
-                          <font>
-                            <Font size="18.0" />
-                          </font>
-                        </Label>
-                      </children>
-                    </VBox>
+                    <VBox alignment="CENTER" prefHeight="159.0" prefWidth="427.0" spacing="10.0" GridPane.columnIndex="2" />
                   </children>
                   <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="885.0" minWidth="10.0" prefWidth="471.0" />
