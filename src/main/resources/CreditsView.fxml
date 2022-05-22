@@ -25,7 +25,7 @@
                               <Font size="25.0" />
                            </font>
                         </Button>
-                        <Label text="Thanks to our Tutor Janik Sauerbier as well as our Reviewers Prof. Dr. Atkinson and  Marcus Kessel" GridPane.columnIndex="1">
+                        <Label text="Special Thanks to our Tutor Janik Sauerbier as well as our lecturers Prof. Dr. Atkinson and  Marcus Kessel!" GridPane.columnIndex="1">
                            <font>
                               <Font size="20.0" />
                            </font>

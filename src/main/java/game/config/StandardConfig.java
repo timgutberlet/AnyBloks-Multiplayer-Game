@@ -12,7 +12,7 @@ public class StandardConfig {
    * Config File is not used or outdated
    */
   public static final String[][] standardConfig = new String[][]{
-      {"VERSION", "12"},
+      {"VERSION", "13"},
       {"SCREEN_WIDTH", "1280"},
       {"SCREEN_HEIGHT", "720"},
       {"SCREEN_MINIMUM_WIDTH", "1280"},
@@ -21,9 +21,9 @@ public class StandardConfig {
       {"SHOW_FPS", "TRUE"},
       {"MAXIMUM_FPS", "60"},
       {"HOSTPLAYER", "HOST"},
-      {"AIPLAYER1", "AlphaGo 2.0"},
-      {"AIPLAYER2", "DeepMind 2.0"},
-      {"AIPLAYER3", "Stockfish 2.0"},
+      {"AIPLAYER1", "AlphaGo"},
+      {"AIPLAYER2", "DeepMind"},
+      {"AIPLAYER3", "Stockfish"},
       {"MUSIC", "ON"},
   };
 
