@@ -271,6 +271,11 @@ public class SettingUiController extends AbstractUiController {
       saveConfirm.setText(saveMessage);
       hostPlayerField.setText(Config.getStringValue("HOSTPLAYER"));
       hostPlayerField.setAlignment(Pos.CENTER);
+      if(Config.getStringValue("MUSIC").equals("ON")){
+        music.setText("STOP MUSIC");
+      }else{
+        music.setText("START MUSIC");
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }

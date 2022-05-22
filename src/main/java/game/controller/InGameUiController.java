@@ -56,6 +56,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 
 /**
@@ -71,6 +72,10 @@ public abstract class InGameUiController extends AbstractUiController {
   private final AbstractGameController gameController;
   private final InputHandler inputHandler;
   private final List<StackPane> stackPanes;
+  /**
+   * Label to drag the chat!
+   */
+  Label dragLabel;
   /**
    * Color used for collision detection
    */
@@ -201,8 +206,10 @@ public abstract class InGameUiController extends AbstractUiController {
     container.setSpacing(10);
     container.setAlignment(Pos.CENTER);
     anchorPane.getChildren().add(container);
+    anchorPane.setPrefWidth(stage.getWidth() + 1000);
+    anchorPane.setPrefHeight(stage.getHeight() + 1000);
 
-    this.root.getChildren().add(anchorPane);
+
 
     content = new HBox();
     content.setPrefWidth(width);
@@ -324,6 +331,10 @@ public abstract class InGameUiController extends AbstractUiController {
       this.chatInput.setText("");
       chatSelected = true;
     });
+    dragLabel  = new Label("Drag and Move the Chat here!");
+    dragLabel.setPrefHeight(30);
+    dragLabel.setPrefWidth(300);
+    dragLabel.setAlignment(Pos.CENTER);
     chatInput.setPrefWidth(300);
     chatInput.setPrefHeight(30);
     chatPane = new VBox();
@@ -332,9 +343,10 @@ public abstract class InGameUiController extends AbstractUiController {
     chatPane.setPrefHeight(height / 6);
     chatPane.setMinWidth(300);
     chatPane.setMaxWidth(300);
+    chatPane.getChildren().add(dragLabel);
     chatPane.getChildren().add(chat);
     chatPane.getChildren().add(chatInput);
-    chatPane.setAlignment(Pos.BOTTOM_RIGHT);
+    chatPane.setAlignment(Pos.CENTER);
     inputHandler.makeDraggable(chatPane);
     double chatHeight = gameController.getStage().getScene().getHeight();
     double chatWidth = gameController.getStage().getScene().getWidth();
@@ -351,7 +363,7 @@ public abstract class InGameUiController extends AbstractUiController {
     infoButton = new Button("Help");
     quitButton = new Button("Quit");
     testButton = new Button("ScoreBoard");
-    chatButton = new Button("Chat");
+    chatButton = new Button("Hide Chat");
 
     //Event to start Chat Window
     chatButton.setOnMouseClicked(event -> {
@@ -395,26 +407,43 @@ public abstract class InGameUiController extends AbstractUiController {
     buttonBox.getChildren().add(chatButton);
     buttonBox.getChildren().add(skipTurnButton);
     container.getChildren().add(buttonBox);
-
+    this.root.getChildren().add(anchorPane);
     switch (Config.getStringValue("THEME")) {
       case "BRIGHT":
         topPane.setStyle("-fx-background-color:#FF4B4B;");
+        dragLabel.setStyle("-fx-background-color:#FF4B4B; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
         break;
       case "DARK":
         topPane.setStyle("-fx-background-color:#F0B27A;");
+        boardPane.setStyle("-fx-background-color:#383837;");
+        turn.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-text-fill: #000000; ");
+        chatPane.setStyle("-fx-background-color:#383837;");
+        dragLabel.setStyle("-fx-background-color:#F0B27A; -fx-text-fill: #000000;-fx-background-radius: 10;");
+        buttonBox.setStyle("-fx-background-color:#383837;");
+        anchorPane.setStyle("-fx-background-color:#383837;");
+        content.setStyle("-fx-background-color:#383837;");
+        container.setStyle("-fx-background-color:#383837;");
+        this.root.setStyle("-fx-background-color:#383837;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
         break;
       case "INTEGRA":
         topPane.setStyle("-fx-background-color:#FF8000;");
+        dragLabel.setStyle("-fx-background-color:#FF8000; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
         break;
       case "THINC!":
         topPane.setStyle("-fx-background-color:#0A123D;");
-        this.root.setStyle("-fx-background-color:#0A123D;");
+        chatPane.setStyle("-fx-background-color:#D8EFFF;");
+        dragLabel.setStyle("-fx-background-color:#0A123D; -fx-background-color: #FFFFFF; -fx-background-radius: 10;");
+        buttonBox.setStyle("-fx-background-color:#D8EFFF;");
+        anchorPane.setStyle("-fx-background-color:#D8EFFF;");
+        content.setStyle("-fx-background-color:#D8EFFF;");
+        container.setStyle("-fx-background-color:#D8EFFF;");
+        boardPane.setStyle("-fx-background-color:#D8EFFF;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
         break;

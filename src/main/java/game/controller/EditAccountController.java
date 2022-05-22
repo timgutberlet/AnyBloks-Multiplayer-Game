@@ -195,11 +195,7 @@ public class EditAccountController extends AbstractUiController {
    */
   @FXML
   public void close() {
-    try {
-      gameController.getApplication().stop();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    onExit();
   }
 
   /**
@@ -207,7 +203,12 @@ public class EditAccountController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-
+    try {
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.exit(0);
   }
 
   /**

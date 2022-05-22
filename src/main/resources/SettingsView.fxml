@@ -200,7 +200,7 @@
               </VBox>
                      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="3">
                         <children>
-                           <Label text="Set Music">
+                           <Label text="Set Music (Enable Wifi)">
                               <font>
                                  <Font size="25.0" />
                               </font>
