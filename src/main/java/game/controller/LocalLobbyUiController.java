@@ -308,6 +308,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     }
     this.gameSession.setAiPlayers(aiPlayers);
 
+
     List<String> gameModes = new ArrayList<>();
 
     for (ComboBox<String> gameRound : this.rounds) {
@@ -348,7 +349,7 @@ public class LocalLobbyUiController extends AbstractUiController {
       LinkedList<GameMode> gameList = this.gameModes;
       this.gameSession.setGameList(gameList);
 
-      this.clientHandler.startLocalGame(gameList);
+      this.clientHandler.startLocalGame(gameList, aiPlayers);
 
       try {
         TimeUnit.SECONDS.sleep(3);

@@ -816,6 +816,13 @@ public abstract class InGameUiController extends AbstractUiController {
     if(gameSession.getHostQuit()){
       System.out.println("The host left -> return to Lobby");
       //TODOKICK: can we send the player back to the lobby they joined?
+
+      /**
+       * lass uns auf ein Meme seite springen, die erklärt warum man da ankommt (Host left game)
+       *
+       * EndpointClient sollte zudem geschlossen werden und damit die GameSession removed werden.
+       * Dadurch können auch nicht weiter ausversehen Packet erhalten werden
+       */
       gameController.setActiveUiController(new JoinLobbyUiController(gameController, gameSession));
     }
 

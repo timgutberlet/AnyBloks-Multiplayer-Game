@@ -207,13 +207,19 @@ public class GameSession {
       System.out.println("Players to be added:" + numPlayersToAdd);
       for (int i = 0; i < numPlayersToAdd; i++) {
         System.out.println("Adding player :" + (this.getPlayerList().size() + 1));
+
         if (this.aiPlayers != null) {
+          System.out.println(this.aiPlayers.size() + "size of playertypes");
           if (this.aiPlayers.size() > 0) {
-            this.addBot(this.aiPlayers.pop());
+            PlayerType pt = this.aiPlayers.pop();
+            System.out.println("PT of new player: " + pt);
+            this.addBot(pt);
           } else {
+            System.out.println("Adding a bot with default ai" + this.defaultAI);
             this.addBot(this.defaultAI);
           }
         } else {
+          System.out.println("Adding a bot with default ai because null " + this.defaultAI);
           this.addBot(this.defaultAI);
         }
       }
@@ -251,6 +257,7 @@ public class GameSession {
 
   public void setAiPlayers(LinkedList<PlayerType> aiPlayers) {
     this.aiPlayers = aiPlayers;
+
   }
 
   public void clearAiPlayers() {
@@ -824,6 +831,8 @@ public class GameSession {
   public Boolean getHostQuit() {
     return hostQuit;
   }
+
+
 
   /**
    * Getter.

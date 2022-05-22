@@ -151,8 +151,22 @@ public class ClientHandler {
    *
    * @param gameModes
    */
-  public void startLocalGame(LinkedList<GameMode> gameModes) {
-    InitGamePacket initGamePacket = new InitGamePacket(gameModes);
+  public void startLocalGame(LinkedList<GameMode> gameModes, LinkedList<PlayerType> playerTypes) {
+    InitGamePacket initGamePacket = new InitGamePacket(gameModes, playerTypes);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
+
+    this.client.sendToServer(wrappedPacket);
+
+
+  }
+
+  /**
+   * function called on client side to send INIT GAME PACKET TO SERVER
+   *
+   * @param gameModes
+   */
+  public void startLocalGame(LinkedList<GameMode> gameModes, PlayerType defaultAI) {
+    InitGamePacket initGamePacket = new InitGamePacket(gameModes, defaultAI);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
 
     this.client.sendToServer(wrappedPacket);
@@ -269,6 +283,9 @@ public class ClientHandler {
   /**
    * Called if a HostQuitPacket is received. Sends the player back to the lobby.
    * TODOKICK: resets the local gameSession? is LocalPlayer relevant here?
+   *
+   * lass uns das nicht hier machen. Wenn wir den Endpoint killen, sind auch alle lokal
+   * gespeicherten variablen weg
    */
   public void handleHostQuit(){
     if(!player.getType().equals(PlayerType.HOST_PLAYER)){

@@ -113,10 +113,10 @@ public class StartGameOnServerTest {
     gameModes.add(gameMode);
     gameModes.add(new GMClassic());
 
-    InitGamePacket initGamePacket = new InitGamePacket(gameModes);
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
+    //InitGamePacket initGamePacket = new InitGamePacket(gameModes);
+    //WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
 
-    client.sendToServer(wrappedPacket);
+    //client.sendToServer(wrappedPacket);
 
     try {
       TimeUnit.SECONDS.sleep(10);

@@ -1,6 +1,7 @@
 package net.packet.game;
 
 import game.model.player.Player;
+import game.model.player.PlayerType;
 import java.util.ArrayList;
 import net.packet.abstr.Packet;
 
@@ -11,6 +12,7 @@ import net.packet.abstr.Packet;
 public class PlayerListPacket extends Packet {
 
   ArrayList<Player> playerList;
+  Player host;
 
   /**
    * empty constructor for jackson.
@@ -25,6 +27,11 @@ public class PlayerListPacket extends Packet {
    */
   public PlayerListPacket(ArrayList<Player> playerList) {
     this.playerList = playerList;
+    for (Player p: playerList){
+      if(p.getType().equals(PlayerType.HOST_PLAYER)){
+        this.host = p;
+      }
+    }
   }
 
   /**
@@ -35,6 +42,15 @@ public class PlayerListPacket extends Packet {
   public ArrayList<Player> getPlayerList() {
     ArrayList playerList = this.playerList;
     return playerList;
+  }
+
+  /**
+   * getter.
+   *
+   * @return
+   */
+  public Player getHost(){
+    return this.host;
   }
 
 }

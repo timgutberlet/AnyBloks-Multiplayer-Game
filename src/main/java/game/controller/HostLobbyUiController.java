@@ -353,20 +353,25 @@ public class HostLobbyUiController extends AbstractUiController {
     ArrayList<Player> players = this.gameSession.getPlayerList();
     boolean error = false;
 
+    PlayerType defaultAi = null;
+
     switch (aiDefault.getText()) {
       case "Easy":
-        this.gameSession.setDefaultAI(PlayerType.AI_EASY);
+        defaultAi = PlayerType.AI_EASY;
         break;
       case "Middle":
-        this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+        defaultAi = PlayerType.AI_MIDDLE;
         break;
       case "Hard":
-        this.gameSession.setDefaultAI(PlayerType.AI_HARD);
+        defaultAi = PlayerType.AI_HARD;
         break;
       case "Godlike":
-        this.gameSession.setDefaultAI(PlayerType.AI_GODLIKE);
+        defaultAi = PlayerType.AI_GODLIKE;
         break;
     }
+
+    this.gameSession.setDefaultAI(defaultAi);
+
     Debug.printMessage("" + this.gameSession.getPlayerList().size());
 
     List<String> gameModes = new ArrayList<>();
@@ -409,7 +414,7 @@ public class HostLobbyUiController extends AbstractUiController {
       LinkedList<GameMode> gameList = this.gameModes;
       this.gameSession.setGameList(gameList);
 
-      this.clientHandler.startLocalGame(gameList);
+      this.clientHandler.startLocalGame(gameList, defaultAi);
 
       try {
         TimeUnit.SECONDS.sleep(3);

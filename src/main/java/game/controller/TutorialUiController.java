@@ -107,7 +107,7 @@ public class TutorialUiController extends AbstractUiController {
 
     this.gameSession.setGameList(this.gameModes);
 
-    this.clientHandler.startLocalGame(this.gameModes);
+    this.clientHandler.startLocalGame(this.gameModes, new LinkedList<PlayerType>());
 
     try {
       TimeUnit.SECONDS.sleep(3);

@@ -88,8 +88,8 @@ public class testGameClient {
       LinkedList<GameMode> gameModeLinkedList = new LinkedList<>();
       gameModeLinkedList.add(new GMTrigon());
       gameModeLinkedList.add(new GMClassic());
-      InitGamePacket initGamePacket = new InitGamePacket(gameModeLinkedList);
-      wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
+      //InitGamePacket initGamePacket = new InitGamePacket(gameModeLinkedList);
+      //wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
       ses.getBasicRemote().sendObject(wrappedPacket);
       Debug.printMessage("InitGamePacket has been sent to the server");
 

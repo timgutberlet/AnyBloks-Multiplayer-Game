@@ -228,6 +228,9 @@ public class InboundServerHandler {
 
     LinkedList<GameMode> gameModes = initGamePacket.getGameMode();
 
+    gameSession.setDefaultAI(initGamePacket.getDefaultAi());
+    gameSession.setAiPlayers(initGamePacket.getPlayerTypes());
+
     gameSession.setGameList(gameModes);
 
     gameSession.startGameServer();
@@ -254,6 +257,7 @@ public class InboundServerHandler {
       //this.server.getOutboundServerHandler().broadcastGameUpdate();
 
   }
+
 
   public EndpointServer getServer() {
     return server;
