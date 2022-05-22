@@ -179,6 +179,9 @@ public class DbServer extends AbstractDB {
    */
   public synchronized boolean doesUserHaveAuthToken(String username) {
     boolean userHasToken = false;
+
+
+
     try {
       Statement getAuthToken = con.createStatement();
       ResultSet resultSet = getAuthToken.executeQuery(
@@ -192,8 +195,8 @@ public class DbServer extends AbstractDB {
     }
 
     return userHasToken || username.equals(Config.getStringValue("HOSTPLAYER")) || username.equals(
-        "Bot 1") || username.equals(
-        "Bot 2") || username.equals("Bot 3");
+        Config.getStringValue("AIPLAYER1")) || username.equals(
+        Config.getStringValue("AIPLAYER2")) || username.equals(Config.getStringValue("AIPLAYER3"));
   }
 
   /**
@@ -239,8 +242,8 @@ public class DbServer extends AbstractDB {
   public synchronized boolean testAuthToken(String username, String providedToken) {
     boolean authSucess = false;
 
-    if (!(username.equals("Bot 1") || username.equals(
-        "Bot 2") || username.equals("Bot 3"))) {
+    if (!(username.equals(Config.getStringValue("AIPLAYER1")) || username.equals(
+        Config.getStringValue("AIPLAYER2")) || username.equals(Config.getStringValue("AIPLAYER3")))) {
       if (doesUserHaveAuthToken(username)) {
 
         try {

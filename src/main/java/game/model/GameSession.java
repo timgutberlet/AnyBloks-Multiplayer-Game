@@ -1,5 +1,6 @@
 package game.model;
 
+import game.config.Config;
 import game.model.chat.Chat;
 import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
@@ -346,7 +347,22 @@ public class GameSession {
    */
   public void addBot(PlayerType playerType) {
     this.numOfBots++;
-    Player bot = new Player("Bot " + this.numOfBots, playerType);
+    Player bot = null;
+    switch(this.numOfBots){
+      case 1:
+        bot = new Player(Config.getStringValue("AIPLAYER1"), playerType);
+        break;
+      case 2:
+        bot = new Player(Config.getStringValue("AIPLAYER2"), playerType);
+        break;
+      case 3:
+        bot = new Player(Config.getStringValue("AIPLAYER3"), playerType);
+        break;
+      default:
+        bot = new Player(Config.getStringValue("AIPLAYER3") + this.numOfBots, playerType);
+    }
+
+
     //bot.start();
     this.addToSession(bot);
 
