@@ -13,6 +13,7 @@ import game.model.player.Player;
 import java.io.IOException;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.EncodeException;
+import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
@@ -127,7 +128,11 @@ public class EndpointClient {
 		ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
 		ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
 
+	}
 
+	@OnError
+	public void onError(Throwable t, final Session ses){
+		gameSession.setGotKicked(true);
 	}
 
   @OnMessage

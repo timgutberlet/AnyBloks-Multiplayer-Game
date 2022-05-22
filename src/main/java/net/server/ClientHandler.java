@@ -222,7 +222,7 @@ public class ClientHandler {
     }
   }
 
-  public void sendTurn(Turn turn){
+  public void sendTurn(Turn turn) {
     TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
     WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
     this.client.sendToServer(wrPacket);
@@ -250,10 +250,20 @@ public class ClientHandler {
    */
   public void endGame(WrappedPacket wrappedPacket) {
     GameWinPacket gameWinPacket = (GameWinPacket) wrappedPacket.getPacket();
+
+    //TODO evaluate necessity @tbuscher & tgeilen
+    /*
     String winner = gameWinPacket.getUsername();
     this.client.getGameSession().endGame(winner);
-    this.client.getGameSession().setGameOver(true);
+    */
+
+    GameSession gameSession = this.client.getGameSession();
+
+    gameSession.setGameOver(true);
+    gameSession.setGameScoreBoard(gameWinPacket.getGameScoreBoard());
+    gameSession.setGameSessionScoreBoard(gameWinPacket.getGameSessionScoreBoard());
     getAfterMatchAIComment(this.gameSession);
+    //TODO check UI change
   }
 
   /**

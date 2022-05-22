@@ -83,7 +83,7 @@ public class Game {
 					} else {
 
 					Debug.printMessage(this, "The game is over and all players will be informed");
-					this.gameSession.getOutboundServerHandler().broadcastGameWin(currentPlayer.getUsername());
+					this.gameSession.getOutboundServerHandler().broadcastGameWin();
 				}
 
 	}

@@ -25,14 +25,14 @@ import net.packet.game.TurnPacket;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = ChatMessagePacket.class, name = "ChatMessage"),
+@JsonSubTypes({@JsonSubTypes.Type(value = ChatMessagePacket.class, name = "ChatMessage"),
     @JsonSubTypes.Type(value = CreateAccountRequestPacket.class, name = "CreateAccountRequest"),
     @JsonSubTypes.Type(value = CreateAccountResponsePacket.class, name = "CreateResponsePacket"),
     @JsonSubTypes.Type(value = GameUpdatePacket.class, name = "GameUpdatePacket"),
     @JsonSubTypes.Type(value = InitSessionPacket.class, name = "InitPacket"),
     @JsonSubTypes.Type(value = RestfulLoginPacket.class, name = "RestfulLoginPacket"),
-    @JsonSubTypes.Type(value = DeleteAccountRequestPacket.class, name = "DeleteAccountRequestPacket"),
+    @JsonSubTypes.Type(value = DeleteAccountRequestPacket.class,
+        name = "DeleteAccountRequestPacket"),
     @JsonSubTypes.Type(value = LoginRequestPacket.class, name = "LoginRequestPacket"),
     @JsonSubTypes.Type(value = LoginResponsePacket.class, name = "LoginResponsePacket"),
     @JsonSubTypes.Type(value = PlayerOrderPacket.class, name = "PlayerOrderPacket"),
@@ -41,10 +41,10 @@ import net.packet.game.TurnPacket;
     @JsonSubTypes.Type(value = RequestTurnPacket.class, name = "RequestTurnPacket"),
     @JsonSubTypes.Type(value = TurnPacket.class, name = "TurnPacket"),
     @JsonSubTypes.Type(value = GameWinPacket.class, name = "GameWinPacket"),
-    @JsonSubTypes.Type(value = UpdateAccountRequestPacket.class, name = "UpdateAccountRequestPacket"),
+    @JsonSubTypes.Type(value = UpdateAccountRequestPacket.class,
+        name = "UpdateAccountRequestPacket"),
     @JsonSubTypes.Type(value = PlayerListPacket.class, name = "PlayerListPacket"),
-    @JsonSubTypes.Type(value = CheckConnectionPacket.class, name = "CheckConnectionPacketPacket")}
-)
+    @JsonSubTypes.Type(value = CheckConnectionPacket.class, name = "CheckConnectionPacketPacket")})
 
 /**
  * Parent class for Packets

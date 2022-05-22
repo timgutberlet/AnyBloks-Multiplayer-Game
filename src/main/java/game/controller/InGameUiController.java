@@ -682,10 +682,15 @@ public abstract class InGameUiController extends AbstractUiController {
 
     //check if game is over
     if (this.gameSession.isGameOver()) {
+      System.out.println("GAME IS OVER");
+
       gameController.setActiveUiController(
           new ScoreBoardUiController(gameController, gameSession));
-      System.out.println("GAME IS OVER");
     }
+    //check if user got kicked
+/*    if(gameSession.getGotKicked()){
+      gameController.setActiveUiController(new KickInfoUiController(gameController));
+    }*/
 
   }
 

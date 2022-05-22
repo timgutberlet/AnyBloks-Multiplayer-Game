@@ -123,12 +123,6 @@ public class DeleteAccountController extends AbstractUiController {
    * @author tgutberl
    */
   public void serverDeleteAccount(String username, String password, String ip) {
-    //TODO remove
-    try {
-      ip = Inet4Address.getLocalHost().getHostAddress();
-    } catch (UnknownHostException e) {
-      e.printStackTrace();
-    }
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 

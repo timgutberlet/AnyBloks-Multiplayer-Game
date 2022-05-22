@@ -1,7 +1,7 @@
 package net.server;
 
 import game.config.Config;
-import game.model.GameScoreBoard;
+import game.scores.GameScoreBoard;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -517,6 +517,23 @@ public class DbServer extends AbstractDB {
 
     }
     return passed;
+  }
+
+
+  public String getLastGameId() {
+    String id = "";
+    try {
+      Statement getGameId = con.createStatement();
+      ResultSet rsGames = getGameId.executeQuery(
+          "SELECT * FROM games");
+      while (rsGames.next()) {
+        //Fetch the Scoreboard for every game and save it to the ArrayList
+        id = String.valueOf(rsGames.getInt("games_id"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return id;
   }
 
 }

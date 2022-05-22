@@ -3,7 +3,7 @@ package net;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import game.model.GameScoreBoard;
+import game.scores.GameScoreBoard;
 import java.util.ArrayList;
 import net.server.DbServer;
 import org.junit.jupiter.api.Test;

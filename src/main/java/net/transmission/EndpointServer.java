@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -225,6 +226,20 @@ public class EndpointServer {
     username2Session.put(username, client);
   }
 
+  /**
+   * Remove a username from Username2Session and cause an Error on the connection.
+   */
+  public void removePlayer(String username){
+    //This causes an Error on the connection within 1 millisecond
+    username2Session.get(username).setMaxIdleTimeout(1);
+    try {
+      TimeUnit.MILLISECONDS.sleep(1);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    //After the session has crashed, the user will be replaced by an AI automatically
+  }
+
   public InboundServerHandler getInboundServerHandler() {
     return inboundServerHandler;
   }
@@ -240,6 +255,7 @@ public class EndpointServer {
   @OnError
   public void onError(Session ses, Throwable t) {
     System.out.println("HI FROM CRASH");
+
     t.printStackTrace();
   }
 }

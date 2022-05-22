@@ -1,8 +1,12 @@
 package net.server;
 
+import static game.scores.ScoreProvider.getGameSessionScoreBoard;
+
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
+import game.scores.GameScoreBoard;
+import game.scores.GameSessionScoreBoard;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,32 +136,41 @@ public class OutboundServerHandler {
    * broadcast GAME_WIN_PACKET to all clients. save the gameScore, and if a gameSession ends,
    * connect all gameScores to it.
    *
-   * @param usernameWinner
    * @author tgeilen
    */
-  public void broadcastGameWin(String usernameWinner) {
-    gameSession.setGameOver(true);
+  public void broadcastGameWin() {
     //gameSession.updateGameSessionScoreboard();
     gameSession.setGameOver(true);
-    GameWinPacket gameWinPacket = new GameWinPacket(usernameWinner);
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_WIN_PACKET, gameWinPacket);
+    System.out.println("_____Hi from broadcast game Win");
 
     //Saving the result of the game to the DB
     String gameId = "";
     GameState gameState = gameSession.getGame().getGameState();
-    HashMap<String, Integer> scorebaord = gameSession.getScoreboard();
+    HashMap<String, Integer> scoreboard = gameSession.getScoreboard();
     String gameMode = gameState.getGameMode().getName();
     try {
       DbServer dbServer = DbServer.getInstance();
       //Insert the game and save its gameId
       gameId = dbServer.insertGame(gameMode);
+      System.out.println("Inserting game: " + gameId + scoreboard.get("TIM"));
+
       //Add the scores of the different players
-      for (String username : scorebaord.keySet()) {
-        dbServer.insertScore(gameId, username, scorebaord.get(username));
+      for (String username : scoreboard.keySet()) {
+
+        System.out.println("Inserting score: " + gameId + username+  scoreboard.get(username));
+        dbServer.insertScore(gameId, username, scoreboard.get(username));
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
+
+    //Create gameSessionScoreBoard with current gameIds
+    GameSessionScoreBoard gameSessionScoreBoard = getGameSessionScoreBoard(
+        GameSession.currentGameIds.toArray(new String[GameSession.currentGameIds.size()]));
+
+    GameWinPacket gameWinPacket = new GameWinPacket(new GameScoreBoard(gameMode, scoreboard),
+        gameSessionScoreBoard);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_WIN_PACKET, gameWinPacket);
     GameSession.currentGameIds.add(gameId);
 
     this.server.broadcastMessage(wrappedPacket);

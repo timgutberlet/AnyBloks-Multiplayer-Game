@@ -296,7 +296,10 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void kickPlayer2() {
-
+    //Kicking a remote Player
+    Player playerToKick = gameSession.getPlayerList().get(1);
+    //Kick player out of username2Session
+    gameSession.getInboundServerHandler().getServer();
   }
 
   /**

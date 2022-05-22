@@ -171,6 +171,11 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+
+    if(gameSession.getGotKicked()){
+      gameController.setActiveUiController(new KickInfoUiController(gameController));
+    }
+
     System.out.println("Gamesession: " + this.gameSession);
     if (this.gameSession.isGameStarted()) {
 

@@ -1,4 +1,4 @@
-package game.model;
+package game.scores;
 
 import java.util.HashMap;
 

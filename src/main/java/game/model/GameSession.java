@@ -5,6 +5,8 @@ import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
+import game.scores.GameScoreBoard;
+import game.scores.GameSessionScoreBoard;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URI;
@@ -66,6 +68,10 @@ public class GameSession {
   private String authToken = "";
 
   private Boolean gameOver = false;
+  private GameScoreBoard gameScoreBoard;
+  private GameSessionScoreBoard gameSessionScoreBoard;
+  private Boolean gotKicked = false;
+
 
 
   /**
@@ -343,6 +349,7 @@ public class GameSession {
     Session session;
 
     try {
+      //TODO verify that localhost as a correct IP here
       session = container.connectToServer(endpointClient, URI.create("ws://localhost:8081/packet"));
       //Login
       LoginRequestPacket loginRequestPacket = new LoginRequestPacket(player.getUsername(),
@@ -708,6 +715,60 @@ public class GameSession {
    */
   public void setGameOver(Boolean gameOver) {
     this.gameOver = gameOver;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return gameSessionScoreBoard
+   */
+  public GameSessionScoreBoard getGameSessionScoreBoard() {
+    return gameSessionScoreBoard;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return gameScoreBoard
+   */
+  public GameScoreBoard getGameScoreBoard() {
+    return gameScoreBoard;
+  }
+
+  /**
+   * Setter.
+   *
+   * @param gameSessionScoreBoard to set
+   */
+  public void setGameSessionScoreBoard(GameSessionScoreBoard gameSessionScoreBoard) {
+    this.gameSessionScoreBoard = gameSessionScoreBoard;
+  }
+
+  /**
+   * Getter.
+   *
+   * @param gameScoreBoard to set
+   */
+  public void setGameScoreBoard(GameScoreBoard gameScoreBoard) {
+    this.gameScoreBoard = gameScoreBoard;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return Boolean
+   */
+  public Boolean getGotKicked() {
+    return gotKicked;
+  }
+
+  /**
+   * Getter.
+   *
+   * @param gotKicked Boolean
+   */
+  public void setGotKicked(Boolean gotKicked){
+    this.gotKicked = gotKicked;
   }
 
   /**

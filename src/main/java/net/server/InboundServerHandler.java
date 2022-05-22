@@ -189,7 +189,7 @@ public class InboundServerHandler {
    *
    * <p>
    * Method called after receiving a CreateAccountRequestPacket. This tries to save the account in
-   * the Database, depending on the result of the attempted DB Insertion the reponse message for the
+   * the Database, depending on the result of the attempted DB Insertion the response message for the
    * createAccountResponsePacket is set.
    *
    * @param packet that contains a createAccountRequestPacket
