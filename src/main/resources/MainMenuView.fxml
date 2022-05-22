@@ -22,6 +22,12 @@
           <children>
             <GridPane GridPane.rowIndex="1" prefHeight="68.0" prefWidth="1280.0">
               <children>
+                <Button GridPane.columnIndex="1" mnemonicParsing="false" onAction="#credits"
+                  prefHeight="50.0" prefWidth="110.0" text="CREDITS">
+                  <font>
+                    <Font size="25.0"/>
+                  </font>
+                </Button>
                 <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#close"
                   prefHeight="50.0" prefWidth="110.0" text="QUIT">
                   <font>

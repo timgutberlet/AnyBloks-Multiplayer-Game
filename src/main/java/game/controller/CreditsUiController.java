@@ -2,30 +2,17 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
-import engine.handler.ThreadHandlerRestful;
 import game.config.Config;
-import game.model.Game;
-import game.model.GameSession;
-import game.model.gamemodes.GMTutorial;
-import game.model.gamemodes.GameMode;
-import game.model.player.Player;
-import game.model.player.PlayerType;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Box;
 
 /**
- * Main Menu Ui Controller that is used first when the game is started.
- *
- * @author lbaudenb
  * @author tgutberl
  */
-
-public class MainMenuUiController extends AbstractUiController {
+public class CreditsUiController extends AbstractUiController {
 
   /**
    * Anbstract Game controller used in Application.
@@ -43,12 +30,28 @@ public class MainMenuUiController extends AbstractUiController {
    * @param gameController
    * @author tgutberl
    */
-  public MainMenuUiController(AbstractGameController gameController) {
+  public CreditsUiController(AbstractGameController gameController) {
     super(gameController);
     this.gameController = gameController;
     init(super.root);
 
   }
+
+  @Override
+  public void onExit() {
+
+  }
+
+  /**
+   * Method to get back to Menu.
+   *
+   * @author tgutberl
+   */
+  @FXML
+  public void back() {
+    this.gameController.setActiveUiController(new MainMenuUiController(gameController));
+  }
+
   /**
    * Method to initialize the FXML.
    *
@@ -58,7 +61,7 @@ public class MainMenuUiController extends AbstractUiController {
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/MainMenuView.fxml"));
+      loader.setLocation(getClass().getResource("/CreditsView.fxml"));
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
 
@@ -90,69 +93,6 @@ public class MainMenuUiController extends AbstractUiController {
     }
   }
 
-  /**
-   * Method to Start the PlayView.
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void play() {
-    gameController.setActiveUiController(new PlayUiController(gameController));
-  }
-
-  /**
-   * Method to Start Tutuorial.
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void tutorial() {
-        new TutorialUiController(gameController);
-  }
-
-  /**
-   * Method to get into SettingController - to get into SettingUI.
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void setting() {
-    gameController.setActiveUiController(new SettingUiController(gameController));
-  }
-  /**
-   * Method to get Quit Menu - to End the Program.
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void credits() {
-    gameController.setActiveUiController(new CreditsUiController(gameController));
-  }
-
-  /**
-   * Method to get Quit Menu - to End the Program.
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void close() {
-    onExit();
-  }
-
-  /**
-   * Method for override on Exit
-   *
-   * @author tgutberl
-   */
-  @Override
-  public void onExit() {
-    try {
-      gameController.getApplication().stop();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    System.exit(0);
-  }
 
   /**
    * Method for override on update
@@ -174,4 +114,3 @@ public class MainMenuUiController extends AbstractUiController {
     updateSize(mainPane, gameController.getStage());
   }
 }
-

@@ -18,6 +18,8 @@ public class StandardConfig {
       {"SCREEN_MINIMUM_WIDTH", "1280"},
       {"SCREEN_MINIMUM_HEIGHT", "720"},
       {"THEME", "DARK"},
+      {"SHOW_FPS", "TRUE"},
+      {"MAXIMUM_FPS", "60"},
       {"HOSTPLAYER", "HOST"},
       {"AIPLAYER1", "AlphaGo 2.0"},
       {"AIPLAYER2", "DeepMind 2.0"},
