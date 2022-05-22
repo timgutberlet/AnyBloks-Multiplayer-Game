@@ -33,7 +33,7 @@ public class MusicThread extends Thread{
    * Constructor for Music thread
    */
   public MusicThread(){
-    media = new Media("https://ia800504.us.archive.org/33/items/TetrisThemeMusic/Tetris.mp3");
+    media = new Media(getClass().getResource("/music/Tetris.mp3").toExternalForm());
     mediaPlayer = new MediaPlayer(media);
     mediaPlayer.setCycleCount(10000);
     stopMusic = false;
