@@ -253,6 +253,10 @@ public class GameSession {
     this.aiPlayers = aiPlayers;
   }
 
+  public void clearAiPlayers() {
+    this.aiPlayers.clear();
+  }
+
   /**
    * Method let the game know, if
    *

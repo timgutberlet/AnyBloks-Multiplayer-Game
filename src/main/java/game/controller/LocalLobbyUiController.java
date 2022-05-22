@@ -371,6 +371,12 @@ public class LocalLobbyUiController extends AbstractUiController {
           player3.setText(this.gameSession.getPlayerList().get(3).getUsername());
         }
       }
+    } else {
+      aiPlayers.clear();
+      this.gameModes.clear();
+      gameSession.clearAiPlayers();
+      playButton.setText("Play");
+      playButton.setDisable(false);
     }
   }
 

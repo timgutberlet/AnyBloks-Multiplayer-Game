@@ -56,6 +56,7 @@ public class TrigonPolyPane extends PolyPane {
     triangleRight.setStroke(Color.TRANSPARENT);
     if (!color.equals(Color.TRANSPARENT)) {
       fields.add(triangleRight);
+      triangleRight.setStroke(Color.BLACK);
     }
     this.getChildren().add(triangleRight);
   }
@@ -93,6 +94,7 @@ public class TrigonPolyPane extends PolyPane {
     triangleLeft.setStroke(Color.TRANSPARENT);
     if (!color.equals(Color.TRANSPARENT)) {
       fields.add(triangleLeft);
+      triangleLeft.setStroke(Color.BLACK);
     }
     this.getChildren().add(triangleLeft);
   }
