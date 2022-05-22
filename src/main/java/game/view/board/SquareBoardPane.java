@@ -8,10 +8,20 @@ import game.model.board.Board;
 import javafx.scene.paint.Color;
 
 /**
+ * Class that represents the squarepane board for the classic or duo game.
+ *
  * @author lbaudenb
+ * @author tgutberl
  */
 public class SquareBoardPane extends BoardPane {
 
+  /**
+   * Constructor of the Squareboardpane intializing the variables of the super
+   *
+   * @param board Board of the gamelogic
+   * @param inputHandler inputhandler used for collision detection
+   * @param width width of frame
+   */
   public SquareBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
     super.size = (0.4 * width) / board.getSize();
@@ -19,11 +29,11 @@ public class SquareBoardPane extends BoardPane {
   }
 
   /**
-   * Method that draws a square at the coordinates {row,j}
+   * Method that draws a square at the coordinates {row,j}.
    *
-   * @param color
-   * @param i
-   * @param j
+   * @param color Color of the square and collision
+   * @param i coord x
+   * @param j coord y
    */
   public void setSquare(int i, int j, Color color) {
 
@@ -56,6 +66,9 @@ public class SquareBoardPane extends BoardPane {
     inputHandler.registerField(field);
   }
 
+  /**
+   * Sets the Board of the game
+   */
   @Override
   public void setBoard() {
     for (int i = 0; i < board.SIZE; i++) {
@@ -66,6 +79,10 @@ public class SquareBoardPane extends BoardPane {
     }
   }
 
+  /**
+   * Resizes the baord
+   * @param width width of the board
+   */
   public void resize(double width) {
     this.size = (0.4 * width) / board.getSize();
     this.fields.clear();

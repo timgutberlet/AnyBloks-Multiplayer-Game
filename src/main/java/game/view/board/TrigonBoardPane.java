@@ -9,14 +9,32 @@ import game.model.board.Board;
 import javafx.scene.paint.Color;
 
 /**
+ * Trigon Board Class representing the Board for the trigon game
+ *
  * @author lbaudenb
+ * @author tgutberl
  */
 public class TrigonBoardPane extends BoardPane {
 
+  /**
+   * Shift variable used for triangle painting
+   */
   private final double shift;
+  /**
+   * Offset Variable used for triangle painting in the parallelogram
+   */
   private double xOfSet;
+  /**
+   * Offset Variable used for triangle painting in the parallelogram
+   */
   private double yOfSet;
 
+  /**
+   * Constrcutor used for intializing
+   * @param board Board of the game logic
+   * @param inputHandler Inputhandler used for collision detection
+   * @param width width used for board
+   */
   public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
     size = 0.4 * width / 18;
@@ -27,11 +45,11 @@ public class TrigonBoardPane extends BoardPane {
   }
 
   /**
-   * Method that draws a triangle (right in the parallelogram) at the coordinates {i,j}
+   * Method that draws a triangle (right in the parallelogram) at the coordinates {i,j}.
    *
-   * @param i
-   * @param j
-   * @param color
+   * @param i coord x
+   * @param j coord y
+   * @param color coolor of triangle
    */
   private void setTriangleRight(int i, int j, Color color) {
     CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 1);
@@ -65,11 +83,11 @@ public class TrigonBoardPane extends BoardPane {
   }
 
   /**
-   * Method that draws a triangle (left in the parallelogram) at the coordinates {i,j}
+   * Method that draws a triangle (left in the parallelogram) at the coordinates {i,j}.
    *
-   * @param i
-   * @param j
-   * @param color
+   * @param i coord x
+   * @param j coord y
+   * @param color Color of triangle
    */
   private void setTriangleLeft(int i, int j, Color color) {
 
@@ -106,10 +124,10 @@ public class TrigonBoardPane extends BoardPane {
   }
 
   /**
-   * Method that draws a triangle at the coordinates {i,j}
+   * Method that draws a triangle at the coordinates {i,j}.
    *
-   * @param i
-   * @param j
+   * @param i coord x
+   * @param j coord y
    */
   private void setTriangle(int i, int j) {
     Color color;
@@ -134,6 +152,9 @@ public class TrigonBoardPane extends BoardPane {
     }
   }
 
+  /**
+   * Sets board of game
+   */
   @Override
   public void setBoard() {
     for (int i = 0; i < 18; i++) {
@@ -143,6 +164,10 @@ public class TrigonBoardPane extends BoardPane {
     }
   }
 
+  /**
+   * Resizes board
+   * @param width width of board
+   */
   public void resize(double width) {
     size = 0.4 * width / 18;
     xOfSet = Math.sin(Math.toRadians(30)) * size;

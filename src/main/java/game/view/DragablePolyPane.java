@@ -82,7 +82,7 @@ public class DragablePolyPane extends Pane {
 
   public void buttons() {
     mirror = new Button("M");
-    mirror.setPrefWidth(size);
+    mirror.setPrefWidth(size +3);
     mirror.setPrefHeight(size);
     rotateRight = new Button("R");
     rotateRight.setPrefWidth(size);

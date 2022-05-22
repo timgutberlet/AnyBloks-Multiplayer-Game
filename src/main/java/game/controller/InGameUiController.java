@@ -51,7 +51,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -69,6 +71,10 @@ public abstract class InGameUiController extends AbstractUiController {
   private final AbstractGameController gameController;
   private final InputHandler inputHandler;
   private final List<StackPane> stackPanes;
+  /**
+   * Color used for collision detection
+   */
+  Color color;
   /**
    * Button to Skip Turns
    */
@@ -227,14 +233,29 @@ public abstract class InGameUiController extends AbstractUiController {
     for (Player p : this.gameSession.getPlayerList()) {
       VBox vbox = new VBox();
       Label name = new Label(p.getUsername());
-      name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5;");
       name.setTextFill(ColorHandler.getJavaColor(game.getGameState().getColorFromPlayer(p)));
       name.setFont(Font.font("System", 20));
       name.setPadding(new Insets(0, 10, 0, 10));
       Label score = new Label("0");
-      score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5;");
       score.setPadding(new Insets(0, 10, 0, 10));
       score.setFont(Font.font("System", 30));
+      switch (game.getGameState().getColorFromPlayer(p).toString()){
+        case "RED":
+          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff0000;");
+          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff0000;");
+          break;
+        case "BLUE":
+          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #0000ff;");
+          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #0000ff;");
+          break;
+        case "GREEN":
+          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00cc00;");
+          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00cc00;");
+          break;
+        case "YELLOW":
+          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
+          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
+      }
       names.add(name);
       scores.add(score);
       vbox.getChildren().add(name);
@@ -644,11 +665,25 @@ public abstract class InGameUiController extends AbstractUiController {
                 }
                 if (possibleFields != null) {
                   for (int[] coords : possibleFields) {
+                    switch (dragablePolyPane.getPoly().getColor().toString()){
+                      case "RED":
+                        color = Color.RED;
+                        break;
+                      case "BLUE":
+                        color = Color.BLUE;
+                        break;
+                      case "GREEN":
+                        color = Color.GREEN;
+                        break;
+                      case "YELLOW":
+                        color = Color.YELLOW;
+                        break;
+                      default: color = Color.BLACK;
+                    }
                     if (game.getGamemode().getName().equals("TRIGON")) {
-                      boardPane.setCheckFieldColor(Color.BLACK, coords[0], coords[1], coords[2]);
-
+                      boardPane.setCheckFieldColor(color, coords[0], coords[1], coords[2]);
                     } else {
-                      boardPane.setCheckFieldColor(Color.BLACK, coords[0], coords[1]);
+                      boardPane.setCheckFieldColor(color, coords[0], coords[1]);
                     }
                   }
                 }
