@@ -12,10 +12,23 @@ public class GameSessionScoreBoard {
 
   public HashMap<String, Integer[]> usernames2pointsAndWins;
 
+  /**
+   * Constructor.
+   *
+   * @param gamesPlayed as int
+   * @param usernames2pointsAndWins as Hashmap
+   */
   public GameSessionScoreBoard(int gamesPlayed, HashMap<String, Integer[]> usernames2pointsAndWins){
     this.gamesPlayed = gamesPlayed;
     this.usernames2pointsAndWins = usernames2pointsAndWins;
+  }
 
+  /**
+   * Default Constructor for Jackson.
+   */
+  public GameSessionScoreBoard(){
+    this.gamesPlayed = 0;
+    this.usernames2pointsAndWins = null;
   }
 
 }

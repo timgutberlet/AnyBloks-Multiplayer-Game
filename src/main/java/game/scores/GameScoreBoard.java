@@ -3,7 +3,8 @@ package game.scores;
 import java.util.HashMap;
 
 /**
- * Class to implement a ScoreBoard within a Game. Contains info about: The gamemode, usernames of
+ * Class to implement a ScoreBoard within a Game. Contains info about: The gamemode.
+ * usernames of
  * players and their scores
  *
  * @author tbuscher
@@ -22,6 +23,14 @@ public class GameScoreBoard {
   public GameScoreBoard(String gamemode, HashMap<String, Integer> playerScores) {
     this.gamemode = gamemode;
     this.playerScores = playerScores;
+  }
+
+  /**
+   * Constructor for Jackson.
+   */
+  public GameScoreBoard(){
+    this.gamemode = null;
+    this.playerScores = null;
   }
 
   /**

@@ -132,6 +132,8 @@ public class EndpointClient {
 
 	@OnError
 	public void onError(Throwable t, final Session ses){
+		System.out.println("Hi from ClientSideOnError()");
+		t.printStackTrace();
 		gameSession.setGotKicked(true);
 	}
 

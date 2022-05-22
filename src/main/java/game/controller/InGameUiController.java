@@ -524,6 +524,10 @@ public abstract class InGameUiController extends AbstractUiController {
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
       skipTurnButton.setVisible(false);
+      if (!game.getGameState().playsTurn()) {
+        Debug.printMessage(this, "" + game.getGameState().playsTurn());
+        refreshUi();
+      }
     } else {
       if (this.game == null) {
         Debug.printMessage(this, "Game is null");
@@ -714,14 +718,16 @@ public abstract class InGameUiController extends AbstractUiController {
     //check if game is over
     if (this.gameSession.isGameOver()) {
       System.out.println("GAME IS OVER");
-
+      //Sending user to ScoreBoard
+      ScoreBoardUiController.sortScoreBoard(gameSession);
       gameController.setActiveUiController(
           new ScoreBoardUiController(gameController, gameSession));
     }
     //check if user got kicked
-/*    if(gameSession.getGotKicked()){
+    if(gameSession.getGotKicked()){
+      System.out.println("GETTING KICKED");
       gameController.setActiveUiController(new KickInfoUiController(gameController));
-    }*/
+    }
 
   }
 

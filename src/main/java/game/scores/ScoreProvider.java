@@ -67,6 +67,9 @@ public class ScoreProvider {
         }
       }
       Integer[] oldEntry = user2ScoreAndWin.get(winner);
+      if(oldEntry[1] == null){
+        oldEntry[1] = 0;
+      }
       oldEntry[1] += 1;
       user2ScoreAndWin.put(winner, oldEntry);
     }
@@ -75,13 +78,35 @@ public class ScoreProvider {
     for (GameScoreBoard gameScoreBoard : gameScoreBoards) {
       for (String uName : gameScoreBoard.getPlayerScores().keySet()) {
         Integer[] oldEntry = user2ScoreAndWin.get(uName);
+        if(oldEntry[0] == null){
+          oldEntry[0] = 0;
+        }
         oldEntry[0] += gameScoreBoard.getPlayerScores().get(uName);
+        user2ScoreAndWin.put(uName, oldEntry);
+      }
+    }
+
+    for(String uName : user2ScoreAndWin.keySet()){
+      if(user2ScoreAndWin.get(uName)[0] == null){
+        Integer[] oldEntry = user2ScoreAndWin.get(uName);
+        if(oldEntry[0] == null){
+          oldEntry[0] = 0;
+        }
+        user2ScoreAndWin.put(uName, oldEntry);
+      }
+      if(user2ScoreAndWin.get(uName)[1] == null){
+
+        Integer[] oldEntry = user2ScoreAndWin.get(uName);
+        if(oldEntry[1] == null){
+          oldEntry[1] = 0;
+        }
         user2ScoreAndWin.put(uName, oldEntry);
       }
     }
 
     GameSessionScoreBoard gameSessionScoreBoard = new GameSessionScoreBoard(gamesPlayed,
         user2ScoreAndWin);
+
 
     return gameSessionScoreBoard;
 

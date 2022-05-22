@@ -146,14 +146,22 @@ public class OutboundServerHandler {
     //Saving the result of the game to the DB
     String gameId = "";
     GameState gameState = gameSession.getGame().getGameState();
-    HashMap<String, Integer> scoreboard = gameSession.getScoreboard();
+    HashMap<String, Integer> scoreboard = new HashMap<>();
+    System.out.println("Num Players:" + gameState.getPlayerList().size());
+    System.out.println("Num length score" + gameState.getScores().length);
+    for(int i = 0; i < gameState.getPlayerList().size(); i++){
+      System.out.println("Number: " + i);
+      System.out.println("username: " + gameState.getPlayerList().get(i).getUsername());
+      System.out.println("Score:" + gameState.getScores()[i]);
+      scoreboard.put(gameState.getPlayerList().get(i).getUsername(), gameState.getScores()[i]);
+    }
     String gameMode = gameState.getGameMode().getName();
     try {
       DbServer dbServer = DbServer.getInstance();
       //Insert the game and save its gameId
       gameId = dbServer.insertGame(gameMode);
-      System.out.println("Inserting game: " + gameId + scoreboard.get("TIM"));
-
+      System.out.println("Inserting game: " + gameId + gameMode);
+      GameSession.currentGameIds.add(gameId);
       //Add the scores of the different players
       for (String username : scoreboard.keySet()) {
 

@@ -46,9 +46,6 @@ public class MainMenuUiController extends AbstractUiController {
     this.gameController = gameController;
     init(super.root);
 
-    ThreadHandlerRestful threadHandlerRestful = new ThreadHandlerRestful();
-    threadHandlerRestful.start();
-
   }
 
   /**
