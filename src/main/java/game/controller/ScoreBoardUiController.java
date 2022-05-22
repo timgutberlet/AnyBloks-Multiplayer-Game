@@ -7,11 +7,15 @@ import game.model.Debug;
 import game.model.GameSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +26,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
+import static java.util.Collections.reverseOrder;
 
 /**
  * Class that controls the Scoreboard View
@@ -53,33 +62,32 @@ public class ScoreBoardUiController extends AbstractUiController {
   private Label userMessage;
 
   @FXML
-  private Label nameWinner;
-  @FXML
-  private Label pointsWinner;
+  private Label gameMode;
 
   @FXML
-  private Label nameSecond;
+  private Text nameWinner;
 
   @FXML
-  private Label pointsSecond;
+  private Text pointsWinner;
 
   @FXML
-  private Label nameThird;
+  private Text nameSecond;
 
   @FXML
-  private Label pointsThird;
+  private Text pointsSecond;
 
   @FXML
-  private Label nameFourth;
+  private Text nameThird;
 
   @FXML
-  private Label pointsFourth;
+  private Text pointsThird;
 
   @FXML
-  private Button backMainMenu;
+  private Text nameFourth;
 
   @FXML
-  private Button nextRound;
+  private Text pointsFourth;
+
 
   public ScoreBoardUiController(AbstractGameController gameController, GameSession gameSession) {
     super(gameController);
@@ -135,29 +143,42 @@ public class ScoreBoardUiController extends AbstractUiController {
   }
 
   public static void sortScoreBoard(GameSession gameSession) {
-    HashMap<String, Integer> sortedScores = gameSession.getScoreboard().entrySet().stream()
-        .sorted(Entry.comparingByValue())
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-            (e1, e2) -> e1, LinkedHashMap::new));
-    for (Map.Entry<String, Integer> entry : sortedScores.entrySet()) {
-      players.add(entry.getKey());
-      scores.add(entry.getValue() + "");
+    List<Map.Entry<String, Integer>> list0
+        = new ArrayList<Entry<String, Integer>>(
+        gameSession.getGameScoreBoard().playerScores.entrySet());
+
+    // Sort the list using lambda expression
+    Collections.sort(
+        list0,
+        (i1, i2) -> i1.getValue().compareTo(i2.getValue()));
+
+    for (int j = list0.size() - 1; j >= 0; j--) {
+      players.add(list0.get(j).getKey());
+      scores.add(list0.get(j).getValue() + "");
     }
 
-    HashMap<String, Integer> sortedSessionScores = gameSession.getGameSessionScoreboard().entrySet()
-        .stream()
-        .sorted(Entry.comparingByValue())
-        .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-            (e1, e2) -> e1, LinkedHashMap::new));
-    for (Map.Entry<String, Integer> entry : sortedSessionScores.entrySet()) {
-      sessionPlayers.add(entry.getKey());
-      sessionScores.add(entry.getValue() + "");
+    List<Map.Entry<String, Integer[]>> list1
+        = new ArrayList<Entry<String, Integer[]>>(
+        gameSession.getGameSessionScoreBoard().usernames2pointsAndWins.entrySet());
+
+    // Sort the list using lambda expression
+    Collections.sort(
+        list1,
+        (i1, i2) -> i1.getValue()[0].compareTo(i2.getValue()[0]));
+
+    for (int i = list1.size() - 1; i >= 0; i--) {
+      sessionPlayers.add(list1.get(i).getKey());
+      sessionScores.add(list1.get(i).getValue()[0] + "");
     }
+
 
   }
 
   public void setLabels() {
-    switch (gameSession.getScoreboard().size()) {
+
+    gameMode.setText("Gamemode: " + gameSession.getGameScoreBoard().gamemode);
+
+    switch (gameSession.getGameScoreBoard().playerScores.size()) {
       case 2:
         nameWinner.setText(players.get(0));
         nameSecond.setText(players.get(1));
@@ -192,22 +213,73 @@ public class ScoreBoardUiController extends AbstractUiController {
         Debug.printMessage("Scoreboard is empty");
     }
 
-    if (false) {
+    if (gameSession.isMultiRound()) {
+
       VBox vBox = new VBox();
       vBox.setAlignment(Pos.CENTER);
-      for (int i = 0; i < sessionPlayers.size(); i++) {
+      vBox.setFillWidth(true);
+      Label label0 = new Label();
+      label0.setText("Leaderboard");
+      label0.setFont(Font.font("System", 40));
+      Label label1 = new Label();
+      label1.setText("Games played: " + gameSession.getGameSessionScoreBoard().gamesPlayed);
+      label1.setFont(Font.font("System", 24));
+      vBox.getChildren().add(label0);
+      vBox.getChildren().add(label1);
+
+      for (int i = 0; i < 4; i++) {
+
         HBox hBox = new HBox();
-        Label name = new Label();
-        name.setText(sessionPlayers.get(i));
-        Label score = new Label();
-        score.setText(sessionScores.get(i));
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setSpacing(20);
+        hBox.setPrefHeight(80);
+        Text name = new Text();
+        Text score = new Text();
+
+        if (i < gameSession.getPlayerList().size()) {
+          name.setText((sessionPlayers.get(i)));
+          score.setText(" " + sessionScores.get(i));
+        } else {
+          name.setText("");
+          score.setText("");
+        }
+
+        switch (i) {
+          case 0:
+            name.setFill(Color.GOLD);
+            name.setFont(Font.font("System", 40));
+            score.setFill(Color.GOLD);
+            score.setFont(Font.font("System", 40));
+            break;
+          case 1:
+            name.setFill(Color.SILVER);
+            name.setFont(Font.font("System", 30));
+            score.setFill(Color.SILVER);
+            score.setFont(Font.font("System", 30));
+            break;
+          case 2:
+            name.setFill(Color.color(0.66, 0.4375, 0));
+            name.setFont(Font.font("System", 30));
+            score.setFill(Color.color(0.66, 0.4375, 0));
+            score.setFont(Font.font("System", 30));
+            break;
+          case 3:
+            name.setFill(Color.WHITE);
+            name.setFont(Font.font("System", 30));
+            score.setFill(Color.WHITE);
+            score.setFont(Font.font("System", 30));
+            break;
+        }
+
         hBox.getChildren().add(name);
         hBox.getChildren().add(score);
         vBox.getChildren().add(hBox);
       }
       board.getChildren().remove(line);
       board.getChildren().add(vBox);
+
     }
+
   }
 
   public void setUserMessage() {
@@ -222,7 +294,7 @@ public class ScoreBoardUiController extends AbstractUiController {
           break;
         case 1:
         case 2:
-          userMessage.setText("Not great, not terrible");
+          userMessage.setText("You are getting closer!");
           break;
         case 3:
           userMessage.setText("Keep going!");
@@ -231,14 +303,14 @@ public class ScoreBoardUiController extends AbstractUiController {
     } else {
       switch (overall) {
         case 0:
-          userMessage.setText("Strong performance!");
+          userMessage.setText("You Won!");
           break;
         case 1:
         case 2:
-          userMessage.setText("Not great, not terrible");
+          userMessage.setText("Good job");
           break;
         case 3:
-          userMessage.setText("Keep going!");
+          userMessage.setText("Better luck next time!");
           break;
       }
     }

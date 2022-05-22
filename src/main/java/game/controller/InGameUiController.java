@@ -120,7 +120,6 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private Boolean chatSelected = false;
   private final Stage stage;
-  private Button testButton;
   private boolean aiCalcRunning;
   private Player localPlayer;
   private ArrayList<int[]> possibleFields;
@@ -198,6 +197,14 @@ public abstract class InGameUiController extends AbstractUiController {
 
   private void setUpUi() {
 
+    switch (Config.getStringValue("THEME")) {
+      case "DARK":
+        ColorHandler.darkMode = true;
+        break;
+      default:
+        ColorHandler.darkMode = false;
+    }
+
     double width = stage.getWidth();
     double height = stage.getHeight();
 
@@ -247,23 +254,61 @@ public abstract class InGameUiController extends AbstractUiController {
       Label score = new Label("0");
       score.setPadding(new Insets(0, 10, 0, 10));
       score.setFont(Font.font("System", 30));
-      switch (game.getGameState().getColorFromPlayer(p).toString()){
+
+      switch (game.getGameState().getColorFromPlayer(p).toString()) {
         case "RED":
-          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff0000;");
-          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff0000;");
+          if (ColorHandler.darkMode) {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #8b0000;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #8b0000;");
+          } else {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff0000;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff0000;");
+          }
           break;
         case "BLUE":
-          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #0000ff;");
-          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #0000ff;");
+          if (ColorHandler.darkMode) {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00008b;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00008b;");
+          } else {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #0000ff;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #0000ff;");
+          }
           break;
         case "GREEN":
-          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00cc00;");
-          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00cc00;");
+          if (ColorHandler.darkMode) {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #006400;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #006400;");
+          } else {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00cc00;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00cc00;");
+          }
           break;
         case "YELLOW":
-          name.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
-          score.setStyle("-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
+          if (ColorHandler.darkMode) {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff8c00 ;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff8c00 ;");
+          } else {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
+          }
       }
+
       names.add(name);
       scores.add(score);
       vbox.getChildren().add(name);
@@ -363,7 +408,6 @@ public abstract class InGameUiController extends AbstractUiController {
     skipTurnButton = new Button("Skip Turn");
     infoButton = new Button("Help");
     quitButton = new Button("Quit");
-    testButton = new Button("ScoreBoard");
     chatButton = new Button("Hide Chat");
 
     //Event to start Chat Window
@@ -398,17 +442,14 @@ public abstract class InGameUiController extends AbstractUiController {
     });
 
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
-    testButton.setOnMouseClicked(mouseEvent -> {
-      this.handleTestButtonClicked();
-    });
 
     buttonBox.getChildren().add(infoButton);
     buttonBox.getChildren().add(quitButton);
-    buttonBox.getChildren().add(testButton);
     buttonBox.getChildren().add(chatButton);
     buttonBox.getChildren().add(skipTurnButton);
     container.getChildren().add(buttonBox);
     this.root.getChildren().add(anchorPane);
+
     switch (Config.getStringValue("THEME")) {
       case "BRIGHT":
         topPane.setStyle("-fx-background-color:#FF4B4B;");
@@ -451,11 +492,6 @@ public abstract class InGameUiController extends AbstractUiController {
     }
   }
 
-  private void handleTestButtonClicked() {
-    gameSession.stopSession();
-    ScoreBoardUiController.sortScoreBoard(gameSession);
-    gameController.setActiveUiController(new ScoreBoardUiController(gameController, gameSession));
-  }
 
   private void handleQuitButtonClicked() {
     gameEnd();

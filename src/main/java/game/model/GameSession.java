@@ -74,7 +74,7 @@ public class GameSession {
   private GameSessionScoreBoard gameSessionScoreBoard;
   private Boolean gotKicked = false;
   private Boolean hostQuit = false;
-
+  private boolean multiRound = false;
 
   /**
    * used to change the view to InGameController.
@@ -652,6 +652,10 @@ public class GameSession {
     this.inboundServerHandler = inboundServerHandler;
   }
 
+  public boolean isMultiRound() {
+    return this.multiRound;
+  }
+
   /**
    * returns the list of games that will be played in the tournament.
    *
@@ -667,6 +671,9 @@ public class GameSession {
    * @param gameList
    */
   public void setGameList(LinkedList<GameMode> gameList) {
+    if (gameList.size() > 1) {
+      multiRound = true;
+    }
     this.gameList = gameList;
   }
 

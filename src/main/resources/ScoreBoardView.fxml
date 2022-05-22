@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -61,64 +62,73 @@
                             <Font size="40.0"/>
                           </font>
                         </Label>
+                        <Label fx:id="gameMode" text="Gamemode: " textFill="WHITE">
+                          <font>
+                            <Font size="24.0"/>
+                          </font>
+                        </Label>
                         <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
                           <children>
-                            <Label fx:id="nameWinner" text="Name_of_winner:" textFill="GOLD">
+                            <Text fx:id="nameWinner" fill="GOLD" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="1. Name_of_winner:">
                               <font>
                                 <Font size="40.0"/>
                               </font>
-                            </Label>
-                            <Label fx:id="pointsWinner" layoutX="127.0" layoutY="24.0" text="Points"
-                              textFill="GOLD">
+                            </Text>
+                            <Text fx:id="pointsWinner" fill="GOLD" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="Points">
                               <font>
                                 <Font size="40.0"/>
                               </font>
-                            </Label>
+                            </Text>
                           </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="70.0" spacing="15.0">
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
                           <children>
-                            <Label fx:id="nameSecond" text="2. Name_of_second:" textFill="SILVER">
+                            <Text fx:id="nameSecond" fill="SILVER" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="2. Name_of_second:">
                               <font>
                                 <Font size="30.0"/>
                               </font>
-                            </Label>
-                            <Label fx:id="pointsSecond" layoutX="203.0" layoutY="10.0" text="Points"
-                              textFill="SILVER">
+                            </Text>
+                            <Text fx:id="pointsSecond" fill="SILVER" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="Points">
                               <font>
                                 <Font size="30.0"/>
                               </font>
-                            </Label>
+                            </Text>
                           </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0" spacing="15.0">
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
                           <children>
-                            <Label fx:id="nameThird" text="3. Name _of_third:" textFill="#a87000">
+                            <Text fx:id="nameThird" fill="#a87000" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="3. Name_of_third:">
                               <font>
                                 <Font size="30.0"/>
                               </font>
-                            </Label>
-                            <Label fx:id="pointsThird" layoutX="213.0" layoutY="10.0" text="Points"
-                              textFill="#a87000">
+                            </Text>
+                            <Text fx:id="pointsThird" fill="#a87000" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="Points">
                               <font>
                                 <Font size="30.0"/>
                               </font>
-                            </Label>
+                            </Text>
                           </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0" spacing="15.0">
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
                           <children>
-                            <Label fx:id="nameFourth" text="4. Name_of_fourth:" textFill="WHITE">
+                            <Text fx:id="nameFourth" fill="WHITE" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="4. Name_of_fourth:">
                               <font>
                                 <Font size="30.0"/>
                               </font>
-                            </Label>
-                            <Label fx:id="pointsFourth" layoutX="209.0" layoutY="10.0" text="Points"
-                              textFill="WHITE">
+                            </Text>
+                            <Text fx:id="pointsFourth" fill="WHITE" strokeType="OUTSIDE"
+                              strokeWidth="0.0" text="Points">
                               <font>
                                 <Font size="30.0"/>
                               </font>
-                            </Label>
+                            </Text>
                           </children>
                         </HBox>
                       </children>
