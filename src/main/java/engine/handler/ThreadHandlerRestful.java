@@ -14,7 +14,7 @@ public class ThreadHandlerRestful extends Thread {
   private HostServer hostServer;
 
   /**
-   * Construcotr for setting the gamession
+   * Constructor for setting the gamession
    */
   public ThreadHandlerRestful() {
     this.hostServer = null;

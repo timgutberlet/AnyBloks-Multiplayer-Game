@@ -1,7 +1,9 @@
 package engine.controller;
 
 import engine.handler.InputHandler;
+import engine.handler.MusicThread;
 import game.config.Config;
+import java.io.File;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -48,6 +50,8 @@ public abstract class AbstractGameController extends AnimationTimer {
     inputHandler = new InputHandler(this);
     stage.setMinWidth(Config.getIntValue("SCREEN_MINIMUM_WIDTH"));
     stage.setMinHeight(Config.getIntValue("SCREEN_MINIMUM_HEIGHT"));
+    MusicThread musicThread = new MusicThread();
+    musicThread.start();
     this.start();
   }
 

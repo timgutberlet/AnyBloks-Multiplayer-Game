@@ -179,7 +179,8 @@ public class LocalLobbyUiController extends AbstractUiController {
       e.printStackTrace();
     }
 
-    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.AI_EASY);
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.HOST_PLAYER);
+
     this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();

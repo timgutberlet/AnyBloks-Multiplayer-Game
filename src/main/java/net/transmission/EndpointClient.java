@@ -7,6 +7,7 @@ import game.controller.HostLobbyUiController;
 import game.controller.JoinAuthController;
 import game.controller.JoinLobbyUiController;
 import game.controller.LocalLobbyUiController;
+import game.controller.TutorialUiController;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.player.Player;
@@ -51,6 +52,19 @@ public class EndpointClient {
   }
 
 	public EndpointClient(LocalLobbyUiController localLobbyUiController, Player player) {
+		super();
+		this.player = player;
+		this.gameSession = new GameSession(player);
+		Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
+		this.gameSession.setLocalPlayer(player);
+		this.player.setGameSession(this.gameSession);
+		this.clientHandler = new ClientHandler(this);
+		Debug.printMessage(this, "EndpointClient created from GUI 1");
+		this.clientHandler.initLocalGame(player);
+
+		Debug.printMessage(this, "EndpointClient created from GUI 2");
+	}
+	public EndpointClient(TutorialUiController localLobbyUiController, Player player) {
 		super();
 		this.player = player;
 		this.gameSession = new GameSession(player);

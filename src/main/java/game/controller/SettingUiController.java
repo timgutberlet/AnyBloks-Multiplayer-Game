@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -21,7 +22,11 @@ import javafx.scene.layout.AnchorPane;
  * @author tgutberl
  */
 public class SettingUiController extends AbstractUiController {
-
+  /**
+   * Button to set Music on
+   */
+  @FXML
+  Button music;
   /**
    * Gamecontroller used in Application.
    */
@@ -147,6 +152,16 @@ public class SettingUiController extends AbstractUiController {
     loadSettings();
     themeBox.setValue(Config.getStringValue("THEME"));
     save("Successfully Resettet");
+  }
+  @FXML
+  private void musicPush(){
+    if(Config.getStringValue("MUSIC").equals("ON")){
+      music.setText("START MUSIC");
+      Config.set("MUSIC", "OFF");
+    }else{
+      music.setText("STOP MUSIC");
+      Config.set("MUSIC", "ON");
+    }
   }
 
   /**

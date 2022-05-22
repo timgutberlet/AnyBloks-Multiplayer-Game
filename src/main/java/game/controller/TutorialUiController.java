@@ -1,34 +1,201 @@
 package game.controller;
 
 import engine.controller.AbstractGameController;
+import engine.controller.AbstractUiController;
+import engine.handler.ErrorMessageHandler;
+import game.config.Config;
+import game.model.Debug;
 import game.model.GameSession;
+import game.model.gamemodes.GMClassic;
+import game.model.gamemodes.GMDuo;
+import game.model.gamemodes.GMJunior;
+import game.model.gamemodes.GMTrigon;
+import game.model.gamemodes.GameMode;
+import game.model.player.Player;
+import game.model.player.PlayerType;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import net.server.ClientHandler;
+import net.server.HostServer;
+import net.tests.NoLogging;
+import net.transmission.EndpointClient;
 
 /**
- * Controller for controlling the tutorial.
+ * Controller used to let the user start a local Game and set all AIs.
  *
  * @author tgutberl
  */
-public class TutorialUiController extends InGameUiController {
+public class TutorialUiController extends AbstractUiController {
 
   /**
-   * Arraylist containing the Instructions.
+   * Gamecontroller used in Application.
    */
-  private final ArrayList<String> hints;
+  private final AbstractGameController gameController;
   /**
-   * Number of turn that got played.
+   * Gamesession for setting players.
    */
-  private int turn;
+  private final GameSession gameSession;
+  /**
+   * Main Anchorpane used for resizing.
+   */
+  @FXML
+  AnchorPane mainPane;
+  /**
+   * Gamemode list.
+   */
+  private final LinkedList<GameMode> gameModes = new LinkedList<>();
+  /**
+   * Endpoint for server-client communication.
+   */
+  private final EndpointClient client;
+  /**
+   * Clienthandler for input to Server.
+   */
+  private final ClientHandler clientHandler;
 
   /**
-   * Constructor.
+   * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.
    *
-   * @param gameController gamecontroler
-   * @param gameSession    gamesession
+   * @param gameController Gamecontroller Object currently used
+   * @author tgutberl
    */
-  public TutorialUiController(AbstractGameController gameController,
-      GameSession gameSession) {
-    super(gameController, gameSession.getGame(), gameSession);
-    hints = new ArrayList<>();
+  public TutorialUiController(AbstractGameController gameController) {
+    super(gameController);
+    this.gameController = gameController;
+    this.init(super.root);
+
+    HostServer hostServer = new HostServer();
+    try {
+      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      hostServer.startWebsocket(8081);
+      Debug.printMessage("[testChatServer] Server is running");
+      //TimeUnit.SECONDS.sleep(3);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.HOST_PLAYER);
+    this.client = new EndpointClient(this, player);
+
+    this.gameSession = client.getGameSession();
+    this.gameSession.setLocalPlayer(player);
+
+    this.clientHandler = client.getClientHandler();
+    gameSession.setClientHandler(this.clientHandler);
+
+    this.gameSession.setDefaultAI(PlayerType.AI_EASY);
+
+    List<String> gameModes = new ArrayList<>();
+
+    this.gameModes.add(new GMDuo());
+
+    this.gameSession.setGameList(this.gameModes);
+
+    this.clientHandler.startLocalGame(this.gameModes);
+
+    try {
+      TimeUnit.SECONDS.sleep(3);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Initalizing UI.
+   *
+   * @param root Root parameter
+   * @author tgutberl
+   */
+  public void init(Group root) {
+    try {
+      FXMLLoader loader = new FXMLLoader();
+      loader.setLocation(getClass().getResource("/TutorialView.fxml"));
+      loader.setControllerFactory(e -> this);
+      root.getChildren().add(loader.load());
+      updateSize(mainPane, gameController.getStage());
+      //Sets the Theme, according to the settings
+      switch (Config.getStringValue("THEME")) {
+        case "BRIGHT":
+          mainPane.setStyle("-fx-background-color:#ffffff;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
+          break;
+        case "DARK":
+          mainPane.setStyle("-fx-background-color: #383837;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleDarkTheme.css").toExternalForm());
+          break;
+        case "INTEGRA":
+          mainPane.setStyle("-fx-background-color: #ffffff;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
+          break;
+        case "THINC!":
+          mainPane.setStyle("-fx-background-color: #D8EFFF;");
+          mainPane.getStylesheets()
+              .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          break;
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+
+  @FXML
+  public void initialize() {
+  }
+
+  /**
+   * override Exit Method
+   */
+  @Override
+  public void onExit() {
+
+  }
+
+  /**
+   * Update Method used for starting game when server messages
+   *
+   * @param gameController
+   * @param deltaTime
+   * @author tgutberl
+   */
+  @Override
+  public void update(AbstractGameController gameController, double deltaTime) {
+
+    if (this.gameSession.isGameStarted() && this.gameSession.isLocalPlayerTurn()) {
+      gameController.setActiveUiController(
+          new TutorialGameUiController(gameController, this.gameSession.getGame(), gameSession));
+    } else {
+      Debug.printMessage(this, "GameSession Controller " + this.gameSession);
+    }
+
+  }
+
+  /**
+   * Override Update Method
+   *
+   * @param gameController GameController of game
+   */
+  @Override
+  public void update(AbstractGameController gameController) {
+
   }
 }
