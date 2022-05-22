@@ -291,11 +291,28 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Override for onExit Method.
+   * Method to get Quit Menu - to End the Program.
+   *
+   * @author tgutberl
+   */
+  @FXML
+  public void close() {
+    onExit();
+  }
+
+  /**
+   * Method for override onExit.
+   *
+   * @author tgutberl
    */
   @Override
   public void onExit() {
-
+    try {
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.exit(0);
   }
 
   /**

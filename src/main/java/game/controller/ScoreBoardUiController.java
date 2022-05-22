@@ -251,7 +251,13 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @Override
   public void onExit() {
-
+    try {
+      this.gameSession.stopSession();
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.exit(0);
   }
 }
 

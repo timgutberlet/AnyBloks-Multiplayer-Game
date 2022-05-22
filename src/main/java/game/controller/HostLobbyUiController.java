@@ -328,6 +328,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void back() {
+    gameSession.stopSession();
     gameController.setActiveUiController(new PlayUiController(gameController));
   }
 

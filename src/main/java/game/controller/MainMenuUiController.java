@@ -125,11 +125,7 @@ public class MainMenuUiController extends AbstractUiController {
    */
   @FXML
   public void close() {
-    try {
-      gameController.getApplication().stop();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    onExit();
   }
 
   /**
@@ -139,7 +135,12 @@ public class MainMenuUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-
+    try {
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.exit(0);
   }
 
   /**

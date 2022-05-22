@@ -24,11 +24,16 @@
                   <Font size="25.0" />
                 </font>
               </Button>
-              <Button mnemonicParsing="false" onAction="#reset" prefHeight="60.0" prefWidth="150.0" text="RESET" GridPane.columnIndex="2">
+              <Button mnemonicParsing="false" onAction="#reset" prefHeight="60.0" prefWidth="150.0" text="RESET" GridPane.columnIndex="1">
                 <font>
                   <Font size="25.0" />
                 </font>
               </Button>
+                     <Button mnemonicParsing="false" onAction="#close" prefHeight="60.0" prefWidth="150.0" text="RESET" GridPane.columnIndex="2">
+                        <font>
+                           <Font size="25.0" />
+                        </font>
+                     </Button>
             </children>
             <columnConstraints>
               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />

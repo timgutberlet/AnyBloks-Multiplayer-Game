@@ -174,13 +174,29 @@ public class JoinLobbyUiController extends AbstractUiController {
   }
 
   /**
+   * Method to get Quit Menu - to End the Program.
+   *
+   * @author tgutberl
+   */
+  @FXML
+  public void close() {
+    onExit();
+  }
+
+  /**
    * Override onExit .
    *
    * @author tgutberl
    */
   @Override
   public void onExit() {
-
+    try {
+      this.gameSession.stopSession();
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.exit(0);
   }
 
   /**

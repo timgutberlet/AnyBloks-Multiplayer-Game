@@ -241,6 +241,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void back() {
+    this.gameSession.stopSession();
     gameController.setActiveUiController(new PlayUiController(gameController));
   }
 
@@ -568,11 +569,29 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * override Exit Method
+   * Method to get Quit Menu - to End the Program.
+   *
+   * @author tgutberl
+   */
+  @FXML
+  public void close() {
+    onExit();
+  }
+
+  /**
+   * Override onExit Method
+   *
+   * @author tgutberl
    */
   @Override
   public void onExit() {
-
+    try {
+      this.gameSession.stopSession();
+      gameController.getApplication().stop();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    System.exit(0);
   }
 
   /**
