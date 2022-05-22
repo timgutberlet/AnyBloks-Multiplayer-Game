@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -71,7 +72,7 @@ public class GameSession {
   private GameScoreBoard gameScoreBoard;
   private GameSessionScoreBoard gameSessionScoreBoard;
   private Boolean gotKicked = false;
-
+  private Boolean hostQuit = false;
 
 
   /**
@@ -200,21 +201,38 @@ public class GameSession {
     System.out.println("Needed players: " + gameMode.getNeededPlayers());
     System.out.println("Current player size: " + this.getPlayerList().size());
     int numPlayersToAdd = gameMode.getNeededPlayers() - this.getPlayerList().size();
-    System.out.println("Players to be added:" + numPlayersToAdd);
-    for (int i = 0; i < numPlayersToAdd; i++) {
-      System.out.println("Adding player :" + (this.getPlayerList().size() + 1));
-      if (this.aiPlayers != null) {
-        if (this.aiPlayers.size() > 0) {
-          this.addBot(this.aiPlayers.pop());
+
+    if (numPlayersToAdd > 0) {
+      System.out.println("Players to be added:" + numPlayersToAdd);
+      for (int i = 0; i < numPlayersToAdd; i++) {
+        System.out.println("Adding player :" + (this.getPlayerList().size() + 1));
+        if (this.aiPlayers != null) {
+          if (this.aiPlayers.size() > 0) {
+            this.addBot(this.aiPlayers.pop());
+          } else {
+            this.addBot(this.defaultAI);
+          }
         } else {
           this.addBot(this.defaultAI);
         }
-      } else {
-        this.addBot(this.defaultAI);
+      }
+    } else {
+      //In this case there are too many players, so some need to be kicked
+      int playerToRemove = (-1) * numPlayersToAdd;
+      System.out.println("Players to be removed:" + playerToRemove);
+      for (int i = 0; i < playerToRemove; i++) {
+
+        String username = this.getPlayerList().get(playerList.size() - 1).getUsername();
+        this.getInboundServerHandler().getServer().dropUser(username);
+        try {
+          TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
       }
     }
 
-    Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
+      Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
 
     try {
       Debug.printMessage(this, "Waiting for clients to establish connection");
@@ -760,6 +778,24 @@ public class GameSession {
    */
   public Boolean getGotKicked() {
     return gotKicked;
+  }
+
+  /**
+   * Getter.
+   *
+   * @param hostQuit Boolean
+   */
+  public void setHostQuit(Boolean hostQuit){
+    this.hostQuit = hostQuit;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return Boolean
+   */
+  public Boolean getHostQuit() {
+    return hostQuit;
   }
 
   /**

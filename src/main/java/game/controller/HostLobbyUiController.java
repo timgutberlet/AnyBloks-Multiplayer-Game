@@ -299,7 +299,7 @@ public class HostLobbyUiController extends AbstractUiController {
     //Kicking a remote Player
     Player playerToKick = gameSession.getPlayerList().get(1);
     //Kick player out of username2Session
-    gameSession.getInboundServerHandler().getServer();
+    gameSession.getInboundServerHandler().getServer().dropUser(playerToKick.getUsername());
   }
 
   /**

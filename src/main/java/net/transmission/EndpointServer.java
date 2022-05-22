@@ -3,6 +3,7 @@ package net.transmission;
 
 import game.model.Debug;
 import game.model.GameSession;
+import game.model.player.Player;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -250,6 +251,35 @@ public class EndpointServer {
 
   public HashMap<String, Session> getUsername2Session() {
     return username2Session;
+  }
+
+  /**
+   * Remove player from gameSession.
+   *
+   * @param username String
+   */
+  public void dropUser(String username){
+    System.out.println("The user: " + username + " has been kicked");
+    Player playertoKick = null;
+    for(Player p : gameSession.getPlayerList()){
+      if(p.getUsername().equals(username)){
+        playertoKick = p;
+      }
+    }
+
+    gameSession.getPlayerList().remove(playertoKick);
+
+    Session sesToKick = username2Session.get(username);
+    username2Session.remove(username);
+
+    try{
+      sesToKick.setMaxIdleTimeout(1);
+    } catch (Exception e){
+      Debug.printMessage("A users session has been terminated");
+      System.out.println("A users session has been terminated");
+      e.printStackTrace();
+    }
+
   }
 
   @OnError
