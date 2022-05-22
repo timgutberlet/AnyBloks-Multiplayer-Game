@@ -251,7 +251,7 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @Override
   public void onExit() {
-
+    System.exit(0);
   }
 }
 

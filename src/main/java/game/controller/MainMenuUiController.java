@@ -152,7 +152,7 @@ public class MainMenuUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-
+    System.exit(0);
   }
 
   /**

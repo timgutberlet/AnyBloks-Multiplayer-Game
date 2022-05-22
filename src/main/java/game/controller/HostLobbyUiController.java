@@ -548,7 +548,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-
+    System.exit(0);
   }
 
   /**

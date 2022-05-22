@@ -211,6 +211,7 @@ public class CreateAccountController extends AbstractUiController {
    */
   @Override
   public void onExit() {
+    System.exit(0);
   }
 
   /**

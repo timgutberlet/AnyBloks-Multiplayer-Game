@@ -143,7 +143,7 @@ public class PlayUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
-
+    System.exit(0);
   }
 
   /**
