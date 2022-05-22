@@ -424,7 +424,12 @@ public class HostLobbyUiController extends AbstractUiController {
         playerName2.setText(this.gameSession.getPlayerList().get(2).getUsername());
         playerName3.setText(this.gameSession.getPlayerList().get(3).getUsername());
       }
+    } else {
+      this.gameModes.clear();
+      playButton.setText("Play");
+      playButton.setDisable(false);
     }
+
   }
 
   /**
