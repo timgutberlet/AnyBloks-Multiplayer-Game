@@ -52,7 +52,7 @@
                       <children>
                         <HBox alignment="CENTER" prefHeight="57.0" prefWidth="381.0" spacing="50.0" GridPane.rowIndex="2">
                           <children>
-                            <Label fx:id="difficultyPlayer1" text="-">
+                            <Label fx:id="remotePlayer1" text="-">
                               <font>
                                 <Font size="20.0" />
                               </font>
@@ -61,7 +61,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="3">
                           <children>
-                            <Label fx:id="difficultyPlayer2" text="-">
+                            <Label fx:id="remotePlayer2" text="-">
                               <font>
                                 <Font size="20.0" />
                               </font>
@@ -70,7 +70,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="4">
                           <children>
-                            <Label fx:id="difficultyPlayer3" text="-">
+                            <Label fx:id="remotePlayer3" text="-">
                               <font>
                                 <Font size="20.0" />
                               </font>
