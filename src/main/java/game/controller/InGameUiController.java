@@ -542,6 +542,16 @@ public abstract class InGameUiController extends AbstractUiController {
       //Check if Player has Turn
       //Debug.printMessage(this, this.localPlayer.getUsername() + " " + this.localPlayer);
       if (this.gameSession.isLocalPlayerTurn()) {
+        help = "";
+        for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
+          if (!alreadyInChat.contains(chatMessage.getTime() + " "
+              + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")) {
+            alreadyInChat.add(chatMessage.getTime() + " "
+                + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
+            help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
+                + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
+          }
+        }
         //hintLabel1.setText("Erkannt");
         //Debug.printMessage(this, "GUI ready for input");
         boolean action = false;

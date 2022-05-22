@@ -6,11 +6,13 @@ import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.chat.ChatMessage;
+import game.model.player.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -24,7 +26,26 @@ import javafx.scene.layout.AnchorPane;
  */
 
 public class JoinLobbyUiController extends AbstractUiController {
-
+  /**
+   * Name of Host Player
+   */
+  @FXML
+  private Label hostPlayerName;
+  /**
+   * Name of Remote Player one
+   */
+  @FXML
+  private Label remotePlayer1;
+  /**
+   * Name of Remote Player two
+   */
+  @FXML
+  private Label remotePlayer2;
+  /**
+   * Name of Remote Player three
+   */
+  @FXML
+  private Label remotePlayer3;
   /**
    * Gamecontroller method used in application.
    */
@@ -171,6 +192,31 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+
+    if(this.gameSession.getPlayerList().size() == 1){
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername());
+      remotePlayer1.setText(" - ");
+      remotePlayer2.setText(" - ");
+      remotePlayer3.setText(" - ");
+    }
+    if (this.gameSession.getPlayerList().size() == 2) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername());
+      remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+      remotePlayer2.setText(" - ");
+      remotePlayer3.setText(" - ");
+    }
+    if (this.gameSession.getPlayerList().size() == 3) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername());
+      remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+      remotePlayer2.setText(this.gameSession.getPlayerList().get(2).getUsername());
+      remotePlayer3.setText(" - ");
+    }
+    if (this.gameSession.getPlayerList().size() == 4) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername());
+      remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+      remotePlayer2.setText(this.gameSession.getPlayerList().get(2).getUsername());
+      remotePlayer3.setText(this.gameSession.getPlayerList().get(3).getUsername());
+    }
 
     if(gameSession.getGotKicked()){
       gameController.setActiveUiController(new KickInfoUiController(gameController));

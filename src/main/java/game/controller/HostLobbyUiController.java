@@ -70,15 +70,15 @@ public class HostLobbyUiController extends AbstractUiController {
   /**
    * cool Ai Player names.
    */
-  private final String nameAiPlayer1 = "AlphaGo";
+  private final String nameAiPlayer1 = Config.getStringValue("AIPLAYER1");
   /**
    * cool Ai Player names.
    */
-  private final String nameAiPlayer2 = "DeepMind";
+  private final String nameAiPlayer2 = Config.getStringValue("AIPLAYER2");
   /**
    * cool Ai Player names.
    */
-  private final String nameAiPlayer3 = "Stockfish";
+  private final String nameAiPlayer3 = Config.getStringValue("AIPLAYER3");
   /**
    * Gamesession variable used for server communication.
    */
