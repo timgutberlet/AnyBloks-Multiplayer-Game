@@ -524,10 +524,6 @@ public abstract class InGameUiController extends AbstractUiController {
     //Check if AI is calculating - only refresh Board then
     if (aiCalcRunning) {
       skipTurnButton.setVisible(false);
-      if (!game.getGameState().playsTurn()) {
-        Debug.printMessage(this, "" + game.getGameState().playsTurn());
-        refreshUi();
-      }
     } else {
       if (this.game == null) {
         Debug.printMessage(this, "Game is null");
