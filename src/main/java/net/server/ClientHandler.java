@@ -10,6 +10,7 @@ import game.model.Turn;
 import game.model.chat.Chat;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
+import game.model.player.PlayerType;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URI;
@@ -262,9 +263,20 @@ public class ClientHandler {
     gameSession.setGameOver(true);
     gameSession.setGameScoreBoard(gameWinPacket.getGameScoreBoard());
     gameSession.setGameSessionScoreBoard(gameWinPacket.getGameSessionScoreBoard());
-    getAfterMatchAIComment(this.gameSession);
-    //TODO check UI change
+    //getAfterMatchAIComment(this.gameSession);
   }
+
+  /**
+   * Called if a HostQuitPacket is received. Sends the player back to the lobby.
+   * TODOKICK: resets the local gameSession? is LocalPlayer relevant here?
+   */
+  public void handleHostQuit(){
+    if(!player.getType().equals(PlayerType.HOST_PLAYER)){
+      this.gameSession.setHostQuit(true);
+    }
+  }
+
+
 
   /**
    * save a ChatMessage in the chat.

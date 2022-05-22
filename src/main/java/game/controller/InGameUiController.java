@@ -13,6 +13,7 @@ import game.model.GameSession;
 import game.model.Turn;
 import game.model.chat.ChatMessage;
 import game.model.player.Player;
+import game.model.player.PlayerType;
 import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
 import game.view.DragablePolyPane;
@@ -429,6 +430,9 @@ public abstract class InGameUiController extends AbstractUiController {
 
   private void handleQuitButtonClicked() {
     gameEnd();
+    if(this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)){
+      this.gameSession.getOutboundServerHandler().broadcastHostQuit();
+    }
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
@@ -727,6 +731,13 @@ public abstract class InGameUiController extends AbstractUiController {
     if(gameSession.getGotKicked()){
       System.out.println("GETTING KICKED");
       gameController.setActiveUiController(new KickInfoUiController(gameController));
+    }
+
+    //Check if the host left, is so, return to the lobby
+    if(gameSession.getHostQuit()){
+      System.out.println("The host left -> return to Lobby");
+      //TODOKICK: can we send the player back to the lobby they joined?
+      gameController.setActiveUiController(new JoinLobbyUiController(gameController, gameSession));
     }
 
   }

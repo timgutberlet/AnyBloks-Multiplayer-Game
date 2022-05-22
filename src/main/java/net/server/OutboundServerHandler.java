@@ -5,6 +5,8 @@ import static game.scores.ScoreProvider.getGameSessionScoreBoard;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.GameState;
+import game.model.player.Player;
+import game.model.player.PlayerType;
 import game.scores.GameScoreBoard;
 import game.scores.GameSessionScoreBoard;
 import java.io.IOException;
@@ -19,6 +21,7 @@ import net.packet.account.CreateAccountResponsePacket;
 import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
+import net.packet.game.HostQuitPacket;
 import net.packet.game.RequestTurnPacket;
 import net.transmission.EndpointServer;
 
@@ -133,6 +136,29 @@ public class OutboundServerHandler {
   }
 
   /**
+   * inform all players, but the host, that the host has left, players should return to the lobby.
+   */
+  public void broadcastHostQuit() {
+    //TODOKICK: does this work for localGames?
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.HOST_QUIT_PACKET,
+        new HostQuitPacket());
+    for (Player p : this.gameSession.getPlayerList()) {
+      //Only send the packet to AIs / remotePlayers
+      if (!p.getType().equals(PlayerType.HOST_PLAYER)) {
+        try {
+          //Send the packet to the players via the existing connection
+          this.server.getUsername2Session().get(p.getUsername()).getBasicRemote()
+              .sendObject(wrappedPacket);
+        } catch (IOException e) {
+          e.printStackTrace();
+        } catch (EncodeException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+  }
+
+  /**
    * broadcast GAME_WIN_PACKET to all clients. save the gameScore, and if a gameSession ends,
    * connect all gameScores to it.
    *
@@ -149,7 +175,7 @@ public class OutboundServerHandler {
     HashMap<String, Integer> scoreboard = new HashMap<>();
     System.out.println("Num Players:" + gameState.getPlayerList().size());
     System.out.println("Num length score" + gameState.getScores().length);
-    for(int i = 0; i < gameState.getPlayerList().size(); i++){
+    for (int i = 0; i < gameState.getPlayerList().size(); i++) {
       System.out.println("Number: " + i);
       System.out.println("username: " + gameState.getPlayerList().get(i).getUsername());
       System.out.println("Score:" + gameState.getScores()[i]);
@@ -165,7 +191,7 @@ public class OutboundServerHandler {
       //Add the scores of the different players
       for (String username : scoreboard.keySet()) {
 
-        System.out.println("Inserting score: " + gameId + username+  scoreboard.get(username));
+        System.out.println("Inserting score: " + gameId + username + scoreboard.get(username));
         dbServer.insertScore(gameId, username, scoreboard.get(username));
       }
     } catch (Exception e) {

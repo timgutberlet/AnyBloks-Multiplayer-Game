@@ -169,6 +169,10 @@ public class EndpointClient {
         this.clientHandler.endGame(packet);
         break;
 
+			case HOST_QUIT_PACKET:
+				this.clientHandler.handleHostQuit();
+				break;
+
       case ILLEGAL_TURN_PACKET:
         this.clientHandler.makeTurn(packet);
         break;
