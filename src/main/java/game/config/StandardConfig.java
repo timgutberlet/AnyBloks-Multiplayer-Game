@@ -19,6 +19,9 @@ public class StandardConfig {
       {"SCREEN_MINIMUM_HEIGHT", "720"},
       {"THEME", "DARK"},
       {"HOSTPLAYER", "HOST"},
+      {"AIPLAYER1", "AlphaGo 2.0"},
+      {"AIPLAYER2", "DeepMind 2.0"},
+      {"AIPLAYER3", "Stockfish 2.0"},
   };
 
   /**

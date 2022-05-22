@@ -51,15 +51,15 @@ public class LocalLobbyUiController extends AbstractUiController {
   /**
    * Cool AI name.
    */
-  private final String nameAiPlayer1 = "AlphaGo";
+  private final String nameAiPlayer1 = Config.getStringValue("AIPLAYER1");
   /**
    * Cool AI name.
    */
-  private final String nameAiPlayer2 = "DeepMind";
+  private final String nameAiPlayer2 = Config.getStringValue("AIPLAYER2");
   /**
    * Cool AI name.
    */
-  private final String nameAiPlayer3 = "Stockfish";
+  private final String nameAiPlayer3 = Config.getStringValue("AIPLAYER3");
   /**
    * Gamesession for setting players.
    */
