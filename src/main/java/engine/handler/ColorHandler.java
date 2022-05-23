@@ -8,6 +8,7 @@ import game.model.Color;
 public class ColorHandler {
   public static boolean darkMode = false;
   public static boolean whiteMode = false;
+
   /**
    * Method that converts game.model.Color objects  to javafx.scene.paint.Color objects
    *
@@ -55,6 +56,14 @@ public class ColorHandler {
         default:
           return javafx.scene.paint.Color.TRANSPARENT;
       }
+    }
+  }
+
+  public static javafx.scene.paint.Color getBoardStrokeColor() {
+    if (darkMode) {
+      return javafx.scene.paint.Color.WHITE;
+    } else {
+      return javafx.scene.paint.Color.BLACK;
     }
   }
 }

@@ -39,6 +39,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
@@ -105,6 +107,12 @@ public class HostLobbyUiController extends AbstractUiController {
    * gamemodes that were chosen.
    */
   private final LinkedList<GameMode> gameModes = new LinkedList<>();
+
+  /**
+   * Rectangle used to disable Ui
+   */
+  private Rectangle disableUi;
+
   /**
    * Button to play the game
    */
@@ -357,6 +365,12 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void playGame() {
+
+    disableUi = new Rectangle(gameController.getStage().getWidth(),
+        gameController.getStage().getHeight());
+    disableUi.setFill(Color.TRANSPARENT);
+    root.getChildren().add(disableUi);
+
     playButton.setText("Waiting for game to start");
     playButton.setDisable(true);
     ArrayList<Player> players = this.gameSession.getPlayerList();
@@ -439,6 +453,7 @@ public class HostLobbyUiController extends AbstractUiController {
         playerName3.setText(this.gameSession.getPlayerList().get(3).getUsername());
       }
     } else {
+      root.getChildren().remove(disableUi);
       this.gameModes.clear();
       playButton.setText("Play");
       playButton.setDisable(false);

@@ -59,7 +59,7 @@ public class SquareBoardPane extends BoardPane {
         size + j * size, size + i * size,
         0 + j * size, size + i * size);
     field.setFill(color);
-    field.setStroke(Color.BLACK);
+    field.setStroke(ColorHandler.getBoardStrokeColor());
 
     fields.add(field);
     this.getChildren().add(field);

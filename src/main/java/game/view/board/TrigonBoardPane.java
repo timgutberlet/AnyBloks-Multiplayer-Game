@@ -77,7 +77,7 @@ public class TrigonBoardPane extends BoardPane {
         size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet, // top vertex
         xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet); // left vertex
     triangleRight.setFill(color);
-    triangleRight.setStroke(Color.BLACK);
+    triangleRight.setStroke(ColorHandler.getBoardStrokeColor());
     this.getChildren().add(triangleRight);
     inputHandler.registerField(triangleRight);
   }
@@ -118,7 +118,7 @@ public class TrigonBoardPane extends BoardPane {
         size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet, // right vertex
         0.0 + j * size + i * xOfSet - shift, 0.0 + i * yOfSet);  // left vertex
     triangleLeft.setFill(color);
-    triangleLeft.setStroke(Color.BLACK);
+    triangleLeft.setStroke(ColorHandler.getBoardStrokeColor());
     this.getChildren().add(triangleLeft);
     inputHandler.registerField(triangleLeft);
   }

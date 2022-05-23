@@ -30,6 +30,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import net.server.ClientHandler;
 import net.server.HostServer;
@@ -64,6 +66,12 @@ public class LocalLobbyUiController extends AbstractUiController {
    * Gamesession for setting players.
    */
   private final GameSession gameSession;
+
+  /**
+   * Rectangle used to disable Ui
+   */
+  private Rectangle disableUi;
+
   /**
    * Button to start Game
    */
@@ -252,8 +260,15 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void playGame() {
+
+    disableUi = new Rectangle(gameController.getStage().getWidth(),
+        gameController.getStage().getHeight());
+    disableUi.setFill(Color.TRANSPARENT);
+    root.getChildren().add(disableUi);
+
     playButton.setText("Waiting for game to start!");
     playButton.setDisable(true);
+
     this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
     boolean error = false;
 
@@ -373,6 +388,7 @@ public class LocalLobbyUiController extends AbstractUiController {
         }
       }
     } else {
+      root.getChildren().remove(disableUi);
       aiPlayers.clear();
       this.gameModes.clear();
       gameSession.clearAiPlayers();
