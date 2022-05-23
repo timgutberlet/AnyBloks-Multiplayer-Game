@@ -85,11 +85,14 @@ public class ScoreBoardUiController extends AbstractUiController {
   private Text pointsThird;
 
   @FXML
-  private Text nameFourth;
+  private Label nameFourth;
+
+  @FXML
+  private Label pointsFourth;
+
   @FXML
   private Label hostWaiting;
-  @FXML
-  private Text pointsFourth;
+
   @FXML
   private HBox buttonBox;
 

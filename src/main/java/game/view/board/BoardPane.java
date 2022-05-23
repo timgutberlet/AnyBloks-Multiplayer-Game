@@ -120,7 +120,7 @@ public class BoardPane extends Pane {
   /**
    * Method that returns all field Elements of the Board.
    *
-   * @return  Returnfs the field elements
+   * @return Returns the field elements
    * @author tgutberl
    */
   public List<Field> getFields() {

@@ -923,6 +923,31 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   public void repaintBoardPane() {
+    if (possibleFields != null) {
+      for (int[] coords : possibleFields) {
+        switch (dragablePolyPane.getPoly().getColor().toString()) {
+          case "RED":
+            color = Color.RED;
+            break;
+          case "BLUE":
+            color = Color.BLUE;
+            break;
+          case "GREEN":
+            color = Color.GREEN;
+            break;
+          case "YELLOW":
+            color = Color.YELLOW;
+            break;
+          default:
+            color = Color.BLACK;
+        }
+        if (game.getGamemode().getName().equals("TRIGON")) {
+          boardPane.setCheckFieldColor(color, coords[0], coords[1], coords[2]);
+        } else {
+          boardPane.setCheckFieldColor(color, coords[0], coords[1]);
+        }
+      }
+    }
     this.boardPane.repaint(game.getGameState().getBoard());
   }
 

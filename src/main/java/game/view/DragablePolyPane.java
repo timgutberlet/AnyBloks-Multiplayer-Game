@@ -82,7 +82,7 @@ public class DragablePolyPane extends Pane {
 
   public void buttons() {
     mirror = new Button("M");
-    mirror.setPrefWidth(size +3);
+    mirror.setPrefWidth(size + 3);
     mirror.setPrefHeight(size);
     rotateRight = new Button("R");
     rotateRight.setPrefWidth(size);
@@ -96,20 +96,20 @@ public class DragablePolyPane extends Pane {
 
     mirror.setOnMouseClicked(e -> {
       polyPane.getPoly().mirror();
-      inGameUiController.repaintBoardPane();
       inGameUiController.paintPossibleFields(this);
+      inGameUiController.repaintBoardPane();
       rerender();
     });
     rotateRight.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateRight();
-      inGameUiController.repaintBoardPane();
       inGameUiController.paintPossibleFields(this);
+      inGameUiController.repaintBoardPane();
       rerender();
     });
     rotateLeft.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateLeft();
-      inGameUiController.repaintBoardPane();
       inGameUiController.paintPossibleFields(this);
+      inGameUiController.repaintBoardPane();
       rerender();
     });
     submit.setOnMouseClicked(e -> {
