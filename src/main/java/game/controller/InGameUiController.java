@@ -132,6 +132,9 @@ public abstract class InGameUiController extends AbstractUiController {
    * Text that should be written into the Label each frame
    */
   private String errorLabelText = "";
+
+  private VBox boardBox;
+
   private Player localPlayer;
   private ArrayList<int[]> possibleFields;
   private Boolean submitRequested;
@@ -204,13 +207,15 @@ public abstract class InGameUiController extends AbstractUiController {
       default:
         break;
     }
-    boardPane.setPadding(new Insets(15, 15, 15, 15));
     errorLabel = new Label("This is the Error Label");
     errorLabel.setPrefHeight(20);
     errorLabel.setPrefWidth(350);
     errorLabel.setFont(Font.font("System", 15));
     boardPane.getChildren().add(errorLabel);
-    content.getChildren().add(boardPane);
+    boardBox = new VBox();
+    boardBox.setPadding(new Insets(0, 0, 0, 10));
+    boardBox.getChildren().add(boardPane);
+    content.getChildren().add(boardBox);
   }
 
   /**
