@@ -198,6 +198,9 @@ public class GameSession {
 
     //System.out.println("DAS GAME WIRD HIER GESTARTET");
 
+    if(this.defaultAI == null){
+      this.defaultAI = PlayerType.AI_MIDDLE;
+    }
     //while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
     GameMode gameMode = this.gameList.pop();
     System.out.println("Needed players: " + gameMode.getNeededPlayers());
@@ -848,6 +851,8 @@ public class GameSession {
   public ClientHandler getClientHandler(){
     return  clientHandler;
   }
+
+
 
   /**
    * function that helps to output the most relevant information of a session.
