@@ -20,6 +20,15 @@ public class LoginResponsePacket extends Packet {
    */
   public LoginResponsePacket(String errorMessage) {
     this.errorMessage = errorMessage;
+    this.loginStatus = "";
+  }
+
+  /**
+   * Default Constructor for Jackson.
+   */
+  public LoginResponsePacket() {
+    this.loginStatus = "";
+    this.errorMessage = "";
   }
 
   /**

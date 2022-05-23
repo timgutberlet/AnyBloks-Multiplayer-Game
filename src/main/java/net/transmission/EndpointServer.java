@@ -1,14 +1,22 @@
 package net.transmission;
 
 
+import static game.model.GameSession.currentGameIds;
+
 import game.model.Debug;
 import game.model.GameSession;
+import game.model.chat.Chat;
 import game.model.player.Player;
+import game.model.player.PlayerType;
+import game.scores.GameScoreBoard;
+import game.scores.GameSessionScoreBoard;
 import java.io.IOException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import javax.websocket.EncodeException;
@@ -59,6 +67,22 @@ public class EndpointServer {
     username2Session.clear();
     sessions.clear();
     gameSession = new GameSession();
+
+    //Manually resetting the gameSession,
+    //to avoid getting old date due to garbage collector being too slow
+    gameSession.getPlayerList().clear();
+    GameSession.currentGameIds.clear();
+    gameSession.getScoreboard().clear();
+    gameSession.getGameSessionScoreboard().clear();
+    gameSession.setChat(new Chat());
+    //gameSession.setHostPlayer(null);
+    gameSession.setGameSessionScoreBoard(new GameSessionScoreBoard());
+    gameSession.setGameList(new LinkedList<>());
+    gameSession.setDefaultAI(PlayerType.AI_EASY);
+    //gameSession.setLocalPlayer(null);
+    gameSession.setAiPlayers(null);
+    gameSession.setGameScoreBoard(new GameScoreBoard());
+
     inboundServerHandler = new InboundServerHandler();
     outboundServerHandler = new OutboundServerHandler(this, gameSession);
   }
@@ -132,6 +156,7 @@ public class EndpointServer {
 
           if (gameSession == null) {
             gameSession = new GameSession();
+            gameSession.getPlayerList().clear();
           }
           if (this.inboundServerHandler == null) {
             this.inboundServerHandler = new InboundServerHandler(this, gameSession);

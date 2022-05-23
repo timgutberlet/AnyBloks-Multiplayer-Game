@@ -94,6 +94,7 @@ public class GameSession {
     this.chat.run();
 
     this.playerList = new ArrayList<>();
+    this.playerList.clear();
     this.hostPlayer = player;
     this.addPlayer(this.hostPlayer);
     this.localPlayer = this.hostPlayer;
@@ -857,6 +858,14 @@ public class GameSession {
   }
 
 
+  /**
+   * Set the hostPlayer to another player.
+   *
+   * @param player that replaces the old hostPlayer
+   */
+  public void setHostPlayer(Player player){
+    this.hostPlayer = player;
+  }
 
   /**
    * function that helps to output the most relevant information of a session.
