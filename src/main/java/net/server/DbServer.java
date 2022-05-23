@@ -180,8 +180,6 @@ public class DbServer extends AbstractDB {
   public synchronized boolean doesUserHaveAuthToken(String username) {
     boolean userHasToken = false;
 
-
-
     try {
       Statement getAuthToken = con.createStatement();
       ResultSet resultSet = getAuthToken.executeQuery(
@@ -243,7 +241,8 @@ public class DbServer extends AbstractDB {
     boolean authSucess = false;
 
     if (!(username.equals(Config.getStringValue("AIPLAYER1")) || username.equals(
-        Config.getStringValue("AIPLAYER2")) || username.equals(Config.getStringValue("AIPLAYER3")))) {
+        Config.getStringValue("AIPLAYER2")) || username.equals(
+        Config.getStringValue("AIPLAYER3")))) {
       if (doesUserHaveAuthToken(username)) {
 
         try {
@@ -522,7 +521,11 @@ public class DbServer extends AbstractDB {
     return passed;
   }
 
-
+  /**
+   * Returns the ID of the last inserted game.
+   *
+   * @return String
+   */
   public String getLastGameId() {
     String id = "";
     try {
@@ -539,4 +542,61 @@ public class DbServer extends AbstractDB {
     return id;
   }
 
+  /**
+   * return how many games are saved in the DB.
+   *
+   * @return int
+   */
+  public int getNumberOfLocalGames() {
+    ResultSet resultSet = null;
+    try {
+      Statement statement = con.createStatement();
+      resultSet = statement.executeQuery("SELECT COUNT(*) FROM games");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    int number = 0;
+    if (resultSet != null) {
+      try {
+        number = resultSet.getInt(0);
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    }
+    return number;
+  }
+
+  /**
+   * Function to provide a Hashmap of all players and the number of wins they have won locally.
+   *
+   * @return Hashmap of String, Integer
+   */
+  public HashMap<String, Integer> getGameWins() {
+    ResultSet resultSet = null;
+    try {
+      Statement statement = con.createStatement();
+      resultSet = statement.executeQuery("SELECT * from GAMES");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    int number = 0;
+    GameScoreBoard gameScoreBoard;
+    HashMap<String, Integer> topThreePlayers = new HashMap<>();
+    try {
+      while (resultSet.next()) {
+        String gameId = String.valueOf(resultSet.getRow());
+        gameScoreBoard = getGameScores(gameId);
+        String winnerUsername = gameScoreBoard.getWinner();
+        int wins =
+            topThreePlayers.get(winnerUsername) == null ? 0
+                : topThreePlayers.get(winnerUsername) + 1;
+        topThreePlayers.put(gameScoreBoard.getWinner(), wins);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    return topThreePlayers;
+
+
+  }
 }

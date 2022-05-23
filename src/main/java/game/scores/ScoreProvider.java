@@ -159,4 +159,23 @@ public class ScoreProvider {
     return analyzeGames(gameScoreBoards);
   }
 
+  /**
+   * This function gathers all the information about previously hosted games
+   *
+   * @return
+   */
+  public static LobbyScoreBoard getLobbyScoreBoard(){
+    DbServer dbServer = null;
+    try {
+      dbServer = DbServer.getInstance();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    int gamesPlayed = dbServer.getNumberOfLocalGames();
+    HashMap<String, Integer> playerWins = dbServer.getGameWins();
+
+    return new LobbyScoreBoard(gamesPlayed, playerWins);
+
+  }
+
 }
