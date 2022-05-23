@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.LongAccumulator;
 import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,10 +86,10 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @FXML
   private Text nameFourth;
-
+  @FXML
+  private Label hostWaiting;
   @FXML
   private Text pointsFourth;
-
   @FXML
   private HBox buttonBox;
 
@@ -106,6 +107,9 @@ public class ScoreBoardUiController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
+      if(this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)){
+        hostWaiting.setVisible(false);
+      }
       //Sets the Theme, according to the settings
       switch (Config.getStringValue("THEME")) {
         case "BRIGHT":

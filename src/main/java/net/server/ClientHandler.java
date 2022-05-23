@@ -120,7 +120,7 @@ public class ClientHandler {
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 
     try {
-      TimeUnit.MILLISECONDS.sleep(100);
+      TimeUnit.MILLISECONDS.sleep(200);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -133,7 +133,7 @@ public class ClientHandler {
 
       ses = container.connectToServer(this.client, URI.create("ws://" + IPAdress + ":8081/packet"));
       this.session = ses;
-      TimeUnit.MILLISECONDS.sleep(100);
+      TimeUnit.MILLISECONDS.sleep(150);
 
       //Sleep so updates can be made in DB
       try {

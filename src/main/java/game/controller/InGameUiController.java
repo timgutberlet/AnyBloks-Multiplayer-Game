@@ -571,7 +571,7 @@ public abstract class InGameUiController extends AbstractUiController {
     if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
       turn.setText("Your Turn");
     } else {
-      turn.setText(game.getGameState().getPlayerCurrent().getUsername() + " 's Turn");
+      turn.setText(this.gameSession.getGame().getGameState().getPlayerCurrent().getUsername() + " 's Turn");
     }
 
     stackPanes.clear();
@@ -617,7 +617,6 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
-
     if (!chatSelected) {
       root.requestFocus();
     }
@@ -647,6 +646,11 @@ public abstract class InGameUiController extends AbstractUiController {
         refreshUi();
       }
     } else {
+      if(this.game.getGameState().getBoard().getPossibleFields(this.game.getGameState().getColorFromPlayer(localPlayer), this.gameSession.getGame().getGameState().isFirstRound()).size() == 0){
+        this.localPlayer.nullTurn();
+        skipTurnButton.setVisible(false);
+        errorLabelText = "You are out of moves and auto-skip turns now...";
+      };
       if (this.game == null) {
         Debug.printMessage(this, "Game is null");
       }
@@ -739,6 +743,7 @@ public abstract class InGameUiController extends AbstractUiController {
           }
           try {
             if (dragablePolyPane != null) {
+              boardPane.repaint(game.getGameState().getBoard());
               boolean currentIntersection = false;
               Bounds polyBounds = dragablePolyPane.getCheckPolyField()
                   .localToScene(dragablePolyPane.getCheckPolyField().getBoundsInLocal());

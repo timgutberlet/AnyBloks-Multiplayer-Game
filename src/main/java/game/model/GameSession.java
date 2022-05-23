@@ -236,7 +236,7 @@ public class GameSession {
         String username = this.getPlayerList().get(playerList.size() - 1).getUsername();
         this.getInboundServerHandler().getServer().dropUser(username);
         try {
-          TimeUnit.MILLISECONDS.sleep(250);
+          TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -247,7 +247,7 @@ public class GameSession {
 
     try {
       Debug.printMessage(this, "Waiting for clients to establish connection");
-      TimeUnit.SECONDS.sleep(1);
+      TimeUnit.SECONDS.sleep(5);
       Debug.printMessage(this, "Starting a new game");
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -458,7 +458,7 @@ public class GameSession {
 
           Debug.printMessage(this, "Waiting for new AI to connect (with a fixed amount of time)");
 
-          TimeUnit.SECONDS.sleep(1);
+          TimeUnit.SECONDS.sleep(5);
 
           this.outboundServerHandler.sendGameStart(player.getUsername(), this.game.getGameState());
 
@@ -510,7 +510,7 @@ public class GameSession {
 
       //Sleep so updates can be made in DB
       try {
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
