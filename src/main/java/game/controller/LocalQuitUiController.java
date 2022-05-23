@@ -20,15 +20,17 @@ public class LocalQuitUiController extends AbstractUiController {
    * Anbstract Game controller used in Application.
    */
   private final AbstractGameController gameController;
-  private GameSession gameSession;
   /**
    * Main Anchorpane used for resizing.
    */
   @FXML
   AnchorPane mainPane;
+  private GameSession gameSession;
+  private int waited;
+  private boolean buttonActive;
 
   /**
-   * Construcotr used for setting gamecontroller.
+   * Constructor used for setting gamecontroller.
    *
    * @param gameController AbstractGameController
    * @author tgutberl
@@ -37,28 +39,17 @@ public class LocalQuitUiController extends AbstractUiController {
     super(gameController);
     this.gameController = gameController;
     this.gameSession = gameSession;
+    this.waited = 0;
+    this.buttonActive = false;
     try {
       gameSession.getClientHandler().getClient().getSession().close();
     } catch (IOException e) {
       e.printStackTrace();
     }
     init(super.root);
-    //Make sure that all clients have left.
-    try {
-      TimeUnit.MILLISECONDS.sleep(5000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    //now that all clients have left, reset & stop the server
-    gameSession.getHostServer().stopWebsocket();
-
-    try {
-      TimeUnit.MILLISECONDS.sleep(3000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
 
   }
+
   /**
    * Method to initialize the FXML.
    *
@@ -99,13 +90,15 @@ public class LocalQuitUiController extends AbstractUiController {
       e.printStackTrace();
     }
   }
+
   /**
    * Gets User Back to lobby
    */
   @FXML
-  public void backToLobby(){
+  public void backToLobby() {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
+
   /**
    * Method to get Quit Menu - to End the Program.
    *
@@ -130,6 +123,43 @@ public class LocalQuitUiController extends AbstractUiController {
   @Override
   public void onExit() {
     System.exit(0);
+  }
+
+  /**
+   * Method for override on update
+   *
+   * @author tbuscher
+   */
+  @Override
+  public void update(AbstractGameController gameController, double deltaTime) {
+    try {
+      TimeUnit.MILLISECONDS.sleep(1);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    if (waited == 10) {
+      try {
+        //Sleep in separate blocks in order to avoid "stalling" the application
+        //Make sure that all clients have left.
+        TimeUnit.MILLISECONDS.sleep(2000);
+        waited++;
+        TimeUnit.MILLISECONDS.sleep(2000);
+
+        //now that all clients have left, reset & stop the server
+        gameSession.getHostServer().stopWebsocket();
+
+        TimeUnit.MILLISECONDS.sleep(2000);
+        buttonActive = true;
+        waited++;
+        System.out.println("The Button works now");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    if(waited<10){
+      waited++;
+    }
+
   }
 
   /**

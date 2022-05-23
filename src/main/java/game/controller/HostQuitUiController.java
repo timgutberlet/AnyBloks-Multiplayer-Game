@@ -26,6 +26,8 @@ public class HostQuitUiController extends AbstractUiController {
   @FXML
   AnchorPane mainPane;
   private GameSession gameSession;
+  private boolean buttonActive;
+  private int waited;
 
   /**
    * Construcotr used for setting gamecontroller.
@@ -38,14 +40,9 @@ public class HostQuitUiController extends AbstractUiController {
     this.gameController = gameController;
     this.gameSession = gameSession;
     init(super.root);
-
+    this.waited = 0;
+    this.buttonActive = false;
     gameSession.getClientHandler().stopClient();
-
-    try {
-      TimeUnit.MILLISECONDS.sleep(8000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
 
   }
 
@@ -123,6 +120,41 @@ public class HostQuitUiController extends AbstractUiController {
   public void onExit() {
     System.exit(0);
   }
+
+  /**
+   * Method for override on update
+   *
+   * @author tgutberl
+   */
+  @Override
+  public void update(AbstractGameController gameController, double deltaTime) {
+    try {
+      TimeUnit.MILLISECONDS.sleep(1);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    if (waited == 10) {
+      try {
+        //Sleep in separate blocks in order to avoid "stalling" the application
+        TimeUnit.MILLISECONDS.sleep(2000);
+        waited++;
+        TimeUnit.MILLISECONDS.sleep(2000);
+        waited++;
+        TimeUnit.MILLISECONDS.sleep(2000);
+        buttonActive = true;
+
+        System.out.println("The Button works now");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    if(waited<10){
+      waited++;
+    }
+
+
+  }
+
 
   /**
    * Method for override on update
