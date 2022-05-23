@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -20,6 +21,8 @@ public class HostQuitUiController extends AbstractUiController {
    * Anbstract Game controller used in Application.
    */
   private final AbstractGameController gameController;
+  @FXML
+  private Button backToLobbyButton;
   /**
    * Main Anchorpane used for resizing.
    */
@@ -30,7 +33,7 @@ public class HostQuitUiController extends AbstractUiController {
   private int waited;
 
   /**
-   * Construcotr used for setting gamecontroller.
+   * Constructor used for setting gamecontroller.
    *
    * @param gameController
    * @author tgutberl
@@ -42,6 +45,7 @@ public class HostQuitUiController extends AbstractUiController {
     init(super.root);
     this.waited = 0;
     this.buttonActive = false;
+    backToLobbyButton.setDisable(true);
     gameSession.getClientHandler().stopClient();
 
   }
@@ -141,9 +145,9 @@ public class HostQuitUiController extends AbstractUiController {
         TimeUnit.MILLISECONDS.sleep(2000);
         waited++;
         TimeUnit.MILLISECONDS.sleep(2000);
+        backToLobbyButton.setDisable(buttonActive);
         buttonActive = true;
 
-        System.out.println("The Button works now");
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

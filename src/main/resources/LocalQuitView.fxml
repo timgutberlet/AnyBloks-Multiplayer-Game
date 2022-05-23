@@ -27,7 +27,7 @@
                         </Button>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#backToLobby" prefHeight="50.0" prefWidth="301.0" text="BACK TO MAIN MENU">
+                              <Button fx:id="backToLobbyButton" mnemonicParsing="false" onAction="#backToLobby" prefHeight="50.0" prefWidth="301.0" text="BACK TO MAIN MENU">
                                  <font>
                                     <Font size="25.0" />
                                  </font>

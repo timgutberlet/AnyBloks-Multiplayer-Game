@@ -1,4 +1,4 @@
-package token;
+package AccountManagement;
 
 import game.model.Debug;
 import net.server.HostServer;

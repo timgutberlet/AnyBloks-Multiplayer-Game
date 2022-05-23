@@ -1,4 +1,4 @@
-package token;
+package AccountManagement;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

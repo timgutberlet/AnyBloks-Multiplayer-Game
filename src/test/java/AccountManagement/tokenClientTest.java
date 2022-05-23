@@ -1,4 +1,4 @@
-package token;
+package AccountManagement;
 
 import game.model.Debug;
 import javax.ws.rs.client.Client;
