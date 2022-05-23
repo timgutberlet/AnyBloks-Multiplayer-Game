@@ -242,6 +242,10 @@ public class EndpointClient {
         this.clientHandler.updatePlayerList(packet);
 				break;
 
+			case LOBBY_SCORE_BOARD_PACKET:
+				this.clientHandler.handleLobbyScoreBoardPacket(packet);
+				break;
+
 			case LOGIN_RESPONSE_PACKET:
 					this.clientHandler.denyLogin(packet);
 

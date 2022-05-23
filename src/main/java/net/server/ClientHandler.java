@@ -1,6 +1,5 @@
 package net.server;
 
-import static game.model.player.AIMessages.getAfterMatchAIComment;
 import static game.model.player.AIMessages.getAfterTurnAIComment;
 
 import game.model.Debug;
@@ -33,6 +32,7 @@ import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
 import net.packet.game.InitGamePacket;
+import net.packet.game.LobbyScoreBoardPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.PlayerQuitPacket;
 import net.packet.game.RequestTurnPacket;
@@ -54,6 +54,7 @@ public class ClientHandler {
 
   /**
    * initializes a new client handler out of the endpoint client.
+   *
    * @param client
    */
   public ClientHandler(EndpointClient client) {
@@ -65,6 +66,7 @@ public class ClientHandler {
 
   /**
    * this method initializes the local game out of the local player.
+   *
    * @param localPlayer considered local player.
    */
   public void initLocalGame(Player localPlayer) {
@@ -101,6 +103,7 @@ public class ClientHandler {
 
   /**
    * initializes a local game out of the local player and its ip.
+   *
    * @param localPlayer
    * @param ip
    */
@@ -111,6 +114,7 @@ public class ClientHandler {
 
   /**
    * initializes a local game out of a local player and its ip as well as its token.
+   *
    * @param localPlayer
    * @param ip
    * @param token
@@ -275,6 +279,7 @@ public class ClientHandler {
 
   /**
    * sends the turn to the server.
+   *
    * @param turn
    */
   public void sendTurn(Turn turn) {
@@ -295,9 +300,9 @@ public class ClientHandler {
 
     this.client.getGameSession().updateGame(gameState);
     String aiMessage = getAfterTurnAIComment(this.gameSession);
-    if(!aiMessage.equals("")){
+    if (!aiMessage.equals("")) {
       Chat chat = this.gameSession.getChat();
-      chat.addMessage(new ChatMessage(this.player.getUsername(),aiMessage));
+      chat.addMessage(new ChatMessage(this.player.getUsername(), aiMessage));
       this.broadcastChatMessage(chat);
     }
   }
@@ -320,20 +325,28 @@ public class ClientHandler {
   }
 
   /**
-   * Called if a HostQuitPacket is received. Sends the player back to the lobby.
-   * TODOKICK: resets the local gameSession? is LocalPlayer relevant here?
-   *
+   * Called if a HostQuitPacket is received. Sends the player back to the lobby. TODOKICK: resets
+   * the local gameSession? is LocalPlayer relevant here?
+   * <p>
    * lass uns das nicht hier machen. Wenn wir den Endpoint killen, sind auch alle lokal
    * gespeicherten variablen weg
    */
-  public void handleHostQuit(){
-    if(!player.getType().equals(PlayerType.HOST_PLAYER)){
-      Debug.printMessage("HANDLEHOSTQUITHASBEENCALLED CORRECTLY");
+  public void handleHostQuit() {
+    if (!player.getType().equals(PlayerType.HOST_PLAYER)) {
+      Debug.printMessage("The client was informed about the host quitting");
       this.gameSession.setHostQuit(true);
     }
   }
 
-
+  /**
+   * Receives a wrapped LobbyScoreBoard and sets the received it in the gameSession.
+   *
+   * @param wrappedPacket
+   */
+  public void handleLobbyScoreBoardPacket(WrappedPacket wrappedPacket) {
+    LobbyScoreBoardPacket lobbyScoreBoardPacket = (LobbyScoreBoardPacket) wrappedPacket.getPacket();
+    this.gameSession.setLobbyScoreBoard(lobbyScoreBoardPacket.getLobbyScoreBoard());
+  }
 
   /**
    * save a ChatMessage in the chat.
@@ -346,6 +359,7 @@ public class ClientHandler {
 
   /**
    * updates the player list out of the player list packet.
+   *
    * @param wrappedPacket player list packet
    */
   public void updatePlayerList(WrappedPacket wrappedPacket) {
@@ -355,6 +369,7 @@ public class ClientHandler {
 
   /**
    * sends a chat message to the server.
+   *
    * @param chat message
    */
   public void broadcastChatMessage(Chat chat) {
@@ -368,6 +383,7 @@ public class ClientHandler {
 
   /**
    * this method processes a login response packet and sets the login status as received.
+   *
    * @param packet received packet
    */
   public void denyLogin(WrappedPacket packet) {
@@ -380,10 +396,11 @@ public class ClientHandler {
   /**
    * sends a disconnect message to the server
    */
-  public void disconnectClient(){
+  public void disconnectClient() {
 
     PlayerQuitPacket playerQuitPacket = new PlayerQuitPacket(this.player.getUsername());
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_QUIT_PACKET, playerQuitPacket);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_QUIT_PACKET,
+        playerQuitPacket);
 
     this.client.sendToServer(wrappedPacket);
 
@@ -393,7 +410,7 @@ public class ClientHandler {
   /**
    * Stop a client by closing the session.
    */
-  public void stopClient(){
+  public void stopClient() {
     try {
       this.session.close();
     } catch (IOException e) {

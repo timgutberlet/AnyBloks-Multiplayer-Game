@@ -6,6 +6,7 @@ import game.model.Turn;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
+import game.scores.ScoreProvider;
 import java.util.LinkedList;
 import javax.websocket.Session;
 import net.packet.abstr.PacketType;
@@ -13,12 +14,11 @@ import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.account.LoginResponsePacket;
-import net.packet.game.IllegalTurnPacket;
 import net.packet.game.InitGamePacket;
+import net.packet.game.LobbyScoreBoardPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.PlayerQuitPacket;
 import net.packet.game.TurnPacket;
-import net.transmission.EndpointClient;
 import net.transmission.EndpointServer;
 
 /**
@@ -89,7 +89,6 @@ public class InboundServerHandler {
       loginSuccess = true;
     }
 
-
     if (loginSuccess) {
       //call when user is verified
       this.addVerifiedUser(wrappedPacket, session);
@@ -106,8 +105,9 @@ public class InboundServerHandler {
 
   /**
    * converts a login request packet into the send attributes and adds the user to the session.
+   *
    * @param wrappedPacket received packet
-   * @param session actual session
+   * @param session       actual session
    * @return a string array out of the success boolean and the username
    */
   public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
@@ -156,7 +156,7 @@ public class InboundServerHandler {
 //      } else
 
       //Debug.printMessage(gameSession.getPlayerList().size());
-      Debug.printMessage(""+gameSession.getPlayerList());
+      Debug.printMessage("" + gameSession.getPlayerList());
       //Debug.printMessage(gameSession.getPlayerList().get(0));
       if (gameSession.getPlayerList().size() < 4) {
 
@@ -182,6 +182,12 @@ public class InboundServerHandler {
     PlayerListPacket playerListPacket = new PlayerListPacket(gameSession.getPlayerList());
     wrappedPacket = new WrappedPacket(PacketType.PLAYER_LIST_PACKET, playerListPacket);
     this.server.broadcastMessage(wrappedPacket);
+    //Fetch the LobbyScoreBoard and send it to all clients
+    LobbyScoreBoardPacket lobbyScoreBoardPacket = new LobbyScoreBoardPacket(
+        ScoreProvider.getLobbyScoreBoard());
+    WrappedPacket wrappedLobbyScoreBoardPacket = new WrappedPacket(
+        PacketType.LOBBY_SCORE_BOARD_PACKET, lobbyScoreBoardPacket);
+    this.server.broadcastMessage(wrappedLobbyScoreBoardPacket);
 
     String[] toReturn = {"true", username};
 
@@ -193,11 +199,10 @@ public class InboundServerHandler {
   }
 
   /**
-   *
    * <p>
    * Method called after receiving a CreateAccountRequestPacket. This tries to save the account in
-   * the Database, depending on the result of the attempted DB Insertion the response message for the
-   * createAccountResponsePacket is set.
+   * the Database, depending on the result of the attempted DB Insertion the response message for
+   * the createAccountResponsePacket is set.
    *
    * @param packet that contains a createAccountRequestPacket
    */
@@ -229,6 +234,7 @@ public class InboundServerHandler {
 
   /**
    * starts the game out of the game init packet.
+   *
    * @param wrappedPacket init game packet.
    */
   public void startGame(WrappedPacket wrappedPacket) {
@@ -239,10 +245,10 @@ public class InboundServerHandler {
 
     LinkedList<GameMode> gameModes = initGamePacket.getGameMode();
 
-    if(initGamePacket.getDefaultAi()!=null){
+    if (initGamePacket.getDefaultAi() != null) {
       gameSession.setDefaultAI(initGamePacket.getDefaultAi());
     }
-    if(initGamePacket.getPlayerTypes()!=null){
+    if (initGamePacket.getPlayerTypes() != null) {
       gameSession.setAiPlayers(initGamePacket.getPlayerTypes());
     }
 
@@ -267,25 +273,23 @@ public class InboundServerHandler {
 
     CheckConnectionThread.turnReceived = true;
 
-      Debug.printMessage(this, "The received turn is legal and will be played");
-      gameSession.getGame().makeMoveServer(turn);
-      //this.server.getOutboundServerHandler().broadcastGameUpdate();
+    Debug.printMessage(this, "The received turn is legal and will be played");
+    gameSession.getGame().makeMoveServer(turn);
+    //this.server.getOutboundServerHandler().broadcastGameUpdate();
 
   }
 
-  public void disconnectClient(Session client, WrappedPacket packet){
+  public void disconnectClient(Session client, WrappedPacket packet) {
     PlayerQuitPacket playerQuitPacket = (PlayerQuitPacket) packet.getPacket();
     String username = playerQuitPacket.getUsername();
 
-
-
-    if(gameSession.getGame()==null){
+    if (gameSession.getGame() == null) {
       //Game has not started and Lobby view is still active
       this.server.getUsername2Session().remove(username);
       EndpointServer.getSessions().remove(client);
       int indexPlayerToRemove = -1;
-      for(int i=0; i<gameSession.getPlayerList().size();i++){
-        if (gameSession.getPlayerList().get(i).getUsername().equals(username)){
+      for (int i = 0; i < gameSession.getPlayerList().size(); i++) {
+        if (gameSession.getPlayerList().get(i).getUsername().equals(username)) {
           indexPlayerToRemove = i;
         }
       }

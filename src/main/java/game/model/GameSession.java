@@ -8,6 +8,7 @@ import game.model.player.Player;
 import game.model.player.PlayerType;
 import game.scores.GameScoreBoard;
 import game.scores.GameSessionScoreBoard;
+import game.scores.LobbyScoreBoard;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URI;
@@ -81,6 +82,7 @@ public class GameSession {
    * used to change the view to InGameController.
    */
   private Boolean gameStarted = false;
+  private LobbyScoreBoard lobbyScoreBoard;
 
   /**
    * a Session is created by a Player in the MainMenu.
@@ -886,6 +888,22 @@ public class GameSession {
     return str;
   }
 
+  /**
+   * Setter.
+   *
+   * @param lobbyScoreBoard to add
+   */
+  public void setLobbyScoreBoard(LobbyScoreBoard lobbyScoreBoard) {
+    this.lobbyScoreBoard = lobbyScoreBoard;
+  }
 
+  /**
+   * Getter.
+   *
+   * @return lobbyScoreBoard
+   */
+  public LobbyScoreBoard getLobbyScoreBoard() {
+    return lobbyScoreBoard;
+  }
 }
 
