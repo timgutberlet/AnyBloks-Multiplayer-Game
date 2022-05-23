@@ -297,6 +297,12 @@ public abstract class InGameUiController extends AbstractUiController {
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #006400;");
             score.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #006400;");
+          }
+          if (ColorHandler.whiteMode) {
+            name.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00ff00;");
+            score.setStyle(
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00ff00;");
           } else {
             name.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00cc00;");
@@ -307,9 +313,9 @@ public abstract class InGameUiController extends AbstractUiController {
         case "YELLOW":
           if (ColorHandler.darkMode) {
             name.setStyle(
-                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff8c00 ;");
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #b2b200;");
             score.setStyle(
-                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #ff8c00 ;");
+                "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #b2b200;");
           } else {
             name.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
