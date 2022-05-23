@@ -212,7 +212,7 @@ public class HostLobbyUiController extends AbstractUiController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.REMOTE_PLAYER);
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.HOST_PLAYER);
     this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();
@@ -445,7 +445,7 @@ public class HostLobbyUiController extends AbstractUiController {
         e.printStackTrace();
       }
 
-      this.gameSession.startGame(this.gameModes.get(0));
+
 
       if (this.gameSession.getPlayerList().size() == 4) {
         playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
@@ -622,6 +622,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
+      this.gameSession.setGameStarted(false);
       //this.gameSession.setGameStarted();
     } else {
       //Debug.printMessage(this, "GameSession Controller " + this.gameSession);

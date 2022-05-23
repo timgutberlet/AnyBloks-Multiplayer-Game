@@ -28,7 +28,7 @@ public class Chat {
     System.out.println(Thread.currentThread().getId() + ": Message Thread started");
 
     //while(this.running){
-    //  if(false) { //recieve message  from server
+    //  if(false) { //receive message  from server
     //System.out.println(message);
     //  }
     // }

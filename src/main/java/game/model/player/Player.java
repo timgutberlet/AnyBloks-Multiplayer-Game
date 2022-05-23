@@ -35,10 +35,6 @@ public class Player implements Serializable {
   private boolean isPlayerConnected;
 
   /**
-   * current session of player
-   */
-  //private GameSession gameSession;
-  /**
    * Current score of the player.
    */
   private int score;
@@ -200,6 +196,8 @@ public class Player implements Serializable {
         }
       }
       System.out.println("Turn Selected from player " + this);
+
+      gameState.playTurn(this.selectedTurn);
       Turn returnTurn = this.selectedTurn;
       this.selectedTurn = null;
       this.aiCalcRunning = true;

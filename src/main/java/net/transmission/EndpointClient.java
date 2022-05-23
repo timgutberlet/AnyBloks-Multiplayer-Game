@@ -214,7 +214,7 @@ public class EndpointClient {
         break;
 
       case REQUEST_TURN_PACKET:
-        Debug.printMessage(this, "REQUEST TURN RECIEVED");
+        Debug.printMessage(this, "REQUEST TURN receiveD");
         this.clientHandler.makeTurn(packet);
         break;
 

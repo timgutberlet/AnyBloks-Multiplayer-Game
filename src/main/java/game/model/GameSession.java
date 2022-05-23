@@ -140,7 +140,7 @@ public class GameSession {
     if (this.playerList.size() == 1) {
       this.localPlayer = player;
     }
-    player.setGameSession(this);
+    //player.setGameSession(this);
   }
 
   /**
@@ -170,7 +170,7 @@ public class GameSession {
    */
   public void addHost(Player host) {
     this.playerList.add(host);
-    host.setGameSession(this);
+    //host.setGameSession(this);
   }
 
 

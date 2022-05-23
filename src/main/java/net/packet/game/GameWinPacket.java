@@ -1,7 +1,9 @@
 package net.packet.game;
 
+import game.model.gamemodes.GameMode;
 import game.scores.GameScoreBoard;
 import game.scores.GameSessionScoreBoard;
+import java.util.LinkedList;
 import net.packet.abstr.Packet;
 
 /**
@@ -12,44 +14,57 @@ import net.packet.abstr.Packet;
  */
 public class GameWinPacket extends Packet {
 
-  private final GameScoreBoard gameScoreBoard;
+	private final GameScoreBoard gameScoreBoard;
 
-  private final GameSessionScoreBoard gameSessionScoreBoard;
+	private final GameSessionScoreBoard gameSessionScoreBoard;
 
-  /**
-   * Constructor without arguments for Jackson.
-   */
-  public GameWinPacket() {
-    this.gameScoreBoard = null;
-    this.gameSessionScoreBoard = null;
-  }
+	private final LinkedList<GameMode> gameList;
 
-  /**
-   * Constructor.
-   *
-   * @param gameScoreBoard of past game
-   * @param gameSessionScoreBoard of entire gameSession
-   */
-  public GameWinPacket(GameScoreBoard gameScoreBoard, GameSessionScoreBoard gameSessionScoreBoard) {
-    this.gameScoreBoard = gameScoreBoard;
-    this.gameSessionScoreBoard = gameSessionScoreBoard;
-  }
+	/**
+	 * Constructor without arguments for Jackson.
+	 */
+	public GameWinPacket() {
+		this.gameScoreBoard = null;
+		this.gameSessionScoreBoard = null;
+		this.gameList = null;
+	}
 
-  /**
-   * Getter.
-   *
-   * @return gameScoreBoard
-   */
-  public GameScoreBoard getGameScoreBoard() {
-    return gameScoreBoard;
-  }
+	/**
+	 * Constructor.
+	 *
+	 * @param gameScoreBoard        of past game
+	 * @param gameSessionScoreBoard of entire gameSession
+	 */
+	public GameWinPacket(GameScoreBoard gameScoreBoard, GameSessionScoreBoard gameSessionScoreBoard,
+			LinkedList<GameMode> gameList) {
+		this.gameScoreBoard = gameScoreBoard;
+		this.gameSessionScoreBoard = gameSessionScoreBoard;
+		this.gameList = gameList;
+	}
 
-  /**
-   * Getter.
-   *
-   * @return gameSessionScoreBoard
-   */
-  public GameSessionScoreBoard getGameSessionScoreBoard() {
-    return gameSessionScoreBoard;
-  }
+	/**
+	 * Getter.
+	 *
+	 * @return gameScoreBoard
+	 */
+	public GameScoreBoard getGameScoreBoard() {
+		return gameScoreBoard;
+	}
+
+	/**
+	 * Getter.
+	 *
+	 * @return gameSessionScoreBoard
+	 */
+	public GameSessionScoreBoard getGameSessionScoreBoard() {
+		return gameSessionScoreBoard;
+	}
+
+	/**
+	 * Getter.
+	 * @return
+	 */
+	public LinkedList<GameMode> getGameList() {
+		return gameList;
+	}
 }

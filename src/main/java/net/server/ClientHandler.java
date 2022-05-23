@@ -33,6 +33,7 @@ import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.PlayerListPacket;
+import net.packet.game.PlayerQuitPacket;
 import net.packet.game.RequestTurnPacket;
 import net.packet.game.TurnPacket;
 import net.transmission.EndpointClient;
@@ -193,6 +194,20 @@ public class ClientHandler {
 
   }
 
+  /**
+   * function called on client side to send INIT GAME PACKET TO SERVER
+   *
+   * @param gameModes
+   */
+  public void startLocalGame(LinkedList<GameMode> gameModes) {
+    InitGamePacket initGamePacket = new InitGamePacket(gameModes);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
+
+    this.client.sendToServer(wrappedPacket);
+
+
+  }
+
 
   /**
    * function that starts a game on the client side.
@@ -201,7 +216,7 @@ public class ClientHandler {
    * @author tgeilen
    */
   public void startGame(WrappedPacket wrappedPacket) {
-    Debug.printMessage(this, "StartGamePacket recieved by a client");
+    Debug.printMessage(this, "StartGamePacket received by a client");
     GameStartPacket gameStartPacket = (GameStartPacket) wrappedPacket.getPacket();
     GameMode gamemode = gameStartPacket.getGameMode();
     GameState gameState = gameStartPacket.getGameState();
@@ -249,6 +264,7 @@ public class ClientHandler {
         Debug.printMessage(this, player.getUsername() + ": I know what to do...");
       }
 
+      //this.gameSession.getGame().getGameState().playTurn(turn);
       this.sendTurn(turn);
 
       this.gameSession.setLocalPlayerTurn(false);
@@ -289,14 +305,8 @@ public class ClientHandler {
   public void endGame(WrappedPacket wrappedPacket) {
     GameWinPacket gameWinPacket = (GameWinPacket) wrappedPacket.getPacket();
 
-    //TODO evaluate necessity @tbuscher & tgeilen
-    /*
-    String winner = gameWinPacket.getUsername();
-    this.client.getGameSession().endGame(winner);
-    */
-
     GameSession gameSession = this.client.getGameSession();
-
+    gameSession.setGameList(gameWinPacket.getGameList());
     gameSession.setGameOver(true);
     gameSession.setGameScoreBoard(gameWinPacket.getGameScoreBoard());
     gameSession.setGameSessionScoreBoard(gameWinPacket.getGameSessionScoreBoard());
@@ -360,6 +370,19 @@ public class ClientHandler {
     this.gameSession.setLoginStatus(loginResponsePacket.getLoginStatus());
 
   }
+
+  /**
+   * sends a disconnect message to the server
+   */
+  public void disconnectClient(){
+
+    PlayerQuitPacket playerQuitPacket = new PlayerQuitPacket(this.player.getUsername());
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_QUIT_PACKET, playerQuitPacket);
+
+    this.client.sendToServer(wrappedPacket);
+
+  }
+
 
   /**
    * Stop a client by closing the session.

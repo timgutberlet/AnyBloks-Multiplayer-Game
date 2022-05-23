@@ -114,7 +114,7 @@ public class EndpointServer {
 
 
     Debug.printMessage(this, type.name());
-    Debug.printMessage(this,"Endpoint recieved message");
+    Debug.printMessage(this,"Endpoint received message");
     LOG.info("A packet has been sent here by a client, it is of the type: {} send by {}",
         packet.getPacketType().toString(), client.getId());
 
@@ -150,7 +150,7 @@ public class EndpointServer {
           break;
 
         case LOGIN_REQUEST_PACKET:
-          Debug.printMessage(this, " LOGIN_REQUEST_PACKET recieved");
+          Debug.printMessage(this, " LOGIN_REQUEST_PACKET received");
 
           this.inboundServerHandler.verifyLogin(packet, client);
           break;
@@ -160,13 +160,13 @@ public class EndpointServer {
           outboundServerHandler.broadcastChatMessage(packet);
           break;
         case PLAYER_ORDER_PACKET:
-          Debug.printMessage(this, "PLAYER_ORDER_PACKET recieved");
+          Debug.printMessage(this, "PLAYER_ORDER_PACKET received");
 //        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
 //          clientEntry.getValue().getBasicRemote().sendObject(packet);
 //        }
           break;
         case TURN_PACKET:
-          inboundServerHandler.recieveTurn(client, packet);
+          inboundServerHandler.receiveTurn(client, packet);
           break;
         case HOST_QUIT_PACKET:
           outboundServerHandler.broadcastHostQuit();
@@ -177,6 +177,9 @@ public class EndpointServer {
           }
           inboundServerHandler.getServer().resetEndpointServer();
 
+          break;
+        case PLAYER_QUIT_PACKET:
+          inboundServerHandler.disconnectClient(client, packet);
           break;
 
         default:
@@ -311,6 +314,11 @@ public class EndpointServer {
       e.printStackTrace();
     }
 
+  }
+
+
+  public static Set<Session> getSessions() {
+    return sessions;
   }
 
   /**

@@ -5,6 +5,7 @@ import engine.controller.AbstractUiController;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
+import game.model.player.PlayerType;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -146,7 +147,10 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @FXML
   public void nextRound() {
-    //TODO Nächstes Spiel starten
+    if(this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER) &&
+    this.gameSession.getGameList().size()>0){
+      this.gameSession.getClientHandler().startLocalGame(this.gameSession.getGameList());
+    }
   }
 
   public static void sortScoreBoard(GameSession gameSession) {
@@ -335,6 +339,17 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @Override
   public void update(AbstractGameController gameController) {
+
+  }
+
+  @Override
+  public void update(AbstractGameController gameController, double deltaTime) {
+
+    if (this.gameSession.isGameStarted()) {
+      gameController.setActiveUiController(
+          new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
+      this.gameSession.setGameStarted(false);
+    }
 
   }
 

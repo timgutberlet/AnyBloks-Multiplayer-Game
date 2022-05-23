@@ -29,6 +29,12 @@ public class InitGamePacket extends Packet {
     this.defaultAi = null;
   }
 
+  public InitGamePacket(LinkedList<GameMode> gameMode) {
+    this.gameMode = gameMode;
+    this.playerTypes = null;
+    this.defaultAi = null;
+  }
+
   public InitGamePacket(LinkedList<GameMode> gameMode,PlayerType defaultAi) {
     this.gameMode = gameMode;
     this.playerTypes = null;

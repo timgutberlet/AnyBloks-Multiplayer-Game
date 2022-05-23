@@ -91,8 +91,8 @@ public abstract class AbstractGameController extends AnimationTimer {
     stage.setMinWidth(Config.getIntValue("SCREEN_MINIMUM_WIDTH"));
     stage.setMinHeight(Config.getIntValue("SCREEN_MINIMUM_HEIGHT"));
     //Starts the music
-    MusicThread musicThread = new MusicThread();
-    musicThread.start();
+    //MusicThread musicThread = new MusicThread();
+    //musicThread.start();
     this.start();
   }
 

@@ -197,7 +197,7 @@ public class OutboundServerHandler {
         GameSession.currentGameIds.toArray(new String[GameSession.currentGameIds.size()]));
 
     GameWinPacket gameWinPacket = new GameWinPacket(new GameScoreBoard(gameMode, scoreboard),
-        gameSessionScoreBoard);
+        gameSessionScoreBoard, this.gameSession.getGameList());
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_WIN_PACKET, gameWinPacket);
     GameSession.currentGameIds.add(gameId);
 
@@ -210,8 +210,8 @@ public class OutboundServerHandler {
     }
 
     if (gameSession.getGameList().size() > 0) {
-      Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-      gameSession.startGameServer();
+    //  Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+    //  gameSession.startGameServer();
     } else {
       //No more games in gameSession, so we return to the lobby
 

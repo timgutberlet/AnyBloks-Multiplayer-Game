@@ -16,7 +16,9 @@ import net.packet.account.LoginResponsePacket;
 import net.packet.game.IllegalTurnPacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.PlayerListPacket;
+import net.packet.game.PlayerQuitPacket;
 import net.packet.game.TurnPacket;
+import net.transmission.EndpointClient;
 import net.transmission.EndpointServer;
 
 /**
@@ -59,8 +61,8 @@ public class InboundServerHandler {
    * @return String[] [0] "true"/"false" [1] username
    */
   public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
-    Debug.printMessage(this, "LOGIN_REQUEST_PACKET recieved in Handler");
-    System.out.println("LOGIN_REQUEST_PACKET recieved in Handler");
+    Debug.printMessage(this, "LOGIN_REQUEST_PACKET received in Handler");
+    System.out.println("LOGIN_REQUEST_PACKET received in Handler");
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
     String token = loginPacket.getToken();
@@ -238,8 +240,12 @@ public class InboundServerHandler {
 
     LinkedList<GameMode> gameModes = initGamePacket.getGameMode();
 
-    gameSession.setDefaultAI(initGamePacket.getDefaultAi());
-    gameSession.setAiPlayers(initGamePacket.getPlayerTypes());
+    if(initGamePacket.getDefaultAi()!=null){
+      gameSession.setDefaultAI(initGamePacket.getDefaultAi());
+    }
+    if(initGamePacket.getPlayerTypes()!=null){
+      gameSession.setAiPlayers(initGamePacket.getPlayerTypes());
+    }
 
     gameSession.setGameList(gameModes);
 
@@ -250,21 +256,48 @@ public class InboundServerHandler {
 
 
   /**
-   * recieve a turn from a remote player and forward it to game logic
+   * receive a turn from a remote player and forward it to game logic
    *
    * @param packet
    * @author tgeilen
    */
-  public void recieveTurn(Session client, WrappedPacket packet) {
-    Debug.printMessage(this, "Recieved turn");
+  public void receiveTurn(Session client, WrappedPacket packet) {
+    Debug.printMessage(this, "received turn");
     TurnPacket turnPacket = (TurnPacket) packet.getPacket();
     Turn turn = turnPacket.getTurn();
 
     CheckConnectionThread.turnReceived = true;
 
-      Debug.printMessage(this, "The recieved turn is legal and will be played");
+      Debug.printMessage(this, "The received turn is legal and will be played");
       gameSession.getGame().makeMoveServer(turn);
       //this.server.getOutboundServerHandler().broadcastGameUpdate();
+
+  }
+
+  public void disconnectClient(Session client, WrappedPacket packet){
+    PlayerQuitPacket playerQuitPacket = (PlayerQuitPacket) packet.getPacket();
+    String username = playerQuitPacket.getUsername();
+
+
+
+    if(gameSession.getGame()==null){
+      //Game has not started and Lobby view is still active
+      this.server.getUsername2Session().remove(username);
+      EndpointServer.getSessions().remove(client);
+      int indexPlayerToRemove = -1;
+      for(int i=0; i<gameSession.getPlayerList().size();i++){
+        if (gameSession.getPlayerList().get(i).getUsername().equals(username)){
+          indexPlayerToRemove = i;
+        }
+      }
+      gameSession.getPlayerList().remove(indexPlayerToRemove);
+
+    } else {
+      //Game has started and players are in-game
+      gameSession.changePlayer2AI(username);
+
+    }
+
 
   }
 

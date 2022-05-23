@@ -148,6 +148,10 @@ public class JoinLobbyUiController extends AbstractUiController {
   @FXML
   public void back() {
     gameSession.stopSession();
+    gameSession.clientHandler.disconnectClient();
+
+
+
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
@@ -238,6 +242,7 @@ public class JoinLobbyUiController extends AbstractUiController {
 
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
+      this.gameSession.setGameStarted(false);
     } else {
       //Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }
@@ -258,6 +263,7 @@ public class JoinLobbyUiController extends AbstractUiController {
       //The host has left, so the user is sent to proper screen
       System.out.println("THE HOST QUIT HAS BEEN DETECTED IN THE JOIN LOBBY CONTROLLER");
       gameController.setActiveUiController(new HostQuitUiController(gameController, gameSession));
+      gameSession.setHostQuit(false);
 
     }
   }

@@ -20,6 +20,7 @@ import net.packet.game.InitGamePacket;
 import net.packet.game.InitSessionPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.PlayerOrderPacket;
+import net.packet.game.PlayerQuitPacket;
 import net.packet.game.RequestTurnPacket;
 import net.packet.game.TurnPacket;
 
@@ -43,6 +44,7 @@ import net.packet.game.TurnPacket;
     @JsonSubTypes.Type(value = TurnPacket.class, name = "TurnPacket"),
     @JsonSubTypes.Type(value = GameWinPacket.class, name = "GameWinPacket"),
     @JsonSubTypes.Type(value = HostQuitPacket.class, name = "HostQuitPacket"),
+		@JsonSubTypes.Type(value = PlayerQuitPacket.class, name = "PlayerQuitPacket"),
     @JsonSubTypes.Type(value = UpdateAccountRequestPacket.class,
         name = "UpdateAccountRequestPacket"),
     @JsonSubTypes.Type(value = PlayerListPacket.class, name = "PlayerListPacket"),
