@@ -23,4 +23,10 @@ public class LobbyScoreBoard {
     this.playerScores = playerScores;
   }
 
+  /**
+   * Default Constructor for Jackson.
+   */
+  public LobbyScoreBoard(){
+  }
+
 }
