@@ -558,7 +558,7 @@ public class DbServer extends AbstractDB {
     int number = 0;
     if (resultSet != null) {
       try {
-        number = resultSet.getInt(0);
+        number = resultSet.getInt(1);
       } catch (SQLException e) {
         e.printStackTrace();
       }
