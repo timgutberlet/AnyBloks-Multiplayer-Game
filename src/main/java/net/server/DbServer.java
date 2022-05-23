@@ -2,6 +2,7 @@ package net.server;
 
 import game.config.Config;
 import game.scores.GameScoreBoard;
+import game.scores.ScoreProvider;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -586,11 +587,11 @@ public class DbServer extends AbstractDB {
       while (resultSet.next()) {
         String gameId = String.valueOf(resultSet.getRow());
         gameScoreBoard = getGameScores(gameId);
-        String winnerUsername = gameScoreBoard.getWinner();
+        String winnerUsername = ScoreProvider.getWinner(gameScoreBoard);
         int wins =
             topThreePlayers.get(winnerUsername) == null ? 0
                 : topThreePlayers.get(winnerUsername) + 1;
-        topThreePlayers.put(gameScoreBoard.getWinner(), wins);
+        topThreePlayers.put(ScoreProvider.getWinner(gameScoreBoard), wins);
       }
     } catch (SQLException e) {
       e.printStackTrace();

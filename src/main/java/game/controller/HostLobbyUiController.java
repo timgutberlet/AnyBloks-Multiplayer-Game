@@ -210,7 +210,7 @@ public class HostLobbyUiController extends AbstractUiController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.HOST_PLAYER);
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.AI_HARD);
     this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();

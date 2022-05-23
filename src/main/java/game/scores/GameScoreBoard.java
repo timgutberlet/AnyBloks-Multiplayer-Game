@@ -46,20 +46,5 @@ public class GameScoreBoard {
     return gamemode;
   }
 
-  /**
-   * Calculate the winner of the stored games.
-   *
-   * @return String
-   */
-  public String getWinner() {
-    String winnerName = "";
-    int maxScore = 0;
-    for (String username : playerScores.keySet()) {
-      if (playerScores.get(username) > maxScore) {
-        maxScore = playerScores.get(username);
-        winnerName = username;
-      }
-    }
-    return winnerName;
-  }
+
 }
