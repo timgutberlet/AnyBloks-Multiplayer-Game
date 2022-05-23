@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import net.packet.abstr.Packet;
 
 /**
- * packet to tell a player that a turn needs to be made
+ * packet to tell a player that a turn needs to be made.
  *
  * @author tgeilen
  * @Date 10.05.22
@@ -74,6 +74,10 @@ public class RequestTurnPacket extends Packet {
 
   }
 
+  /**
+   * gets the game state from the attributes.
+   * @return game state
+   */
   public GameState getGameState() {
 
     Debug.printMessage(this, "Length of recieved remaining polys " + this.remainingPolys.size());

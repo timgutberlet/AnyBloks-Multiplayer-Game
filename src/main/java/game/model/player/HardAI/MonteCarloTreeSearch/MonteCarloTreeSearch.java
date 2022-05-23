@@ -7,13 +7,13 @@ import game.model.Turn;
 import java.util.ArrayList;
 
 /**
+ * central class of the representation of the monte carlo tree search.
+ * for the monte carlo tree search https://www.baeldung.com/java-monte-carlo-tree-search was used as
+ * an orientation.
  * @author tiotto
  * @date 16.05.2022
  */
 
-/**
- * central class of the representation of the monte carlo tree search.
- */
 public class MonteCarloTreeSearch {
 
   static final int MAX_DEPTH = 5;

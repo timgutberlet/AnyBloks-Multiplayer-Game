@@ -49,6 +49,10 @@ public class ClientHandler {
   private final Player player;
   private final GameSession gameSession;
 
+  /**
+   * initializes a new client handler out of the endpoint client.
+   * @param client
+   */
   public ClientHandler(EndpointClient client) {
     this.client = client;
     this.player = this.client.getPlayer();
@@ -56,7 +60,10 @@ public class ClientHandler {
 
   }
 
-
+  /**
+   * this method initializes the local game out of the local player.
+   * @param localPlayer considered local player.
+   */
   public void initLocalGame(Player localPlayer) {
 
     TokenGenerationRessource tokenGenerationRessource = new TokenGenerationRessource();
@@ -89,11 +96,22 @@ public class ClientHandler {
 
   }
 
+  /**
+   * initializes a local game out of the local player and its ip.
+   * @param localPlayer
+   * @param ip
+   */
   public void initLocalGame(Player localPlayer, String ip) {
     String token = "";
     this.initLocalGame(player, ip, token);
   }
 
+  /**
+   * initializes a local game out of a local player and its ip as well as its token.
+   * @param localPlayer
+   * @param ip
+   * @param token
+   */
   public void initLocalGame(Player localPlayer, String ip, String token) {
 
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
@@ -237,6 +255,10 @@ public class ClientHandler {
     }
   }
 
+  /**
+   * sends the turn to the server.
+   * @param turn
+   */
   public void sendTurn(Turn turn) {
     TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
     WrappedPacket wrPacket = new WrappedPacket(PacketType.TURN_PACKET, turnPacket);
@@ -304,11 +326,19 @@ public class ClientHandler {
     //Debug.printMessage(this,chatMessagePacket.getChatMessage().getMessage());
   }
 
+  /**
+   * updates the player list out of the player list packet.
+   * @param wrappedPacket player list packet
+   */
   public void updatePlayerList(WrappedPacket wrappedPacket) {
     PlayerListPacket playerListPacket = (PlayerListPacket) wrappedPacket.getPacket();
     this.gameSession.setPlayerList(playerListPacket.getPlayerList());
   }
 
+  /**
+   * sends a chat message to the server.
+   * @param chat message
+   */
   public void broadcastChatMessage(Chat chat) {
 
     ChatMessagePacket chatMessagePacket = new ChatMessagePacket(chat);
@@ -318,6 +348,10 @@ public class ClientHandler {
     this.client.sendToServer(wrappedPacket);
   }
 
+  /**
+   * this method processes a login response packet and sets the login status as received.
+   * @param packet received packet
+   */
   public void denyLogin(WrappedPacket packet) {
 
     LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet.getPacket();

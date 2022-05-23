@@ -208,6 +208,10 @@ public class EndpointServer {
     }
   }
 
+  /**
+   * broadcasts a message to all players.
+   * @param wrappedPacket message packet.
+   */
   public void broadcastMessage(WrappedPacket wrappedPacket) {
     Session client;
 
@@ -223,6 +227,11 @@ public class EndpointServer {
     }
   }
 
+  /**
+   * adds username and a client session to the hash map username2session.
+   * @param username
+   * @param client
+   */
   public void addUsernameSession(String username, Session client) {
     username2Session.put(username, client);
   }
@@ -282,6 +291,11 @@ public class EndpointServer {
 
   }
 
+  /**
+   * handles an occurring error.
+   * @param ses session
+   * @param t error
+   */
   @OnError
   public void onError(Session ses, Throwable t) {
     System.out.println("HI FROM CRASH");

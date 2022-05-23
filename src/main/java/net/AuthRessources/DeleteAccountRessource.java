@@ -19,6 +19,11 @@ import net.server.DbServer;
 @Path(("/deleteAccount/"))
 public class DeleteAccountRessource {
 
+  /**
+   * This method registers and processes a delete account request packet.
+   * @param wrappedPacket
+   * @return response on the delete account request
+   */
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)

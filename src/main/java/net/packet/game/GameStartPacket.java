@@ -32,6 +32,10 @@ public class GameStartPacket extends Packet {
     this.gameMode = null;
   }
 
+  /**
+   * Initializes the GameStartPacket with the corresponding game state.
+   * @param gameState
+   */
   public GameStartPacket(GameState gameState) {
     this.gameMode = gameState.getGameMode();
 
@@ -52,6 +56,10 @@ public class GameStartPacket extends Packet {
     return gameMode;
   }
 
+  /**
+   * gets the game state from the attributes.
+   * @return game state
+   */
   public GameState getGameState() {
 
     ArrayList<Player> players = this.playerList;

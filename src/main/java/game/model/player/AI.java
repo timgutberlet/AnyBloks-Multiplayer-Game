@@ -178,7 +178,7 @@ public class AI {
     if (gameState.getRound() < roundSections[gameModeNumber][0] + 1) {
       return calculateNextHardMoveRoomDiscovery(gameState, player);
     } else if (gameState.getRound() < roundSections[gameModeNumber][1] + 1) {
-      return calculateNextHardMoveReallyAggressive(gameState, player);
+      return calculateNextHardMoveAggressive(gameState, player);
     } else {
       return calculateNextHardMoveMCTS(gameState, player);
     }
@@ -226,8 +226,7 @@ public class AI {
    * @return "best" turn
    */
   public static Turn calculateNextHardMoveAggressive(GameState gameState, Player player) {
-    return calculateNextMiddleMove(gameState.getBoard(), gameState.getRemainingPolys(player),
-        gameState.isFirstRound());
+    return calculateNextHardMove(gameState,player);
   }
 
   /**

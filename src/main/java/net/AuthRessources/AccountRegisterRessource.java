@@ -12,13 +12,18 @@ import net.packet.account.CreateAccountRequestPacket;
 import net.server.DbServer;
 
 /**
- * Class to be used in REST Server to create Accounts
+ * Class to be used in REST Server to create Accounts.
  *
  * @author tbuscher
  */
 @Path(("/register/"))
 public class AccountRegisterRessource {
 
+  /**
+   * This method registers and processes a create account request packet.
+   * @param wrappedPacket
+   * @return response on the create account request
+   */
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)

@@ -40,7 +40,10 @@ public class EndpointClient {
   private ClientHandler clientHandler;
   private Player player;
 
-  //used to add the bots, therefore initLocalGame() not needed
+	/**
+	 * used to add the bots, therefore initLocalGame() not needed.
+	 */
+
   public EndpointClient(Player player) {
     super();
     this.player = player;
@@ -51,6 +54,11 @@ public class EndpointClient {
     this.gameSession.setClientHandler(this.clientHandler);
   }
 
+	/**
+	 * shows local lobby ui controller and initialises the local game for the given player.
+	 * @param localLobbyUiController lobby controller
+	 * @param player given player
+	 */
 	public EndpointClient(LocalLobbyUiController localLobbyUiController, Player player) {
 		super();
 		this.player = player;
@@ -64,6 +72,12 @@ public class EndpointClient {
 
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
+
+	/**
+	 * shows the tutorial ui controller and initializes the tutorial game.
+	 * @param localLobbyUiController lobby controller
+	 * @param player player
+	 */
 	public EndpointClient(TutorialUiController localLobbyUiController, Player player) {
 		super();
 		this.player = player;
@@ -77,6 +91,12 @@ public class EndpointClient {
 
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
+
+	/**
+	 * shows host lobby ui controller and initialises the game for the given player.
+	 * @param localLobbyUiController lobby controller
+	 * @param player given player
+	 */
 	public EndpointClient(HostLobbyUiController localLobbyUiController, Player player) {
 		super();
 		this.player = player;
@@ -91,6 +111,12 @@ public class EndpointClient {
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
 
+	/**
+	 * shows join lobby ui controller and initialises the game for the given player.
+	 * @param joinLobbyUiController lobby controller
+	 * @param player given player
+	 * @param ip ip address where to join
+	 */
 	public EndpointClient(JoinLobbyUiController joinLobbyUiController, Player player, String ip) {
 		super();
 		this.player = player;
@@ -105,6 +131,13 @@ public class EndpointClient {
 		Debug.printMessage(this, "EndpointClient created from GUI 2");
 	}
 
+	/**
+	 * shows join authenticated lobby ui controller, where the lobby of the game is shown.
+	 * @param joinAuthController controller
+	 * @param player player
+	 * @param ip ip address
+	 * @param token authentication token
+	 */
 	public EndpointClient(JoinAuthController joinAuthController, Player player, String ip, String token) {
 		super();
 		this.player = player;
@@ -144,6 +177,11 @@ public class EndpointClient {
 
 	}
 
+	/**
+	 * Handles if an error occurs.
+	 * @param t error
+	 * @param ses session
+	 */
 	@OnError
 	public void onError(Throwable t, final Session ses){
 		System.out.println("Hi from ClientSideOnError()");
@@ -151,6 +189,11 @@ public class EndpointClient {
 		gameSession.setGotKicked(true);
 	}
 
+	/**
+	 * handles incoming packets.
+	 * @param packet packet
+	 * @param ses session
+	 */
   @OnMessage
   public void onMessage(final WrappedPacket packet, Session ses) {
     LOG.info(this.player.getUsername()

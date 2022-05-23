@@ -22,6 +22,11 @@ import net.server.DbServer;
 @Path(("/authentication/"))
 public class TokenGenerationRessource {
 
+  /**
+   * This method registers and processes a restful login packet.
+   * @param wrappedPacket
+   * @return response on the restful login packet
+   */
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)

@@ -103,6 +103,12 @@ public class InboundServerHandler {
 
   }
 
+  /**
+   * converts a login request packet into the send attributes and adds the user to the session.
+   * @param wrappedPacket received packet
+   * @param session actual session
+   * @return a string array out of the success boolean and the username
+   */
   public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
@@ -220,6 +226,10 @@ public class InboundServerHandler {
     return errorMessage;
   }
 
+  /**
+   * starts the game out of the game init packet.
+   * @param wrappedPacket init game packet.
+   */
   public void startGame(WrappedPacket wrappedPacket) {
 
     InitGamePacket initGamePacket = (InitGamePacket) wrappedPacket.getPacket();

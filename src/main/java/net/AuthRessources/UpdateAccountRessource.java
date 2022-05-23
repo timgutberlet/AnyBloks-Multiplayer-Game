@@ -19,6 +19,11 @@ import net.server.DbServer;
 @Path(("/updateAccount/"))
 public class UpdateAccountRessource {
 
+  /**
+   * This method registers and processes an update account request packet.
+   * @param wrappedPacket
+   * @return response on the update account request
+   */
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import net.packet.abstr.Packet;
 
 /**
- * Packet sent by server to all players specifying the order of all players
+ * Packet sent by server to all players specifying the order of all players.
  *
  * @author tbuscher
  */

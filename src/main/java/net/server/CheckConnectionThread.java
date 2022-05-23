@@ -24,6 +24,13 @@ public class CheckConnectionThread extends Thread {
   private Boolean connectionCrashed = false;
 
 
+  /**
+   * initializes a new check connection thread out of a game session, the considered username and
+   * the serverEndpoint.
+   * @param gameSession
+   * @param username
+   * @param serverEndpoint
+   */
   public CheckConnectionThread(GameSession gameSession, String username,
       EndpointServer serverEndpoint) {
 
@@ -40,6 +47,9 @@ public class CheckConnectionThread extends Thread {
 
   }
 
+  /**
+   * starts the thread.
+   */
   public void run() {
     int threshold = 10;
 
