@@ -32,35 +32,43 @@ public class MusicThread extends Thread{
    * Constructor for Music thread
    */
   public MusicThread(){
-    media = new Media(getClass().getResource("/music/Tetris.mp3").toExternalForm());
-    mediaPlayer = new MediaPlayer(media);
-    mediaPlayer.setCycleCount(10000);
-    stopMusic = false;
+    try{
+      media = new Media(getClass().getResource("/music/Tetris.mp3").toExternalForm());
+      mediaPlayer = new MediaPlayer(media);
+      mediaPlayer.setCycleCount(10000);
+      stopMusic = false;
+    }catch (Exception e){
+
+    }
   }
   /**
    * Run Method for thread
    */
   @Override
   public void run() {
-    while (!this.isInterrupted()){
-      if(Config.getStringValue("MUSIC").equals("ON")){
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setMute(false);
-        stopMusic = false;
-        while (!stopMusic && (count - 8300) < 0) {
-          count += 10;
-          if (!Config.getStringValue("MUSIC").equals("ON")) {
-            mediaPlayer.setMute(true);
-            stopMusic = true;
+    try {
+      while (!this.isInterrupted()) {
+        if (Config.getStringValue("MUSIC").equals("ON")) {
+          mediaPlayer.setAutoPlay(true);
+          mediaPlayer.setMute(false);
+          stopMusic = false;
+          while (!stopMusic && (count - 8300) < 0) {
+            count += 10;
+            if (!Config.getStringValue("MUSIC").equals("ON")) {
+              mediaPlayer.setMute(true);
+              stopMusic = true;
+            }
+            try {
+              Thread.sleep(10);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
           }
-          try {
-            Thread.sleep(10);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
+          count = 0;
         }
-        count = 0;
       }
+    }catch (Exception e){
+
     }
   }
 }
