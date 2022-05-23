@@ -160,7 +160,7 @@ public class HostLobbyUiController extends AbstractUiController {
    * name of Hostplayer.
    */
   @FXML
-  private Label nameHostPlayer;
+  private Label hostPlayerName;
   /**
    * Name of Player one.
    */

@@ -195,6 +195,9 @@ public abstract class InGameUiController extends AbstractUiController {
     content.getChildren().add(boardPane);
   }
 
+  /**
+   *
+   */
   private void setUpUi() {
 
     switch (Config.getStringValue("THEME")) {
