@@ -33,6 +33,7 @@ import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.LobbyScoreBoardPacket;
+import net.packet.game.PlayerKickPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.PlayerQuitPacket;
 import net.packet.game.RequestTurnPacket;
@@ -47,9 +48,9 @@ import net.transmission.EndpointClient;
  */
 public class ClientHandler {
 
-  private final EndpointClient client;
-  private final Player player;
-  private final GameSession gameSession;
+  private EndpointClient client;
+  private Player player;
+  private GameSession gameSession;
   private Session session;
 
   /**
@@ -393,6 +394,24 @@ public class ClientHandler {
 
   }
 
+  public void kickClient(Player player){
+    PlayerKickPacket playerKickPacket = new PlayerKickPacket(player.getUsername());
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_KICK_PACKET,playerKickPacket);
+
+    this.client.sendToServer(wrappedPacket);
+  }
+
+  public void disconnectClient(WrappedPacket packet){
+    PlayerKickPacket playerKickPacket = (PlayerKickPacket) packet.getPacket();
+
+    if(this.player.equals(playerKickPacket.getUsername())){
+      this.gameSession.setPlayerKicked(true);
+      disconnectClient();
+      this.gameSession.setPlayerKicked(false);
+    }
+
+  }
+
   /**
    * sends a disconnect message to the server
    */
@@ -404,6 +423,13 @@ public class ClientHandler {
 
     this.client.sendToServer(wrappedPacket);
 
+
+
+    this.client.setGameSession(null);
+    this.client.setPlayer(null);
+    this.gameSession = null;
+    this.client = null;
+    this.player = null;
   }
 
 

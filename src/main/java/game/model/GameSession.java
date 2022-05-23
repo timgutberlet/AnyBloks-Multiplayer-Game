@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.URI;
 import java.net.UnknownHostException;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,7 +33,6 @@ import net.server.HostServer;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
 import net.transmission.EndpointClient;
-import org.eclipse.jetty.server.Server;
 
 /**
  * a session is the central place taking care of players joining, starting a game, selecting
@@ -60,6 +58,7 @@ public class GameSession {
   private int numOfBots = 0;
   private Player localPlayer;
   private Boolean localPlayerTurn = false;
+  private Boolean playerKicked = false;
 
   private Boolean updatingGameState = false;
 
@@ -200,15 +199,17 @@ public class GameSession {
   public Game startGameServer() {
 
     //Debug.printMessage("DAS GAME WIRD HIER GESTARTET");
-
+    System.out.println("Server gamesession 1: " + this);
     if(this.defaultAI == null){
       this.defaultAI = PlayerType.AI_MIDDLE;
     }
+    System.out.println("Server gamesession 2: " + this);
     //while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
     GameMode gameMode = this.gameList.pop();
     Debug.printMessage("Needed players: " + gameMode.getNeededPlayers());
     Debug.printMessage("Current player size: " + this.getPlayerList().size());
     int numPlayersToAdd = gameMode.getNeededPlayers() - this.getPlayerList().size();
+    System.out.println("Server gamesession 3: " + this);
 
     if (numPlayersToAdd > 0) {
       Debug.printMessage("Players to be added:" + numPlayersToAdd);
@@ -230,6 +231,7 @@ public class GameSession {
           this.addBot(this.defaultAI);
         }
       }
+      System.out.println("Server gamesession 4: " + this);
     } else {
       //In this case there are too many players, so some need to be kicked
       int playerToRemove = (-1) * numPlayersToAdd;
@@ -244,10 +246,11 @@ public class GameSession {
           e.printStackTrace();
         }
       }
+      System.out.println("Server gamesession 4.1: " + this);
     }
 
       Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
-
+    System.out.println("Server gamesession 5: " + this);
     try {
       Debug.printMessage(this, "Waiting for clients to establish connection");
       TimeUnit.SECONDS.sleep(5);
@@ -255,10 +258,10 @@ public class GameSession {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-
+    System.out.println("Server gamesession 6: " + this);
     this.game = new Game(this, gameMode, true);
     this.game.startGame();
-
+    System.out.println("Server gamesession 7: " + this);
     return this.game;
   }
 
@@ -436,7 +439,7 @@ public class GameSession {
    *
    * @param username username
    */
-  public void changePlayer2AI(String username) {
+  public void changePlayer2Ai(String username) {
     for (Player player : this.playerList) {
       if (player.getUsername().equals(username)) {
         player.setAI(true);
@@ -870,23 +873,39 @@ public class GameSession {
   }
 
   /**
-   * function that helps to output the most relevant information of a session.
-   *
-   * @return String
-   * @author tgeilen
+   * setter.
+   * @param playerKicked
    */
-  @Override
-  public String toString() {
-    String str = "[SESSION INFO] \n";
-
-    for (Player p : this.playerList) {
-      str +=
-          p.getUsername() + "  |  " + p.getType() + "  |  " + this.scoreboard.get(p.getUsername())
-              + "\n";
-    }
-
-    return str;
+  public void setPlayerKicked(Boolean playerKicked) {
+    this.playerKicked = playerKicked;
   }
+
+  /**
+   * getter.
+   * @return
+   */
+  public Boolean isPlayerKicked() {
+    return playerKicked;
+  }
+
+  //  /**
+//   * function that helps to output the most relevant information of a session.
+//   *
+//   * @return String
+//   * @author tgeilen
+//   */
+//  @Override
+//  public String toString() {
+//    String str = "[SESSION INFO] \n";
+//
+//    for (Player p : this.playerList) {
+//      str +=
+//          p.getUsername() + "  |  " + p.getType() + "  |  " + this.scoreboard.get(p.getUsername())
+//              + "\n";
+//    }
+//
+//    return str;
+//  }
 
   /**
    * Setter.

@@ -21,7 +21,7 @@
           <children>
             <GridPane prefHeight="93.0" prefWidth="1280.0" GridPane.rowIndex="1">
               <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="110.0" text="BACK">
+                <Button alignment="CENTER" contentDisplay="CENTER" onAction="#back" mnemonicParsing="false" prefHeight="50.0" prefWidth="110.0" text="BACK">
                   <GridPane.margin>
                     <Insets />
                   </GridPane.margin>

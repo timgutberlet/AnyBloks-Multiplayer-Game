@@ -147,11 +147,12 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void back() {
-    gameSession.stopSession();
+
+    System.out.println("Disconnecting client");
     gameSession.clientHandler.disconnectClient();
-
-
-
+    System.out.println("Stopping session");
+    gameSession.stopSession();
+    System.out.println("Changing UI");
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
@@ -240,6 +241,9 @@ public class JoinLobbyUiController extends AbstractUiController {
     //Debug.printMessage("Gamesession: " + this.gameSession);
     if (this.gameSession.isGameStarted()) {
 
+      if(this.gameSession.getGame() == null){
+        System.out.println("gs is null");
+      }
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
       this.gameSession.setGameStarted(false);
@@ -265,6 +269,12 @@ public class JoinLobbyUiController extends AbstractUiController {
       gameController.setActiveUiController(new HostQuitUiController(gameController, gameSession));
       gameSession.setHostQuit(false);
 
+    }
+
+    if (gameSession.isPlayerKicked()) {
+      //The host has left, so the user is sent to proper screen
+      Debug.printMessage("The player has been kicked");
+      gameController.setActiveUiController(new MainMenuUiController(gameController));
     }
   }
 

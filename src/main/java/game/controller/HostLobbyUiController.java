@@ -47,6 +47,7 @@ import javafx.scene.text.Text;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.game.HostQuitPacket;
+import net.packet.game.PlayerKickPacket;
 import net.server.ClientHandler;
 import net.server.HostServer;
 import net.tests.NoLogging;
@@ -206,7 +207,7 @@ public class HostLobbyUiController extends AbstractUiController {
     alreadyInChat = new ArrayList<>();
     HostServer hostServer = new HostServer();
     try {
-      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+     // org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       //Debug.printMessage("[testChatServer] Server is running");
       //TimeUnit.SECONDS.sleep(3);
@@ -299,7 +300,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void kickPlayer1() {
-
+  gameSession.clientHandler.kickClient(gameSession.getPlayerList().get(1));
   }
 
   /**
@@ -307,10 +308,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void kickPlayer2() {
-    //Kicking a remote Player
-    Player playerToKick = gameSession.getPlayerList().get(1);
-    //Kick player out of username2Session
-    gameSession.getInboundServerHandler().getServer().dropUser(playerToKick.getUsername());
+    gameSession.clientHandler.kickClient(gameSession.getPlayerList().get(2));
   }
 
   /**
@@ -318,7 +316,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void kickPlayer3() {
-
+    gameSession.clientHandler.kickClient(gameSession.getPlayerList().get(3));
   }
 
   /**
@@ -347,7 +345,7 @@ public class HostLobbyUiController extends AbstractUiController {
 
     Debug.printMessage("change UI controller!");
 
-    gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession));
+    gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession, true));
   }
 
   /**

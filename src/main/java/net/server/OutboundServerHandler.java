@@ -22,6 +22,7 @@ import net.packet.game.GameStartPacket;
 import net.packet.game.GameUpdatePacket;
 import net.packet.game.GameWinPacket;
 import net.packet.game.HostQuitPacket;
+import net.packet.game.PlayerKickPacket;
 import net.packet.game.RequestTurnPacket;
 import net.transmission.EndpointServer;
 
@@ -237,9 +238,27 @@ public class OutboundServerHandler {
 
   }
 
+  /**
+   * broadcasts a chat to all clients.
+   * @param wrappedPacket
+   */
   public void broadcastChatMessage(WrappedPacket wrappedPacket) {
     this.server.broadcastMessage(wrappedPacket);
   }
+
+  /**
+   * kicks a player from the server.
+   * @param username
+   */
+  public void kickPlayer(String username){
+    PlayerKickPacket playerKickPacket = new PlayerKickPacket(username);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_KICK_PACKET,playerKickPacket);
+
+    this.server.sendMessage(wrappedPacket, username);
+
+  }
+
+
 
 
 }

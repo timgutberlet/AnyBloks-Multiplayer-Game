@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 public class EndpointClient {
 
-  private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
+  //private static final Logger LOG = LoggerFactory.getLogger(EndpointClient.class);
   private Session server;
   private GameSession gameSession;
   private ClientHandler clientHandler;
@@ -196,9 +196,13 @@ public class EndpointClient {
 	 */
   @OnMessage
   public void onMessage(final WrappedPacket packet, Session ses) {
-    LOG.info(this.player.getUsername()
-            + ": A packet has been sent here by the server, it is of the type: {} send by {}",
-        packet.getPacketType().toString(), ses.getId());
+
+		System.out.println("Client gamesession: " + this.gameSession);
+
+
+   // LOG.info(this.player.getUsername()
+   //         + ": A packet has been sent here by the server, it is of the type: {} send by {}",
+   //     packet.getPacketType().toString(), ses.getId());
     PacketType type = packet.getPacketType();
     switch (type) {
       case PLAYER_ORDER_PACKET:
@@ -248,6 +252,11 @@ public class EndpointClient {
 
 			case LOGIN_RESPONSE_PACKET:
 					this.clientHandler.denyLogin(packet);
+					break;
+
+			case PLAYER_KICK_PACKET:
+				this.clientHandler.disconnectClient(packet);
+				break;
 
       //
     }
@@ -299,14 +308,29 @@ public class EndpointClient {
     Debug.printMessage(this, "I have sent something to the server...");
   }
 
+	/**
+	 * getter.
+	 *
+	 * @return
+	 */
   public GameSession getGameSession() {
     return gameSession;
   }
 
+	/**
+	 * getter.
+	 *
+	 * @return
+	 */
   public Player getPlayer() {
     return player;
   }
 
+	/**
+	 * getter.
+	 *
+	 * @return
+	 */
 	public ClientHandler getClientHandler() {
 		return this.clientHandler;
 	}
@@ -318,6 +342,24 @@ public class EndpointClient {
 	 */
 	public Session getSession(){
 		return server;
+	}
+
+
+	/**
+	 * setter.
+	 * @param gameSession
+	 */
+	public void setGameSession(GameSession gameSession) {
+		this.gameSession = gameSession;
+	}
+
+	/**
+	 * setter.
+	 *
+	 * @param player
+	 */
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }
 

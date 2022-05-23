@@ -541,11 +541,14 @@ public abstract class InGameUiController extends AbstractUiController {
     Debug.printMessage(
         "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
+      //Player is the host
       this.gameSession.getClientHandler().getClient()
           .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
-      gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession));
+      gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession,true));
     } else {
-      //TODO add client leave logic
+      //Player is a remote player
+      this.gameSession.getClientHandler().disconnectClient();
+      gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession,false));
     }
   }
 

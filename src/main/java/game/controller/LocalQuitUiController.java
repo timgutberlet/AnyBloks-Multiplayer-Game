@@ -35,7 +35,7 @@ public class LocalQuitUiController extends AbstractUiController {
    * @param gameController AbstractGameController
    * @author tgutberl
    */
-  public LocalQuitUiController(AbstractGameController gameController, GameSession gameSession) {
+  public LocalQuitUiController(AbstractGameController gameController, GameSession gameSession, Boolean host) {
     super(gameController);
     this.gameController = gameController;
     this.gameSession = gameSession;
@@ -47,9 +47,23 @@ public class LocalQuitUiController extends AbstractUiController {
       e.printStackTrace();
     }
     init(super.root);
+    //Make sure that all clients have left.
+    if(host) {
+      try {
+        TimeUnit.MILLISECONDS.sleep(5000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      //now that all clients have left, reset & stop the server
+      gameSession.getHostServer().stopWebsocket();
+    }
+    try {
+      TimeUnit.MILLISECONDS.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
   }
-
   /**
    * Method to initialize the FXML.
    *

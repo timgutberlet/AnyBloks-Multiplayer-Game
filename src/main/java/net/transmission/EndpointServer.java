@@ -1,8 +1,6 @@
 package net.transmission;
 
 
-import static game.model.GameSession.currentGameIds;
-
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.chat.Chat;
@@ -11,8 +9,6 @@ import game.model.player.PlayerType;
 import game.scores.GameScoreBoard;
 import game.scores.GameSessionScoreBoard;
 import java.io.IOException;
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -97,8 +93,10 @@ public class EndpointServer {
     sessions.add(ses);
     ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
     ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
+    if(gameSession == null){
+      gameSession = new GameSession();
+    }
 
-    gameSession = new GameSession();
     this.inboundServerHandler = new InboundServerHandler(this, gameSession);
     this.outboundServerHandler = new OutboundServerHandler(this, gameSession);
     try {
@@ -134,13 +132,15 @@ public class EndpointServer {
   public void onMessage(final WrappedPacket packet, final Session client)
       throws IOException, EncodeException {
 
+    System.out.println("Server gamesession: " + gameSession);
+
     PacketType type = packet.getPacketType();
 
 
     Debug.printMessage(this, type.name());
     Debug.printMessage(this,"Endpoint received message");
-    LOG.info("A packet has been sent here by a client, it is of the type: {} send by {}",
-        packet.getPacketType().toString(), client.getId());
+    //LOG.info("A packet has been sent here by a client, it is of the type: {} send by {}",
+    //    packet.getPacketType().toString(), client.getId());
 
     String username = packet.getUsername();
     String authToken = packet.getToken();
@@ -201,11 +201,13 @@ public class EndpointServer {
             e.printStackTrace();
           }
           inboundServerHandler.getServer().resetEndpointServer();
-
           break;
         case PLAYER_QUIT_PACKET:
           inboundServerHandler.disconnectClient(client, packet);
           break;
+
+        case PLAYER_KICK_PACKET:
+          inboundServerHandler.kickClient(client,packet);
 
         default:
           Debug.printMessage("Received a packet of type: " + type);
@@ -229,7 +231,7 @@ public class EndpointServer {
       this.sendMessage(wrappedPacket, client);
     } catch (Exception e) {
       Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
-      gameSession.changePlayer2AI(username);
+      gameSession.changePlayer2Ai(username);
       //e.printStackTrace();
     }
   }
@@ -250,7 +252,7 @@ public class EndpointServer {
       Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
       for (String username : this.getUsername2Session().keySet()) {
         if (client.equals(this.getUsername2Session().get(username))) {
-          gameSession.changePlayer2AI(username);
+          gameSession.changePlayer2Ai(username);
         }
       }
 
@@ -271,7 +273,7 @@ public class EndpointServer {
         client.getBasicRemote().sendObject(wrappedPacket);
       } catch (Exception e) {
         Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
-        gameSession.changePlayer2AI(username);
+        gameSession.changePlayer2Ai(username);
         //e.printStackTrace();
       }
     }

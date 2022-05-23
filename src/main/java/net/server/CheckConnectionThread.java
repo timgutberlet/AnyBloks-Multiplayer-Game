@@ -70,7 +70,7 @@ public class CheckConnectionThread extends Thread {
       } catch (Exception e) {
         this.connectionCrashed = true;
         Debug.printMessage(this, "THE SERVER LOST CONNECTION TO " + this.username);
-        this.gameSession.changePlayer2AI(this.username);
+        this.gameSession.changePlayer2Ai(this.username);
         e.printStackTrace();
 
       }
@@ -88,7 +88,7 @@ public class CheckConnectionThread extends Thread {
     if (this.requestCounter >= threshold) {
       Debug.printMessage(this,
           "THE SERVER LOST CONNECTION TO " + this.username + "WITHOUT EXCEPTION");
-      this.gameSession.changePlayer2AI(this.username);
+      this.gameSession.changePlayer2Ai(this.username);
     }
 
   }
