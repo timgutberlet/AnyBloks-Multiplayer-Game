@@ -24,6 +24,11 @@ import javafx.scene.layout.AnchorPane;
  */
 public class SettingUiController extends AbstractUiController {
   /**
+   * Button to enable/Disable Tooltips in Game
+   */
+  @FXML
+  Button tooltips;
+  /**
    * Button to set Music on
    */
   @FXML
@@ -154,6 +159,10 @@ public class SettingUiController extends AbstractUiController {
     themeBox.setValue(Config.getStringValue("THEME"));
     save("Successfully Resettet");
   }
+
+  /**
+   * Button to enable/disable the music
+   */
   @FXML
   private void musicPush(){
     if(Config.getStringValue("MUSIC").equals("ON")){
@@ -162,6 +171,20 @@ public class SettingUiController extends AbstractUiController {
     }else{
       music.setText("STOP MUSIC");
       Config.set("MUSIC", "ON");
+    }
+  }
+
+  /**
+   * Button to enable/disable tooltips
+   */
+  @FXML
+  private void tooltipPush(){
+    if(Config.getStringValue("TOOLTIPS").equals("ON")){
+      music.setText("DISBALE TOOLTIPS");
+      Config.set("TOOLTIPS", "OFF");
+    }else{
+      music.setText("ENABLE TOOLTIPS");
+      Config.set("TOOLTIPS", "ON");
     }
   }
 

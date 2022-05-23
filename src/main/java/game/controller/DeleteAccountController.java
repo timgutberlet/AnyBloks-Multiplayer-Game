@@ -5,8 +5,6 @@ import engine.controller.AbstractUiController;
 import game.config.Config;
 import game.model.Debug;
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -61,7 +59,11 @@ public class DeleteAccountController extends AbstractUiController {
    * Error Textfield used for informing the user of errors.
    */
   @FXML
-  Text usernameError, passwordError, ipError;
+  Text usernameError;
+  @FXML
+  Text passwordError;
+  @FXML
+  Text ipError;
 
   /**
    * Constructor used for setting the gamecontroller and initating.
@@ -199,7 +201,7 @@ public class DeleteAccountController extends AbstractUiController {
   }
 
   /**
-   * Override onExit Method
+   * Override onExit Method.
    */
   @Override
   public void onExit() {
@@ -207,7 +209,7 @@ public class DeleteAccountController extends AbstractUiController {
   }
 
   /**
-   * Override Update Method
+   * Override Update Method.
    *
    * @param gameController GameController of game
    */
@@ -217,7 +219,7 @@ public class DeleteAccountController extends AbstractUiController {
   }
 
   /**
-   * Override Intialize Class
+   * Override Intialize Class.
    */
   @FXML
   public void initialize() {

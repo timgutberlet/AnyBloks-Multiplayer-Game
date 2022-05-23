@@ -355,7 +355,6 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void close() {
-    gameSession.stopSession();
     Config.saveProperty();
     System.exit(0);
   }

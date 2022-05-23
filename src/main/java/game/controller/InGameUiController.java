@@ -111,18 +111,27 @@ public abstract class InGameUiController extends AbstractUiController {
   /**
    * Chat area.
    */
-  @FXML
   private TextArea chat;
   /**
    * Text field for chat input.
    */
-  @FXML
   private TextField chatInput;
   /**
    * Checks if Chat Selected
    */
   private Boolean chatSelected = false;
+  /**
+   * Checks if Ai is calulating
+   */
   private boolean aiCalcRunning;
+  /**
+   * This Label informs the User, why a certain move was possible / impossible.
+   */
+  private Label errorLabel;
+  /**
+   * Text that should be written into the Label each frame
+   */
+  private String errorLabelText = "";
   private Player localPlayer;
   private ArrayList<int[]> possibleFields;
   private Boolean submitRequested;
@@ -192,8 +201,15 @@ public abstract class InGameUiController extends AbstractUiController {
         boardPane = new TrigonBoardPane(game.getGameState().getBoard(), inputHandler,
             stage.getWidth());
         break;
+      default:
+        break;
     }
-
+    boardPane.setPadding(new Insets(15, 15, 15, 15));
+    errorLabel = new Label("This is the Error Label");
+    errorLabel.setPrefHeight(20);
+    errorLabel.setPrefWidth(350);
+    errorLabel.setFont(Font.font("System", 15));
+    boardPane.getChildren().add(errorLabel);
     content.getChildren().add(boardPane);
   }
 
@@ -468,6 +484,8 @@ public abstract class InGameUiController extends AbstractUiController {
     switch (Config.getStringValue("THEME")) {
       case "BRIGHT":
         topPane.setStyle("-fx-background-color:#FF4B4B;");
+        errorLabel.setStyle((
+            "-fx-background-color: #FF4B4B; -fx-background-radius: 5; -fx-text-fill: #FFFFFF;"));
         dragLabel.setStyle("-fx-background-color:#FF4B4B; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
@@ -476,6 +494,8 @@ public abstract class InGameUiController extends AbstractUiController {
         topPane.setStyle("-fx-background-color:#F0B27A;");
         boardPane.setStyle("-fx-background-color:#383837;");
         turn.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-text-fill: #000000; ");
+        errorLabel.setStyle((
+            "-fx-background-color: #ffffff; -fx-background-radius: 5; -fx-text-fill: #000000;"));
         chatPane.setStyle("-fx-background-color:#383837;");
         dragLabel.setStyle("-fx-background-color:#F0B27A; -fx-text-fill: #000000;-fx-background-radius: 10;");
         buttonBox.setStyle("-fx-background-color:#383837;");
@@ -488,6 +508,8 @@ public abstract class InGameUiController extends AbstractUiController {
         break;
       case "INTEGRA":
         topPane.setStyle("-fx-background-color:#FF8000;");
+        errorLabel.setStyle((
+            "-fx-background-color: #FF8000; -fx-background-radius: 5; -fx-text-fill: #FFFFFF;"));
         dragLabel.setStyle("-fx-background-color:#FF8000; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
@@ -495,7 +517,9 @@ public abstract class InGameUiController extends AbstractUiController {
       case "THINC!":
         topPane.setStyle("-fx-background-color:#0A123D;");
         chatPane.setStyle("-fx-background-color:#D8EFFF;");
-        dragLabel.setStyle("-fx-background-color:#0A123D; -fx-background-color: #FFFFFF; -fx-background-radius: 10;");
+        errorLabel.setStyle((
+            "-fx-background-color: #0A123D; -fx-background-radius: 5; -fx-text-fill: #000000;"));
+        dragLabel.setStyle("-fx-background-color:#0A123D; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         buttonBox.setStyle("-fx-background-color:#D8EFFF;");
         anchorPane.setStyle("-fx-background-color:#D8EFFF;");
         content.setStyle("-fx-background-color:#D8EFFF;");
@@ -572,7 +596,14 @@ public abstract class InGameUiController extends AbstractUiController {
         }
         break;
     }
-
+    errorLabel.setText(errorLabelText);
+    stacks.getChildren().add(errorLabel);
+    if(Config.getStringValue("TOOLTIPS").equals("OFF")){
+      errorLabel.setVisible(false);
+    }
+    else {
+      errorLabel.setVisible(true);
+    }
   }
 
   /**
@@ -603,14 +634,13 @@ public abstract class InGameUiController extends AbstractUiController {
     }
     this.chat.appendText(help);
 
-    boardPane.repaint(game.getGameState().getBoard());
-
     localPlayer = gameSession.getLocalPlayer();
 
     aiCalcRunning = game.getCurrentPlayer().getAiCalcRunning();
-
     //Check if AI is calculating - only refresh Board then
-    if (aiCalcRunning) {
+    if (!this.gameSession.isLocalPlayerTurn()) {
+      boardPane.repaint(game.getGameState().getBoard());
+      errorLabelText = "  Please wait while the other Players are playing!";
       skipTurnButton.setVisible(false);
       if (!game.getGameState().playsTurn()) {
         Debug.printMessage(this, "" + game.getGameState().playsTurn());
@@ -648,6 +678,7 @@ public abstract class InGameUiController extends AbstractUiController {
           for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
               .getPolyPanes()) {
             if (inputHandler.isPolyClicked(polyPane)) {
+              errorLabelText = "  Drag the Poly to a possible Position (it lights up)!";
               chatSelected = false;
               if (dragablePolyPane != null) {
                 root.getChildren().remove(dragablePolyPane);
@@ -694,6 +725,9 @@ public abstract class InGameUiController extends AbstractUiController {
               possibleFields = game.getGameState().getBoard()
                   .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
                       game.getGameState().isFirstRound());
+            }
+            else{
+              errorLabelText = "  Please click on a Poly (Your Color: " + this.game.getGameState().getColorFromPlayer(localPlayer).toString() + ")";
             }
           }
 
@@ -742,22 +776,28 @@ public abstract class InGameUiController extends AbstractUiController {
                   //change
                   if (game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(),
                       game.getGameState().isFirstRound())) {
+                    errorLabelText = "  Press Enter/Space to place the Poly here!";
                     dragablePolyPane.inncerCircleSetColor();
                     currentIntersection = true;
                     dragablePolyPane.rerender();
                     if (inputHandler.isKeyPressed(KeyCode.ENTER) || inputHandler.isKeyPressed(
                         KeyCode.SPACE) || submitRequested) {
+                      errorLabelText = "";
                       possibleFields = null;
                       boardPane.resetAllCheckFields();
                       Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
                       Debug.printMessage(""+turn.getPoly());
                       root.getChildren().remove(dragablePolyPane);
                       dragablePolyPane = null;
+                      this.gameSession.getGame().getGameState().playTurn(turn);
+                      refreshUi();
+                      boardPane.repaint(game.getGameState().getBoard());
                       localPlayer.setSelectedTurn(turn);
                     }
                   }
                 }
                 if (!currentIntersection) {
+                  errorLabelText = "  Drag the Poly to a possible Position where it lights up!";
                   dragablePolyPane.inncerCircleResetColor();
                   dragablePolyPane.rerender();
                 }
@@ -794,7 +834,7 @@ public abstract class InGameUiController extends AbstractUiController {
         /*
         /*if (localPlayer.getSelectedPoly() != null) {
           localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
-          Debug.printMessage("Localplayer Selected Poly");
+          Debug.out.println("Localplayer Selected Poly");
           //create helpArraylist containing the selectedPoly to check the possible Moves
           ArrayList<Poly> helpList = new ArrayList<>();
           helpList.add(localPlayer.getSelectedPoly());

@@ -10,6 +10,8 @@ import javafx.scene.Group;
 import javafx.scene.layout.AnchorPane;
 
 /**
+ * Ui Controlling controlling the CreditsView.
+ *
  * @author tgutberl
  */
 public class CreditsUiController extends AbstractUiController {
@@ -27,7 +29,7 @@ public class CreditsUiController extends AbstractUiController {
   /**
    * Construcotr used for setting gamecontroller.
    *
-   * @param gameController
+   * @param gameController Gamecontroller Object used throughout the Application
    * @author tgutberl
    */
   public CreditsUiController(AbstractGameController gameController) {
@@ -95,7 +97,7 @@ public class CreditsUiController extends AbstractUiController {
 
 
   /**
-   * Method for override on update
+   * Method for override on update.
    *
    * @author tgutberl
    */
@@ -105,7 +107,7 @@ public class CreditsUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on initalize
+   * Method for override on initalize.
    *
    * @author tgutberl
    */

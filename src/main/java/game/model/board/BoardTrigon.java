@@ -555,9 +555,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
     if (turn == null) {
       return false;
     }
-    if (isPolyPossible(turn.getX(), turn.getY(), turn.getIsRight(), turn.getPolyTrigon(),
-        isFirstRound)) {
-      Debug.printMessage("Poly size: " + turn.getPoly().getSize());
+
       if (turn.getPoly().getSize() > 6) {
         Debug.printMessage(
             "!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!");
@@ -570,8 +568,6 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
             ft.getPos()[2]).setColor(turn.getPolyTrigon().getColor());
       }
       return true;
-    }
-    return false;
   }
 
   /**

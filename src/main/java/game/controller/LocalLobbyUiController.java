@@ -367,7 +367,7 @@ public class LocalLobbyUiController extends AbstractUiController {
       this.clientHandler.startLocalGame(gameList, aiPlayers);
 
       try {
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(1);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -598,12 +598,6 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void close() {
-    try {
-      this.gameSession.stopSession();
-      gameController.getApplication().stop();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     Config.saveProperty();
     System.exit(0);
   }

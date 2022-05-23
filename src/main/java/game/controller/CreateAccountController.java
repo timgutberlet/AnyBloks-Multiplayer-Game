@@ -59,7 +59,13 @@ public class CreateAccountController extends AbstractUiController {
    * Error Variables used for informing the Player of wrong input.
    */
   @FXML
-  Text usernameError, passwordError1, passwordError2, ipError;
+  Text usernameError;
+  @FXML
+  Text passwordError1;
+  @FXML
+  Text passwordError2;
+  @FXML
+  Text ipError;
 
   /**
    * Used for setting the Gamecontroller and initiating.
@@ -110,6 +116,8 @@ public class CreateAccountController extends AbstractUiController {
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          break;
+        default:
           break;
       }
     } catch (IOException e) {

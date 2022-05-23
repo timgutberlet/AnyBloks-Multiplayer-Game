@@ -178,7 +178,7 @@ public class Player implements Serializable {
       this.aiCalcRunning = true;
 
       try {
-        TimeUnit.MILLISECONDS.sleep(200);
+        TimeUnit.MILLISECONDS.sleep(100);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -190,7 +190,7 @@ public class Player implements Serializable {
         try {
           //Debug.printMessage(this, this.getUsername() + " " + this);
           // Debug.printMessage(this, "A TURN NEEDS TO BE MADE");
-          Thread.sleep(10);
+          Thread.sleep(5);
           //Debug.printMessage(this, "Waiting for PlayerInput from this " + this);
         } catch (InterruptedException e) {
         }
@@ -202,6 +202,7 @@ public class Player implements Serializable {
       this.selectedTurn = null;
       this.aiCalcRunning = true;
       this.nullTurn = false;
+
       return returnTurn;
     }
   }

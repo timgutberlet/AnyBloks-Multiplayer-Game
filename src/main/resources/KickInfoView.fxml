@@ -24,7 +24,7 @@
             <GridPane GridPane.rowIndex="1" prefHeight="93.0" prefWidth="1280.0">
               <children>
                 <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#close"
-                  prefHeight="50.0" prefWidth="110.0" text="QUIT">
+                  prefHeight="50.0" prefWidth="110.0" text="CLOSE">
                   <font>
                     <Font size="25.0"/>
                   </font>

@@ -120,7 +120,7 @@ public class ClientHandler {
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
 
     try {
-      TimeUnit.MILLISECONDS.sleep(200);
+      TimeUnit.MILLISECONDS.sleep(100);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

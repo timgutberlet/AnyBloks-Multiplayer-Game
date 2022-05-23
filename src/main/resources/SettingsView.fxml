@@ -29,7 +29,7 @@
                   <Font size="25.0" />
                 </font>
               </Button>
-                     <Button mnemonicParsing="false" onAction="#close" prefHeight="60.0" prefWidth="150.0" text="QUIT" GridPane.columnIndex="2">
+                     <Button mnemonicParsing="false" onAction="#close" prefHeight="60.0" prefWidth="150.0" text="CLOSE" GridPane.columnIndex="2">
                         <font>
                            <Font size="25.0" />
                         </font>
@@ -203,20 +203,53 @@
                   </HBox>
                 </children>
               </VBox>
-                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="3">
+                     <GridPane GridPane.rowIndex="3">
+                       <columnConstraints>
+                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
                         <children>
-                           <Label text="Set Music (Enable Wifi)">
-                              <font>
-                                 <Font size="25.0" />
-                              </font>
-                           </Label>
-                           <Button fx:id="music" mnemonicParsing="false" onAction="#musicPush" text="Stop Music">
-                              <font>
-                                 <Font size="18.0" />
-                              </font>
-                           </Button>
+                           <VBox prefHeight="200.0" prefWidth="100.0">
+                              <children>
+                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                    <children>
+                                       <Label text="Set Music (Enable Wifi)">
+                                          <font>
+                                             <Font size="25.0" />
+                                          </font>
+                                       </Label>
+                                       <Button fx:id="music" mnemonicParsing="false" onAction="#musicPush" text="Stop Music">
+                                          <font>
+                                             <Font size="18.0" />
+                                          </font>
+                                       </Button>
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </VBox>
+                           <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                              <children>
+                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                    <children>
+                                       <Label text="Show Tooltips:">
+                                          <font>
+                                             <Font size="25.0" />
+                                          </font>
+                                       </Label>
+                                       <Button fx:id="tooltips" mnemonicParsing="false" onAction="#tooltipPush" text="Disable Toolstips">
+                                          <font>
+                                             <Font size="18.0" />
+                                          </font>
+                                       </Button>
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </VBox>
                         </children>
-                     </VBox>
+                     </GridPane>
             </children>
             <columnConstraints>
               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

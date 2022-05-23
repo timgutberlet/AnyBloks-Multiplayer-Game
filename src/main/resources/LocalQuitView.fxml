@@ -20,7 +20,7 @@
                <children>
                   <GridPane prefHeight="68.0" prefWidth="1280.0" GridPane.rowIndex="1">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="110.0" text="QUIT" GridPane.columnIndex="2">
+                        <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="110.0" text="CLOSE" GridPane.columnIndex="2">
                            <font>
                               <Font size="25.0" />
                            </font>
@@ -55,7 +55,7 @@
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                            <children>
-                              <Label text="You are such a great friend for leaving your friends...">
+                              <Label text="You just left the game before it was finished...">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
