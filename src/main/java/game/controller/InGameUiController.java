@@ -646,15 +646,21 @@ public abstract class InGameUiController extends AbstractUiController {
         refreshUi();
       }
     } else {
-      if(this.game.getGameState().getBoard().getPossibleFields(this.game.getGameState().getColorFromPlayer(localPlayer), this.gameSession.getGame().getGameState().isFirstRound()).size() == 0){
+      if (dragablePolyPane == null) {
+        boardPane.repaint(game.getGameState().getBoard());
+      }
+      if (this.game.getGameState().getBoard()
+          .getPossibleFields(this.game.getGameState().getColorFromPlayer(localPlayer),
+              this.gameSession.getGame().getGameState().isFirstRound()).size() == 0) {
         this.localPlayer.nullTurn();
         skipTurnButton.setVisible(false);
         errorLabelText = "You are out of moves and auto-skip turns now...";
-      };
+      }
+      ;
       if (this.game == null) {
         Debug.printMessage(this, "Game is null");
       }
-      if(!this.game.getGameState().isFirstRound()){
+      if (!this.game.getGameState().isFirstRound()) {
         skipTurnButton.setVisible(true);
       }
       if (!game.getGameState().playsTurn()) {
@@ -772,7 +778,6 @@ public abstract class InGameUiController extends AbstractUiController {
           }
           try {
             if (dragablePolyPane != null) {
-              boardPane.repaint(game.getGameState().getBoard());
               boolean currentIntersection = false;
               Bounds polyBounds = dragablePolyPane.getCheckPolyField()
                   .localToScene(dragablePolyPane.getCheckPolyField().getBoundsInLocal());
