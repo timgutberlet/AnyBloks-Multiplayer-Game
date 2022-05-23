@@ -42,9 +42,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
+import net.packet.game.HostQuitPacket;
 import net.server.ClientHandler;
 import net.server.HostServer;
-import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**
@@ -84,6 +86,26 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   private final GameSession gameSession;
   /**
+   * Endpoint client variable used for server establish.
+   */
+  private final EndpointClient client;
+  /**
+   * client handling used for communication handling.
+   */
+  private final ClientHandler clientHandler;
+  /**
+   * rounds gathered for multi round game.
+   */
+  private final List<ComboBox<String>> rounds = new ArrayList<>();
+  /**
+   * used for comparing already in chat messages to chat Object.
+   */
+  private final ArrayList<String> alreadyInChat;
+  /**
+   * gamemodes that were chosen.
+   */
+  private final LinkedList<GameMode> gameModes = new LinkedList<>();
+  /**
    * Button to play the game
    */
   @FXML
@@ -103,25 +125,9 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   private ObservableList<String> list;
   /**
-   * Endpoint client variable used for server establish.
-   */
-  private final EndpointClient client;
-  /**
-   * client handling used for communication handling.
-   */
-  private final ClientHandler clientHandler;
-  /**
-   * rounds gathered for multi round game.
-   */
-  private final List<ComboBox<String>> rounds = new ArrayList<>();
-  /**
    * count of chosen rounds.
    */
   private int round = 1;
-  /**
-   * used for comparing already in chat messages to chat Object.
-   */
-  private final ArrayList<String> alreadyInChat;
   /**
    * Chat area.
    */
@@ -152,10 +158,6 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   private ComboBox<String> gameMode;
-  /**
-   * gamemodes that were chosen.
-   */
-  private final LinkedList<GameMode> gameModes = new LinkedList<>();
   /**
    * name of Hostplayer.
    */
@@ -328,8 +330,15 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void back() {
-    gameSession.stopSession();
-    gameController.setActiveUiController(new PlayUiController(gameController));
+    System.out.println("THE HOST TRIED TO GO BACK!");
+    System.out.println("And kmows he is Host so he broadcasts!");
+
+    this.gameSession.getClientHandler().getClient()
+        .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
+
+    System.out.println("change UI controller!");
+
+    gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession));
   }
 
   /**
@@ -581,13 +590,13 @@ public class HostLobbyUiController extends AbstractUiController {
       playerName3.setText(" - ");
     }
     if (this.gameSession.getPlayerList().size() == 3) {
-      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
       playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
       playerName2.setText(this.gameSession.getPlayerList().get(2).getUsername());
       playerName3.setText(" - ");
     }
     if (this.gameSession.getPlayerList().size() == 4) {
-      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
       playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
       playerName2.setText(this.gameSession.getPlayerList().get(2).getUsername());
       playerName3.setText(this.gameSession.getPlayerList().get(3).getUsername());
@@ -600,7 +609,7 @@ public class HostLobbyUiController extends AbstractUiController {
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
       //this.gameSession.setGameStarted();
     } else {
-      Debug.printMessage(this, "GameSession Controller " + this.gameSession);
+      //Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }
     String help = "";
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {

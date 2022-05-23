@@ -3,7 +3,9 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.GameSession;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -23,6 +25,7 @@ public class HostQuitUiController extends AbstractUiController {
    */
   @FXML
   AnchorPane mainPane;
+  private GameSession gameSession;
 
   /**
    * Construcotr used for setting gamecontroller.
@@ -30,12 +33,22 @@ public class HostQuitUiController extends AbstractUiController {
    * @param gameController
    * @author tgutberl
    */
-  public HostQuitUiController(AbstractGameController gameController) {
+  public HostQuitUiController(AbstractGameController gameController, GameSession gameSession) {
     super(gameController);
     this.gameController = gameController;
+    this.gameSession = gameSession;
     init(super.root);
 
+    gameSession.getClientHandler().stopClient();
+
+    try {
+      TimeUnit.MILLISECONDS.sleep(8000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
   }
+
   /**
    * Method to initialize the FXML.
    *
@@ -76,13 +89,15 @@ public class HostQuitUiController extends AbstractUiController {
       e.printStackTrace();
     }
   }
+
   /**
    * Gets User Back to lobby
    */
   @FXML
-public void backToLobby(){
+  public void backToLobby() {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
+
   /**
    * Method to get Quit Menu - to End the Program.
    *

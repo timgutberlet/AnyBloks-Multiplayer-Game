@@ -52,7 +52,7 @@ public class NetworkAccountCreationTest {
    */
   @AfterAll
   public static void afterAll() {
-    hostServer.stop();
+    hostServer.stopWebsocket();
 
   }
 

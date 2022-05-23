@@ -33,6 +33,7 @@ import net.server.HostServer;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
 import net.transmission.EndpointClient;
+import org.eclipse.jetty.server.Server;
 
 /**
  * a session is the central place taking care of players joining, starting a game, selecting
@@ -313,15 +314,6 @@ public class GameSession {
   }
 
   /**
-   * functions that triggered when someone has won the game.
-   *
-   * @author tgeilen
-   */
-  public void endGame(String usernameWinner) {
-    //TODO add logic
-  }
-
-  /**
    * Setter for localGame.
    *
    * @author tgutberl
@@ -546,17 +538,24 @@ public class GameSession {
    */
   public void stopSession() {
     if (hostServer != null) {
-      hostServer.stop();
+      hostServer.stopWebsocket();
     } else {
 
     }
   }
 
   /**
-   * Set Hostserver
+   * Set Hostserver.
    */
   public void setHostServer(HostServer hostServerNew) {
     hostServer = hostServerNew;
+  }
+
+  /**
+   * Getter
+   */
+  public HostServer getHostServer(){
+    return hostServer;
   }
 
   /**
@@ -832,8 +831,6 @@ public class GameSession {
     return hostQuit;
   }
 
-
-
   /**
    * Getter.
    *
@@ -841,6 +838,15 @@ public class GameSession {
    */
   public void setGotKicked(Boolean gotKicked){
     this.gotKicked = gotKicked;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return Clienthandler.
+   */
+  public ClientHandler getClientHandler(){
+    return  clientHandler;
   }
 
   /**

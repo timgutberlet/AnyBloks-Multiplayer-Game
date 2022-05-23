@@ -185,7 +185,7 @@ public class LocalLobbyUiController extends AbstractUiController {
 
     this.gameSession = client.getGameSession();
     this.gameSession.setLocalPlayer(player);
-
+    this.gameSession.setHostServer(hostServer);
     this.clientHandler = client.getClientHandler();
     gameSession.setClientHandler(this.clientHandler);
 

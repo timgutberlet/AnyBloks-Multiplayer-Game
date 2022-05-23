@@ -306,6 +306,15 @@ public class EndpointClient {
 	public ClientHandler getClientHandler() {
 		return this.clientHandler;
 	}
+
+	/**
+	 * Getter for session.
+	 *
+	 * @return session.
+	 */
+	public Session getSession(){
+		return server;
+	}
 }
 
 

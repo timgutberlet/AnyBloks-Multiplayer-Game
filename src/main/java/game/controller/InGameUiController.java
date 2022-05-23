@@ -57,7 +57,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
+import net.packet.game.HostQuitPacket;
 
 
 /**
@@ -74,6 +76,19 @@ public abstract class InGameUiController extends AbstractUiController {
   private final InputHandler inputHandler;
   private final List<StackPane> stackPanes;
   /**
+   * Main Anchorpane used for Style
+   */
+  private final AnchorPane anchorPane;
+  /**
+   * String to save Input Message before repaint
+   */
+  private final String bufferChat = "";
+  /**
+   * used for comparing already in chat messages to chat Object.
+   */
+  private final ArrayList<String> alreadyInChat;
+  private final Stage stage;
+  /**
    * Label to drag the chat!
    */
   Label dragLabel;
@@ -86,14 +101,6 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   Button skipTurnButton;
   /**
-   * Main Anchorpane used for Style
-   */
-  private final AnchorPane anchorPane;
-  /**
-   * String to save Input Message before repaint
-   */
-  private final String bufferChat = "";
-  /**
    * Button to open Chat Window
    */
   private Button chatButton;
@@ -101,10 +108,6 @@ public abstract class InGameUiController extends AbstractUiController {
    * Pane where the Chat is put onto.
    */
   private VBox chatPane;
-  /**
-   * used for comparing already in chat messages to chat Object.
-   */
-  private final ArrayList<String> alreadyInChat;
   /**
    * Chat area.
    */
@@ -119,7 +122,6 @@ public abstract class InGameUiController extends AbstractUiController {
    * Checks if Chat Selected
    */
   private Boolean chatSelected = false;
-  private final Stage stage;
   private boolean aiCalcRunning;
   private Player localPlayer;
   private ArrayList<int[]> possibleFields;
@@ -501,11 +503,15 @@ public abstract class InGameUiController extends AbstractUiController {
 
 
   private void handleQuitButtonClicked() {
-    gameEnd();
-    if(this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)){
-      this.gameSession.getOutboundServerHandler().broadcastHostQuit();
+    System.out.println(
+        "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
+    if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
+      this.gameSession.getClientHandler().getClient()
+          .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
+      gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession));
+    } else {
+      //TODO add client leave logic
     }
-    gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
   private void refreshUi() {
@@ -816,17 +822,10 @@ public abstract class InGameUiController extends AbstractUiController {
     }
 
     //Check if the host left, is so, return to the lobby
-    if(gameSession.getHostQuit()){
-      System.out.println("The host left -> return to Lobby");
-      //TODOKICK: can we send the player back to the lobby they joined?
+    if (gameSession.getHostQuit()) {
+      //The host has left, so the user is sent to proper screen
+      gameController.setActiveUiController(new HostQuitUiController(gameController, gameSession));
 
-      /**
-       * lass uns auf ein Meme seite springen, die erklärt warum man da ankommt (Host left game)
-       *
-       * EndpointClient sollte zudem geschlossen werden und damit die GameSession removed werden.
-       * Dadurch können auch nicht weiter ausversehen Packet erhalten werden
-       */
-      gameController.setActiveUiController(new JoinLobbyUiController(gameController, gameSession));
     }
 
   }
@@ -846,9 +845,6 @@ public abstract class InGameUiController extends AbstractUiController {
     this.submitRequested = true;
   }
 
-  protected void gameEnd() {
-    this.gameSession.endGame(null);
-  }
 
   /**
    * Exit Method given by Abstract Class

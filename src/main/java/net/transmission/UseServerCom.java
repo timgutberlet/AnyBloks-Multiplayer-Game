@@ -38,7 +38,7 @@ public class UseServerCom {
 
       ses.getBasicRemote().sendObject(packet);
       ses.close();
-      hostServer.stop();
+      hostServer.stopWebsocket();
 
     } catch (Exception e) {
       e.printStackTrace();

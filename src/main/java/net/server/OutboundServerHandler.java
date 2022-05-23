@@ -145,15 +145,9 @@ public class OutboundServerHandler {
     for (Player p : this.gameSession.getPlayerList()) {
       //Only send the packet to AIs / remotePlayers
       if (!p.getType().equals(PlayerType.HOST_PLAYER)) {
-        try {
-          //Send the packet to the players via the existing connection
-          this.server.getUsername2Session().get(p.getUsername()).getBasicRemote()
-              .sendObject(wrappedPacket);
-        } catch (IOException e) {
-          e.printStackTrace();
-        } catch (EncodeException e) {
-          e.printStackTrace();
-        }
+        //Send the packet to the players via the existing connection
+        this.server.sendMessage(wrappedPacket, p.getUsername());
+
       }
     }
   }

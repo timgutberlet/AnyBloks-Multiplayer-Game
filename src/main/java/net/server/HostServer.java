@@ -25,7 +25,8 @@ public class HostServer {
 
   private static final Logger LOG = LoggerFactory.getLogger(HostServer.class);
 
-  private Server server;
+  private Server restServer;
+  private static Server websocketServer;
 
   /**
    * Starting the server itself.
@@ -38,10 +39,10 @@ public class HostServer {
     URI baseUri = UriBuilder.fromUri("http://" + IPAdress + "/").port(portNumber).build();
     ServerConfig config = new ServerConfig();
 
-    server = JettyHttpContainerFactory.createServer(baseUri, config);
+    restServer = JettyHttpContainerFactory.createServer(baseUri, config);
 
-    server.start();
-    server.join();
+    restServer.start();
+    restServer.join();
 
   }
 
@@ -50,16 +51,16 @@ public class HostServer {
    *
    * @param portNumber bind to specified port
    */
-  public void startWebsocket(int portNumber) throws Exception {
+  public Server startWebsocket(int portNumber) throws Exception {
 
-    Server server = new Server(portNumber);
+    websocketServer = new Server(portNumber);
 
     ServletContextHandler context = new ServletContextHandler();
     context.setContextPath("/");
 
     final ServletHolder defaultHolder = new ServletHolder("default", DefaultServlet.class);
     context.addServlet(defaultHolder, "/");
-    server.setHandler(context);
+    websocketServer.setHandler(context);
 
     // activate websockets
     ServerContainer serverContainer = WebSocketServerContainerInitializer.configureContext(context);
@@ -67,15 +68,16 @@ public class HostServer {
     // add endpoints
     serverContainer.addEndpoint(EndpointServer.class);
 
-    server.start();
+    websocketServer.start();
 
+    return websocketServer;
   }
 
   /**
-   * Stop jetty instance.
+   * Stop the websocket server.
    */
-  public void stop() {
-    if (server == null || !server.isRunning()) {
+  public void stopWebsocket() {
+    if (websocketServer == null || !websocketServer.isRunning()) {
       if (LOG.isWarnEnabled()) {
         LOG.warn("No Jetty server running");
       }
@@ -84,7 +86,7 @@ public class HostServer {
     }
 
     try {
-      server.stop();
+      websocketServer.stop();
 
       if (LOG.isInfoEnabled()) {
         LOG.info("Stopped Jetty server");
@@ -92,7 +94,31 @@ public class HostServer {
     } catch (Exception e) {
       LOG.error("Could not stop jetty server", e);
     } finally {
-      server.destroy();
+      websocketServer.destroy();
+    }
+  }
+
+  /**
+   * Stop the restful server
+   */
+  public void stopRestful(){
+    if (restServer == null || !restServer.isRunning()) {
+      if (LOG.isWarnEnabled()) {
+        LOG.warn("No Jetty server running");
+      }
+      return;
+    }
+
+    try {
+      restServer.stop();
+
+      if (LOG.isInfoEnabled()) {
+        LOG.info("Stopped Jetty server");
+      }
+    } catch (Exception e) {
+      LOG.error("Could not stop jetty server", e);
+    } finally {
+      restServer.destroy();
     }
   }
 

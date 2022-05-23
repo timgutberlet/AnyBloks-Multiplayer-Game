@@ -268,7 +268,6 @@ public class InboundServerHandler {
 
   }
 
-
   public EndpointServer getServer() {
     return server;
   }

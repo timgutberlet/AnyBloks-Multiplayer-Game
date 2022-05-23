@@ -5,6 +5,7 @@ import game.model.Debug;
 import game.model.GameSession;
 import game.model.player.Player;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,6 +50,17 @@ public class EndpointServer {
 
   public static GameSession getGameSession() {
     return gameSession;
+  }
+
+  /**
+   * This method resets any saved variables of the endpoint. This way it is ready to restart.
+   */
+  public void resetEndpointServer(){
+    username2Session.clear();
+    sessions.clear();
+    gameSession = new GameSession();
+    inboundServerHandler = new InboundServerHandler();
+    outboundServerHandler = new OutboundServerHandler(this, gameSession);
   }
 
   /**
@@ -155,6 +167,16 @@ public class EndpointServer {
           break;
         case TURN_PACKET:
           inboundServerHandler.recieveTurn(client, packet);
+          break;
+        case HOST_QUIT_PACKET:
+          outboundServerHandler.broadcastHostQuit();
+          try {
+            TimeUnit.MILLISECONDS.sleep(5000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          inboundServerHandler.getServer().resetEndpointServer();
+
           break;
 
         default:

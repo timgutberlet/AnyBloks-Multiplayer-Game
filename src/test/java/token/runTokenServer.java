@@ -26,7 +26,7 @@ public class runTokenServer {
 
   @AfterAll
   public static void afterAll() {
-    hostServer.stop();
+    hostServer.stopRestful();
   }
 
   @Test

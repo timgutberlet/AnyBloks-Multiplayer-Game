@@ -233,13 +233,13 @@ public class JoinLobbyUiController extends AbstractUiController {
       gameController.setActiveUiController(new KickInfoUiController(gameController));
     }
 
-    System.out.println("Gamesession: " + this.gameSession);
+    //System.out.println("Gamesession: " + this.gameSession);
     if (this.gameSession.isGameStarted()) {
 
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));
     } else {
-      Debug.printMessage(this, "GameSession Controller " + this.gameSession);
+      //Debug.printMessage(this, "GameSession Controller " + this.gameSession);
     }
     String help = "";
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
@@ -252,6 +252,14 @@ public class JoinLobbyUiController extends AbstractUiController {
       }
     }
     this.chat.appendText(help);
+
+    //Check if the host left, is so, return to the lobby
+    if (gameSession.getHostQuit()) {
+      //The host has left, so the user is sent to proper screen
+      System.out.println("THE HOST QUIT HAS BEEN DETECTED IN THE JOIN LOBBY CONTROLLER");
+      gameController.setActiveUiController(new HostQuitUiController(gameController, gameSession));
+
+    }
   }
 
   /**

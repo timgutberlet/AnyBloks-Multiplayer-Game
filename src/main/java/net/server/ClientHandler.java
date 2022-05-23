@@ -48,6 +48,7 @@ public class ClientHandler {
   private final EndpointClient client;
   private final Player player;
   private final GameSession gameSession;
+  private Session session;
 
   /**
    * initializes a new client handler out of the endpoint client.
@@ -129,7 +130,7 @@ public class ClientHandler {
       String IPAdress = ip;
 
       ses = container.connectToServer(this.client, URI.create("ws://" + IPAdress + ":8081/packet"));
-
+      this.session = ses;
       TimeUnit.MILLISECONDS.sleep(100);
 
       //Sleep so updates can be made in DB
@@ -311,6 +312,7 @@ public class ClientHandler {
    */
   public void handleHostQuit(){
     if(!player.getType().equals(PlayerType.HOST_PLAYER)){
+      System.out.println("HANDLEHOSTQUITHASBEENCALLED CORRECTLY");
       this.gameSession.setHostQuit(true);
     }
   }
@@ -357,6 +359,17 @@ public class ClientHandler {
     LoginResponsePacket loginResponsePacket = (LoginResponsePacket) packet.getPacket();
     this.gameSession.setLoginStatus(loginResponsePacket.getLoginStatus());
 
+  }
+
+  /**
+   * Stop a client by closing the session.
+   */
+  public void stopClient(){
+    try {
+      this.session.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public EndpointClient getClient() {

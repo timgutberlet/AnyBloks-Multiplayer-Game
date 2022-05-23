@@ -35,6 +35,6 @@ public class ThreadHandlerRestful extends Thread {
     while (!Thread.currentThread().isInterrupted()) {
     }
     System.out.println("Restful Server Interrupted");
-    hostServer.stop();
+    hostServer.stopRestful();
   }
 }

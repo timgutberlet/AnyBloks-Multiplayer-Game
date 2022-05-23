@@ -3,7 +3,9 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.GameSession;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -18,6 +20,7 @@ public class LocalQuitUiController extends AbstractUiController {
    * Anbstract Game controller used in Application.
    */
   private final AbstractGameController gameController;
+  private GameSession gameSession;
   /**
    * Main Anchorpane used for resizing.
    */
@@ -27,13 +30,33 @@ public class LocalQuitUiController extends AbstractUiController {
   /**
    * Construcotr used for setting gamecontroller.
    *
-   * @param gameController
+   * @param gameController AbstractGameController
    * @author tgutberl
    */
-  public LocalQuitUiController(AbstractGameController gameController) {
+  public LocalQuitUiController(AbstractGameController gameController, GameSession gameSession) {
     super(gameController);
     this.gameController = gameController;
+    this.gameSession = gameSession;
+    try {
+      gameSession.getClientHandler().getClient().getSession().close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     init(super.root);
+    //Make sure that all clients have left.
+    try {
+      TimeUnit.MILLISECONDS.sleep(5000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    //now that all clients have left, reset & stop the server
+    gameSession.getHostServer().stopWebsocket();
+
+    try {
+      TimeUnit.MILLISECONDS.sleep(3000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
   }
   /**
