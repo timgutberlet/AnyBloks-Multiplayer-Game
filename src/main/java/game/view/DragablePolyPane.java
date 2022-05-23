@@ -96,16 +96,19 @@ public class DragablePolyPane extends Pane {
 
     mirror.setOnMouseClicked(e -> {
       polyPane.getPoly().mirror();
+      inGameUiController.repaintBoardPane();
       inGameUiController.paintPossibleFields(this);
       rerender();
     });
     rotateRight.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateRight();
+      inGameUiController.repaintBoardPane();
       inGameUiController.paintPossibleFields(this);
       rerender();
     });
     rotateLeft.setOnMouseClicked(e -> {
       polyPane.getPoly().rotateLeft();
+      inGameUiController.repaintBoardPane();
       inGameUiController.paintPossibleFields(this);
       rerender();
     });

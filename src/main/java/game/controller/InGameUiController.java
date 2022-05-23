@@ -729,6 +729,35 @@ public abstract class InGameUiController extends AbstractUiController {
               possibleFields = game.getGameState().getBoard()
                   .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
                       game.getGameState().isFirstRound());
+
+              if (possibleFields != null) {
+                for (int[] coords : possibleFields) {
+                  switch (dragablePolyPane.getPoly().getColor().toString()) {
+                    case "RED":
+                      color = Color.RED;
+                      break;
+                    case "BLUE":
+                      color = Color.BLUE;
+                      break;
+                    case "GREEN":
+                      color = Color.GREEN;
+                      break;
+                    case "YELLOW":
+                      color = Color.YELLOW;
+                      break;
+                    default:
+                      color = Color.BLACK;
+                  }
+                  if (game.getGamemode().getName().equals("TRIGON")) {
+                    boardPane.setCheckFieldColor(color, coords[0], coords[1], coords[2]);
+                  } else {
+                    boardPane.setCheckFieldColor(color, coords[0], coords[1]);
+                  }
+                }
+              }
+
+              boardPane.repaint(game.getGameState().getBoard());
+
             }
             else{
               errorLabelText = "  Please click on a Poly (Your Color: " + this.game.getGameState().getColorFromPlayer(localPlayer).toString() + ")";
@@ -791,7 +820,7 @@ public abstract class InGameUiController extends AbstractUiController {
                       possibleFields = null;
                       boardPane.resetAllCheckFields();
                       Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
-                      Debug.printMessage(""+turn.getPoly());
+                      Debug.printMessage("" + turn.getPoly());
                       root.getChildren().remove(dragablePolyPane);
                       dragablePolyPane = null;
                       this.gameSession.getGame().getGameState().playTurn(turn);
@@ -801,33 +830,34 @@ public abstract class InGameUiController extends AbstractUiController {
                     }
                   }
                 }
-                if (!currentIntersection) {
-                  errorLabelText = "  Drag the Poly to a possible Position where it lights up!";
-                  dragablePolyPane.inncerCircleResetColor();
-                  dragablePolyPane.rerender();
-                }
-                if (possibleFields != null) {
-                  for (int[] coords : possibleFields) {
-                    switch (dragablePolyPane.getPoly().getColor().toString()){
-                      case "RED":
-                        color = Color.RED;
-                        break;
-                      case "BLUE":
-                        color = Color.BLUE;
-                        break;
-                      case "GREEN":
-                        color = Color.GREEN;
-                        break;
-                      case "YELLOW":
-                        color = Color.YELLOW;
-                        break;
-                      default: color = Color.BLACK;
-                    }
-                    if (game.getGamemode().getName().equals("TRIGON")) {
-                      boardPane.setCheckFieldColor(color, coords[0], coords[1], coords[2]);
-                    } else {
-                      boardPane.setCheckFieldColor(color, coords[0], coords[1]);
-                    }
+              }
+              if (!currentIntersection) {
+                errorLabelText = "  Drag the Poly to a possible Position where it lights up!";
+                dragablePolyPane.inncerCircleResetColor();
+                dragablePolyPane.rerender();
+              }
+              if (possibleFields != null) {
+                for (int[] coords : possibleFields) {
+                  switch (dragablePolyPane.getPoly().getColor().toString()) {
+                    case "RED":
+                      color = Color.RED;
+                      break;
+                    case "BLUE":
+                      color = Color.BLUE;
+                      break;
+                    case "GREEN":
+                      color = Color.GREEN;
+                      break;
+                    case "YELLOW":
+                      color = Color.YELLOW;
+                      break;
+                    default:
+                      color = Color.BLACK;
+                  }
+                  if (game.getGamemode().getName().equals("TRIGON")) {
+                    boardPane.setCheckFieldColor(color, coords[0], coords[1], coords[2]);
+                  } else {
+                    boardPane.setCheckFieldColor(color, coords[0], coords[1]);
                   }
                 }
               }
@@ -880,6 +910,10 @@ public abstract class InGameUiController extends AbstractUiController {
 
     }
 
+  }
+
+  public void repaintBoardPane() {
+    this.boardPane.repaint(game.getGameState().getBoard());
   }
 
   public void paintPossibleFields(DragablePolyPane dragablePolyPane) {
