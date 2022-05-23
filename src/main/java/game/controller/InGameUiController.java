@@ -30,7 +30,6 @@ import game.view.stack.StackSquarePane;
 import game.view.stack.StackTrigonPane;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,7 +43,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -52,9 +50,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.packet.abstr.PacketType;
@@ -121,6 +117,10 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private Boolean chatSelected = false;
   /**
+   * Block int that determines if the player did a move or not
+   */
+  private int moveCheck = 0;
+  /**
    * Checks if Ai is calulating
    */
   private boolean aiCalcRunning;
@@ -132,6 +132,10 @@ public abstract class InGameUiController extends AbstractUiController {
    * Text that should be written into the Label each frame
    */
   private String errorLabelText = "";
+  /**
+   * Block boolean that shows if moves are possible for player or not
+   */
+  private boolean block = false;
 
   private VBox boardBox;
 
@@ -625,6 +629,15 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+  if(moveCheck == 1){
+    if(this.game.getGameState().getBoard().getPossibleMoves(this.gameSession.getGame().getGameState().getRemainingPolys(localPlayer), this.gameSession.getGame().getGameState().isFirstRound()).size() == 0){
+      this.localPlayer.nullTurn();
+      skipTurnButton.setVisible(false);
+      errorLabelText = "You are out of moves and auto-skip turns now...";
+      block = true;
+    }
+  }
+
     if (!chatSelected) {
       root.requestFocus();
     }
@@ -646,14 +659,18 @@ public abstract class InGameUiController extends AbstractUiController {
     aiCalcRunning = game.getCurrentPlayer().getAiCalcRunning();
     //Check if AI is calculating - only refresh Board then
     if (!this.gameSession.isLocalPlayerTurn()) {
+      moveCheck = 0;
       boardPane.repaint(game.getGameState().getBoard());
-      errorLabelText = "  Please wait while the other Players are playing!";
+      if(!block){
+        errorLabelText = "  Please wait while the other Players are playing!";
+      }
       skipTurnButton.setVisible(false);
       if (!game.getGameState().playsTurn()) {
         Debug.printMessage(this, "" + game.getGameState().playsTurn());
         refreshUi();
       }
     } else {
+      moveCheck++;
       if (dragablePolyPane == null) {
         boardPane.repaint(game.getGameState().getBoard());
       }
@@ -662,7 +679,9 @@ public abstract class InGameUiController extends AbstractUiController {
               this.gameSession.getGame().getGameState().isFirstRound()).size() == 0) {
         this.localPlayer.nullTurn();
         skipTurnButton.setVisible(false);
-        errorLabelText = "You are out of moves and auto-skip turns now...";
+        if(!block){
+          errorLabelText = "You are out of moves and auto-skip turns now...";
+        }
       }
       ;
       if (this.game == null) {
@@ -696,7 +715,9 @@ public abstract class InGameUiController extends AbstractUiController {
           for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
               .getPolyPanes()) {
             if (inputHandler.isPolyClicked(polyPane)) {
-              errorLabelText = "  Drag the Poly to a possible Position (it lights up)!";
+              if(!block){
+                errorLabelText = "  Drag the Poly to a possible Position (it lights up)!";
+              }
               chatSelected = false;
               if (dragablePolyPane != null) {
                 root.getChildren().remove(dragablePolyPane);
@@ -774,7 +795,9 @@ public abstract class InGameUiController extends AbstractUiController {
 
             }
             else{
-              errorLabelText = "  Please click on a Poly (Your Color: " + this.game.getGameState().getColorFromPlayer(localPlayer).toString() + ")";
+              if(!block){
+                errorLabelText = "  Please click on a Poly (Your Color: " + this.game.getGameState().getColorFromPlayer(localPlayer).toString() + ")";
+              }
             }
           }
 

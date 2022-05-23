@@ -180,10 +180,10 @@ public class SettingUiController extends AbstractUiController {
   @FXML
   private void tooltipPush(){
     if(Config.getStringValue("TOOLTIPS").equals("ON")){
-      music.setText("DISBALE TOOLTIPS");
+      tooltips.setText("ENABLE TOOLTIPS");
       Config.set("TOOLTIPS", "OFF");
     }else{
-      music.setText("ENABLE TOOLTIPS");
+      tooltips.setText("DISABLE TOOLTIPS");
       Config.set("TOOLTIPS", "ON");
     }
   }
@@ -299,6 +299,11 @@ public class SettingUiController extends AbstractUiController {
         music.setText("STOP MUSIC");
       }else{
         music.setText("START MUSIC");
+      }
+      if(Config.getStringValue("TOOLTIPS").equals("ON")){
+        tooltips.setText("DISABLE TOOLTIPS");
+      }else{
+        tooltips.setText("ENABLE TOOLTIPS");
       }
     } catch (IOException e) {
       e.printStackTrace();

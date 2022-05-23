@@ -24,7 +24,7 @@ public class StandardConfig {
       {"AIPLAYER1", "AlphaGo"},
       {"AIPLAYER2", "DeepMind"},
       {"AIPLAYER3", "Stockfish"},
-      {"MUSIC", "OFF"},
+      {"MUSIC", "ON"},
       {"TOOLTIPS", "ON"},
   };
 
