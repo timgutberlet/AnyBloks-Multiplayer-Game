@@ -570,8 +570,27 @@ public class HostLobbyUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
-    if (this.gameSession.getPlayerList().size() > 1) {
+    if (this.gameSession.getPlayerList().size() == 1) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
+    }
+
+    if (this.gameSession.getPlayerList().size() == 2) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
       playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+      playerName2.setText(" - ");
+      playerName3.setText(" - ");
+    }
+    if (this.gameSession.getPlayerList().size() == 3) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
+      playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+      playerName2.setText(this.gameSession.getPlayerList().get(2).getUsername());
+      playerName3.setText(" - ");
+    }
+    if (this.gameSession.getPlayerList().size() == 4) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
+      playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());
+      playerName2.setText(this.gameSession.getPlayerList().get(2).getUsername());
+      playerName3.setText(this.gameSession.getPlayerList().get(3).getUsername());
     }
 
     if (this.gameSession.isGameStarted() && this.gameSession.isLocalPlayerTurn()) {

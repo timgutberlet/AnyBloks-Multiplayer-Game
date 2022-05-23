@@ -211,16 +211,19 @@ public class JoinLobbyUiController extends AbstractUiController {
   public void update(AbstractGameController gameController, double deltaTime) {
 
     if (this.gameSession.getPlayerList().size() == 2) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
       remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
       remotePlayer2.setText(" - ");
       remotePlayer3.setText(" - ");
     }
     if (this.gameSession.getPlayerList().size() == 3) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
       remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
       remotePlayer2.setText(this.gameSession.getPlayerList().get(2).getUsername());
       remotePlayer3.setText(" - ");
     }
     if (this.gameSession.getPlayerList().size() == 4) {
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
       remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
       remotePlayer2.setText(this.gameSession.getPlayerList().get(2).getUsername());
       remotePlayer3.setText(this.gameSession.getPlayerList().get(3).getUsername());

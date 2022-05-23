@@ -91,7 +91,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.rowIndex="1">
                           <children>
-                            <Label fx:id="difficultyPlayer11" text="HOST">
+                            <Label fx:id="hostPlayerName" text="HOST">
                               <font>
                                 <Font size="20.0" />
                               </font>
