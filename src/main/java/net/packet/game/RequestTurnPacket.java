@@ -76,6 +76,7 @@ public class RequestTurnPacket extends Packet {
 
   /**
    * gets the game state from the attributes.
+   *
    * @return game state
    */
   public GameState getGameState() {

@@ -12,8 +12,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- * Abstractgamecontroller class, representing the gamecontroller that is used throughout the application.
- * It is extending the Animationtimer Class, controlling the frame logic.
+ * Abstractgamecontroller class, representing the gamecontroller that is used throughout the
+ * application. It is extending the Animationtimer Class, controlling the frame logic.
  *
  * @author lbaudenb
  * @author tgutberl
@@ -21,9 +21,8 @@ import javafx.stage.Stage;
 public abstract class AbstractGameController extends AnimationTimer {
 
   /**
-   * Stage Object representing the current stage with window width and height.
-   * The stage object also holds the scene.
-   *
+   * Stage Object representing the current stage with window width and height. The stage object also
+   * holds the scene.
    */
   private final Stage stage;
   /**
@@ -43,8 +42,8 @@ public abstract class AbstractGameController extends AnimationTimer {
    */
   private final boolean printFps = Config.getBooleanValue("SHOW_FPS");
   /**
-   * AbstractUiController Element that is representing and controlling the current
-   * active UiController and therefore the current scene we are in.
+   * AbstractUiController Element that is representing and controlling the current active
+   * UiController and therefore the current scene we are in.
    */
   private AbstractUiController activeUiController;
   /**
@@ -92,10 +91,10 @@ public abstract class AbstractGameController extends AnimationTimer {
     stage.setMinWidth(Config.getIntValue("SCREEN_MINIMUM_WIDTH"));
     stage.setMinHeight(Config.getIntValue("SCREEN_MINIMUM_HEIGHT"));
     //Starts the music
-    try{
+    try {
       MusicThread musicThread = new MusicThread();
       musicThread.start();
-    }catch (Exception e){
+    } catch (Exception e) {
     }
     this.start();
   }
@@ -103,8 +102,8 @@ public abstract class AbstractGameController extends AnimationTimer {
   /**
    * handle method handling the framecount.
    *
-   * @author tgutberl
    * @param currentNanoTime
+   * @author tgutberl
    */
   @Override
   public void handle(long currentNanoTime) {
@@ -152,8 +151,6 @@ public abstract class AbstractGameController extends AnimationTimer {
   }
 
   /**
-   *
-   *
    * @return
    */
   public Stage getStage() {

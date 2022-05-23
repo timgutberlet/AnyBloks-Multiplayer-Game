@@ -22,6 +22,7 @@ public class DeleteAccountRessource {
 
   /**
    * This method registers and processes a delete account request packet.
+   *
    * @param wrappedPacket
    * @return response on the delete account request
    */

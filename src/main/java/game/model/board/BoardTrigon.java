@@ -556,18 +556,18 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
       return false;
     }
 
-      if (turn.getPoly().getSize() > 6) {
-        Debug.printMessage(
-            "!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!");
-      }
-      int xRef = turn.getPolyTrigon().shape.get(0).getPos()[0];
-      int yRef = turn.getPolyTrigon().shape.get(0).getPos()[1];
+    if (turn.getPoly().getSize() > 6) {
+      Debug.printMessage(
+          "!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!\n!!!!!!!!!!!!!!!!!!");
+    }
+    int xRef = turn.getPolyTrigon().shape.get(0).getPos()[0];
+    int yRef = turn.getPolyTrigon().shape.get(0).getPos()[1];
 
-      for (FieldTrigon ft : turn.getPolyTrigon().getShape()) {
-        getField(ft.getPos()[0] + turn.getX() - xRef, ft.getPos()[1] + turn.getY() - yRef,
-            ft.getPos()[2]).setColor(turn.getPolyTrigon().getColor());
-      }
-      return true;
+    for (FieldTrigon ft : turn.getPolyTrigon().getShape()) {
+      getField(ft.getPos()[0] + turn.getX() - xRef, ft.getPos()[1] + turn.getY() - yRef,
+          ft.getPos()[2]).setColor(turn.getPolyTrigon().getColor());
+    }
+    return true;
   }
 
   /**

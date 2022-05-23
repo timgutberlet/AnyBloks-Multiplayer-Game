@@ -159,13 +159,15 @@ public class Player implements Serializable {
     //this.gameSession.getChat().addMessage(this, msg);
 
   }
+
   /**
    * Function to set Nullturn
    */
-  public void nullTurn(){
+  public void nullTurn() {
     this.setSelectedTurn(null);
     this.nullTurn = true;
   }
+
   /**
    * function used to return the next turn of a player
    *
@@ -245,13 +247,17 @@ public class Player implements Serializable {
     return type;
   }
 
-  public String getUsername() {
-    return username;
+  public void setType(PlayerType type) {
+    this.type = type;
   }
 
   //public String toString() {
   //  return username;
   //}
+
+  public String getUsername() {
+    return username;
+  }
 
   public int getOrderNum() {
     return this.orderNum;
@@ -265,12 +271,8 @@ public class Player implements Serializable {
     return isAI;
   }
 
-  public void setType(PlayerType type) {
-    this.type = type;
-  }
-
   @Override
-  public boolean equals(Object object){
+  public boolean equals(Object object) {
     Player p = (Player) object;
     return this.username.equals(p.getUsername());
   }

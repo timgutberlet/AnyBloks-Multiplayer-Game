@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -10,95 +11,110 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<?import javafx.scene.image.Image?>
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.LocalQuitUiController">
-   <children>
-      <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <GridPane GridPane.rowIndex="1">
-               <children>
-                  <GridPane prefHeight="68.0" prefWidth="1280.0" GridPane.rowIndex="1">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="110.0" text="CLOSE" GridPane.columnIndex="2">
-                           <font>
-                              <Font size="25.0" />
-                           </font>
-                        </Button>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-                           <children>
-                              <Button fx:id="backToLobbyButton" mnemonicParsing="false" onAction="#backToLobby" prefHeight="50.0" prefWidth="301.0" text="BACK TO MAIN MENU">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </VBox>
-                     </children>
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0" prefWidth="1348.2804870605469" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                  </GridPane>
-                  <GridPane>
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="413.77996826171875" minHeight="10.0" prefHeight="413.77996826171875" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="395.9958953857422" minHeight="10.0" prefHeight="106.22003173828125" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
-                           <children>
-                              <Label text="You just left the game before it was finished...">
-                                 <font>
-                                    <Font size="25.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <ImageView fitHeight="378.0" fitWidth="452.0" pickOnBounds="true" preserveRatio="true" >
-                                 <image>
-                                    <Image url="images/uno.jpg"/>
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </VBox>
-                     </children>
-                  </GridPane>
-               </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-               </rowConstraints>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+  minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/18"
+  fx:controller="game.controller.LocalQuitUiController" fx:id="mainPane">
+  <children>
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+      AnchorPane.topAnchor="0.0" alignment="CENTER" gridLinesVisible="true">
+      <children>
+        <GridPane GridPane.rowIndex="1">
+          <children>
+            <GridPane GridPane.rowIndex="1" prefHeight="68.0" prefWidth="1280.0">
+              <children>
+                <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#close"
+                  prefHeight="50.0" prefWidth="110.0" text="CLOSE">
+                  <font>
+                    <Font size="25.0"/>
+                  </font>
+                </Button>
+                <VBox GridPane.columnIndex="1" alignment="CENTER" prefHeight="200.0"
+                  prefWidth="100.0">
+                  <children>
+                    <Button mnemonicParsing="false" onAction="#backToLobby"
+                      prefHeight="50.0" prefWidth="301.0" text="BACK TO MAIN MENU"
+                      fx:id="backToLobbyButton">
+                      <font>
+                        <Font size="25.0"/>
+                      </font>
+                    </Button>
+                  </children>
+                </VBox>
+              </children>
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0"
+                  minWidth="160.0" prefWidth="160.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0"
+                  prefWidth="1348.2804870605469"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0"
+                  minWidth="150.0" prefWidth="150.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
+                  vgrow="SOMETIMES"/>
+              </rowConstraints>
             </GridPane>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label alignment="CENTER" graphicTextGap="20.0" text="LEFT">
-                     <font>
-                        <Font size="50.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-         </children>
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5" vgrow="SOMETIMES" />
-         </rowConstraints>
-      </GridPane>
-   </children>
+            <GridPane>
+              <children>
+                <VBox GridPane.rowIndex="1" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <children>
+                    <Label text="You just left the game before it was finished...">
+                      <font>
+                        <Font size="25.0"/>
+                      </font>
+                    </Label>
+                  </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <children>
+                    <ImageView fitHeight="378.0" fitWidth="452.0" pickOnBounds="true"
+                      preserveRatio="true">
+                      <image>
+                        <Image url="images/uno.jpg"/>
+                      </image>
+                    </ImageView>
+                  </children>
+                </VBox>
+              </children>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="413.77996826171875" minHeight="10.0"
+                  prefHeight="413.77996826171875" vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="395.9958953857422" minHeight="10.0"
+                  prefHeight="106.22003173828125" vgrow="SOMETIMES"/>
+              </rowConstraints>
+            </GridPane>
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5"
+              vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
+              vgrow="SOMETIMES"/>
+          </rowConstraints>
+        </GridPane>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+          <children>
+            <Label alignment="CENTER" graphicTextGap="20.0" text="LEFT">
+              <font>
+                <Font size="50.0"/>
+              </font>
+            </Label>
+          </children>
+        </HBox>
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5"
+          vgrow="SOMETIMES"/>
+      </rowConstraints>
+    </GridPane>
+  </children>
 </AnchorPane>

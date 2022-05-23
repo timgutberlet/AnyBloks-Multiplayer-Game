@@ -18,8 +18,6 @@ import net.packet.account.CreateAccountRequestPacket;
 import net.server.DbServer;
 import net.server.HashingHandler;
 import org.glassfish.jersey.jackson.JacksonFeature;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -28,11 +26,12 @@ import org.junit.jupiter.api.Test;
  * @author tbuscher
  */
 public class CreateAccountTest {
+
   ThreadHandlerRestful threadHandlerRestful;
 
 
   @Test
-  public void testCreateAccount(){
+  public void testCreateAccount() {
     //Cant start this thread in beforeAll since beforeAll needs to be static
     threadHandlerRestful = new ThreadHandlerRestful();
     threadHandlerRestful.start();
@@ -44,7 +43,6 @@ public class CreateAccountTest {
       e.printStackTrace();
     }
     assertNotNull(dbServer);
-
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
     String username = "testuserUpdate1";
@@ -63,10 +61,10 @@ public class CreateAccountTest {
 
     if (receivedAnswer.getStatus() != 200) {
       Debug.printMessage("Something went wrong");
-      Debug.printMessage(""+receivedAnswer.getStatus());
-      Debug.printMessage(""+receivedAnswer.getStatusInfo());
+      Debug.printMessage("" + receivedAnswer.getStatus());
+      Debug.printMessage("" + receivedAnswer.getStatusInfo());
     } else {
-      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("" + receivedAnswer.getStatus());
       Debug.printMessage("The account has been created.");
 
     }

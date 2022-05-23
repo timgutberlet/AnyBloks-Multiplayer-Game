@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -19,14 +13,147 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-  minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;"
-  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="game.controller.ScoreBoardUiController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
+  minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
+  xmlns="http://javafx.com/javafx/8" fx:controller="game.controller.ScoreBoardUiController"
+  fx:id="mainPane">
   <children>
-    <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+      AnchorPane.topAnchor="0.0" prefHeight="400.0" prefWidth="600.0">
+      <children>
+        <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+          <children>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+              <children>
+                <HBox alignment="CENTER" mouseTransparent="true" spacing="60.0" fx:id="board">
+                  <children>
+                    <Line endX="-100.28358459472656" endY="739.663330078125" startX="-100.28353881835938"
+                      startY="395.81231689453125" stroke="WHITE" fx:id="line"/>
+                    <Line endX="-100.28358459472656" endY="739.663330078125" layoutX="824.0"
+                      layoutY="-383.0" startX="-100.28353881835938" startY="395.81231689453125"
+                      stroke="WHITE"/>
+                    <VBox alignment="CENTER">
+                      <children>
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
+                          <children>
+                            <Text fill="GOLD" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="1. Name_of_winner:" fx:id="nameWinner">
+                              <font>
+                                <Font size="40.0"/>
+                              </font>
+                            </Text>
+                            <Text fill="GOLD" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Points" fx:id="pointsWinner">
+                              <font>
+                                <Font size="40.0"/>
+                              </font>
+                            </Text>
+                          </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
+                          <children>
+                            <Text fill="SILVER" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="2. Name_of_second:" fx:id="nameSecond">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Text>
+                            <Text fill="SILVER" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Points" fx:id="pointsSecond">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Text>
+                          </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
+                          <children>
+                            <Text fill="#a87000" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="3. Name_of_third:" fx:id="nameThird">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Text>
+                            <Text fill="#a87000" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Points" fx:id="pointsThird">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Text>
+                          </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
+                          <children>
+                            <Label text="4. Name_of_fourth:" fx:id="nameFourth">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Label>
+                            <Label text="Label" fx:id="pointsFourth">
+                              <font>
+                                <Font size="30.0"/>
+                              </font>
+                            </Label>
+                          </children>
+                        </HBox>
+                        <Label text="Scoreboard" textFill="WHITE">
+                          <font>
+                            <Font size="40.0"/>
+                          </font>
+                        </Label>
+                        <Label text="Gamemode: " textFill="WHITE" fx:id="gameMode">
+                          <font>
+                            <Font size="24.0"/>
+                          </font>
+                        </Label>
+                      </children>
+                    </VBox>
+                  </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0"
+                  fx:id="buttonBox">
+                  <children>
+                    <Button mnemonicParsing="false" onAction="#backMainMenu" text="BACK TO MAIN MENU"
+                      fx:id="backMainMenu">
+                      <font>
+                        <Font size="20.0"/>
+                      </font>
+                    </Button>
+                  </children>
+                </HBox>
+                <Label text="THE HOST IS STARTING ANOTHER GAME, PLEASE WAIT..." fx:id="hostWaiting">
+                  <font>
+                    <Font size="20.0"/>
+                  </font>
+                </Label>
+                <Label ellipsisString="" maxHeight="170.0" text="YOU WON" textFill="WHITE"
+                  fx:id="userMessage">
+                  <font>
+                    <Font size="48.0"/>
+                  </font>
+                </Label>
+              </children>
+            </VBox>
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+          </columnConstraints>
+          <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+          </rowConstraints>
+        </GridPane>
+        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" text="Results"
+          textFill="WHITE">
+          <font>
+            <Font size="50.0"/>
+          </font>
+        </Label>
+        <Pane style="-fx-background-color: #303030;">
+          <effect>
+            <DropShadow/>
+          </effect>
+        </Pane>
+      </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES"/>
       </columnConstraints>
@@ -34,127 +161,6 @@
         <RowConstraints maxHeight="100.0" minHeight="50.0" prefHeight="100.0" vgrow="SOMETIMES"/>
         <RowConstraints vgrow="SOMETIMES"/>
       </rowConstraints>
-      <children>
-        <Pane style="-fx-background-color: #303030;">
-          <effect>
-            <DropShadow />
-          </effect>
-        </Pane>
-        <Label text="Results" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-          <font>
-            <Font size="50.0" />
-          </font>
-        </Label>
-        <GridPane GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
-          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-          </columnConstraints>
-          <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          </rowConstraints>
-          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-              <children>
-                <Label fx:id="userMessage" ellipsisString="" maxHeight="170.0" text="YOU WON" textFill="WHITE">
-                  <font>
-                    <Font size="48.0" />
-                  </font>
-                </Label>
-                <HBox fx:id="board" alignment="CENTER" mouseTransparent="true" spacing="60.0">
-                  <children>
-                    <Line fx:id="line" endX="-100.28358459472656" endY="739.663330078125" startX="-100.28353881835938" startY="395.81231689453125" stroke="WHITE" />
-                    <VBox alignment="CENTER">
-                      <children>
-                        <Label text="Scoreboard" textFill="WHITE">
-                          <font>
-                            <Font size="40.0" />
-                          </font>
-                        </Label>
-                        <Label fx:id="gameMode" text="Gamemode: " textFill="WHITE">
-                          <font>
-                            <Font size="24.0" />
-                          </font>
-                        </Label>
-                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
-                          <children>
-                            <Text fx:id="nameWinner" fill="GOLD" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Name_of_winner:">
-                              <font>
-                                <Font size="40.0" />
-                              </font>
-                            </Text>
-                            <Text fx:id="pointsWinner" fill="GOLD" strokeType="OUTSIDE" strokeWidth="0.0" text="Points">
-                              <font>
-                                <Font size="40.0" />
-                              </font>
-                            </Text>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
-                          <children>
-                            <Text fx:id="nameSecond" fill="SILVER" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Name_of_second:">
-                              <font>
-                                <Font size="30.0" />
-                              </font>
-                            </Text>
-                            <Text fx:id="pointsSecond" fill="SILVER" strokeType="OUTSIDE" strokeWidth="0.0" text="Points">
-                              <font>
-                                <Font size="30.0" />
-                              </font>
-                            </Text>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
-                          <children>
-                            <Text fx:id="nameThird" fill="#a87000" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Name_of_third:">
-                              <font>
-                                <Font size="30.0" />
-                              </font>
-                            </Text>
-                            <Text fx:id="pointsThird" fill="#a87000" strokeType="OUTSIDE" strokeWidth="0.0" text="Points">
-                              <font>
-                                <Font size="30.0" />
-                              </font>
-                            </Text>
-                          </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="80.0" spacing="20.0">
-                          <children>
-                            <Label fx:id="nameFourth" text="4. Name_of_fourth:">
-                              <font>
-                                <Font size="30.0"/>
-                              </font>
-                            </Label>
-                            <Label fx:id="pointsFourth" text="Label">
-                              <font>
-                                <Font size="30.0"/>
-                              </font>
-                            </Label>
-                          </children>
-                        </HBox>
-                      </children>
-                    </VBox>
-                    <Line endX="-100.28358459472656" endY="739.663330078125" layoutX="824.0" layoutY="-383.0" startX="-100.28353881835938" startY="395.81231689453125" stroke="WHITE" />
-                  </children>
-                </HBox>
-                        <Label fx:id="hostWaiting" text="THE HOST IS STARTING ANOTHER GAME, PLEASE WAIT...">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                <HBox fx:id="buttonBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
-                  <children>
-                    <Button fx:id="backMainMenu" mnemonicParsing="false" onAction="#backMainMenu" text="BACK TO MAIN MENU">
-                      <font>
-                        <Font size="20.0" />
-                      </font>
-                    </Button>
-                  </children>
-                </HBox>
-              </children>
-            </VBox>
-          </children>
-        </GridPane>
-      </children>
     </GridPane>
   </children>
 </AnchorPane>

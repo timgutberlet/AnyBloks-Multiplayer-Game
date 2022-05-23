@@ -21,14 +21,14 @@ public class HostQuitUiController extends AbstractUiController {
    * Anbstract Game controller used in Application.
    */
   private final AbstractGameController gameController;
-  @FXML
-  private Button backToLobbyButton;
   /**
    * Main Anchorpane used for resizing.
    */
   @FXML
   AnchorPane mainPane;
-  private GameSession gameSession;
+  @FXML
+  private Button backToLobbyButton;
+  private final GameSession gameSession;
   private boolean buttonActive;
   private int waited;
 
@@ -152,7 +152,7 @@ public class HostQuitUiController extends AbstractUiController {
         e.printStackTrace();
       }
     }
-    if(waited<10){
+    if (waited < 10) {
       waited++;
     }
 

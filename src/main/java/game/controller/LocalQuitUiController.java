@@ -21,14 +21,14 @@ public class LocalQuitUiController extends AbstractUiController {
    * Anbstract Game controller used in Application.
    */
   private final AbstractGameController gameController;
-  @FXML
-  private Button backToLobbyButton = new Button();
   /**
    * Main Anchorpane used for resizing.
    */
   @FXML
   AnchorPane mainPane;
-  private GameSession gameSession;
+  @FXML
+  private Button backToLobbyButton = new Button();
+  private final GameSession gameSession;
   private int waited;
   private boolean buttonActive;
 
@@ -38,7 +38,8 @@ public class LocalQuitUiController extends AbstractUiController {
    * @param gameController AbstractGameController
    * @author tgutberl
    */
-  public LocalQuitUiController(AbstractGameController gameController, GameSession gameSession, Boolean host) {
+  public LocalQuitUiController(AbstractGameController gameController, GameSession gameSession,
+      Boolean host) {
     super(gameController);
     this.gameController = gameController;
     this.gameSession = gameSession;
@@ -52,7 +53,7 @@ public class LocalQuitUiController extends AbstractUiController {
     }
     init(super.root);
     //Make sure that all clients have left.
-    if(host) {
+    if (host) {
       try {
         TimeUnit.MILLISECONDS.sleep(5000);
       } catch (InterruptedException e) {
@@ -68,6 +69,7 @@ public class LocalQuitUiController extends AbstractUiController {
     }
 
   }
+
   /**
    * Method to initialize the FXML.
    *
@@ -174,7 +176,7 @@ public class LocalQuitUiController extends AbstractUiController {
         e.printStackTrace();
       }
     }
-    if(waited<10){
+    if (waited < 10) {
       waited++;
     }
 

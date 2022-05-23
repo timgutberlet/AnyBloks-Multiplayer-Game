@@ -6,7 +6,6 @@ import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.chat.ChatMessage;
-import game.model.player.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.fxml.FXML;
@@ -26,6 +25,19 @@ import javafx.scene.layout.AnchorPane;
  */
 
 public class JoinLobbyUiController extends AbstractUiController {
+
+  /**
+   * Gamecontroller method used in application.
+   */
+  private final AbstractGameController gameController;
+  /**
+   * Gamessession controlling the game.
+   */
+  private final GameSession gameSession;
+  /**
+   * Arraylist saving what is already in Chat.
+   */
+  ArrayList<String> alreadyInChat;
   /**
    * Name of Host Player
    */
@@ -46,18 +58,6 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   @FXML
   private Label remotePlayer3;
-  /**
-   * Gamecontroller method used in application.
-   */
-  private final AbstractGameController gameController;
-  /**
-   * Gamessession controlling the game.
-   */
-  private final GameSession gameSession;
-  /**
-   * Arraylist saving what is already in Chat.
-   */
-  ArrayList<String> alreadyInChat;
   /**
    * Textarea with Chat messages.
    */
@@ -222,26 +222,26 @@ public class JoinLobbyUiController extends AbstractUiController {
       remotePlayer3.setText(" - ");
     }
     if (this.gameSession.getPlayerList().size() == 3) {
-      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
       remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
       remotePlayer2.setText(this.gameSession.getPlayerList().get(2).getUsername());
       remotePlayer3.setText(" - ");
     }
     if (this.gameSession.getPlayerList().size() == 4) {
-      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername()+ " (HOST)");
+      hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
       remotePlayer1.setText(this.gameSession.getPlayerList().get(1).getUsername());
       remotePlayer2.setText(this.gameSession.getPlayerList().get(2).getUsername());
       remotePlayer3.setText(this.gameSession.getPlayerList().get(3).getUsername());
     }
 
-    if(gameSession.getGotKicked()){
+    if (gameSession.getGotKicked()) {
       gameController.setActiveUiController(new KickInfoUiController(gameController));
     }
 
     //Debug.printMessage("Gamesession: " + this.gameSession);
     if (this.gameSession.isGameStarted()) {
 
-      if(this.gameSession.getGame() == null){
+      if (this.gameSession.getGame() == null) {
         System.out.println("gs is null");
       }
       gameController.setActiveUiController(

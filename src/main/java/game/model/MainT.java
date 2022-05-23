@@ -62,16 +62,16 @@ public class MainT {
 
     AI.setRoundSections(0, new int[]{0, 24});
     int[] result = playClassicGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
     AI.setRoundSections(1, new int[]{0, 24});
     result = playDuoGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
     AI.setRoundSections(2, new int[]{0, 24});
     result = playJuniorGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
     AI.setRoundSections(3, new int[]{0, 24});
     result = playTrigonGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
 
     Debug.printMessage("Everything works");
 
@@ -180,15 +180,15 @@ public class MainT {
       Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        Debug.printMessage(""+t1);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t1);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
-        Debug.printMessage(""+t2);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t2);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -209,15 +209,15 @@ public class MainT {
       Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        Debug.printMessage(""+t1);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t1);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
-        Debug.printMessage(""+t2);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t2);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -240,33 +240,33 @@ public class MainT {
       Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        Debug.printMessage(""+t1);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t1);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
-        Debug.printMessage(""+t2);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t2);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t3 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t3);
       if (print) {
-        Debug.printMessage(""+t3);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t3);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t4 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t4);
       if (print) {
-        Debug.printMessage(""+t4);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t4);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
-    Debug.printMessage(""+game.getGameState().getRound());
+    Debug.printMessage("" + game.getGameState().getRound());
     gameSession.stopSession();
     return res;
   }
@@ -286,29 +286,29 @@ public class MainT {
       Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        Debug.printMessage(""+t1);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t1);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
-        Debug.printMessage(""+t2);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t2);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t3 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t3);
       if (print) {
-        Debug.printMessage(""+t3);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t3);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
 
       Turn t4 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t4);
       if (print) {
-        Debug.printMessage(""+t4);
-        Debug.printMessage(""+game.getGameState().getBoard());
+        Debug.printMessage("" + t4);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();

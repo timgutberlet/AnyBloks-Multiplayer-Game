@@ -67,7 +67,7 @@ public class ScoreProvider {
         }
       }
       Integer[] oldEntry = user2ScoreAndWin.get(winner);
-      if(oldEntry[1] == null){
+      if (oldEntry[1] == null) {
         oldEntry[1] = 0;
       }
       oldEntry[1] += 1;
@@ -78,7 +78,7 @@ public class ScoreProvider {
     for (GameScoreBoard gameScoreBoard : gameScoreBoards) {
       for (String uName : gameScoreBoard.getPlayerScores().keySet()) {
         Integer[] oldEntry = user2ScoreAndWin.get(uName);
-        if(oldEntry[0] == null){
+        if (oldEntry[0] == null) {
           oldEntry[0] = 0;
         }
         oldEntry[0] += gameScoreBoard.getPlayerScores().get(uName);
@@ -86,18 +86,18 @@ public class ScoreProvider {
       }
     }
 
-    for(String uName : user2ScoreAndWin.keySet()){
-      if(user2ScoreAndWin.get(uName)[0] == null){
+    for (String uName : user2ScoreAndWin.keySet()) {
+      if (user2ScoreAndWin.get(uName)[0] == null) {
         Integer[] oldEntry = user2ScoreAndWin.get(uName);
-        if(oldEntry[0] == null){
+        if (oldEntry[0] == null) {
           oldEntry[0] = 0;
         }
         user2ScoreAndWin.put(uName, oldEntry);
       }
-      if(user2ScoreAndWin.get(uName)[1] == null){
+      if (user2ScoreAndWin.get(uName)[1] == null) {
 
         Integer[] oldEntry = user2ScoreAndWin.get(uName);
-        if(oldEntry[1] == null){
+        if (oldEntry[1] == null) {
           oldEntry[1] = 0;
         }
         user2ScoreAndWin.put(uName, oldEntry);
@@ -106,7 +106,6 @@ public class ScoreProvider {
 
     GameSessionScoreBoard gameSessionScoreBoard = new GameSessionScoreBoard(gamesPlayed,
         user2ScoreAndWin);
-
 
     return gameSessionScoreBoard;
 
@@ -164,7 +163,7 @@ public class ScoreProvider {
    *
    * @return
    */
-  public static LobbyScoreBoard getLobbyScoreBoard(){
+  public static LobbyScoreBoard getLobbyScoreBoard() {
     DbServer dbServer = null;
     try {
       dbServer = DbServer.getInstance();

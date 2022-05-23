@@ -9,7 +9,7 @@ import javafx.scene.media.MediaPlayer;
  *
  * @author tgutberl
  */
-public class MusicThread extends Thread{
+public class MusicThread extends Thread {
 
   /**
    * Mediaplayer for controlling Music
@@ -31,16 +31,17 @@ public class MusicThread extends Thread{
   /**
    * Constructor for Music thread
    */
-  public MusicThread(){
-    try{
+  public MusicThread() {
+    try {
       media = new Media(getClass().getResource("/music/Tetris.mp3").toExternalForm());
       mediaPlayer = new MediaPlayer(media);
       mediaPlayer.setCycleCount(10000);
       stopMusic = false;
-    }catch (Exception e){
+    } catch (Exception e) {
 
     }
   }
+
   /**
    * Run Method for thread
    */
@@ -67,7 +68,7 @@ public class MusicThread extends Thread{
           count = 0;
         }
       }
-    }catch (Exception e){
+    } catch (Exception e) {
 
     }
   }

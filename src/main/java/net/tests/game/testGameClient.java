@@ -18,7 +18,6 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
-import net.packet.game.InitGamePacket;
 import net.packet.game.InitSessionPacket;
 import net.server.HashingHandler;
 import net.transmission.EndpointClient;

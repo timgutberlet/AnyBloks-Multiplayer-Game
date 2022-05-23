@@ -37,10 +37,10 @@ public class RESTFULClientRegister {
 
     if (receivedAnswer.getStatus() != 200) {
       Debug.printMessage("Something went wrong");
-      Debug.printMessage(""+receivedAnswer.getStatus());
-      Debug.printMessage(""+receivedAnswer.getStatusInfo());
+      Debug.printMessage("" + receivedAnswer.getStatus());
+      Debug.printMessage("" + receivedAnswer.getStatusInfo());
     } else {
-      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("" + receivedAnswer.getStatus());
       Debug.printMessage("Everything worked");
 
     }

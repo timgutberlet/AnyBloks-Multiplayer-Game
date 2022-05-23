@@ -10,8 +10,8 @@ public class CheckTrigonField extends TrigonField {
   /**
    * Constructor for the CheckTrigonField.
    *
-   * @param x Coordinate X of the Checktrigonfield.
-   * @param y Coordinate Y of the Checktrigonfield.
+   * @param x       Coordinate X of the Checktrigonfield.
+   * @param y       Coordinate Y of the Checktrigonfield.
    * @param isRight Coordinate that shows if a Triangle ist right or left in the parrallelogram.
    */
   public CheckTrigonField(int x, int y, int isRight) {

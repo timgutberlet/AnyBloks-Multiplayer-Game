@@ -13,7 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;"
+  maxHeight="-Infinity" maxWidth="-Infinity"
   minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
   xmlns="http://javafx.com/javafx/18" fx:controller="game.controller.JoinAuthController"
   fx:id="mainPane">
@@ -128,7 +129,8 @@
                     </VBox>
                   </children>
                 </VBox>
-                <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="CENTER" prefHeight="200.0"
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="1" alignment="CENTER"
+                  prefHeight="200.0"
                   prefWidth="100.0" spacing="5.0">
                   <children>
                     <Label text="IP-Adress">
@@ -141,7 +143,8 @@
                     <TextField fx:id="ipField"/>
                   </children>
                 </VBox>
-                <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER" prefHeight="78.0"
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="2" alignment="CENTER"
+                  prefHeight="78.0"
                   prefWidth="480.0" spacing="5.0">
                   <children>
                     <Label prefHeight="105.0" prefWidth="115.0" text="Username">

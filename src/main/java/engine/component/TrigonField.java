@@ -15,8 +15,8 @@ public class TrigonField extends Field {
   /**
    * Constructor Method initializing the Trigonfield class.
    *
-   * @param x Coordinate X of the field.
-   * @param y Coordinate Y of the field.
+   * @param x       Coordinate X of the field.
+   * @param y       Coordinate Y of the field.
    * @param isRight isRight Int showing if triangle is right or left in parallelogram.
    */
   public TrigonField(int x, int y, int isRight) {

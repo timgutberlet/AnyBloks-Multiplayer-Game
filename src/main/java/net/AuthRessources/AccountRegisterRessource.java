@@ -22,6 +22,7 @@ public class AccountRegisterRessource {
 
   /**
    * This method registers and processes a create account request packet.
+   *
    * @param wrappedPacket
    * @return response on the create account request
    */

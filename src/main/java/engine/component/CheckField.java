@@ -1,8 +1,8 @@
 package engine.component;
 
 /**
- * This is the Checkfield Class representing a field, that is getting checked for collision and
- * if a Poly can be placed. This is used for the Classic Gamemodes and not Trigon.
+ * This is the Checkfield Class representing a field, that is getting checked for collision and if a
+ * Poly can be placed. This is used for the Classic Gamemodes and not Trigon.
  *
  * @author tgutberl
  */

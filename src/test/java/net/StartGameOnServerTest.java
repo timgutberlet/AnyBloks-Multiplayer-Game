@@ -21,7 +21,6 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
-import net.packet.game.InitGamePacket;
 import net.server.HashingHandler;
 import net.server.HostServer;
 import net.tests.NoLogging;

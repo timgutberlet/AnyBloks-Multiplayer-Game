@@ -64,7 +64,7 @@ public class Game {
    */
   public void makeMoveServer(Turn turn) {
     //Debug.printMessage(this,this.board.toString());
-    if(!gameSession.getHostQuit()){
+    if (!gameSession.getHostQuit()) {
       Player currentPlayer = this.gameState.getPlayerCurrent();
 
       this.gameState.playTurn(turn);

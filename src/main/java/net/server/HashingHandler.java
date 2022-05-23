@@ -9,6 +9,7 @@ public class HashingHandler {
 
   /**
    * encodes a string input into the output string.
+   *
    * @param input
    * @return
    */
@@ -19,6 +20,7 @@ public class HashingHandler {
 
   /**
    * checks if two passwords are equal.
+   *
    * @param passwordA
    * @param passwordB
    * @return boolean if the passwords are equal

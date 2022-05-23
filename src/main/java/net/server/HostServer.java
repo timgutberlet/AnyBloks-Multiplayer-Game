@@ -24,9 +24,8 @@ import org.slf4j.LoggerFactory;
 public class HostServer {
 
   private static final Logger LOG = LoggerFactory.getLogger(HostServer.class);
-
-  private Server restServer;
   private static Server websocketServer;
+  private Server restServer;
 
   /**
    * Starting the server itself.
@@ -101,7 +100,7 @@ public class HostServer {
   /**
    * Stop the restful server
    */
-  public void stopRestful(){
+  public void stopRestful() {
     if (restServer == null || !restServer.isRunning()) {
       if (LOG.isWarnEnabled()) {
         LOG.warn("No Jetty server running");

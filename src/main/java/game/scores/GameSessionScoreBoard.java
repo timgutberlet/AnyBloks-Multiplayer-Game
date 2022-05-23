@@ -1,7 +1,6 @@
 package game.scores;
 
 import java.util.HashMap;
-import net.server.DbServer;
 
 /**
  * @author tbuscher
@@ -15,10 +14,11 @@ public class GameSessionScoreBoard {
   /**
    * Constructor.
    *
-   * @param gamesPlayed as int
+   * @param gamesPlayed             as int
    * @param usernames2pointsAndWins as Hashmap
    */
-  public GameSessionScoreBoard(int gamesPlayed, HashMap<String, Integer[]> usernames2pointsAndWins){
+  public GameSessionScoreBoard(int gamesPlayed,
+      HashMap<String, Integer[]> usernames2pointsAndWins) {
     this.gamesPlayed = gamesPlayed;
     this.usernames2pointsAndWins = usernames2pointsAndWins;
   }
@@ -26,7 +26,7 @@ public class GameSessionScoreBoard {
   /**
    * Default Constructor for Jackson.
    */
-  public GameSessionScoreBoard(){
+  public GameSessionScoreBoard() {
     this.gamesPlayed = 0;
     this.usernames2pointsAndWins = null;
   }

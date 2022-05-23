@@ -23,9 +23,8 @@ public class BoardPane extends Pane {
    */
   protected final List<Field> fields;
   /**
-   * List of smaller fields in a big field on the board
-   * that is being used for the collision detection
-   * algorithm.
+   * List of smaller fields in a big field on the board that is being used for the collision
+   * detection algorithm.
    */
   protected final List<Field> checkFields;
   /**
@@ -47,10 +46,10 @@ public class BoardPane extends Pane {
 
   /**
    * Constructor used to initalize all variables and to set board and inputhandler.
-   * @param board Board of the game logic
-   * @param inputHandler Handler used to control inputs for collision
-   * @param width width of frame
    *
+   * @param board        Board of the game logic
+   * @param inputHandler Handler used to control inputs for collision
+   * @param width        width of frame
    * @author lbaudenb
    */
   public BoardPane(Board board, InputHandler inputHandler, double width) {
@@ -63,10 +62,10 @@ public class BoardPane extends Pane {
 
   /**
    * Method to set the color of the checkfields.
-   * @param color Color of the collision field
-   * @param x coord x
-   * @param y coord y
    *
+   * @param color Color of the collision field
+   * @param x     coord x
+   * @param y     coord y
    * @author tgutberl
    */
   public void setCheckFieldColor(Paint color, int x, int y) {
@@ -75,11 +74,11 @@ public class BoardPane extends Pane {
 
   /**
    * Method to set the color of the ckeckfields in trigon.
-   * @param color Color of the collision field
-   * @param x coord x
-   * @param y coord y
-   * @param isRight marks if right or left triangle is to be painted
    *
+   * @param color   Color of the collision field
+   * @param x       coord x
+   * @param y       coord y
+   * @param isRight marks if right or left triangle is to be painted
    * @author tgutberl
    */
   public void setCheckFieldColor(Paint color, int x, int y, int isRight) {
@@ -88,20 +87,21 @@ public class BoardPane extends Pane {
 
   /**
    * Resets a checkfield to not being painted.
+   *
    * @param x coord x
    * @param y coord y
-   *
    * @author tgutberl
    */
   public void resetCheckFieldColor(int x, int y) {
     this.checkFieldColor.remove("" + (x * 1000) + y);
   }
+
   /**
    * Resets a checkfield to not being painted.
-   * @param x coord x
-   * @param y coord y
-   * @param isRight marks if right or left triangle is to be painted.
    *
+   * @param x       coord x
+   * @param y       coord y
+   * @param isRight marks if right or left triangle is to be painted.
    * @author tgutberl
    */
   public void resetCheckFieldColor(int x, int y, int isRight) {
@@ -168,6 +168,7 @@ public class BoardPane extends Pane {
 
   /**
    * Resizes the Boardpane.
+   *
    * @param width
    */
   public void resize(double width) {

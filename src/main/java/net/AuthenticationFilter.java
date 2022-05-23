@@ -26,7 +26,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
   public void filter(ContainerRequestContext containerRequestContext) {
     // get headers
     MultivaluedMap<String, String> headers = containerRequestContext.getHeaders();
-    Debug.printMessage(""+headers);
+    Debug.printMessage("" + headers);
     String encodedAuth = headers.getFirst("Authentication");
     String authString = Arrays.toString(Base64.getDecoder().decode(encodedAuth));
     Debug.printMessage("DECODED AUTH");

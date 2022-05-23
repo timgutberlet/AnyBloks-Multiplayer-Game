@@ -25,6 +25,7 @@ public class TokenGenerationRessource {
 
   /**
    * This method registers and processes a restful login packet.
+   *
    * @param wrappedPacket
    * @return response on the restful login packet
    */
@@ -43,7 +44,7 @@ public class TokenGenerationRessource {
         throw new Exception("This packet is not of the correct type");
       }
 
-      Debug.printMessage(""+wrappedPacket.getPacket());
+      Debug.printMessage("" + wrappedPacket.getPacket());
       restfulLoginPacket = (RestfulLoginPacket) wrappedPacket.getPacket();
       username = restfulLoginPacket.getUsername();
       passwordHash = restfulLoginPacket.getPasswordHash();
@@ -68,8 +69,8 @@ public class TokenGenerationRessource {
 
   private void authenticate(String username, String password) throws Exception {
     DbServer dbServer = DbServer.getInstance();
-    Debug.printMessage(""+dbServer.doesUsernameExist(username));
-    Debug.printMessage(""+!dbServer.doesUsernameExist(username));
+    Debug.printMessage("" + dbServer.doesUsernameExist(username));
+    Debug.printMessage("" + !dbServer.doesUsernameExist(username));
     if (!(dbServer.doesUsernameExist(username))) {
       throw new Exception("The username doesn't exist!");
     }

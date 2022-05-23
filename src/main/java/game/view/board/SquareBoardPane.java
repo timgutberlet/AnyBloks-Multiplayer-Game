@@ -18,9 +18,9 @@ public class SquareBoardPane extends BoardPane {
   /**
    * Constructor of the Squareboardpane intializing the variables of the super
    *
-   * @param board Board of the gamelogic
+   * @param board        Board of the gamelogic
    * @param inputHandler inputhandler used for collision detection
-   * @param width width of frame
+   * @param width        width of frame
    */
   public SquareBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
@@ -32,8 +32,8 @@ public class SquareBoardPane extends BoardPane {
    * Method that draws a square at the coordinates {row,j}.
    *
    * @param color Color of the square and collision
-   * @param i coord x
-   * @param j coord y
+   * @param i     coord x
+   * @param j     coord y
    */
   public void setSquare(int i, int j, Color color) {
 
@@ -81,6 +81,7 @@ public class SquareBoardPane extends BoardPane {
 
   /**
    * Resizes the baord
+   *
    * @param width width of the board
    */
   public void resize(double width) {

@@ -14,14 +14,12 @@ import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.account.LoginResponsePacket;
-import net.packet.game.IllegalTurnPacket;
 import net.packet.game.InitGamePacket;
-import net.packet.game.PlayerKickPacket;
 import net.packet.game.LobbyScoreBoardPacket;
+import net.packet.game.PlayerKickPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.PlayerQuitPacket;
 import net.packet.game.TurnPacket;
-import net.transmission.EndpointClient;
 import net.transmission.EndpointServer;
 
 /**
@@ -284,10 +282,11 @@ public class InboundServerHandler {
 
   /**
    * remove a player from the server
+   *
    * @param client
    * @param packet
    */
-  public void disconnectClient(Session client, WrappedPacket packet){
+  public void disconnectClient(Session client, WrappedPacket packet) {
     PlayerQuitPacket playerQuitPacket = (PlayerQuitPacket) packet.getPacket();
     String username = playerQuitPacket.getUsername();
 
@@ -312,7 +311,7 @@ public class InboundServerHandler {
 
   }
 
-  public void kickClient(Session client, WrappedPacket packet){
+  public void kickClient(Session client, WrappedPacket packet) {
     PlayerKickPacket playerKickPacket = (PlayerKickPacket) packet.getPacket();
     String username = playerKickPacket.getUsername();
     this.server.getOutboundServerHandler().kickPlayer(username);
@@ -320,8 +319,8 @@ public class InboundServerHandler {
     this.server.getUsername2Session().remove(username);
     EndpointServer.getSessions().remove(client);
     int indexPlayerToRemove = -1;
-    for(int i=0; i<gameSession.getPlayerList().size();i++){
-      if (gameSession.getPlayerList().get(i).getUsername().equals(username)){
+    for (int i = 0; i < gameSession.getPlayerList().size(); i++) {
+      if (gameSession.getPlayerList().get(i).getUsername().equals(username)) {
         indexPlayerToRemove = i;
       }
     }

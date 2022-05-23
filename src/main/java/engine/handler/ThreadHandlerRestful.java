@@ -2,7 +2,6 @@ package engine.handler;
 
 import game.model.Debug;
 import net.server.HostServer;
-import net.tests.NoLogging;
 
 /**
  * @author tgutberl The Basic Thread can look like this

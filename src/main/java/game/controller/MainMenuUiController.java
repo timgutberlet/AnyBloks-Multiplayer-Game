@@ -2,21 +2,12 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
-import engine.handler.ThreadHandlerRestful;
 import game.config.Config;
-import game.model.Game;
-import game.model.GameSession;
-import game.model.gamemodes.GMTutorial;
-import game.model.gamemodes.GameMode;
-import game.model.player.Player;
-import game.model.player.PlayerType;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Box;
 
 /**
  * Main Menu Ui Controller that is used first when the game is started.
@@ -49,6 +40,7 @@ public class MainMenuUiController extends AbstractUiController {
     init(super.root);
 
   }
+
   /**
    * Method to initialize the FXML.
    *
@@ -107,7 +99,7 @@ public class MainMenuUiController extends AbstractUiController {
    */
   @FXML
   public void tutorial() {
-        new TutorialUiController(gameController);
+    new TutorialUiController(gameController);
   }
 
   /**
@@ -119,6 +111,7 @@ public class MainMenuUiController extends AbstractUiController {
   public void setting() {
     gameController.setActiveUiController(new SettingUiController(gameController));
   }
+
   /**
    * Method to get Quit Menu - to End the Program.
    *

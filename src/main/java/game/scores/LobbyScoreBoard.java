@@ -26,7 +26,7 @@ public class LobbyScoreBoard {
   /**
    * Default Constructor for Jackson.
    */
-  public LobbyScoreBoard(){
+  public LobbyScoreBoard() {
   }
 
 }

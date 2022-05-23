@@ -3,8 +3,7 @@ package game.scores;
 import java.util.HashMap;
 
 /**
- * Class to implement a ScoreBoard within a Game. Contains info about: The gamemode.
- * usernames of
+ * Class to implement a ScoreBoard within a Game. Contains info about: The gamemode. usernames of
  * players and their scores
  *
  * @author tbuscher
@@ -28,7 +27,7 @@ public class GameScoreBoard {
   /**
    * Constructor for Jackson.
    */
-  public GameScoreBoard(){
+  public GameScoreBoard() {
     this.gamemode = null;
     this.playerScores = null;
   }
@@ -52,11 +51,11 @@ public class GameScoreBoard {
    *
    * @return String
    */
-  public String getWinner(){
+  public String getWinner() {
     String winnerName = "";
     int maxScore = 0;
-    for(String username : playerScores.keySet()){
-      if(playerScores.get(username) > maxScore){
+    for (String username : playerScores.keySet()) {
+      if (playerScores.get(username) > maxScore) {
         maxScore = playerScores.get(username);
         winnerName = username;
       }

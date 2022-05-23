@@ -31,9 +31,10 @@ public class TrigonBoardPane extends BoardPane {
 
   /**
    * Constrcutor used for intializing
-   * @param board Board of the game logic
+   *
+   * @param board        Board of the game logic
    * @param inputHandler Inputhandler used for collision detection
-   * @param width width used for board
+   * @param width        width used for board
    */
   public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
     super(board, inputHandler, width);
@@ -47,8 +48,8 @@ public class TrigonBoardPane extends BoardPane {
   /**
    * Method that draws a triangle (right in the parallelogram) at the coordinates {i,j}.
    *
-   * @param i coord x
-   * @param j coord y
+   * @param i     coord x
+   * @param j     coord y
    * @param color coolor of triangle
    */
   private void setTriangleRight(int i, int j, Color color) {
@@ -85,8 +86,8 @@ public class TrigonBoardPane extends BoardPane {
   /**
    * Method that draws a triangle (left in the parallelogram) at the coordinates {i,j}.
    *
-   * @param i coord x
-   * @param j coord y
+   * @param i     coord x
+   * @param j     coord y
    * @param color Color of triangle
    */
   private void setTriangleLeft(int i, int j, Color color) {
@@ -166,6 +167,7 @@ public class TrigonBoardPane extends BoardPane {
 
   /**
    * Resizes board
+   *
    * @param width width of board
    */
   public void resize(double width) {

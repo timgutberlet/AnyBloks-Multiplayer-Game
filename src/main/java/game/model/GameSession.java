@@ -200,7 +200,7 @@ public class GameSession {
 
     //Debug.printMessage("DAS GAME WIRD HIER GESTARTET");
     System.out.println("Server gamesession 1: " + this);
-    if(this.defaultAI == null){
+    if (this.defaultAI == null) {
       this.defaultAI = PlayerType.AI_MIDDLE;
     }
     System.out.println("Server gamesession 2: " + this);
@@ -249,7 +249,7 @@ public class GameSession {
       System.out.println("Server gamesession 4.1: " + this);
     }
 
-      Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
+    Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
     System.out.println("Server gamesession 5: " + this);
     try {
       Debug.printMessage(this, "Waiting for clients to establish connection");
@@ -323,15 +323,6 @@ public class GameSession {
   }
 
   /**
-   * Setter for localGame.
-   *
-   * @author tgutberl
-   */
-  public void setClientHandler(ClientHandler clientHandler) {
-    this.clientHandler = clientHandler;
-  }
-
-  /**
    * function to add a new msg and broadcast to all players
    *
    * @param msg message
@@ -360,7 +351,7 @@ public class GameSession {
   public void addBot(PlayerType playerType) {
     this.numOfBots++;
     Player bot = null;
-    switch(this.numOfBots){
+    switch (this.numOfBots) {
       case 1:
         bot = new Player(Config.getStringValue("AIPLAYER1"), playerType);
         break;
@@ -373,7 +364,6 @@ public class GameSession {
       default:
         bot = new Player(Config.getStringValue("AIPLAYER3") + this.numOfBots, playerType);
     }
-
 
     //bot.start();
     this.addToSession(bot);
@@ -484,7 +474,6 @@ public class GameSession {
 
   }
 
-
   public EndpointClient joinLocalGame() {
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
     Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
@@ -554,17 +543,17 @@ public class GameSession {
   }
 
   /**
+   * Getter
+   */
+  public HostServer getHostServer() {
+    return hostServer;
+  }
+
+  /**
    * Set Hostserver.
    */
   public void setHostServer(HostServer hostServerNew) {
     hostServer = hostServerNew;
-  }
-
-  /**
-   * Getter
-   */
-  public HostServer getHostServer(){
-    return hostServer;
   }
 
   /**
@@ -680,6 +669,15 @@ public class GameSession {
   }
 
   /**
+   * Set the hostPlayer to another player.
+   *
+   * @param player that replaces the old hostPlayer
+   */
+  public void setHostPlayer(Player player) {
+    this.hostPlayer = player;
+  }
+
+  /**
    * returns the list of games that will be played in the tournament.
    *
    * @return gameList
@@ -791,21 +789,21 @@ public class GameSession {
   }
 
   /**
-   * Getter.
-   *
-   * @return gameScoreBoard
-   */
-  public GameScoreBoard getGameScoreBoard() {
-    return gameScoreBoard;
-  }
-
-  /**
    * Setter.
    *
    * @param gameSessionScoreBoard to set
    */
   public void setGameSessionScoreBoard(GameSessionScoreBoard gameSessionScoreBoard) {
     this.gameSessionScoreBoard = gameSessionScoreBoard;
+  }
+
+  /**
+   * Getter.
+   *
+   * @return gameScoreBoard
+   */
+  public GameScoreBoard getGameScoreBoard() {
+    return gameScoreBoard;
   }
 
   /**
@@ -829,10 +827,10 @@ public class GameSession {
   /**
    * Getter.
    *
-   * @param hostQuit Boolean
+   * @param gotKicked Boolean
    */
-  public void setHostQuit(Boolean hostQuit){
-    this.hostQuit = hostQuit;
+  public void setGotKicked(Boolean gotKicked) {
+    this.gotKicked = gotKicked;
   }
 
   /**
@@ -847,10 +845,10 @@ public class GameSession {
   /**
    * Getter.
    *
-   * @param gotKicked Boolean
+   * @param hostQuit Boolean
    */
-  public void setGotKicked(Boolean gotKicked){
-    this.gotKicked = gotKicked;
+  public void setHostQuit(Boolean hostQuit) {
+    this.hostQuit = hostQuit;
   }
 
   /**
@@ -858,22 +856,22 @@ public class GameSession {
    *
    * @return Clienthandler.
    */
-  public ClientHandler getClientHandler(){
-    return  clientHandler;
+  public ClientHandler getClientHandler() {
+    return clientHandler;
   }
 
-
   /**
-   * Set the hostPlayer to another player.
+   * Setter for localGame.
    *
-   * @param player that replaces the old hostPlayer
+   * @author tgutberl
    */
-  public void setHostPlayer(Player player){
-    this.hostPlayer = player;
+  public void setClientHandler(ClientHandler clientHandler) {
+    this.clientHandler = clientHandler;
   }
 
   /**
    * setter.
+   *
    * @param playerKicked
    */
   public void setPlayerKicked(Boolean playerKicked) {
@@ -882,6 +880,7 @@ public class GameSession {
 
   /**
    * getter.
+   *
    * @return
    */
   public Boolean isPlayerKicked() {
@@ -908,21 +907,21 @@ public class GameSession {
 //  }
 
   /**
-   * Setter.
-   *
-   * @param lobbyScoreBoard to add
-   */
-  public void setLobbyScoreBoard(LobbyScoreBoard lobbyScoreBoard) {
-    this.lobbyScoreBoard = lobbyScoreBoard;
-  }
-
-  /**
    * Getter.
    *
    * @return lobbyScoreBoard
    */
   public LobbyScoreBoard getLobbyScoreBoard() {
     return lobbyScoreBoard;
+  }
+
+  /**
+   * Setter.
+   *
+   * @param lobbyScoreBoard to add
+   */
+  public void setLobbyScoreBoard(LobbyScoreBoard lobbyScoreBoard) {
+    this.lobbyScoreBoard = lobbyScoreBoard;
   }
 }
 

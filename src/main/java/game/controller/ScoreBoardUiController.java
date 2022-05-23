@@ -8,17 +8,10 @@ import game.model.GameSession;
 import game.model.player.PlayerType;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.LongAccumulator;
-import java.util.stream.Collectors;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -33,8 +26,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import static java.util.Collections.reverseOrder;
-
 /**
  * Class that controls the Scoreboard View
  *
@@ -42,15 +33,12 @@ import static java.util.Collections.reverseOrder;
  */
 public class ScoreBoardUiController extends AbstractUiController {
 
-  private AbstractGameController gameController;
-  private GameSession gameSession;
-
-  private static List<String> players = new ArrayList<>();
-  private static List<String> scores = new ArrayList<>();
-
-  private static List<String> sessionPlayers = new ArrayList<>();
-  private static List<String> sessionScores = new ArrayList<>();
-
+  private static final List<String> players = new ArrayList<>();
+  private static final List<String> scores = new ArrayList<>();
+  private static final List<String> sessionPlayers = new ArrayList<>();
+  private static final List<String> sessionScores = new ArrayList<>();
+  private final AbstractGameController gameController;
+  private final GameSession gameSession;
   @FXML
   private AnchorPane mainPane;
 
@@ -103,6 +91,38 @@ public class ScoreBoardUiController extends AbstractUiController {
     this.init(super.root);
   }
 
+  public static void sortScoreBoard(GameSession gameSession) {
+    List<Map.Entry<String, Integer>> list0
+        = new ArrayList<Entry<String, Integer>>(
+        gameSession.getGameScoreBoard().playerScores.entrySet());
+
+    // Sort the list using lambda expression
+    Collections.sort(
+        list0,
+        (i1, i2) -> i1.getValue().compareTo(i2.getValue()));
+
+    for (int j = list0.size() - 1; j >= 0; j--) {
+      players.add(list0.get(j).getKey());
+      scores.add(list0.get(j).getValue() + "");
+    }
+
+    List<Map.Entry<String, Integer[]>> list1
+        = new ArrayList<Entry<String, Integer[]>>(
+        gameSession.getGameSessionScoreBoard().usernames2pointsAndWins.entrySet());
+
+    // Sort the list using lambda expression
+    Collections.sort(
+        list1,
+        (i1, i2) -> i1.getValue()[0].compareTo(i2.getValue()[0]));
+
+    for (int i = list1.size() - 1; i >= 0; i--) {
+      sessionPlayers.add(list1.get(i).getKey());
+      sessionScores.add(list1.get(i).getValue()[0] + "");
+    }
+
+
+  }
+
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -110,7 +130,7 @@ public class ScoreBoardUiController extends AbstractUiController {
       loader.setControllerFactory(e -> this);
       root.getChildren().add(loader.load());
       updateSize(mainPane, gameController.getStage());
-      if(this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)){
+      if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
         hostWaiting.setVisible(false);
       }
       //Sets the Theme, according to the settings
@@ -154,42 +174,10 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @FXML
   public void nextRound() {
-    if(this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER) &&
-    this.gameSession.getGameList().size()>0){
+    if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER) &&
+        this.gameSession.getGameList().size() > 0) {
       this.gameSession.getClientHandler().startLocalGame(this.gameSession.getGameList());
     }
-  }
-
-  public static void sortScoreBoard(GameSession gameSession) {
-    List<Map.Entry<String, Integer>> list0
-        = new ArrayList<Entry<String, Integer>>(
-        gameSession.getGameScoreBoard().playerScores.entrySet());
-
-    // Sort the list using lambda expression
-    Collections.sort(
-        list0,
-        (i1, i2) -> i1.getValue().compareTo(i2.getValue()));
-
-    for (int j = list0.size() - 1; j >= 0; j--) {
-      players.add(list0.get(j).getKey());
-      scores.add(list0.get(j).getValue() + "");
-    }
-
-    List<Map.Entry<String, Integer[]>> list1
-        = new ArrayList<Entry<String, Integer[]>>(
-        gameSession.getGameSessionScoreBoard().usernames2pointsAndWins.entrySet());
-
-    // Sort the list using lambda expression
-    Collections.sort(
-        list1,
-        (i1, i2) -> i1.getValue()[0].compareTo(i2.getValue()[0]));
-
-    for (int i = list1.size() - 1; i >= 0; i--) {
-      sessionPlayers.add(list1.get(i).getKey());
-      sessionScores.add(list1.get(i).getValue()[0] + "");
-    }
-
-
   }
 
   public void setLabels() {

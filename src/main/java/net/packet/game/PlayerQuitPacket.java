@@ -8,21 +8,20 @@ import net.packet.abstr.Packet;
  */
 public class PlayerQuitPacket extends Packet {
 
-	private String username;
+  private final String username;
 
-	/**
-	 * empty constructor needed for jackson
-	 *
-	 */
-	public PlayerQuitPacket(){
-		this.username = "";
-	}
+  /**
+   * empty constructor needed for jackson
+   */
+  public PlayerQuitPacket() {
+    this.username = "";
+  }
 
-	public PlayerQuitPacket(String username){
-		this.username = username;
-	}
+  public PlayerQuitPacket(String username) {
+    this.username = username;
+  }
 
-	public String getUsername() {
-		return username;
-	}
+  public String getUsername() {
+    return username;
+  }
 }

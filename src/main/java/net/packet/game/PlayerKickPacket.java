@@ -8,28 +8,28 @@ import net.packet.abstr.Packet;
  */
 public class PlayerKickPacket extends Packet {
 
-	private String username;
+  private final String username;
 
-	/**
-	 * empty constructor for jackson.
-	 *
-	 */
-	public PlayerKickPacket(){
-		this.username = "";
-	}
+  /**
+   * empty constructor for jackson.
+   */
+  public PlayerKickPacket() {
+    this.username = "";
+  }
 
-	/**
-	 * constructor.
-	 */
-	public PlayerKickPacket(String username){
-		this.username = username;
-	}
+  /**
+   * constructor.
+   */
+  public PlayerKickPacket(String username) {
+    this.username = username;
+  }
 
-	/**
-	 * getter
-	 * @return
-	 */
-	public String getUsername() {
-		return username;
-	}
+  /**
+   * getter
+   *
+   * @return
+   */
+  public String getUsername() {
+    return username;
+  }
 }

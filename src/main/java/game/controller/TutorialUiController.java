@@ -2,14 +2,10 @@ package game.controller;
 
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
-import engine.handler.ErrorMessageHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
-import game.model.gamemodes.GMJunior;
-import game.model.gamemodes.GMTrigon;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
@@ -18,19 +14,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import net.server.ClientHandler;
 import net.server.HostServer;
 import net.tests.NoLogging;
@@ -52,11 +39,6 @@ public class TutorialUiController extends AbstractUiController {
    */
   private final GameSession gameSession;
   /**
-   * Main Anchorpane used for resizing.
-   */
-  @FXML
-  AnchorPane mainPane;
-  /**
    * Gamemode list.
    */
   private final LinkedList<GameMode> gameModes = new LinkedList<>();
@@ -68,6 +50,11 @@ public class TutorialUiController extends AbstractUiController {
    * Clienthandler for input to Server.
    */
   private final ClientHandler clientHandler;
+  /**
+   * Main Anchorpane used for resizing.
+   */
+  @FXML
+  AnchorPane mainPane;
 
   /**
    * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.

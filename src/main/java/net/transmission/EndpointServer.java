@@ -56,10 +56,14 @@ public class EndpointServer {
     return gameSession;
   }
 
+  public static Set<Session> getSessions() {
+    return sessions;
+  }
+
   /**
    * This method resets any saved variables of the endpoint. This way it is ready to restart.
    */
-  public void resetEndpointServer(){
+  public void resetEndpointServer() {
     username2Session.clear();
     sessions.clear();
     gameSession = new GameSession();
@@ -93,7 +97,7 @@ public class EndpointServer {
     sessions.add(ses);
     ses.setMaxBinaryMessageBufferSize(1024 * 1024 * 20);
     ses.setMaxTextMessageBufferSize(1024 * 1024 * 20);
-    if(gameSession == null){
+    if (gameSession == null) {
       gameSession = new GameSession();
     }
 
@@ -136,9 +140,8 @@ public class EndpointServer {
 
     PacketType type = packet.getPacketType();
 
-
     Debug.printMessage(this, type.name());
-    Debug.printMessage(this,"Endpoint received message");
+    Debug.printMessage(this, "Endpoint received message");
     //LOG.info("A packet has been sent here by a client, it is of the type: {} send by {}",
     //    packet.getPacketType().toString(), client.getId());
 
@@ -207,7 +210,7 @@ public class EndpointServer {
           break;
 
         case PLAYER_KICK_PACKET:
-          inboundServerHandler.kickClient(client,packet);
+          inboundServerHandler.kickClient(client, packet);
 
         default:
           Debug.printMessage("Received a packet of type: " + type);
@@ -262,6 +265,7 @@ public class EndpointServer {
 
   /**
    * broadcasts a message to all players.
+   *
    * @param wrappedPacket message packet.
    */
   public void broadcastMessage(WrappedPacket wrappedPacket) {
@@ -281,6 +285,7 @@ public class EndpointServer {
 
   /**
    * adds username and a client session to the hash map username2session.
+   *
    * @param username
    * @param client
    */
@@ -291,7 +296,7 @@ public class EndpointServer {
   /**
    * Remove a username from Username2Session and cause an Error on the connection.
    */
-  public void removePlayer(String username){
+  public void removePlayer(String username) {
     //This causes an Error on the connection within 1 millisecond
     username2Session.get(username).setMaxIdleTimeout(1);
     try {
@@ -319,11 +324,11 @@ public class EndpointServer {
    *
    * @param username String
    */
-  public void dropUser(String username){
+  public void dropUser(String username) {
     Debug.printMessage("The user: " + username + " has been kicked");
     Player playertoKick = null;
-    for(Player p : gameSession.getPlayerList()){
-      if(p.getUsername().equals(username)){
+    for (Player p : gameSession.getPlayerList()) {
+      if (p.getUsername().equals(username)) {
         playertoKick = p;
       }
     }
@@ -333,9 +338,9 @@ public class EndpointServer {
     Session sesToKick = username2Session.get(username);
     username2Session.remove(username);
 
-    try{
+    try {
       sesToKick.setMaxIdleTimeout(1);
-    } catch (Exception e){
+    } catch (Exception e) {
       Debug.printMessage("A users session has been terminated");
       Debug.printMessage("A users session has been terminated");
       e.printStackTrace();
@@ -343,15 +348,11 @@ public class EndpointServer {
 
   }
 
-
-  public static Set<Session> getSessions() {
-    return sessions;
-  }
-
   /**
    * handles an occurring error.
+   *
    * @param ses session
-   * @param t error
+   * @param t   error
    */
   @OnError
   public void onError(Session ses, Throwable t) {

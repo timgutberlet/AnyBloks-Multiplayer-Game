@@ -148,7 +148,7 @@ public class EditAccountController extends AbstractUiController {
       Debug.printMessage("Something went wrong");
       usernameError.setText(String.valueOf(receivedAnswer.getStatusInfo()));
     } else {
-      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("" + receivedAnswer.getStatus());
       Debug.printMessage("Everything worked");
       gameController.setActiveUiController(new JoinAuthController(gameController, ip, username));
 

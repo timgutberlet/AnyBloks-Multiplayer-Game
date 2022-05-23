@@ -27,8 +27,8 @@ public class PlayerListPacket extends Packet {
    */
   public PlayerListPacket(ArrayList<Player> playerList) {
     this.playerList = playerList;
-    for (Player p: playerList){
-      if(p.getType().equals(PlayerType.HOST_PLAYER)){
+    for (Player p : playerList) {
+      if (p.getType().equals(PlayerType.HOST_PLAYER)) {
         this.host = p;
       }
     }
@@ -49,7 +49,7 @@ public class PlayerListPacket extends Packet {
    *
    * @return
    */
-  public Player getHost(){
+  public Player getHost() {
     return this.host;
   }
 

@@ -226,7 +226,7 @@ public class AI {
    * @return "best" turn
    */
   public static Turn calculateNextHardMoveAggressive(GameState gameState, Player player) {
-    return calculateNextHardMove(gameState,player);
+    return calculateNextHardMove(gameState, player);
   }
 
   /**

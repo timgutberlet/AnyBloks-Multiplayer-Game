@@ -211,8 +211,8 @@ public class OutboundServerHandler {
     }
 
     if (gameSession.getGameList().size() > 0) {
-    //  Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
-    //  gameSession.startGameServer();
+      //  Debug.printMessage(this, "STARTING A NEW GAME FROM THE GAMELIST");
+      //  gameSession.startGameServer();
     } else {
       //No more games in gameSession, so we return to the lobby
 
@@ -240,6 +240,7 @@ public class OutboundServerHandler {
 
   /**
    * broadcasts a chat to all clients.
+   *
    * @param wrappedPacket
    */
   public void broadcastChatMessage(WrappedPacket wrappedPacket) {
@@ -248,17 +249,17 @@ public class OutboundServerHandler {
 
   /**
    * kicks a player from the server.
+   *
    * @param username
    */
-  public void kickPlayer(String username){
+  public void kickPlayer(String username) {
     PlayerKickPacket playerKickPacket = new PlayerKickPacket(username);
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_KICK_PACKET,playerKickPacket);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_KICK_PACKET,
+        playerKickPacket);
 
     this.server.sendMessage(wrappedPacket, username);
 
   }
-
-
 
 
 }

@@ -9,12 +9,13 @@ import net.packet.abstr.Packet;
  * @author tbuscher
  */
 public class LobbyScoreBoardPacket extends Packet {
+
   public LobbyScoreBoard lobbyScoreBoard;
 
   /**
    * Default Constructor for Jackson.
    */
-  public LobbyScoreBoardPacket(){
+  public LobbyScoreBoardPacket() {
     this.lobbyScoreBoard = null;
   }
 
@@ -23,7 +24,7 @@ public class LobbyScoreBoardPacket extends Packet {
    *
    * @param lobbyScoreBoard
    */
-  public LobbyScoreBoardPacket(LobbyScoreBoard lobbyScoreBoard){
+  public LobbyScoreBoardPacket(LobbyScoreBoard lobbyScoreBoard) {
     this.lobbyScoreBoard = lobbyScoreBoard;
   }
 

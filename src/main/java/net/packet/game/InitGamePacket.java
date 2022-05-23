@@ -2,7 +2,6 @@ package net.packet.game;
 
 import game.model.gamemodes.GameMode;
 import game.model.player.PlayerType;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import net.packet.abstr.Packet;
 
@@ -35,7 +34,7 @@ public class InitGamePacket extends Packet {
     this.defaultAi = null;
   }
 
-  public InitGamePacket(LinkedList<GameMode> gameMode,PlayerType defaultAi) {
+  public InitGamePacket(LinkedList<GameMode> gameMode, PlayerType defaultAi) {
     this.gameMode = gameMode;
     this.playerTypes = null;
     this.defaultAi = defaultAi;

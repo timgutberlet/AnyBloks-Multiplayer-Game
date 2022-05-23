@@ -14,7 +14,6 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.LoginRequestPacket;
 import net.packet.chat.ChatMessagePacket;
-import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**

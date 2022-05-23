@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;"
+  maxHeight="-Infinity" maxWidth="-Infinity"
   minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
   xmlns="http://javafx.com/javafx/18" fx:controller="game.controller.PlayUiController"
   fx:id="mainPane">
@@ -83,7 +84,8 @@
               vgrow="SOMETIMES"/>
           </rowConstraints>
         </GridPane>
-        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" alignment="CENTER" graphicTextGap="20.0"
+        <Label GridPane.halignment="CENTER" GridPane.valignment="CENTER" alignment="CENTER"
+          graphicTextGap="20.0"
           text="PLAY">
           <font>
             <Font size="50.0"/>

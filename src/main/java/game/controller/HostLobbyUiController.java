@@ -47,10 +47,8 @@ import javafx.scene.text.Text;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.game.HostQuitPacket;
-import net.packet.game.PlayerKickPacket;
 import net.server.ClientHandler;
 import net.server.HostServer;
-import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**
@@ -109,12 +107,6 @@ public class HostLobbyUiController extends AbstractUiController {
    * gamemodes that were chosen.
    */
   private final LinkedList<GameMode> gameModes = new LinkedList<>();
-
-  /**
-   * Rectangle used to disable Ui
-   */
-  private Rectangle disableUi;
-
   /**
    * Button to play the game
    */
@@ -130,6 +122,10 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   Label roundCount;
+  /**
+   * Rectangle used to disable Ui
+   */
+  private Rectangle disableUi;
   /**
    * List for gamemodes to choose.
    */
@@ -207,7 +203,7 @@ public class HostLobbyUiController extends AbstractUiController {
     alreadyInChat = new ArrayList<>();
     HostServer hostServer = new HostServer();
     try {
-     // org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      // org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       //Debug.printMessage("[testChatServer] Server is running");
       //TimeUnit.SECONDS.sleep(3);
@@ -300,7 +296,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void kickPlayer1() {
-  gameSession.clientHandler.kickClient(gameSession.getPlayerList().get(1));
+    gameSession.clientHandler.kickClient(gameSession.getPlayerList().get(1));
   }
 
   /**
@@ -345,7 +341,8 @@ public class HostLobbyUiController extends AbstractUiController {
 
     Debug.printMessage("change UI controller!");
 
-    gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession, true));
+    gameController.setActiveUiController(
+        new LocalQuitUiController(gameController, gameSession, true));
   }
 
   /**
@@ -442,8 +439,6 @@ public class HostLobbyUiController extends AbstractUiController {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-
-
 
       if (this.gameSession.getPlayerList().size() == 4) {
         playerName1.setText(this.gameSession.getPlayerList().get(1).getUsername());

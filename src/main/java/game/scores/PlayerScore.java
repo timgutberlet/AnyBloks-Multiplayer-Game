@@ -1,7 +1,6 @@
 package game.scores;
 
 import game.model.player.Player;
-import java.util.ArrayList;
 
 /**
  * @author tiotto

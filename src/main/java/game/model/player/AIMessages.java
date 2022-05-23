@@ -38,7 +38,7 @@ public class AIMessages {
       if (Math.round(Math.random() * 4) < 1) {
         String message = afterTurnComments[(int) Math.round(
             Math.random() * afterTurnComments.length)];
-        return(message);
+        return (message);
       }
     }
     return "";

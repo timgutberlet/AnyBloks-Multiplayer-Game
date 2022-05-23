@@ -41,8 +41,8 @@ public class tokenClientTest {
     Debug.printMessage("---------");
     Debug.printMessage(token);
 
-    Debug.printMessage(""+receivedToken.getStatus());
-    Debug.printMessage(""+receivedToken.getMediaType());
+    Debug.printMessage("" + receivedToken.getStatus());
+    Debug.printMessage("" + receivedToken.getMediaType());
   }
 
 

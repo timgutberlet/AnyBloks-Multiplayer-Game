@@ -23,6 +23,11 @@ import javafx.scene.layout.AnchorPane;
  * @author tgutberl
  */
 public class SettingUiController extends AbstractUiController {
+
+  /**
+   * Gamecontroller used in Application.
+   */
+  private final AbstractGameController gameController;
   /**
    * Button to enable/Disable Tooltips in Game
    */
@@ -33,11 +38,6 @@ public class SettingUiController extends AbstractUiController {
    */
   @FXML
   Button music;
-  /**
-   * Gamecontroller used in Application.
-   */
-  private final AbstractGameController gameController;
-
   /**
    * Themes that are available.
    */
@@ -164,11 +164,11 @@ public class SettingUiController extends AbstractUiController {
    * Button to enable/disable the music
    */
   @FXML
-  private void musicPush(){
-    if(Config.getStringValue("MUSIC").equals("ON")){
+  private void musicPush() {
+    if (Config.getStringValue("MUSIC").equals("ON")) {
       music.setText("START MUSIC");
       Config.set("MUSIC", "OFF");
-    }else{
+    } else {
       music.setText("STOP MUSIC");
       Config.set("MUSIC", "ON");
     }
@@ -178,11 +178,11 @@ public class SettingUiController extends AbstractUiController {
    * Button to enable/disable tooltips
    */
   @FXML
-  private void tooltipPush(){
-    if(Config.getStringValue("TOOLTIPS").equals("ON")){
+  private void tooltipPush() {
+    if (Config.getStringValue("TOOLTIPS").equals("ON")) {
       tooltips.setText("ENABLE TOOLTIPS");
       Config.set("TOOLTIPS", "OFF");
-    }else{
+    } else {
       tooltips.setText("DISABLE TOOLTIPS");
       Config.set("TOOLTIPS", "ON");
     }
@@ -295,14 +295,14 @@ public class SettingUiController extends AbstractUiController {
       saveConfirm.setText(saveMessage);
       hostPlayerField.setText(Config.getStringValue("HOSTPLAYER"));
       hostPlayerField.setAlignment(Pos.CENTER);
-      if(Config.getStringValue("MUSIC").equals("ON")){
+      if (Config.getStringValue("MUSIC").equals("ON")) {
         music.setText("STOP MUSIC");
-      }else{
+      } else {
         music.setText("START MUSIC");
       }
-      if(Config.getStringValue("TOOLTIPS").equals("ON")){
+      if (Config.getStringValue("TOOLTIPS").equals("ON")) {
         tooltips.setText("DISABLE TOOLTIPS");
-      }else{
+      } else {
         tooltips.setText("ENABLE TOOLTIPS");
       }
     } catch (IOException e) {

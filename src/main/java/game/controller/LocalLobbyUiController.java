@@ -35,7 +35,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import net.server.ClientHandler;
 import net.server.HostServer;
-import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**
@@ -66,12 +65,26 @@ public class LocalLobbyUiController extends AbstractUiController {
    * Gamesession for setting players.
    */
   private final GameSession gameSession;
-
   /**
-   * Rectangle used to disable Ui
+   * Gamemode list.
    */
-  private Rectangle disableUi;
-
+  private final LinkedList<GameMode> gameModes = new LinkedList<>();
+  /**
+   * Set Ai players List.
+   */
+  private final LinkedList<PlayerType> aiPlayers = new LinkedList<>();
+  /**
+   * Combobox where user can choose gamemode.
+   */
+  private final List<ComboBox<String>> rounds = new ArrayList<>();
+  /**
+   * Endpoint for server-client communication.
+   */
+  private final EndpointClient client;
+  /**
+   * Clienthandler for input to Server.
+   */
+  private final ClientHandler clientHandler;
   /**
    * Button to start Game
    */
@@ -98,33 +111,17 @@ public class LocalLobbyUiController extends AbstractUiController {
   @FXML
   Text gamemodeError;
   /**
-   * Gamemode list.
+   * Rectangle used to disable Ui
    */
-  private final LinkedList<GameMode> gameModes = new LinkedList<>();
-  /**
-   * Set Ai players List.
-   */
-  private final LinkedList<PlayerType> aiPlayers = new LinkedList<>();
+  private Rectangle disableUi;
   /**
    * List where the gamemodes are set in.
    */
   private ObservableList<String> list;
   /**
-   * Combobox where user can choose gamemode.
-   */
-  private final List<ComboBox<String>> rounds = new ArrayList<>();
-  /**
    * Round count.
    */
   private int round = 1;
-  /**
-   * Endpoint for server-client communication.
-   */
-  private final EndpointClient client;
-  /**
-   * Clienthandler for input to Server.
-   */
-  private final ClientHandler clientHandler;
   /**
    * Player one name.
    */
@@ -322,7 +319,6 @@ public class LocalLobbyUiController extends AbstractUiController {
       }
     }
     this.gameSession.setAiPlayers(aiPlayers);
-
 
     List<String> gameModes = new ArrayList<>();
 

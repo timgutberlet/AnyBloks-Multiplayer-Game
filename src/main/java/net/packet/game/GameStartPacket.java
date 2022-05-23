@@ -34,6 +34,7 @@ public class GameStartPacket extends Packet {
 
   /**
    * Initializes the GameStartPacket with the corresponding game state.
+   *
    * @param gameState
    */
   public GameStartPacket(GameState gameState) {
@@ -58,6 +59,7 @@ public class GameStartPacket extends Packet {
 
   /**
    * gets the game state from the attributes.
+   *
    * @return game state
    */
   public GameState getGameState() {

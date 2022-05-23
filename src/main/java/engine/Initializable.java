@@ -11,6 +11,7 @@ public interface Initializable {
 
   /**
    * Init Method calld when initializing the Controller.
+   *
    * @param root
    */
   void init(Group root);

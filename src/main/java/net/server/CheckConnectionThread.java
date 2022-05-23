@@ -16,17 +16,18 @@ import net.transmission.EndpointServer;
 public class CheckConnectionThread extends Thread {
 
   public static boolean turnReceived;
-  private int requestCounter;
-  private CheckConnectionPacket checkConnectionPacket;
   private final Session session;
   private final GameSession gameSession;
   private final String username;
+  private int requestCounter;
+  private CheckConnectionPacket checkConnectionPacket;
   private Boolean connectionCrashed = false;
 
 
   /**
    * initializes a new check connection thread out of a game session, the considered username and
    * the serverEndpoint.
+   *
    * @param gameSession
    * @param username
    * @param serverEndpoint

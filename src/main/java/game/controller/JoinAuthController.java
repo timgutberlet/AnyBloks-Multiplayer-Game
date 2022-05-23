@@ -215,8 +215,8 @@ public class JoinAuthController extends AbstractUiController {
 
       if (receivedToken.getStatus() != 200) {
         Debug.printMessage("Unexpected answer!");
-        Debug.printMessage(""+receivedToken.getStatus());
-        Debug.printMessage(""+receivedToken.getStatusInfo());
+        Debug.printMessage("" + receivedToken.getStatus());
+        Debug.printMessage("" + receivedToken.getStatusInfo());
 
         passwordError.setText(
             "You seem to have entered an invalid username or password. "

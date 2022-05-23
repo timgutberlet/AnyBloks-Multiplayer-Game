@@ -6,6 +6,7 @@ import game.model.Color;
  * @author lbaudenb
  */
 public class ColorHandler {
+
   public static boolean darkMode = false;
   public static boolean whiteMode = false;
 

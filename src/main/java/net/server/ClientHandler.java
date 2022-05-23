@@ -394,17 +394,18 @@ public class ClientHandler {
 
   }
 
-  public void kickClient(Player player){
+  public void kickClient(Player player) {
     PlayerKickPacket playerKickPacket = new PlayerKickPacket(player.getUsername());
-    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_KICK_PACKET,playerKickPacket);
+    WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_KICK_PACKET,
+        playerKickPacket);
 
     this.client.sendToServer(wrappedPacket);
   }
 
-  public void disconnectClient(WrappedPacket packet){
+  public void disconnectClient(WrappedPacket packet) {
     PlayerKickPacket playerKickPacket = (PlayerKickPacket) packet.getPacket();
 
-    if(this.player.equals(playerKickPacket.getUsername())){
+    if (this.player.equals(playerKickPacket.getUsername())) {
       this.gameSession.setPlayerKicked(true);
       disconnectClient();
       this.gameSession.setPlayerKicked(false);
@@ -422,8 +423,6 @@ public class ClientHandler {
         playerQuitPacket);
 
     this.client.sendToServer(wrappedPacket);
-
-
 
     this.client.setGameSession(null);
     this.client.setPlayer(null);

@@ -18,8 +18,8 @@ import net.packet.game.GameWinPacket;
 import net.packet.game.HostQuitPacket;
 import net.packet.game.InitGamePacket;
 import net.packet.game.InitSessionPacket;
-import net.packet.game.PlayerKickPacket;
 import net.packet.game.LobbyScoreBoardPacket;
+import net.packet.game.PlayerKickPacket;
 import net.packet.game.PlayerListPacket;
 import net.packet.game.PlayerOrderPacket;
 import net.packet.game.PlayerQuitPacket;
@@ -38,8 +38,8 @@ import net.packet.game.TurnPacket;
     @JsonSubTypes.Type(value = DeleteAccountRequestPacket.class,
         name = "DeleteAccountRequestPacket"),
     @JsonSubTypes.Type(value = LoginRequestPacket.class, name = "LoginRequestPacket"),
-		@JsonSubTypes.Type(value = LobbyScoreBoardPacket.class, name = "LobbyScoreBoardPacket"),
-		@JsonSubTypes.Type(value = LoginResponsePacket.class, name = "LoginResponsePacket"),
+    @JsonSubTypes.Type(value = LobbyScoreBoardPacket.class, name = "LobbyScoreBoardPacket"),
+    @JsonSubTypes.Type(value = LoginResponsePacket.class, name = "LoginResponsePacket"),
     @JsonSubTypes.Type(value = PlayerOrderPacket.class, name = "PlayerOrderPacket"),
     @JsonSubTypes.Type(value = InitGamePacket.class, name = "InitGamePacket"),
     @JsonSubTypes.Type(value = GameStartPacket.class, name = "GameStartPacket"),
@@ -47,8 +47,8 @@ import net.packet.game.TurnPacket;
     @JsonSubTypes.Type(value = TurnPacket.class, name = "TurnPacket"),
     @JsonSubTypes.Type(value = GameWinPacket.class, name = "GameWinPacket"),
     @JsonSubTypes.Type(value = HostQuitPacket.class, name = "HostQuitPacket"),
-		@JsonSubTypes.Type(value = PlayerQuitPacket.class, name = "PlayerQuitPacket"),
-		@JsonSubTypes.Type(value = PlayerKickPacket.class, name = "PlayerKickPacket"),
+    @JsonSubTypes.Type(value = PlayerQuitPacket.class, name = "PlayerQuitPacket"),
+    @JsonSubTypes.Type(value = PlayerKickPacket.class, name = "PlayerKickPacket"),
     @JsonSubTypes.Type(value = UpdateAccountRequestPacket.class,
         name = "UpdateAccountRequestPacket"),
     @JsonSubTypes.Type(value = PlayerListPacket.class, name = "PlayerListPacket"),

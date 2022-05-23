@@ -59,7 +59,7 @@ import net.packet.game.HostQuitPacket;
 
 
 /**
- * UiController controlling the Ingame Inputs and Outputs, as well as the VIew
+ * UiController controlling the Ingame Inputs and Outputs, as well as the VIew.
  *
  * @author tgutberl
  */
@@ -76,7 +76,7 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private final AnchorPane anchorPane;
   /**
-   * String to save Input Message before repaint
+   * String to save Input Message before repaint.
    */
   private final String bufferChat = "";
   /**
@@ -89,15 +89,15 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   Label dragLabel;
   /**
-   * Color used for collision detection
+   * Color used for collision detection.
    */
   Color color;
   /**
-   * Button to Skip Turns
+   * Button to Skip Turns.
    */
   Button skipTurnButton;
   /**
-   * Button to open Chat Window
+   * Button to open Chat Window.
    */
   private Button chatButton;
   /**
@@ -117,11 +117,11 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private Boolean chatSelected = false;
   /**
-   * Block int that determines if the player did a move or not
+   * Block int that determines if the player did a move or not.
    */
   private int moveCheck = 0;
   /**
-   * Checks if Ai is calulating
+   * Checks if Ai is calulating.
    */
   private boolean aiCalcRunning;
   /**
@@ -129,7 +129,7 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private Label errorLabel;
   /**
-   * Text that should be written into the Label each frame
+   * Text that should be written into the Label each frame.
    */
   private String errorLabelText = "";
   /**
@@ -162,8 +162,6 @@ public abstract class InGameUiController extends AbstractUiController {
   private List<Label> scores;
   private List<Label> names;
   private Label turn;
-
-
 
 
   public InGameUiController(AbstractGameController gameController, Game game,
@@ -250,8 +248,6 @@ public abstract class InGameUiController extends AbstractUiController {
     anchorPane.getChildren().add(container);
     anchorPane.setPrefWidth(stage.getWidth() + 1000);
     anchorPane.setPrefHeight(stage.getHeight() + 1000);
-
-
 
     content = new HBox();
     content.setPrefWidth(width);
@@ -417,7 +413,7 @@ public abstract class InGameUiController extends AbstractUiController {
       this.chatInput.setText("");
       chatSelected = true;
     });
-    dragLabel  = new Label("Drag and Move the Chat here!");
+    dragLabel = new Label("Drag and Move the Chat here!");
     dragLabel.setPrefHeight(30);
     dragLabel.setPrefWidth(300);
     dragLabel.setAlignment(Pos.CENTER);
@@ -495,18 +491,21 @@ public abstract class InGameUiController extends AbstractUiController {
         topPane.setStyle("-fx-background-color:#FF4B4B;");
         errorLabel.setStyle((
             "-fx-background-color: #FF4B4B; -fx-background-radius: 5; -fx-text-fill: #FFFFFF;"));
-        dragLabel.setStyle("-fx-background-color:#FF4B4B; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
+        dragLabel.setStyle(
+            "-fx-background-color:#FF4B4B; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleBrightTheme.css").toExternalForm());
         break;
       case "DARK":
         topPane.setStyle("-fx-background-color:#F0B27A;");
         boardPane.setStyle("-fx-background-color:#383837;");
-        turn.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-text-fill: #000000; ");
+        turn.setStyle(
+            "-fx-background-color: #ffffff; -fx-background-radius: 10; -fx-text-fill: #000000; ");
         errorLabel.setStyle((
             "-fx-background-color: #ffffff; -fx-background-radius: 5; -fx-text-fill: #000000;"));
         chatPane.setStyle("-fx-background-color:#383837;");
-        dragLabel.setStyle("-fx-background-color:#F0B27A; -fx-text-fill: #000000;-fx-background-radius: 10;");
+        dragLabel.setStyle(
+            "-fx-background-color:#F0B27A; -fx-text-fill: #000000;-fx-background-radius: 10;");
         buttonBox.setStyle("-fx-background-color:#383837;");
         anchorPane.setStyle("-fx-background-color:#383837;");
         content.setStyle("-fx-background-color:#383837;");
@@ -519,7 +518,8 @@ public abstract class InGameUiController extends AbstractUiController {
         topPane.setStyle("-fx-background-color:#FF8000;");
         errorLabel.setStyle((
             "-fx-background-color: #FF8000; -fx-background-radius: 5; -fx-text-fill: #FFFFFF;"));
-        dragLabel.setStyle("-fx-background-color:#FF8000; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
+        dragLabel.setStyle(
+            "-fx-background-color:#FF8000; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleIntegra.css").toExternalForm());
         break;
@@ -528,7 +528,8 @@ public abstract class InGameUiController extends AbstractUiController {
         chatPane.setStyle("-fx-background-color:#D8EFFF;");
         errorLabel.setStyle((
             "-fx-background-color: #0A123D; -fx-background-radius: 5; -fx-text-fill: #000000;"));
-        dragLabel.setStyle("-fx-background-color:#0A123D; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
+        dragLabel.setStyle(
+            "-fx-background-color:#0A123D; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         buttonBox.setStyle("-fx-background-color:#D8EFFF;");
         anchorPane.setStyle("-fx-background-color:#D8EFFF;");
         content.setStyle("-fx-background-color:#D8EFFF;");
@@ -548,11 +549,13 @@ public abstract class InGameUiController extends AbstractUiController {
       //Player is the host
       this.gameSession.getClientHandler().getClient()
           .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
-      gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession,true));
+      gameController.setActiveUiController(
+          new LocalQuitUiController(gameController, gameSession, true));
     } else {
       //Player is a remote player
       this.gameSession.getClientHandler().disconnectClient();
-      gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession,false));
+      gameController.setActiveUiController(
+          new LocalQuitUiController(gameController, gameSession, false));
     }
   }
 
@@ -583,7 +586,8 @@ public abstract class InGameUiController extends AbstractUiController {
     if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
       turn.setText("Your Turn");
     } else {
-      turn.setText(this.gameSession.getGame().getGameState().getPlayerCurrent().getUsername() + " 's Turn");
+      turn.setText(
+          this.gameSession.getGame().getGameState().getPlayerCurrent().getUsername() + " 's Turn");
     }
 
     stackPanes.clear();
@@ -610,12 +614,7 @@ public abstract class InGameUiController extends AbstractUiController {
     }
     errorLabel.setText(errorLabelText);
     stacks.getChildren().add(errorLabel);
-    if(Config.getStringValue("TOOLTIPS").equals("OFF")){
-      errorLabel.setVisible(false);
-    }
-    else {
-      errorLabel.setVisible(true);
-    }
+    errorLabel.setVisible(!Config.getStringValue("TOOLTIPS").equals("OFF"));
   }
 
   /**
@@ -629,14 +628,16 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
-  if(moveCheck == 1){
-    if(this.game.getGameState().getBoard().getPossibleMoves(this.gameSession.getGame().getGameState().getRemainingPolys(localPlayer), this.gameSession.getGame().getGameState().isFirstRound()).size() == 0){
-      this.localPlayer.nullTurn();
-      skipTurnButton.setVisible(false);
-      errorLabelText = "You are out of moves and auto-skip turns now...";
-      block = true;
+    if (moveCheck == 1) {
+      if (this.game.getGameState().getBoard().getPossibleMoves(
+          this.gameSession.getGame().getGameState().getRemainingPolys(localPlayer),
+          this.gameSession.getGame().getGameState().isFirstRound()).size() == 0) {
+        this.localPlayer.nullTurn();
+        skipTurnButton.setVisible(false);
+        errorLabelText = "You are out of moves and auto-skip turns now...";
+        block = true;
+      }
     }
-  }
 
     if (!chatSelected) {
       root.requestFocus();
@@ -661,7 +662,7 @@ public abstract class InGameUiController extends AbstractUiController {
     if (!this.gameSession.isLocalPlayerTurn()) {
       moveCheck = 0;
       boardPane.repaint(game.getGameState().getBoard());
-      if(!block){
+      if (!block) {
         errorLabelText = "  Please wait while the other Players are playing!";
       }
       skipTurnButton.setVisible(false);
@@ -679,11 +680,10 @@ public abstract class InGameUiController extends AbstractUiController {
               this.gameSession.getGame().getGameState().isFirstRound()).size() == 0) {
         this.localPlayer.nullTurn();
         skipTurnButton.setVisible(false);
-        if(!block){
+        if (!block) {
           errorLabelText = "You are out of moves and auto-skip turns now...";
         }
       }
-      ;
       if (this.game == null) {
         Debug.printMessage(this, "Game is null");
       }
@@ -703,8 +703,9 @@ public abstract class InGameUiController extends AbstractUiController {
               + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")) {
             alreadyInChat.add(chatMessage.getTime() + " "
                 + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n");
-            help += chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
-                + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
+            help +=
+                chatMessage.getTime().getHours() + ":" + chatMessage.getTime().getMinutes() + " "
+                    + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
           }
         }
         //hintLabel1.setText("Erkannt");
@@ -715,7 +716,7 @@ public abstract class InGameUiController extends AbstractUiController {
           for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
               .getPolyPanes()) {
             if (inputHandler.isPolyClicked(polyPane)) {
-              if(!block){
+              if (!block) {
                 errorLabelText = "  Drag the Poly to a possible Position (it lights up)!";
               }
               chatSelected = false;
@@ -793,10 +794,10 @@ public abstract class InGameUiController extends AbstractUiController {
 
               boardPane.repaint(game.getGameState().getBoard());
 
-            }
-            else{
-              if(!block){
-                errorLabelText = "  Please click on a Poly (Your Color: " + this.game.getGameState().getColorFromPlayer(localPlayer).toString() + ")";
+            } else {
+              if (!block) {
+                errorLabelText = "  Please click on a Poly (Your Color: " + this.game.getGameState()
+                    .getColorFromPlayer(localPlayer).toString() + ")";
               }
             }
           }
@@ -934,7 +935,7 @@ public abstract class InGameUiController extends AbstractUiController {
       this.gameSession.setGameOver(false);
     }
     //check if user got kicked
-    if(gameSession.getGotKicked()){
+    if (gameSession.getGotKicked()) {
       Debug.printMessage("GETTING KICKED");
       gameController.setActiveUiController(new KickInfoUiController(gameController));
     }
