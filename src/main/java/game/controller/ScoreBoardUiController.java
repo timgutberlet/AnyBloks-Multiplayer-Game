@@ -88,6 +88,8 @@ public class ScoreBoardUiController extends AbstractUiController {
   @FXML
   private Text pointsFourth;
 
+  @FXML
+  private HBox buttonBox;
 
   public ScoreBoardUiController(AbstractGameController gameController, GameSession gameSession) {
     super(gameController);
@@ -140,6 +142,11 @@ public class ScoreBoardUiController extends AbstractUiController {
   @FXML
   public void backMainMenu() {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
+  }
+
+  @FXML
+  public void nextRound() {
+    //TODO Nächstes Spiel starten
   }
 
   public static void sortScoreBoard(GameSession gameSession) {
@@ -277,6 +284,16 @@ public class ScoreBoardUiController extends AbstractUiController {
       }
       board.getChildren().remove(line);
       board.getChildren().add(vBox);
+
+      if (gameSession.getLocalPlayer().equals(gameSession.getHostPlayer())) {
+        Button button = new Button();
+        button.setText("Next Round");
+        button.setFont(Font.font("System", 20));
+        button.setOnMouseClicked(mouseEvent -> {
+          this.nextRound();
+        });
+        buttonBox.getChildren().add(button);
+      }
 
     }
 

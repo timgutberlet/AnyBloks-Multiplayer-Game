@@ -138,16 +138,11 @@
                       stroke="WHITE"/>
                   </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0">
+                <HBox fx:id="buttonBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
+                  spacing="100.0">
                   <children>
                     <Button fx:id="backMainMenu" mnemonicParsing="false" onAction="#backMainMenu"
                       text="BACK TO MAIN MENU">
-                      <font>
-                        <Font size="20.0"/>
-                      </font>
-                    </Button>
-                    <Button fx:id="nextRound" minWidth="225.0" mnemonicParsing="false"
-                      text="BACK TO LOBBY">
                       <font>
                         <Font size="20.0"/>
                       </font>

@@ -669,6 +669,10 @@ public class GameSession {
     return this.multiRound;
   }
 
+  public Player getHostPlayer() {
+    return this.hostPlayer;
+  }
+
   /**
    * returns the list of games that will be played in the tournament.
    *
