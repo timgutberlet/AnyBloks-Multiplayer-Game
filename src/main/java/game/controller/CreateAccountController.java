@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.Debug;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -131,19 +132,19 @@ public class CreateAccountController extends AbstractUiController {
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET, carp);
 
     String targetAddress = "http://" + ip + ":8082/";
-    System.out.println("Ich sende an den Server");
+    Debug.printMessage("Ich sende an den Server");
 
     WebTarget targetPath = testClient.target(targetAddress).path("/register/");
     Response receivedAnswer = targetPath.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
-    System.out.println("Ich empfange von dem Server");
+    Debug.printMessage("Ich empfange von dem Server");
     if (receivedAnswer.getStatus() != 200) {
-      System.out.println("Something went wrong");
+      Debug.printMessage("Something went wrong");
       usernameError.setText(String.valueOf(receivedAnswer.getStatusInfo()));
     } else {
-      System.out.println(receivedAnswer.getStatus());
-      System.out.println("Everything worked");
+      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("Everything worked");
       gameController.setActiveUiController(new JoinAuthController(gameController, ip, username));
 
     }

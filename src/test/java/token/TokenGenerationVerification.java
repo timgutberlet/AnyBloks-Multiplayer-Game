@@ -8,6 +8,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import game.model.Debug;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -31,7 +32,7 @@ public class TokenGenerationVerification {
       passed = false;
     }
 
-    System.out.println(token);
+    Debug.printMessage(token);
 
     try {
       Algorithm algorithm = Algorithm.HMAC256("notblocks3");

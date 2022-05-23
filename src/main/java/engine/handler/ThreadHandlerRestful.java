@@ -1,5 +1,6 @@
 package engine.handler;
 
+import game.model.Debug;
 import net.server.HostServer;
 import net.tests.NoLogging;
 
@@ -34,7 +35,7 @@ public class ThreadHandlerRestful extends Thread {
     }
     while (!Thread.currentThread().isInterrupted()) {
     }
-    System.out.println("Restful Server Interrupted");
+    Debug.printMessage("Restful Server Interrupted");
     hostServer.stopRestful();
   }
 }

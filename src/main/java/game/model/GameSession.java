@@ -135,7 +135,7 @@ public class GameSession {
    * @author tgutberl
    */
   public void addPlayer(Player player) {
-    System.out.println(player.getUsername() + " ttry to add to playerlist");
+    Debug.printMessage(player.getUsername() + " ttry to add to playerlist");
     this.playerList.add(player);
     if (this.playerList.size() == 1) {
       this.localPlayer = player;
@@ -196,41 +196,41 @@ public class GameSession {
    */
   public Game startGameServer() {
 
-    //System.out.println("DAS GAME WIRD HIER GESTARTET");
+    //Debug.printMessage("DAS GAME WIRD HIER GESTARTET");
 
     if(this.defaultAI == null){
       this.defaultAI = PlayerType.AI_MIDDLE;
     }
     //while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
     GameMode gameMode = this.gameList.pop();
-    System.out.println("Needed players: " + gameMode.getNeededPlayers());
-    System.out.println("Current player size: " + this.getPlayerList().size());
+    Debug.printMessage("Needed players: " + gameMode.getNeededPlayers());
+    Debug.printMessage("Current player size: " + this.getPlayerList().size());
     int numPlayersToAdd = gameMode.getNeededPlayers() - this.getPlayerList().size();
 
     if (numPlayersToAdd > 0) {
-      System.out.println("Players to be added:" + numPlayersToAdd);
+      Debug.printMessage("Players to be added:" + numPlayersToAdd);
       for (int i = 0; i < numPlayersToAdd; i++) {
-        System.out.println("Adding player :" + (this.getPlayerList().size() + 1));
+        Debug.printMessage("Adding player :" + (this.getPlayerList().size() + 1));
 
         if (this.aiPlayers != null) {
-          System.out.println(this.aiPlayers.size() + "size of playertypes");
+          Debug.printMessage(this.aiPlayers.size() + "size of playertypes");
           if (this.aiPlayers.size() > 0) {
             PlayerType pt = this.aiPlayers.pop();
-            System.out.println("PT of new player: " + pt);
+            Debug.printMessage("PT of new player: " + pt);
             this.addBot(pt);
           } else {
-            System.out.println("Adding a bot with default ai" + this.defaultAI);
+            Debug.printMessage("Adding a bot with default ai" + this.defaultAI);
             this.addBot(this.defaultAI);
           }
         } else {
-          System.out.println("Adding a bot with default ai because null " + this.defaultAI);
+          Debug.printMessage("Adding a bot with default ai because null " + this.defaultAI);
           this.addBot(this.defaultAI);
         }
       }
     } else {
       //In this case there are too many players, so some need to be kicked
       int playerToRemove = (-1) * numPlayersToAdd;
-      System.out.println("Players to be removed:" + playerToRemove);
+      Debug.printMessage("Players to be removed:" + playerToRemove);
       for (int i = 0; i < playerToRemove; i++) {
 
         String username = this.getPlayerList().get(playerList.size() - 1).getUsername();
@@ -313,7 +313,7 @@ public class GameSession {
       }
     }
     this.updatingGameState = false;
-    System.out.println(gameState);
+    Debug.printMessage(gameState.toString());
   }
 
   /**
@@ -383,7 +383,7 @@ public class GameSession {
    * @param player player
    */
   public void addToSession(Player player) {
-    System.out.println("Adding a new player from add to session");
+    Debug.printMessage("Adding a new player from add to session");
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
     EndpointClient endpointClient = new EndpointClient(player);
     Session session;

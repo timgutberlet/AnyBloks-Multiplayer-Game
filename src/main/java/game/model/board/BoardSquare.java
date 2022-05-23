@@ -2,6 +2,7 @@ package game.model.board;
 
 import engine.handler.ColorHandler;
 import game.model.Color;
+import game.model.Debug;
 import game.model.Turn;
 import game.model.field.Field;
 import game.model.field.FieldSquare;
@@ -170,7 +171,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
         return fs;
       }
     }
-    System.out.println("" + x + "," + y);
+    Debug.printMessage("" + x + "," + y);
     return null;
   }
 

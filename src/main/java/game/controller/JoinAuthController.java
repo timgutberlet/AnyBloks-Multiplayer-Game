@@ -207,16 +207,16 @@ public class JoinAuthController extends AbstractUiController {
       WrappedPacket wrappedPacket = new WrappedPacket(PacketType.RESTFUL_LOGIN_PACKET,
           restfulLoginPacket);
 
-      System.out.println("PasswortHash" + passwordHash);
+      Debug.printMessage("PasswortHash" + passwordHash);
 
       WebTarget targetPath = testClient.target(targetAddress).path("/authentication/");
       Response receivedToken = targetPath.request(MediaType.APPLICATION_JSON)
           .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
       if (receivedToken.getStatus() != 200) {
-        System.out.println("Unexpected answer!");
-        System.out.println(receivedToken.getStatus());
-        System.out.println(receivedToken.getStatusInfo());
+        Debug.printMessage("Unexpected answer!");
+        Debug.printMessage(""+receivedToken.getStatus());
+        Debug.printMessage(""+receivedToken.getStatusInfo());
 
         passwordError.setText(
             "You seem to have entered an invalid username or password. "
@@ -228,7 +228,7 @@ public class JoinAuthController extends AbstractUiController {
         this.client = new EndpointClient(this, player, ipField.getText(), token);
         this.gameSession = client.getGameSession();
         this.gameSession.setLocalPlayer(player);
-        System.out.println(token);
+        Debug.printMessage(token);
         this.gameSession.setAuthToken(token);
         this.clientHandler = client.getClientHandler();
         this.gameSession.setClientHandler(this.clientHandler);

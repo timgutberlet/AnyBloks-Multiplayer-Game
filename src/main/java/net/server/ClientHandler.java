@@ -8,6 +8,7 @@ import game.model.GameSession;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.chat.Chat;
+import game.model.chat.ChatMessage;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
@@ -293,7 +294,12 @@ public class ClientHandler {
     GameState gameState = gameUpdatePacket.getGameState();
 
     this.client.getGameSession().updateGame(gameState);
-    getAfterTurnAIComment(this.gameSession);
+    String aiMessage = getAfterTurnAIComment(this.gameSession);
+    if(!aiMessage.equals("")){
+      Chat chat = this.gameSession.getChat();
+      chat.addMessage(new ChatMessage(this.player.getUsername(),aiMessage));
+      this.broadcastChatMessage(chat);
+    }
   }
 
   /**
@@ -322,7 +328,7 @@ public class ClientHandler {
    */
   public void handleHostQuit(){
     if(!player.getType().equals(PlayerType.HOST_PLAYER)){
-      System.out.println("HANDLEHOSTQUITHASBEENCALLED CORRECTLY");
+      Debug.printMessage("HANDLEHOSTQUITHASBEENCALLED CORRECTLY");
       this.gameSession.setHostQuit(true);
     }
   }

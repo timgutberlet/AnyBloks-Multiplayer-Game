@@ -1,5 +1,6 @@
 package net.AuthRessources;
 
+import game.model.Debug;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -29,7 +30,7 @@ public class DeleteAccountRessource {
   @Consumes(MediaType.APPLICATION_JSON)
 
   public Response update(WrappedPacket wrappedPacket) {
-    System.out.println("Hi from deleteAcc method");
+    Debug.printMessage("Hi from deleteAcc method");
     String errorMessage = "";
     try {
       if (wrappedPacket.getPacketType() != PacketType.DELETE_ACCOUNT_REQUEST_PACKET) {

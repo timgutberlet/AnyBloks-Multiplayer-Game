@@ -161,18 +161,18 @@ public class OutboundServerHandler {
   public void broadcastGameWin() {
     //gameSession.updateGameSessionScoreboard();
     gameSession.setGameOver(true);
-    System.out.println("_____Hi from broadcast game Win");
+    Debug.printMessage("_____Hi from broadcast game Win");
 
     //Saving the result of the game to the DB
     String gameId = "";
     GameState gameState = gameSession.getGame().getGameState();
     HashMap<String, Integer> scoreboard = new HashMap<>();
-    System.out.println("Num Players:" + gameState.getPlayerList().size());
-    System.out.println("Num length score" + gameState.getScores().length);
+    Debug.printMessage("Num Players:" + gameState.getPlayerList().size());
+    Debug.printMessage("Num length score" + gameState.getScores().length);
     for (int i = 0; i < gameState.getPlayerList().size(); i++) {
-      System.out.println("Number: " + i);
-      System.out.println("username: " + gameState.getPlayerList().get(i).getUsername());
-      System.out.println("Score:" + gameState.getScores()[i]);
+      Debug.printMessage("Number: " + i);
+      Debug.printMessage("username: " + gameState.getPlayerList().get(i).getUsername());
+      Debug.printMessage("Score:" + gameState.getScores()[i]);
       scoreboard.put(gameState.getPlayerList().get(i).getUsername(), gameState.getScores()[i]);
     }
     String gameMode = gameState.getGameMode().getName();
@@ -180,12 +180,12 @@ public class OutboundServerHandler {
       DbServer dbServer = DbServer.getInstance();
       //Insert the game and save its gameId
       gameId = dbServer.insertGame(gameMode);
-      System.out.println("Inserting game: " + gameId + gameMode);
+      Debug.printMessage("Inserting game: " + gameId + gameMode);
       GameSession.currentGameIds.add(gameId);
       //Add the scores of the different players
       for (String username : scoreboard.keySet()) {
 
-        System.out.println("Inserting score: " + gameId + username + scoreboard.get(username));
+        Debug.printMessage("Inserting score: " + gameId + username + scoreboard.get(username));
         dbServer.insertScore(gameId, username, scoreboard.get(username));
       }
     } catch (Exception e) {

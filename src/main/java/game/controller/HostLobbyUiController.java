@@ -49,6 +49,7 @@ import net.packet.abstr.WrappedPacket;
 import net.packet.game.HostQuitPacket;
 import net.server.ClientHandler;
 import net.server.HostServer;
+import net.tests.NoLogging;
 import net.transmission.EndpointClient;
 
 /**
@@ -205,7 +206,7 @@ public class HostLobbyUiController extends AbstractUiController {
     alreadyInChat = new ArrayList<>();
     HostServer hostServer = new HostServer();
     try {
-      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       //Debug.printMessage("[testChatServer] Server is running");
       //TimeUnit.SECONDS.sleep(3);
@@ -338,13 +339,13 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void back() {
-    System.out.println("THE HOST TRIED TO GO BACK!");
-    System.out.println("And kmows he is Host so he broadcasts!");
+    Debug.printMessage("THE HOST TRIED TO GO BACK!");
+    Debug.printMessage("And kmows he is Host so he broadcasts!");
 
     this.gameSession.getClientHandler().getClient()
         .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
 
-    System.out.println("change UI controller!");
+    Debug.printMessage("change UI controller!");
 
     gameController.setActiveUiController(new LocalQuitUiController(gameController, gameSession));
   }

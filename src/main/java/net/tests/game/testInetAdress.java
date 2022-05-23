@@ -23,8 +23,8 @@ public class testInetAdress {
     dbServer.newAccount("testuser", "123456");
     String passwordHash = dbServer.getUserPasswordHash("testuser");
 
-    System.out.println(dbServer.doesUsernameExist("testuser"));
-    System.out.println(passwordHash);
+    Debug.printMessage(""+dbServer.doesUsernameExist("testuser"));
+    Debug.printMessage(passwordHash);
   }
 
 }

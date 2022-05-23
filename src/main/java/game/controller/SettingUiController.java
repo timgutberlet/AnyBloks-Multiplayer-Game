@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.Debug;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -104,7 +105,7 @@ public class SettingUiController extends AbstractUiController {
   private void increaseWidth() {
     windowWidth.setText(String.valueOf(Integer.parseInt(windowWidth.getText()) + 10));
     Config.set("SCREEN_WIDTH", windowWidth.getText());
-    System.out.println("Screen width increast" + windowWidth.getText());
+    Debug.printMessage("Screen width increast" + windowWidth.getText());
     saveConfirm.setText("");
   }
 

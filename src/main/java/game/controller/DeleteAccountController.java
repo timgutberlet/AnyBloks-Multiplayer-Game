@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.Debug;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
@@ -139,11 +140,11 @@ public class DeleteAccountController extends AbstractUiController {
         .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
     if (receivedAnswer.getStatus() != 200) {
-      System.out.println("Something went wrong");
+      Debug.printMessage("Something went wrong");
       usernameError.setText(String.valueOf(receivedAnswer.getStatusInfo()));
     } else {
-      System.out.println(receivedAnswer.getStatus());
-      System.out.println("Everything worked");
+      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("Everything worked");
       gameController.setActiveUiController(new JoinAuthController(gameController, ip, username));
 
     }

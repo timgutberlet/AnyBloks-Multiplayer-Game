@@ -2,6 +2,7 @@ package net;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import game.model.Debug;
 import net.server.DbServer;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +20,7 @@ public class DBReader {
       e.printStackTrace();
     }
     dbServer.newAccount("172.19.112.1", "123456");
-    System.out.println(dbServer.doesUsernameExist("172.19.112.1"));
+    Debug.printMessage(""+dbServer.doesUsernameExist("172.19.112.1"));
     assertTrue(dbServer.doesUsernameExist("172.19.112.1"));
 
   }

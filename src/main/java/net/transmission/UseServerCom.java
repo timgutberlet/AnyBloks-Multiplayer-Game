@@ -1,5 +1,6 @@
 package net.transmission;
 
+import game.model.Debug;
 import java.net.URI;
 import javax.websocket.ContainerProvider;
 import javax.websocket.Session;
@@ -21,17 +22,17 @@ public class UseServerCom {
   public static void main(String[] args) {
 
     try {
-      System.out.println("Got here Caller function");
+      Debug.printMessage("Got here Caller function");
 
       hostServer.startWebsocket(8080);
-      System.out.println("Made it past start");
+      Debug.printMessage("Made it past start");
 
       final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
       EndpointClient client = new EndpointClient();
-      System.out.println("Gonna connect");
+      Debug.printMessage("Gonna connect");
 
       Session ses = container.connectToServer(client, URI.create("ws://localhost:8080/packet"));
-      System.out.println("Past connection here");
+      Debug.printMessage("Past connection here");
 
       WrappedPacket packet = new WrappedPacket(PacketType.CREATE_ACCOUNT_REQUEST_PACKET,
           new CreateAccountRequestPacket("testuser", "unhashed"));

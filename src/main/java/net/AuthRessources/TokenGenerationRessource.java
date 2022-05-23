@@ -3,6 +3,7 @@ package net.AuthRessources;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import game.model.Debug;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -32,7 +33,7 @@ public class TokenGenerationRessource {
   @Consumes(MediaType.APPLICATION_JSON)
 
   public Response authenticateUser(WrappedPacket wrappedPacket) {
-    System.out.println("Hi from auth method");
+    Debug.printMessage("Hi from auth method");
 
     try {
       String username = "";
@@ -42,12 +43,12 @@ public class TokenGenerationRessource {
         throw new Exception("This packet is not of the correct type");
       }
 
-      System.out.println(wrappedPacket.getPacket());
+      Debug.printMessage(""+wrappedPacket.getPacket());
       restfulLoginPacket = (RestfulLoginPacket) wrappedPacket.getPacket();
       username = restfulLoginPacket.getUsername();
       passwordHash = restfulLoginPacket.getPasswordHash();
 
-      System.out.println(
+      Debug.printMessage(
           restfulLoginPacket.getUsername() + " " + restfulLoginPacket.getPasswordHash());
 
       // Authenticate user with db
@@ -67,15 +68,15 @@ public class TokenGenerationRessource {
 
   private void authenticate(String username, String password) throws Exception {
     DbServer dbServer = DbServer.getInstance();
-    System.out.println(dbServer.doesUsernameExist(username));
-    System.out.println(!dbServer.doesUsernameExist(username));
+    Debug.printMessage(""+dbServer.doesUsernameExist(username));
+    Debug.printMessage(""+!dbServer.doesUsernameExist(username));
     if (!(dbServer.doesUsernameExist(username))) {
       throw new Exception("The username doesn't exist!");
     }
     String dbpasswordHash = dbServer.getUserPasswordHash(username);
 
-    System.out.println(username + " " + password);
-    System.out.println(username + " " + dbpasswordHash);
+    Debug.printMessage(username + " " + password);
+    Debug.printMessage(username + " " + dbpasswordHash);
     if (!password.equals(dbpasswordHash)) {
       throw new Exception("The credentials are wrong!");
     }

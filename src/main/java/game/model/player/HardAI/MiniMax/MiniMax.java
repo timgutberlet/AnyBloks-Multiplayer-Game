@@ -3,6 +3,7 @@ package game.model.player.HardAI.MiniMax;
 import static game.model.player.AI.calculateNextMiddleMove;
 
 import game.model.Color;
+import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.board.Board;
@@ -63,7 +64,7 @@ public class MiniMax {
       }
     }
     long finish = System.currentTimeMillis();
-    System.out.println("Time: " + (finish - start) + " ms");
+    Debug.printMessage("Time: " + (finish - start) + " ms");
     return bestTurn;
   }
 

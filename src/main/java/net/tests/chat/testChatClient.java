@@ -36,7 +36,7 @@ public class testChatClient {
 
     Player player = new Player("user1", PlayerType.REMOTE_PLAYER);
 
-    org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+    //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
 
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
     EndpointClient client = new EndpointClient(player);

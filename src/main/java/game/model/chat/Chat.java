@@ -25,11 +25,11 @@ public class Chat {
    */
   public void run() {
     this.running = true;
-    System.out.println(Thread.currentThread().getId() + ": Message Thread started");
+    Debug.printMessage(Thread.currentThread().getId() + ": Message Thread started");
 
     //while(this.running){
     //  if(false) { //receive message  from server
-    //System.out.println(message);
+    //Debug.printMessage(message);
     //  }
     // }
   }

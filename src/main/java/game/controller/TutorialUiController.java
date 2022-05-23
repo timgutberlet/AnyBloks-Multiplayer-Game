@@ -82,7 +82,7 @@ public class TutorialUiController extends AbstractUiController {
 
     HostServer hostServer = new HostServer();
     try {
-      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       Debug.printMessage("[testChatServer] Server is running");
       //TimeUnit.SECONDS.sleep(3);

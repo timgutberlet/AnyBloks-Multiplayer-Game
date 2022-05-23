@@ -1,5 +1,6 @@
 package token;
 
+import game.model.Debug;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -37,11 +38,11 @@ public class tokenClientTest {
 
     String token = receivedToken.readEntity(String.class);
 
-    System.out.println("---------");
-    System.out.println(token);
+    Debug.printMessage("---------");
+    Debug.printMessage(token);
 
-    System.out.println(receivedToken.getStatus());
-    System.out.println(receivedToken.getMediaType());
+    Debug.printMessage(""+receivedToken.getStatus());
+    Debug.printMessage(""+receivedToken.getMediaType());
   }
 
 

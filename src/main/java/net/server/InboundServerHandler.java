@@ -62,17 +62,17 @@ public class InboundServerHandler {
    */
   public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
     Debug.printMessage(this, "LOGIN_REQUEST_PACKET received in Handler");
-    System.out.println("LOGIN_REQUEST_PACKET received in Handler");
+    Debug.printMessage("LOGIN_REQUEST_PACKET received in Handler");
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
     String token = loginPacket.getToken();
-    System.out.println(username);
-    System.out.println(token);
+    Debug.printMessage(username);
+    Debug.printMessage(token);
     //Checking the credentials against the database
     boolean loginSuccess = false;
     //only check with db if not a bot
     if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
-      System.out.println(username + "Delete me in verify Login");
+      Debug.printMessage(username + "Delete me in verify Login");
       try {
         DbServer dbServer = DbServer.getInstance();
         if (!dbServer.doesUserHaveAuthToken(username)) {
@@ -89,7 +89,6 @@ public class InboundServerHandler {
       loginSuccess = true;
     }
 
-    System.out.println();
 
     if (loginSuccess) {
       //call when user is verified
@@ -114,10 +113,10 @@ public class InboundServerHandler {
   public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
     String username = loginPacket.getUsername();
-    System.out.println(username + " addVerfiedUser");
+    Debug.printMessage(username + " addVerfiedUser");
     //check if username has been connected before
     if (this.server.getUsername2Session().containsKey(username)) {
-      System.out.println(username + " in keyset");
+      Debug.printMessage(username + " in keyset");
       //find existing player with the username
       for (Player player : gameSession.getPlayerList()) {
         if (player.getUsername().equals(username)) {
@@ -156,9 +155,9 @@ public class InboundServerHandler {
 //        this.server.sendMessage(wrappedPacketLoginResponse, session);
 //      } else
 
-      //System.out.println(gameSession.getPlayerList().size());
-      System.out.println(gameSession.getPlayerList());
-      //System.out.println(gameSession.getPlayerList().get(0));
+      //Debug.printMessage(gameSession.getPlayerList().size());
+      Debug.printMessage(""+gameSession.getPlayerList());
+      //Debug.printMessage(gameSession.getPlayerList().get(0));
       if (gameSession.getPlayerList().size() < 4) {
 
         Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
@@ -166,9 +165,9 @@ public class InboundServerHandler {
         gameSession.addPlayer(new Player(username, loginPacket.getPlayerType()));
 
         this.server.getUsername2Session().put(username, session);
-        System.out.println(
+        Debug.printMessage(
             "Username2Session size: " + this.server.getUsername2Session().size());
-        System.out.println(
+        Debug.printMessage(
             "Gamesession size: " + EndpointServer.getGameSession().getPlayerList().size());
       } else {
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket(

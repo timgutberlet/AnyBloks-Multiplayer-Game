@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import game.model.Debug;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -55,17 +56,17 @@ public class AccountManagementTest {
         .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
     if (receivedAnswer.getStatus() != 200) {
-      System.out.println("Something went wrong");
-      System.out.println(receivedAnswer.getStatus());
-      System.out.println(receivedAnswer.getStatusInfo());
+      Debug.printMessage("Something went wrong");
+      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage(""+receivedAnswer.getStatusInfo());
     } else {
-      System.out.println(receivedAnswer.getStatus());
-      System.out.println("The account has been created.");
+      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("The account has been created.");
 
     }
     assertEquals(200, receivedAnswer.getStatus());
     assertTrue(dbServer.doesUsernameExist(username));
-    System.out.println("--------- Below the line the account is updated ------------");
+    Debug.printMessage("--------- Below the line the account is updated ------------");
 
     Client updateClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
     String updatedPassword = "1234567890";
@@ -80,13 +81,13 @@ public class AccountManagementTest {
     Response receivedUpdateAnswer = targetPathUpdate.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(wrappedUpdateAccountRequestPacket, MediaType.APPLICATION_JSON));
 
-    System.out.println(
+    Debug.printMessage(
         "The reponse to the updateRequest has the status:" + receivedUpdateAnswer.getStatus()
             + ": " + receivedUpdateAnswer.getStatusInfo());
     assertEquals(200, receivedUpdateAnswer.getStatus());
     assertEquals(updatedPasswordHash, dbServer.getUserPasswordHash(username));
 
-    System.out.println("--------- Below the line the account is deleted ------------");
+    Debug.printMessage("--------- Below the line the account is deleted ------------");
 
     Client deleteClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
     DeleteAccountRequestPacket deleteAccountRequestPacket = new DeleteAccountRequestPacket(username,
@@ -98,7 +99,7 @@ public class AccountManagementTest {
     WebTarget targetPathDelete = testClient.target(targetAddress).path("/deleteAccount/");
     Response receivedDeleteAnswer = targetPathDelete.request(MediaType.APPLICATION_JSON)
         .put(Entity.entity(wrappedDeleteAccountRequestPacket, MediaType.APPLICATION_JSON));
-    System.out.println(
+    Debug.printMessage(
         "The reponse to the deleteRequest has the status:" + receivedDeleteAnswer.getStatus()
             + ": " + receivedDeleteAnswer.getStatusInfo());
     assertEquals(200, receivedDeleteAnswer.getStatus());

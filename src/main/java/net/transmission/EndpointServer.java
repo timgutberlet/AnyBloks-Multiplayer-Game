@@ -91,7 +91,7 @@ public class EndpointServer {
    */
   @OnClose
   public void onClose(final Session ses) {
-    System.out.println("THIS SESSION WAS CLOSED BY THE SERVER TOBI");
+    Debug.printMessage("THIS SESSION WAS CLOSED BY THE SERVER TOBI");
     sessions.remove(ses);
 
   }
@@ -121,12 +121,12 @@ public class EndpointServer {
     String username = packet.getUsername();
     String authToken = packet.getToken();
     //Validate the token sent with the packet, only if it is valid, the request is handled
-    System.out.println(username);
-    System.out.println(authToken);
-    System.out.println(
+    Debug.printMessage(username);
+    Debug.printMessage(authToken);
+    Debug.printMessage(
         dbServer.testAuthToken(username, authToken) + " In endpoint server verfiy login");
     if (dbServer.testAuthToken(username, authToken)) {
-      System.out.println("Passed if testAuth");
+      Debug.printMessage("Passed if testAuth");
       switch (type) {
         case INIT_SESSION_PACKET: {
 
@@ -183,7 +183,7 @@ public class EndpointServer {
           break;
 
         default:
-          System.out.println("Received a packet of type: " + type);
+          Debug.printMessage("Received a packet of type: " + type);
 
       }
     }
@@ -293,7 +293,7 @@ public class EndpointServer {
    * @param username String
    */
   public void dropUser(String username){
-    System.out.println("The user: " + username + " has been kicked");
+    Debug.printMessage("The user: " + username + " has been kicked");
     Player playertoKick = null;
     for(Player p : gameSession.getPlayerList()){
       if(p.getUsername().equals(username)){
@@ -310,7 +310,7 @@ public class EndpointServer {
       sesToKick.setMaxIdleTimeout(1);
     } catch (Exception e){
       Debug.printMessage("A users session has been terminated");
-      System.out.println("A users session has been terminated");
+      Debug.printMessage("A users session has been terminated");
       e.printStackTrace();
     }
 
@@ -328,7 +328,7 @@ public class EndpointServer {
    */
   @OnError
   public void onError(Session ses, Throwable t) {
-    System.out.println("HI FROM CRASH");
+    Debug.printMessage("HI FROM CRASH");
 
     t.printStackTrace();
   }

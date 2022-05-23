@@ -509,7 +509,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
 
   private void handleQuitButtonClicked() {
-    System.out.println(
+    Debug.printMessage(
         "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
       this.gameSession.getClientHandler().getClient()
@@ -750,7 +750,7 @@ public abstract class InGameUiController extends AbstractUiController {
                       possibleFields = null;
                       boardPane.resetAllCheckFields();
                       Turn turn = new Turn(dragablePolyPane.getPoly(), pos);
-                      System.out.println(turn.getPoly());
+                      Debug.printMessage(""+turn.getPoly());
                       root.getChildren().remove(dragablePolyPane);
                       dragablePolyPane = null;
                       localPlayer.setSelectedTurn(turn);
@@ -794,7 +794,7 @@ public abstract class InGameUiController extends AbstractUiController {
         /*
         /*if (localPlayer.getSelectedPoly() != null) {
           localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
-          System.out.println("Localplayer Selected Poly");
+          Debug.printMessage("Localplayer Selected Poly");
           //create helpArraylist containing the selectedPoly to check the possible Moves
           ArrayList<Poly> helpList = new ArrayList<>();
           helpList.add(localPlayer.getSelectedPoly());
@@ -815,7 +815,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
     //check if game is over
     if (this.gameSession.isGameOver()) {
-      System.out.println("GAME IS OVER");
+      Debug.printMessage("GAME IS OVER");
       //Sending user to ScoreBoard
       ScoreBoardUiController.sortScoreBoard(gameSession);
       gameController.setActiveUiController(
@@ -824,7 +824,7 @@ public abstract class InGameUiController extends AbstractUiController {
     }
     //check if user got kicked
     if(gameSession.getGotKicked()){
-      System.out.println("GETTING KICKED");
+      Debug.printMessage("GETTING KICKED");
       gameController.setActiveUiController(new KickInfoUiController(gameController));
     }
 

@@ -1,5 +1,6 @@
 package net.AuthRessources;
 
+import game.model.Debug;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -29,7 +30,7 @@ public class UpdateAccountRessource {
   @Consumes(MediaType.APPLICATION_JSON)
 
   public Response update(WrappedPacket wrappedPacket) {
-    System.out.println("Hi from updateAcc method");
+    Debug.printMessage("Hi from updateAcc method");
     String errorMessage = "";
 
     try {
@@ -42,9 +43,9 @@ public class UpdateAccountRessource {
         String username = updateAccountRequestPacket.getUsername();
         String passwordHash = updateAccountRequestPacket.getPasswordHash();
         String updatedPasswordHash = updateAccountRequestPacket.getUpdatedPasswordHash();
-        System.out.println("oldPW: " + passwordHash);
-        System.out.println("newPW: " + updatedPasswordHash);
-        System.out.println("username : " + username);
+        Debug.printMessage("oldPW: " + passwordHash);
+        Debug.printMessage("newPW: " + updatedPasswordHash);
+        Debug.printMessage("username : " + username);
 
         DbServer dbServer = DbServer.getInstance();
         //Make sure the is a user with that username

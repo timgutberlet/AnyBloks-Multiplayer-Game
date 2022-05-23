@@ -237,7 +237,7 @@ public class JoinLobbyUiController extends AbstractUiController {
       gameController.setActiveUiController(new KickInfoUiController(gameController));
     }
 
-    //System.out.println("Gamesession: " + this.gameSession);
+    //Debug.printMessage("Gamesession: " + this.gameSession);
     if (this.gameSession.isGameStarted()) {
 
       gameController.setActiveUiController(
@@ -261,7 +261,7 @@ public class JoinLobbyUiController extends AbstractUiController {
     //Check if the host left, is so, return to the lobby
     if (gameSession.getHostQuit()) {
       //The host has left, so the user is sent to proper screen
-      System.out.println("THE HOST QUIT HAS BEEN DETECTED IN THE JOIN LOBBY CONTROLLER");
+      Debug.printMessage("THE HOST QUIT HAS BEEN DETECTED IN THE JOIN LOBBY CONTROLLER");
       gameController.setActiveUiController(new HostQuitUiController(gameController, gameSession));
       gameSession.setHostQuit(false);
 

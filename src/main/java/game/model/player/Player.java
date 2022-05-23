@@ -195,7 +195,7 @@ public class Player implements Serializable {
         } catch (InterruptedException e) {
         }
       }
-      System.out.println("Turn Selected from player " + this);
+      Debug.printMessage("Turn Selected from player " + this);
 
       gameState.playTurn(this.selectedTurn);
       Turn returnTurn = this.selectedTurn;

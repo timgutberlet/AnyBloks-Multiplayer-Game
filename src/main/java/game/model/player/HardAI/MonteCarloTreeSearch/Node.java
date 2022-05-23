@@ -1,5 +1,6 @@
 package game.model.player.HardAI.MonteCarloTreeSearch;
 
+import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import java.util.ArrayList;
@@ -87,9 +88,9 @@ public class Node {
         winner = child;
       }
     }
-    System.out.println("Max Score: " + max);
+    Debug.printMessage("Max Score: " + max);
     if (winner != null) {
-      System.out.println("Visits: " + winner.getState().getVisitCount());
+      Debug.printMessage("Visits: " + winner.getState().getVisitCount());
     }
     return winner;
   }

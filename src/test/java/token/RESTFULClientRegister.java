@@ -1,5 +1,6 @@
 package token;
 
+import game.model.Debug;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -35,15 +36,15 @@ public class RESTFULClientRegister {
         .put(Entity.entity(wrappedPacket, MediaType.APPLICATION_JSON));
 
     if (receivedAnswer.getStatus() != 200) {
-      System.out.println("Something went wrong");
-      System.out.println(receivedAnswer.getStatus());
-      System.out.println(receivedAnswer.getStatusInfo());
+      Debug.printMessage("Something went wrong");
+      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage(""+receivedAnswer.getStatusInfo());
     } else {
-      System.out.println(receivedAnswer.getStatus());
-      System.out.println("Everything worked");
+      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("Everything worked");
 
     }
-    System.out.println("---------");
+    Debug.printMessage("---------");
 
 
   }

@@ -1,5 +1,6 @@
 package net.AuthRessources;
 
+import game.model.Debug;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -29,7 +30,7 @@ public class AccountRegisterRessource {
   @Consumes(MediaType.APPLICATION_JSON)
 
   public Response register(WrappedPacket wrappedPacket) {
-    System.out.println("Hi from reg method");
+    Debug.printMessage("Hi from reg method");
     String errorMessage = "";
     try {
       String username = "";

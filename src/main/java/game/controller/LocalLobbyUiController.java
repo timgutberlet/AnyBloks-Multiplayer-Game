@@ -179,7 +179,7 @@ public class LocalLobbyUiController extends AbstractUiController {
 
     HostServer hostServer = new HostServer();
     try {
-      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       hostServer.startWebsocket(8081);
       Debug.printMessage("[testChatServer] Server is running");
       //TimeUnit.SECONDS.sleep(3);
@@ -456,7 +456,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   private void increaseDifficulty1() {
-    System.out.println("increase!!!!");
+    Debug.printMessage("increase!!!!");
     increaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
 
@@ -467,7 +467,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   private void increaseDifficulty2() {
-    System.out.println("increase!!!!");
+    Debug.printMessage("increase!!!!");
     increaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
 
@@ -478,7 +478,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   private void increaseDifficulty3() {
-    System.out.println("increase!!!!");
+    Debug.printMessage("increase!!!!");
     increaseAi(difficultyPlayer3, nameAiPlayer3, player3);
   }
 
@@ -489,7 +489,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   private void decreaseDifficulty1() {
-    System.out.println("decrease!!!!");
+    Debug.printMessage("decrease!!!!");
     decreaseAi(difficultyPlayer1, nameAiPlayer1, player1);
   }
 
@@ -500,7 +500,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   private void decreaseDifficulty2() {
-    System.out.println("decrease!!!!");
+    Debug.printMessage("decrease!!!!");
     decreaseAi(difficultyPlayer2, nameAiPlayer2, player2);
   }
 
@@ -511,7 +511,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   private void decreaseDifficulty3() {
-    System.out.println("decrease!!!!!");
+    Debug.printMessage("decrease!!!!!");
     decreaseAi(difficultyPlayer3, nameAiPlayer3, player3);
   }
 

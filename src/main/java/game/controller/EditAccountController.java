@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.Debug;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -144,11 +145,11 @@ public class EditAccountController extends AbstractUiController {
         .put(Entity.entity(wrappedUpdateAccountRequestPacket, MediaType.APPLICATION_JSON));
 
     if (receivedAnswer.getStatus() != 200) {
-      System.out.println("Something went wrong");
+      Debug.printMessage("Something went wrong");
       usernameError.setText(String.valueOf(receivedAnswer.getStatusInfo()));
     } else {
-      System.out.println(receivedAnswer.getStatus());
-      System.out.println("Everything worked");
+      Debug.printMessage(""+receivedAnswer.getStatus());
+      Debug.printMessage("Everything worked");
       gameController.setActiveUiController(new JoinAuthController(gameController, ip, username));
 
     }

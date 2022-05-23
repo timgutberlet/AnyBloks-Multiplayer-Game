@@ -1,5 +1,6 @@
 package token;
 
+import game.model.Debug;
 import net.server.HostServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,6 +32,6 @@ public class runTokenServer {
 
   @Test
   public void test() {
-    System.out.println("_____");
+    Debug.printMessage("_____");
   }
 }

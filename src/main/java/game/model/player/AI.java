@@ -45,7 +45,7 @@ public class AI {
         return calculateNextRandomMove(gameState.getBoard(), gameState.getRemainingPolys(player),
             gameState.isFirstRound());
       default:
-        System.out.println("AI move for human player");
+        Debug.printMessage("AI move for human player");
         return null;
     }
   }

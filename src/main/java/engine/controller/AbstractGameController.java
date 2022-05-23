@@ -3,6 +3,7 @@ package engine.controller;
 import engine.handler.InputHandler;
 import engine.handler.MusicThread;
 import game.config.Config;
+import game.model.Debug;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -127,7 +128,7 @@ public abstract class AbstractGameController extends AnimationTimer {
     if (System.currentTimeMillis() - fpsTimer > 1000) {
       fpsTimer += 1000;
       if (printFps) {
-        System.out.println("FPS: " + frameCount);
+        Debug.printMessage("FPS: " + frameCount);
       }
       frameCount = 0;
     }
@@ -141,7 +142,7 @@ public abstract class AbstractGameController extends AnimationTimer {
    * @author tgutberl
    */
   public void setActiveUiController(AbstractUiController activeUiController) {
-    System.out.println("[GameController] Switched UI-Controller!");
+    Debug.printMessage("[GameController] Switched UI-Controller!");
     this.activeUiController = activeUiController;
     gameRoot.getChildren().clear();
     activeUiController.attachToRoot(gameRoot);
