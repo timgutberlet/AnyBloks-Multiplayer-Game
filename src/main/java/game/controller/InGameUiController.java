@@ -72,7 +72,7 @@ public abstract class InGameUiController extends AbstractUiController {
   private final InputHandler inputHandler;
   private final List<StackPane> stackPanes;
   /**
-   * Main Anchorpane used for Style
+   * Main Anchorpane used for Style.
    */
   private final AnchorPane anchorPane;
   /**
@@ -85,7 +85,7 @@ public abstract class InGameUiController extends AbstractUiController {
   private final ArrayList<String> alreadyInChat;
   private final Stage stage;
   /**
-   * Label to drag the chat!
+   * Label to drag the chat.
    */
   Label dragLabel;
   /**
@@ -113,7 +113,7 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private TextField chatInput;
   /**
-   * Checks if Chat Selected
+   * Checks if Chat Selected.
    */
   private Boolean chatSelected = false;
   /**
@@ -133,7 +133,7 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private String errorLabelText = "";
   /**
-   * Block boolean that shows if moves are possible for player or not
+   * Block boolean that shows if moves are possible for player or not.
    */
   private boolean block = false;
 
@@ -163,7 +163,11 @@ public abstract class InGameUiController extends AbstractUiController {
   private List<Label> names;
   private Label turn;
 
-
+  /**
+   * Constructor used for setting gameController, game and gameSession.
+   *
+   * @author tgutberl
+   */
   public InGameUiController(AbstractGameController gameController, Game game,
       GameSession gameSession) {
     super(gameController);
@@ -194,6 +198,9 @@ public abstract class InGameUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method to create Board.
+   */
   public void createBoard() {
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
@@ -221,7 +228,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   /**
-   *
+   * Method to setup UI.
    */
   private void setUpUi() {
 
@@ -343,6 +350,8 @@ public abstract class InGameUiController extends AbstractUiController {
             score.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
           }
+        default:
+          break;
       }
 
       names.add(name);
@@ -400,6 +409,8 @@ public abstract class InGameUiController extends AbstractUiController {
           stackPanes.add(stackPane);
           stacks.getChildren().add(stackPane);
         }
+        break;
+      default:
         break;
     }
     content.getChildren().add(stacks);
@@ -470,7 +481,8 @@ public abstract class InGameUiController extends AbstractUiController {
       Alert alert = new Alert(AlertType.INFORMATION);
       alert.setTitle("Information");
       alert.setContentText(
-          "Set Poly: Push 'P'-Button, ENTER or SPACE \n Mirror: Push 'M'-Button \n Left/Right Rotate: Push 'L' or 'M' Button");
+          "Set Poly: Push 'P'-Button, ENTER or SPACE \n Mirror: Push 'M'-Button \n "
+              + "Left/Right Rotate: Push 'L' or 'M' Button");
       alert.setHeaderText(null);
       alert.initModality(Modality.APPLICATION_MODAL);
       alert.initOwner(stage);
@@ -537,6 +549,8 @@ public abstract class InGameUiController extends AbstractUiController {
         boardPane.setStyle("-fx-background-color:#D8EFFF;");
         anchorPane.getStylesheets()
             .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+        break;
+      default:
         break;
     }
   }
@@ -611,6 +625,8 @@ public abstract class InGameUiController extends AbstractUiController {
           stacks.getChildren().add(stackPane);
         }
         break;
+      default:
+        break;
     }
     errorLabel.setText(errorLabelText);
     stacks.getChildren().add(errorLabel);
@@ -620,8 +636,8 @@ public abstract class InGameUiController extends AbstractUiController {
   /**
    * function that updates the screen and calls the next move to be made
    *
-   * @param gameController
-   * @param deltaTime
+   * @param gameController gameController
+   * @param deltaTime deltaTime
    * @author //TODO hier die klasse hat jemand anders geschrieben. ich habe nur paar changes
    * gemacht. echter autor am besten noch dazu schreiben
    * @author tgeilen
@@ -739,6 +755,8 @@ public abstract class InGameUiController extends AbstractUiController {
                       new TrigonPolyPane(polyPane.getPoly().clone(), inputHandler,
                           stage.getWidth()), boardPane.getSize(),
                       inputHandler, this);
+                  break;
+                default:
                   break;
               }
 
@@ -900,11 +918,12 @@ public abstract class InGameUiController extends AbstractUiController {
               }
             }
           } catch (Exception e) {
+            e.printStackTrace();
           }
 
           //If localPlayer has selected a Poly, check if he also already click on the Board
         /*
-        /*if (localPlayer.getSelectedPoly() != null) {
+          if (localPlayer.getSelectedPoly() != null) {
           localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
           Debug.out.println("Localplayer Selected Poly");
           //create helpArraylist containing the selectedPoly to check the possible Moves
@@ -949,6 +968,9 @@ public abstract class InGameUiController extends AbstractUiController {
 
   }
 
+  /**
+   * Method repaints the BoardPane
+   */
   public void repaintBoardPane() {
     if (possibleFields != null) {
       for (int[] coords : possibleFields) {
@@ -978,6 +1000,10 @@ public abstract class InGameUiController extends AbstractUiController {
     this.boardPane.repaint(game.getGameState().getBoard());
   }
 
+  /**
+   * Paints all possible Fields for a move by the player.
+   * @param dragablePolyPane dragablePolyPane
+   */
   public void paintPossibleFields(DragablePolyPane dragablePolyPane) {
     possibleFields = game.getGameState().getBoard()
         .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
@@ -985,7 +1011,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   /**
-   * Handles Button Submit Request of DraggablePolyPane
+   * Handles Button Submit Request of DraggablePolyPane.
    *
    * @author tgutberl
    */
@@ -995,7 +1021,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
 
   /**
-   * Exit Method given by Abstract Class
+   * Exit Method given by Abstract Class.
    *
    * @author tgutberl
    */
@@ -1004,7 +1030,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   /**
-   * Init Method given by Abstract Class
+   * Init Method given by Abstract Class.
    *
    * @author tgutberl
    */
@@ -1014,7 +1040,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   /**
-   * Method used to update the current frame
+   * Method used to update the current frame.
    *
    * @param gameController GameController of game
    * @author tgutberl
