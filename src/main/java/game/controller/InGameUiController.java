@@ -612,7 +612,9 @@ public abstract class InGameUiController extends AbstractUiController {
     });
 
     for (int i = 0; i < playerSize; i++) {
-      scores.get(i).setText(game.getGameState().getScores()[i] + "");
+      if(i<scores.size()){
+        scores.get(i).setText(game.getGameState().getScores()[i] + "");
+      }
     }
 
     if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
