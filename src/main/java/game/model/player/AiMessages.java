@@ -8,7 +8,7 @@ import game.model.GameSession;
  * @author tiotto
  * @date 20.05.2022
  */
-public class AIMessages {
+public class AiMessages {
 
   /**
    * comments to chat after a played turn.
@@ -33,8 +33,8 @@ public class AIMessages {
    *
    * @return random comment after a played turn
    */
-  public static String getAfterTurnAIComment(GameSession gameSession) {
-    if (gameSession.getLocalPlayer().isAI()) {
+  public static String getAfterTurnAiComment(GameSession gameSession) {
+    if (gameSession.getLocalPlayer().isAi()) {
       if (Math.round(Math.random() * 4) < 1) {
         String message = afterTurnComments[(int) Math.round(
             Math.random() * (afterTurnComments.length - 1))];
@@ -47,8 +47,8 @@ public class AIMessages {
   /**
    * gets a random comment after a finished game.
    */
-  public static void getAfterMatchAIComment(GameSession gameSession) {
-    if (gameSession.getLocalPlayer().isAI()) {
+  public static void getAfterMatchAiComment(GameSession gameSession) {
+    if (gameSession.getLocalPlayer().isAi()) {
       String message = afterGameComments[(int) Math.round(
           Math.random() * (afterTurnComments.length - 1))];
       gameSession.addChatMessage(message);
