@@ -3,6 +3,8 @@ package engine.handler;
 import game.model.Color;
 
 /**
+ * Handler to choose between different Themes for the Board elements.
+ *
  * @author lbaudenb
  */
 public class ColorHandler {
@@ -11,10 +13,10 @@ public class ColorHandler {
   public static boolean whiteMode = false;
 
   /**
-   * Method that converts game.model.Color objects  to javafx.scene.paint.Color objects
+   * Method that converts game.model.Color objects  to javafx.scene.paint.Color objects.
    *
-   * @param color
-   * @return
+   * @param color Color element being used to determine theme
+   * @return returns right Java.Fx Color element
    */
   public static javafx.scene.paint.Color getJavaColor(Color color) {
     if (darkMode) {
@@ -60,6 +62,11 @@ public class ColorHandler {
     }
   }
 
+  /**
+   * Method returning the boardstroke color, for the right Theme.
+   *
+   * @return returns java paint Object
+   */
   public static javafx.scene.paint.Color getBoardStrokeColor() {
     if (darkMode) {
       return javafx.scene.paint.Color.WHITE;

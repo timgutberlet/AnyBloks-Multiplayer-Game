@@ -130,7 +130,7 @@ public class InputHandler {
   }
 
   /**
-   * Method to regiser Keys
+   * Method to regiser Keys.
    *
    * @param scene Scene that is given
    */
@@ -152,9 +152,9 @@ public class InputHandler {
   }
 
   /**
-   * Method to check if key is pressed
+   * Method to check if key is pressed.
    *
-   * @param keyCode
+   * @param keyCode Keycode element, determining which key of the keyboard was pushed
    * @return boolean
    */
   public boolean isKeyPressed(KeyCode keyCode) {
@@ -162,10 +162,10 @@ public class InputHandler {
   }
 
   /**
-   * Method to check if key is released
+   * Method to check if key is released.
    *
-   * @param keyCode
-   * @return
+   * @param keyCode Keycode element, determining which key of the keyboard was released
+   * @return returns if keyecode was released or not
    */
   public boolean isKeyReleased(KeyCode keyCode) {
     return this.keysReleased.contains(keyCode);
@@ -173,14 +173,14 @@ public class InputHandler {
 
 
   /**
-   * Method to be called before a Frame
+   * Method to be called before a Frame.
    */
   public void start() {
     blockInput = true;
   }
 
   /**
-   * Method to be called after a frame
+   * Method to be called after a frame.
    */
   public void end() {
     //Clear BoardInputs
@@ -213,7 +213,7 @@ public class InputHandler {
   }
 
   /**
-   * Method to clear all keys
+   * Method to clear all keys.
    */
   private void clearKeys() {
     fieldClickedSaved.clear();
@@ -224,7 +224,7 @@ public class InputHandler {
 
   /**
    * Add all needed Eventhandlers to the Abstract field Element, that represents a grid on the Board
-   * on either Square or Trigon
+   * on either Square or Trigon.
    *
    * @param field Element on the Board
    */
@@ -263,9 +263,9 @@ public class InputHandler {
   }
 
   /**
-   * Add event handler to object poly pane
+   * Add event handler to object poly pane.
    *
-   * @param polyPane
+   * @param polyPane Polypane object that should be register for inputs
    */
   public void registerPoly(PolyPane polyPane) {
     for (Field field : polyPane.getFields()) {
@@ -280,7 +280,7 @@ public class InputHandler {
   }
 
   /**
-   * The Following  Methods return, if a field Object has been register in the Mouse Event handler
+   * The Following  Methods return, if a field Object has been register in the Mouse Event handler.
    *
    * @param field Element on the Board
    * @return Boolean
@@ -289,6 +289,12 @@ public class InputHandler {
     return fieldClicked.contains(field);
   }
 
+  /**
+   * Returns if a field of an Array has been clicked or not.
+   *
+   * @param fieldArray Field array with field elements to be checked
+   * @return returns if field in array was clicked or not
+   */
   public boolean isFieldArrayClicked(List<Field> fieldArray) {
     for (Field field : fieldArray) {
       if (fieldClicked.contains(field)) {
@@ -299,10 +305,10 @@ public class InputHandler {
   }
 
   /**
-   * Method to check for an Field array if one of it was pressed
+   * Method to check for an Field array if one of it was pressed.
    *
-   * @param fieldArray
-   * @return
+   * @param fieldArray Field array with field elements to be checked
+   * @return returns if field in array was pressed or not
    */
   public boolean isFieldArrayPressed(List<Field> fieldArray) {
     for (Field field : fieldArray) {
@@ -314,7 +320,7 @@ public class InputHandler {
   }
 
   /**
-   * The Following  Methods return, if a field Object has been register in the Mouse Event handler
+   * The Following  Methods return, if a field Object has been register in the Mouse Event handler.
    *
    * @param field Element on the Board
    * @return Boolean
@@ -324,7 +330,7 @@ public class InputHandler {
   }
 
   /**
-   * The Following  Methods return, if a field Object has been register in the Mouse Event handler
+   * The Following  Methods return, if a field Object has been register in the Mouse Event handler.
    *
    * @param field Element on the Board
    * @return Boolean
@@ -335,10 +341,10 @@ public class InputHandler {
 
   /**
    * The following  Method returns, if a poly pane object has been register in the mouse event
-   * handler
+   * handler.
    *
-   * @param polyPane0
-   * @return
+   * @param polyPane0 Polypane object that should be checked if clicked or not
+   * @return Boolean if polypane was clicked or not
    */
   public boolean isPolyClicked(PolyPane polyPane0) {
     for (PolyPane polyPane1 : polyClicked) {

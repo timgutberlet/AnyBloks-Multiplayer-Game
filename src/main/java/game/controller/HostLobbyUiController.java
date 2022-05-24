@@ -192,17 +192,17 @@ public class HostLobbyUiController extends AbstractUiController {
   @FXML
   private Label informationIp;
   /**
-   * Trashbin Button that is used to kick a player
+   * Trashbin Button that is used to kick a player.
    */
   @FXML
   private Button trashBin1;
   /**
-   * Trashbin Button that is used to kick a player (No. 2)
+   * Trashbin Button that is used to kick a player (No. 2).
    */
   @FXML
   private Button trashBin2;
   /**
-   * Trashbin Button that is used to kick a player (No. 3)
+   * Trashbin Button that is used to kick a player (No. 3).
    */
   @FXML
   private Button trashBin3;
@@ -231,21 +231,21 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   private LobbyScoreBoard lobbyScoreBoard;
   /**
-   * Variable that shows, if the scoreboard already loaded
+   * Variable that shows, if the scoreboard already loaded.
    */
   private int scoreLoaded = 3;
   /**
-   * Label that shows count of wins of the best Player
+   * Label that shows count of wins of the best Player.
    */
   @FXML
   private Label winsBest;
   /**
-   * Label that shows count of wins of the second best Player
+   * Label that shows count of wins of the second best Player.
    */
   @FXML
   private Label winsSecond;
   /**
-   * Label that shows count of wins of the third best Player
+   * Label that shows count of wins of the third best Player.
    */
   @FXML
   private Label winsThird;
@@ -331,11 +331,21 @@ public class HostLobbyUiController extends AbstractUiController {
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
           trashBin1.setStyle(
-              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; -fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-background-insets: 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
+              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; "
+                  + "-fx-background-color: #FFFFFF; "
+                  + "-fx-background-radius: 10px; -fx-background-insets: 0; "
+                  + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
           trashBin2.setStyle(
-              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; -fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-background-insets: 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
+              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; "
+                  + "-fx-background-color: #FFFFFF; "
+                  + "-fx-background-radius: 10px; -fx-background-insets: 0; "
+                  + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
           trashBin3.setStyle(
-              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; -fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-background-insets: 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
+              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; "
+                  + "-fx-background-color: #FFFFFF; "
+                  + "-fx-background-radius: 10px; "
+                  + "-fx-background-insets: 0; "
+                  + "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
@@ -660,7 +670,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
-    if(!(scoreLoaded < 1)) {
+    if (!(scoreLoaded < 1)) {
       lobbyScoreBoard = this.gameSession.getLobbyScoreBoard();
       int gamesPlayed = 0;
       String playerWinsName = "";
@@ -683,15 +693,15 @@ public class HostLobbyUiController extends AbstractUiController {
           scoreMap.remove(playerWinsName);
         }
         this.gameNumber.setText(gamesPlayed + "");
-        if(scoreLoaded == 3){
-          bestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
-          winsBest.setText(playerWins+"");
-        }else if(scoreLoaded == 2){
-          secondBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
-          winsSecond.setText(playerWins+"");
-        }else{
-          thirdBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
-          winsThird.setText(playerWins+"");
+        if (scoreLoaded == 3) {
+          bestPlayer.setText(playerWinsName + "");
+          winsBest.setText(playerWins + "");
+        } else if (scoreLoaded == 2) {
+          secondBestPlayer.setText(playerWinsName + "");
+          winsSecond.setText(playerWins + "");
+        } else {
+          thirdBestPlayer.setText(playerWinsName + "");
+          winsThird.setText(playerWins + "");
         }
         scoreLoaded--;
       }

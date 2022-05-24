@@ -28,20 +28,23 @@ import javafx.scene.layout.AnchorPane;
 
 public class JoinLobbyUiController extends AbstractUiController {
   /**
-   * Label that shows count of wins of the best Player
+   * Label that shows count of wins of the best Player.
    */
   @FXML
   private Label winsBest;
   /**
-   * Label that shows count of wins of the second best Player
+   * Label that shows count of wins of the second best Player.
    */
   @FXML
   private Label winsSecond;
   /**
-   * Label that shows count of wins of the third best Player
+   * Label that shows count of wins of the third best Player.
    */
   @FXML
   private Label winsThird;
+  /**
+   * Counts the number of Games, that were done on the Host.
+   */
   @FXML
   private Label gameNumber;
   /**
@@ -64,7 +67,7 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   private LobbyScoreBoard lobbyScoreBoard;
   /**
-   * Variable that shows, if the scoreboard already loaded
+   * Variable that shows, if the scoreboard already loaded.
    */
   private int scoreLoaded = 3;
   /**
@@ -257,7 +260,7 @@ public class JoinLobbyUiController extends AbstractUiController {
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
 
-    if(!(scoreLoaded < 1)) {
+    if (!(scoreLoaded < 1)) {
       lobbyScoreBoard = this.gameSession.getLobbyScoreBoard();
       int gamesPlayed = 0;
       String playerWinsName = "";
@@ -280,15 +283,15 @@ public class JoinLobbyUiController extends AbstractUiController {
           scoreMap.remove(playerWinsName);
         }
         this.gameNumber.setText(gamesPlayed + "");
-        if(scoreLoaded == 3){
-          bestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
-          winsBest.setText(playerWins+"");
-        }else if(scoreLoaded == 2){
-          secondBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
-          winsSecond.setText(playerWins+"");
-        }else{
-          thirdBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
-          winsThird.setText(playerWins+"");
+        if (scoreLoaded == 3) {
+          bestPlayer.setText(playerWinsName + "");
+          winsBest.setText(playerWins + "");
+        } else if (scoreLoaded == 2) {
+          secondBestPlayer.setText(playerWinsName + "");
+          winsSecond.setText(playerWins + "");
+        } else {
+          thirdBestPlayer.setText(playerWinsName + "");
+          winsThird.setText(playerWins + "");
         }
         scoreLoaded--;
       }

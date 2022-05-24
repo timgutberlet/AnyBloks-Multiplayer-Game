@@ -10,6 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
+ * AbstractUiController class, being used for all UiControlling,
+ * controlling an initiating the different FXML Views.
+ *
  * @author lbaudenb
  * @author tgutberl
  */
@@ -19,6 +22,8 @@ public abstract class AbstractUiController implements Initializable, Updating {
   protected Group root = new Group();
 
   /**
+   * Constructor to intialize Class.
+   *
    * @param gameController most recent Gamecontroller
    * @author tgutberl
    */
@@ -41,14 +46,14 @@ public abstract class AbstractUiController implements Initializable, Updating {
   }
 
   /**
-   * Method getting called, when closing the Game
+   * Method getting called, when closing the Game.
    *
    * @author tgutberl
    */
   public abstract void onExit();
 
   /**
-   * Method for Auto Updating Width and Heigth of fxml File
+   * Method for Auto Updating Width and Heigth of fxml File.
    *
    * @param anchorPane Anchorpane Object used as Wrapper in the fxml File for each Menu
    * @param stage      Stage currently used

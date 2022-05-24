@@ -86,7 +86,7 @@ public class ScoreBoardUiController extends AbstractUiController {
   private HBox buttonBox;
 
   /**
-   * Constructor
+   * Constructor to initiate the Class.
    *
    * @param gameController gameController
    * @param gameSession gameSession
@@ -133,6 +133,11 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   }
 
+  /**
+   * Method to initiate the UI and the FXML File.
+   *
+   * @param root Root object of the Application
+   */
   public void init(Group root) {
     try {
       FXMLLoader loader = new FXMLLoader();
@@ -179,9 +184,12 @@ public class ScoreBoardUiController extends AbstractUiController {
     setUserMessage();
   }
 
+  /**
+   * Method the get Back to Menu, end the server and change Ui Controller.
+   */
   @FXML
   public void backMainMenu() {
-    if(gameSession.getLocalPlayer().getType() != PlayerType.HOST_PLAYER){
+    if (gameSession.getLocalPlayer().getType() != PlayerType.HOST_PLAYER) {
       gameSession.getHostServer().stopWebsocket();
       try {
         TimeUnit.MILLISECONDS.sleep(2000);
@@ -202,6 +210,9 @@ public class ScoreBoardUiController extends AbstractUiController {
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
+  /**
+   * Method to initiate the next round.
+   */
   @FXML
   public void nextRound() {
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)
@@ -210,6 +221,9 @@ public class ScoreBoardUiController extends AbstractUiController {
     }
   }
 
+  /**
+   * Method the set the right default labels of the winners.
+   */
   public void setLabels() {
 
     gameMode.setText("Gamemode: " + gameSession.getGameScoreBoard().gamemode);
@@ -348,6 +362,9 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   }
 
+  /**
+   * Method to set a message by a default user.
+   */
   public void setUserMessage() {
     String username = gameSession.getLocalPlayer().getUsername();
     int place = players.indexOf(username);

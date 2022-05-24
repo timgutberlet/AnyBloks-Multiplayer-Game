@@ -9,7 +9,7 @@ package engine.component;
 public class CheckField extends Field {
 
   /**
-   * Checkfield constructor initializing the Checkfield
+   * Checkfield constructor initializing the Checkfield.
    *
    * @param x Coordinate x of the game
    * @param y Coordinate y of the game

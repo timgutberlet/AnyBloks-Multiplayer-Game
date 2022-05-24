@@ -95,6 +95,7 @@ public abstract class AbstractGameController extends AnimationTimer {
       MusicThread musicThread = new MusicThread();
       musicThread.start();
     } catch (Exception e) {
+      Debug.printMessage("");
     }
     this.start();
   }
@@ -102,7 +103,7 @@ public abstract class AbstractGameController extends AnimationTimer {
   /**
    * handle method handling the framecount.
    *
-   * @param currentNanoTime
+   * @param currentNanoTime Time to pause between Frame
    * @author tgutberl
    */
   @Override
@@ -151,7 +152,9 @@ public abstract class AbstractGameController extends AnimationTimer {
   }
 
   /**
-   * @return
+   * Returns current stage.
+   *
+   * @return stage object
    */
   public Stage getStage() {
     return this.stage;
@@ -166,6 +169,8 @@ public abstract class AbstractGameController extends AnimationTimer {
   }
 
   /**
+   * Returns current application.
+   *
    * @return returns current application
    * @author tgutberl
    */
@@ -175,7 +180,7 @@ public abstract class AbstractGameController extends AnimationTimer {
 
 
   /**
-   * Method that closes the game
+   * Method that closes the game.
    *
    * @author tgutberl
    */

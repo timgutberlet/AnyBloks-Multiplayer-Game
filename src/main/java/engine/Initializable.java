@@ -12,7 +12,7 @@ public interface Initializable {
   /**
    * Init Method calld when initializing the Controller.
    *
-   * @param root
+   * @param root Root object of the Application
    */
   void init(Group root);
 }
