@@ -230,6 +230,25 @@ public class HostLobbyUiController extends AbstractUiController {
    * Lobbyscoreboard element, to get Data out of the Database.
    */
   private LobbyScoreBoard lobbyScoreBoard;
+  /**
+   * Variable that shows, if the scoreboard already loaded
+   */
+  private int scoreLoaded = 3;
+  /**
+   * Label that shows count of wins of the best Player
+   */
+  @FXML
+  private Label winsBest;
+  /**
+   * Label that shows count of wins of the second best Player
+   */
+  @FXML
+  private Label winsSecond;
+  /**
+   * Label that shows count of wins of the third best Player
+   */
+  @FXML
+  private Label winsThird;
 
   /**
    * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.
@@ -641,51 +660,42 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+    if(!(scoreLoaded < 1)) {
+      lobbyScoreBoard = this.gameSession.getLobbyScoreBoard();
+      int gamesPlayed = 0;
+      String playerWinsName = "";
+      int playerWins = 0;
+      int playerWinsScores = 0;
+      HashMap<String, Integer[]> scoreMap = null;
+      if (lobbyScoreBoard != null) {
+        gamesPlayed = lobbyScoreBoard.gamesPlayedOnServer;
+        scoreMap = lobbyScoreBoard.playerScores;
+        System.out.println(scoreMap.toString());
 
-    lobbyScoreBoard = this.gameSession.getLobbyScoreBoard();
-    int gamesPlayed = 0;
-    String bestPlayer1String = "";
-    int bestPlayerScore = 0;
-    String bestPlayer2String = "";
-    int bestPlayer2Score = 0;
-    String bestPlayer3String = "";
-    int bestPlayer3Score = 0;
-    HashMap<String, Integer> scoreMap = null;
-    if (lobbyScoreBoard != null) {
-      gamesPlayed = lobbyScoreBoard.gamesPlayedOnServer;
-      scoreMap = lobbyScoreBoard.playerScores;
-      if (scoreMap.size() > 0) {
-        for (String playerKey : scoreMap.keySet()) {
-          if (scoreMap.get(playerKey) > bestPlayerScore) {
-            bestPlayer1String = playerKey;
-            bestPlayerScore = scoreMap.get(playerKey);
+        if (scoreMap.size() > 0) {
+          for (String playerKey : scoreMap.keySet()) {
+            if (scoreMap.get(playerKey)[0] > playerWins) {
+              playerWinsName = playerKey;
+              playerWins = scoreMap.get(playerKey)[0];
+              playerWinsScores = scoreMap.get(playerKey)[1];
+            }
           }
+          scoreMap.remove(playerWinsName);
         }
-        scoreMap.remove(bestPlayer1String);
-      }
-      if (scoreMap.size() > 0) {
-        for (String playerKey : scoreMap.keySet()) {
-          if (scoreMap.get(playerKey) > bestPlayerScore) {
-            bestPlayer2String = playerKey;
-            bestPlayer2Score = scoreMap.get(playerKey);
-          }
+        this.gameNumber.setText(gamesPlayed + "");
+        if(scoreLoaded == 3){
+          bestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
+          winsBest.setText(playerWins+"");
+        }else if(scoreLoaded == 2){
+          secondBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
+          winsSecond.setText(playerWins+"");
+        }else{
+          thirdBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
+          winsThird.setText(playerWins+"");
         }
-        scoreMap.remove(bestPlayer2String);
-      }
-      if (scoreMap.size() > 0) {
-        for (String playerKey : scoreMap.keySet()) {
-          if (scoreMap.get(playerKey) > bestPlayerScore) {
-            bestPlayer3String = playerKey;
-            bestPlayer3Score = scoreMap.get(playerKey);
-          }
-        }
-        scoreMap.remove(bestPlayer3String);
+        scoreLoaded--;
       }
     }
-    this.gameNumber.setText(gamesPlayed + "");
-    bestPlayer.setText(bestPlayer1String);
-    secondBestPlayer.setText(bestPlayer2String);
-    thirdBestPlayer.setText(bestPlayer3String);
 
     if (this.gameSession.getPlayerList().size() == 1) {
       hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");

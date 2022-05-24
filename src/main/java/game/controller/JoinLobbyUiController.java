@@ -6,8 +6,10 @@ import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.chat.ChatMessage;
+import game.scores.LobbyScoreBoard;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -25,7 +27,46 @@ import javafx.scene.layout.AnchorPane;
  */
 
 public class JoinLobbyUiController extends AbstractUiController {
-
+  /**
+   * Label that shows count of wins of the best Player
+   */
+  @FXML
+  private Label winsBest;
+  /**
+   * Label that shows count of wins of the second best Player
+   */
+  @FXML
+  private Label winsSecond;
+  /**
+   * Label that shows count of wins of the third best Player
+   */
+  @FXML
+  private Label winsThird;
+  @FXML
+  private Label gameNumber;
+  /**
+   * Game number Label, that shows the number of games, that have been Played on the server.
+   */
+  @FXML
+  private Label bestPlayer;
+  /**
+   * Game number Label, that shows the number of games, that have been Played on the server.
+   */
+  @FXML
+  private Label secondBestPlayer;
+  /**
+   * Game number Label, that shows the number of games, that have been Played on the server.
+   */
+  @FXML
+  private Label thirdBestPlayer;
+  /**
+   * Lobbyscoreboard element, to get Data out of the Database.
+   */
+  private LobbyScoreBoard lobbyScoreBoard;
+  /**
+   * Variable that shows, if the scoreboard already loaded
+   */
+  private int scoreLoaded = 3;
   /**
    * Gamecontroller method used in application.
    */
@@ -215,6 +256,43 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+
+    if(!(scoreLoaded < 1)) {
+      lobbyScoreBoard = this.gameSession.getLobbyScoreBoard();
+      int gamesPlayed = 0;
+      String playerWinsName = "";
+      int playerWins = 0;
+      int playerWinsScores = 0;
+      HashMap<String, Integer[]> scoreMap = null;
+      if (lobbyScoreBoard != null) {
+        gamesPlayed = lobbyScoreBoard.gamesPlayedOnServer;
+        scoreMap = lobbyScoreBoard.playerScores;
+        System.out.println(scoreMap.toString());
+
+        if (scoreMap.size() > 0) {
+          for (String playerKey : scoreMap.keySet()) {
+            if (scoreMap.get(playerKey)[0] > playerWins) {
+              playerWinsName = playerKey;
+              playerWins = scoreMap.get(playerKey)[0];
+              playerWinsScores = scoreMap.get(playerKey)[1];
+            }
+          }
+          scoreMap.remove(playerWinsName);
+        }
+        this.gameNumber.setText(gamesPlayed + "");
+        if(scoreLoaded == 3){
+          bestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
+          winsBest.setText(playerWins+"");
+        }else if(scoreLoaded == 2){
+          secondBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
+          winsSecond.setText(playerWins+"");
+        }else{
+          thirdBestPlayer.setText(playerWinsName + "("+playerWinsScores+")");
+          winsThird.setText(playerWins+"");
+        }
+        scoreLoaded--;
+      }
+    }
 
     if (this.gameSession.getPlayerList().size() == 2) {
       hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");
