@@ -40,7 +40,7 @@ public class AccountManagementTest {
     threadHandlerRestful.start();
 
     try {
-      TimeUnit.MILLISECONDS.sleep(500);
+      TimeUnit.MILLISECONDS.sleep(2500);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

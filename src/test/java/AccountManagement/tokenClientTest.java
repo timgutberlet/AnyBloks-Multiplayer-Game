@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import engine.handler.ThreadHandlerRestful;
 import game.model.Debug;
+import java.util.concurrent.TimeUnit;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -31,6 +32,12 @@ public class tokenClientTest {
     //Cant start this thread in beforeAll since beforeAll needs to be static
     ThreadHandlerRestful threadHandlerRestful = new ThreadHandlerRestful();
     threadHandlerRestful.start();
+
+    try {
+      TimeUnit.MILLISECONDS.sleep(1500);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
     DbServer dbServer = null;
     try {
