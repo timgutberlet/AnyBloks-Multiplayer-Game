@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.UpdateAccountRequestPacket;
-import net.server.DBServer;
+import net.server.DbServer;
 
 /**
  * Class that provides the option to change the password of an existing account.
@@ -49,7 +49,7 @@ public class UpdateAccountRessource {
         Debug.printMessage("newPW: " + updatedPasswordHash);
         Debug.printMessage("username : " + username);
 
-        DBServer dbServer = DBServer.getInstance();
+        DbServer dbServer = DbServer.getInstance();
         //Make sure the is a user with that username
         if (!dbServer.doesUsernameExist(username)) {
           throw new Exception("The provided credentials appear to be false.");

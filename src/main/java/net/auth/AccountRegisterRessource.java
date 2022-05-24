@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
-import net.server.DBServer;
+import net.server.DbServer;
 
 /**
  * Class to be used in REST Server to create Accounts.
@@ -46,7 +46,7 @@ public class AccountRegisterRessource {
       username = createAccountRequestPacket.getUsername();
       passwordHash = createAccountRequestPacket.getPasswordHash();
 
-      DBServer dbServer = DBServer.getInstance();
+      DbServer dbServer = DbServer.getInstance();
       //Make sure username is not used yet
       if (dbServer.doesUsernameExist(username)) {
         errorMessage = "The username already exists, please use another one!";

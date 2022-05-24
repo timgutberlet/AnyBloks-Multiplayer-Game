@@ -2,7 +2,7 @@ package game.scores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.server.DBServer;
+import net.server.DbServer;
 
 /**
  * This class provides the data shown while waiting.
@@ -18,10 +18,10 @@ public class ScoreProvider {
    */
   public static GameScoreBoard getLastGameScoreBoard() {
 
-    DBServer dbServer = null;
+    DbServer dbServer = null;
 
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
       if (dbServer == null) {
         throw new Exception("DB Connect failed!");
       }
@@ -118,9 +118,9 @@ public class ScoreProvider {
    * @return GameSessionScoreBoard
    */
   public static GameSessionScoreBoard getGameSessionScoreBoard(String gameSessionScoreId) {
-    DBServer dbServer = null;
+    DbServer dbServer = null;
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
       if (dbServer == null) {
         throw new Exception("Connection to DB failed");
       }
@@ -139,9 +139,9 @@ public class ScoreProvider {
    * @return GameSessionScoreBoard
    */
   public static GameSessionScoreBoard getGameSessionScoreBoard(String[] gameIds) {
-    DBServer dbServer = null;
+    DbServer dbServer = null;
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
       if (dbServer == null) {
         throw new Exception("Connection to DB failed");
       }
@@ -164,9 +164,9 @@ public class ScoreProvider {
    * @return LobbyScoreBoard
    */
   public static LobbyScoreBoard getLobbyScoreBoard() {
-    DBServer dbServer = null;
+    DbServer dbServer = null;
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -28,6 +28,7 @@ import net.packet.game.TurnPacket;
 
 /**
  * parent class for all packets.
+ *
  * @author tbuscher
  */
 @JsonIgnoreProperties(ignoreUnknown = true)

@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.RestfulLoginPacket;
-import net.server.DBServer;
+import net.server.DbServer;
 
 /**
  * Class to be used in REST Server to provide tokens.
@@ -78,7 +78,7 @@ public class TokenGenerationRessource {
    * @throws Exception expection
    */
   private void authenticate(String username, String password) throws Exception {
-    DBServer dbServer = DBServer.getInstance();
+    DbServer dbServer = DbServer.getInstance();
     if (!(dbServer.doesUsernameExist(username))) {
       throw new Exception("The username doesn't exist!");
     }
@@ -92,16 +92,16 @@ public class TokenGenerationRessource {
   /**
    * flag for token.
    *
-   * @param username
+   * @param username username
    * @return String
    */
   public String issueToken(String username) {
     boolean passed = true;
 
     //delete any old authTokens that might exist for the user
-    DBServer dbServer = null;
+    DbServer dbServer = null;
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -183,7 +183,7 @@ public class OutboundServerHandler {
     }
     String gameMode = gameState.getGameMode().getName();
     try {
-      DBServer dbServer = DBServer.getInstance();
+      DbServer dbServer = DbServer.getInstance();
       //Insert the game and save its gameId
       gameId = dbServer.insertGame(gameMode);
       Debug.printMessage("Inserting game: " + gameId + gameMode);
@@ -222,7 +222,7 @@ public class OutboundServerHandler {
 
       //Saving the scores of the gameSession
       try {
-        DBServer dbServer = DBServer.getInstance();
+        DbServer dbServer = DbServer.getInstance();
         //Creating a new gameSessionScore
         String gameSessionScoreId = dbServer.insertGameSessionScore();
 

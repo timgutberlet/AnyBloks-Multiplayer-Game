@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.RestfulLoginPacket;
-import net.server.DBServer;
+import net.server.DbServer;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.Test;
 
@@ -39,9 +39,9 @@ public class tokenClientTest {
       e.printStackTrace();
     }
 
-    DBServer dbServer = null;
+    DbServer dbServer = null;
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

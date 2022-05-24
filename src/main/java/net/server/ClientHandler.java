@@ -74,9 +74,9 @@ public class ClientHandler {
   public void initLocalGame(Player localPlayer) {
 
 
-    DBServer db = null;
+    DbServer db = null;
     try {
-      db = DBServer.getInstance();
+      db = DbServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

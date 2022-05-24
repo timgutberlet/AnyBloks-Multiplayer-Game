@@ -58,7 +58,7 @@ public class MonteCarloTreeSearch {
   private static Node selectPromisingNode(Node rootNode) {
     Node node = rootNode;
     while (node.getChildArray().size() != 0) {
-      node = UpperConfidenceTree.findBestNodeWithUCT(node);
+      node = UpperConfidenceTree.findBestNodeWithUct(node);
     }
     return node;
   }
@@ -66,7 +66,7 @@ public class MonteCarloTreeSearch {
   /**
    * expands the new node with the generation of all its possible child nodes.
    *
-   * @param node
+   * @param node node
    */
   private static void expandNode(Node node) {
     ArrayList<NodeState> possibleStates = node.getState().getAllPossibleStates();

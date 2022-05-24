@@ -3,7 +3,7 @@ package net.tests.game;
 import game.model.Debug;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import net.server.DBServer;
+import net.server.DbServer;
 
 /**
  * @author tgeilen
@@ -14,9 +14,9 @@ public class testInetAdress {
   public static void main(String[] args) throws UnknownHostException {
     Debug.printMessage(Inet4Address.getLocalHost().getHostAddress());
 
-    DBServer dbServer = null;
+    DbServer dbServer = null;
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

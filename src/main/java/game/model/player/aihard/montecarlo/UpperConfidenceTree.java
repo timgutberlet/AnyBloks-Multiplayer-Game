@@ -33,7 +33,7 @@ public class UpperConfidenceTree {
    * @param node parent node
    * @return best child node
    */
-  public static Node findBestNodeWithUCT(Node node) {
+  public static Node findBestNodeWithUct(Node node) {
     int parentVisit = node.getState().getVisitCount();
     return Collections.max(node.getChildArray(), Comparator.comparing(
         c -> uctValue(parentVisit, c.getState().getWinScore(), c.getState().getVisitCount())));

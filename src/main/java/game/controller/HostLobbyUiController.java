@@ -12,7 +12,6 @@ import game.model.gamemodes.GameModeClassic;
 import game.model.gamemodes.GameModeDuo;
 import game.model.gamemodes.GameModeJunior;
 import game.model.gamemodes.GameModeTrigon;
-import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import game.scores.LobbyScoreBoard;

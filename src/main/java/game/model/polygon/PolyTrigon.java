@@ -172,7 +172,7 @@ public class PolyTrigon extends Poly {
   public void rotateLeft() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
 
-    for (FieldTrigon ft : this.shape) { //toDo Idee: Sortierung der Zeilen aendern, um immer unten links als Referenzstein zu haben
+    for (FieldTrigon ft : this.shape) {
       if (ft.isPos(0, 0, 0)) {
         newShape.add(new FieldTrigon(3, 0, 1, this.color));
       } else if (ft.isPos(0, 0, 1)) {
@@ -300,6 +300,7 @@ public class PolyTrigon extends Poly {
             }
           }
         }
+        break;
         case 1: {
           switch (ft.getPos()[1]) {
             case 0 -> {
@@ -338,6 +339,7 @@ public class PolyTrigon extends Poly {
               break;
             }
           }
+          break;
         }
         case 2: {
           switch (ft.getPos()[1]) {
@@ -378,6 +380,7 @@ public class PolyTrigon extends Poly {
             }
           }
         }
+        break;
         case 3: {
           switch (ft.getPos()[1]) {
             case 0 -> {
@@ -417,6 +420,7 @@ public class PolyTrigon extends Poly {
             }
           }
         }
+        break;
         default: break;
       }
     }

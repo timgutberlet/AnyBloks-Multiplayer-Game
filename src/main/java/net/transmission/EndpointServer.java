@@ -24,7 +24,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.server.DBServer;
+import net.server.DbServer;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
 import org.slf4j.Logger;
@@ -48,7 +48,7 @@ public class EndpointServer {
   private static GameSession gameSession;
   private InboundServerHandler inboundServerHandler;
   private OutboundServerHandler outboundServerHandler;
-  private DBServer dbServer = null;
+  private DbServer dbServer = null;
 
   public static GameSession getGameSession() {
     return gameSession;
@@ -102,7 +102,7 @@ public class EndpointServer {
     this.inboundServerHandler = new InboundServerHandler(this, gameSession);
     this.outboundServerHandler = new OutboundServerHandler(this, gameSession);
     try {
-      this.dbServer = DBServer.getInstance();
+      this.dbServer = DbServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

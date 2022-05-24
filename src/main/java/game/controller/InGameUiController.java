@@ -189,6 +189,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
   /**
    * Method that is called when chatInput Enter was done. Sends Chatmessage to Server.
+   *
    * @author tgutberl
    */
   public void registerChatMessage() {

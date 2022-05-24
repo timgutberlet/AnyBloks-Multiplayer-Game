@@ -52,10 +52,10 @@ public class RequestTurnPacket extends Packet {
   }
 
   /**
-   * contructor for packet
+   * contructor for packet.
    *
-   * @param username
-   * @param gameState
+   * @param username username
+   * @param gameState gamestate
    * @author tgeilen
    */
   public RequestTurnPacket(String username, GameState gameState) {

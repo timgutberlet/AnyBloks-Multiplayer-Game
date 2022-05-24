@@ -77,7 +77,7 @@ public class InboundServerHandler {
     if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
       Debug.printMessage(username + "Delete me in verify Login");
       try {
-        DBServer dbServer = DBServer.getInstance();
+        DbServer dbServer = DbServer.getInstance();
         if (!dbServer.doesUserHaveAuthToken(username)) {
           loginSuccess = false;
         } else {
@@ -203,10 +203,10 @@ public class InboundServerHandler {
     String username = carp.getUsername();
     String passwordHash = carp.getPasswordHash();
     String errorMessage = "";
-    DBServer dbServer = null;
+    DbServer dbServer = null;
     boolean success = false;
     try {
-      dbServer = DBServer.getInstance();
+      dbServer = DbServer.getInstance();
       //Check if the username is already in DB, return with errorMessage
       if (dbServer.doesUsernameExist(username)) {
         return "The requested username already exists. Please choose another one!";
