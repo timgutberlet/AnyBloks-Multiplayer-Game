@@ -2,6 +2,7 @@ package engine.handler;
 
 import game.model.Debug;
 import net.server.HostServer;
+import net.tests.NoLogging;
 
 /**
  * @author tgutberl The Basic Thread can look like this
@@ -26,7 +27,7 @@ public class ThreadHandlerRestful extends Thread {
   @Override
   public void run() {
     try {
-      //org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
+      org.eclipse.jetty.util.log.Log.setLog(new NoLogging());
       this.hostServer = new HostServer();
       hostServer.startRestfulServer(8082);
     } catch (Exception e) {

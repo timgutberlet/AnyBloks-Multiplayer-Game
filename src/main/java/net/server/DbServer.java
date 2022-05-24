@@ -586,16 +586,20 @@ public class DbServer extends AbstractDB {
     try {
       while (resultSet.next()) {
         String gameId = String.valueOf(resultSet.getRow());
+        System.out.println(gameId);
         gameScoreBoard = getGameScores(gameId);
         String winnerUsername = ScoreProvider.getWinner(gameScoreBoard);
+        System.out.println(winnerUsername);
+        System.out.println(gameScoreBoard.getPlayerScores().toString());
         int wins =
-            topThreePlayers.get(winnerUsername) == null ? 0
-                : topThreePlayers.get(winnerUsername) + 1;
+            topThreePlayers.get(winnerUsername) == null ? 1
+                : (topThreePlayers.get(winnerUsername) + 1);
         topThreePlayers.put(ScoreProvider.getWinner(gameScoreBoard), wins);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
+    System.out.println(topThreePlayers);
     return topThreePlayers;
 
 

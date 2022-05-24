@@ -33,6 +33,7 @@ public class MusicThread extends Thread {
    */
   public MusicThread() {
     try {
+      //The Tetris file was copyright approved by the Tetris cooperation. Ask us for more Infos if needed.
       media = new Media(getClass().getResource("/music/Tetris.mp3").toExternalForm());
       mediaPlayer = new MediaPlayer(media);
       mediaPlayer.setCycleCount(10000);

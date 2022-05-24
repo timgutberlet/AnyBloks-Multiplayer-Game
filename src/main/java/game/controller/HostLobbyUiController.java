@@ -14,6 +14,7 @@ import game.model.gamemodes.GMTrigon;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
+import game.scores.LobbyScoreBoard;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -189,6 +191,45 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @FXML
   private Label informationIp;
+  /**
+   * Trashbin Button that is used to kick a player
+   */
+  @FXML
+  private Button trashBin1;
+  /**
+   * Trashbin Button that is used to kick a player (No. 2)
+   */
+  @FXML
+  private Button trashBin2;
+  /**
+   * Trashbin Button that is used to kick a player (No. 3)
+   */
+  @FXML
+  private Button trashBin3;
+  /**
+   * Game number Label, that shows the number of games, that have been Played on the server.
+   */
+  @FXML
+  private Label gameNumber;
+  /**
+   * Game number Label, that shows the number of games, that have been Played on the server.
+   */
+  @FXML
+  private Label bestPlayer;
+  /**
+   * Game number Label, that shows the number of games, that have been Played on the server.
+   */
+  @FXML
+  private Label secondBestPlayer;
+  /**
+   * Game number Label, that shows the number of games, that have been Played on the server.
+   */
+  @FXML
+  private Label thirdBestPlayer;
+  /**
+   * Lobbyscoreboard element, to get Data out of the Database.
+   */
+  private LobbyScoreBoard lobbyScoreBoard;
 
   /**
    * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.
@@ -218,6 +259,7 @@ public class HostLobbyUiController extends AbstractUiController {
     this.clientHandler = client.getClientHandler();
     gameSession.setHostServer(hostServer);
     gameSession.setClientHandler(this.clientHandler);
+
   }
 
   /**
@@ -269,6 +311,12 @@ public class HostLobbyUiController extends AbstractUiController {
           break;
         case "THINC!":
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
+          trashBin1.setStyle(
+              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; -fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-background-insets: 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
+          trashBin2.setStyle(
+              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; -fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-background-insets: 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
+          trashBin3.setStyle(
+              "-fx-alignment: BASELINE_CENTER; -fx-text-fill: #F9FAFE; -fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-background-insets: 0; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
@@ -593,6 +641,51 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+
+    lobbyScoreBoard = this.gameSession.getLobbyScoreBoard();
+    int gamesPlayed = 0;
+    String bestPlayer1String = "";
+    int bestPlayerScore = 0;
+    String bestPlayer2String = "";
+    int bestPlayer2Score = 0;
+    String bestPlayer3String = "";
+    int bestPlayer3Score = 0;
+    HashMap<String, Integer> scoreMap = null;
+    if (lobbyScoreBoard != null) {
+      gamesPlayed = lobbyScoreBoard.gamesPlayedOnServer;
+      scoreMap = lobbyScoreBoard.playerScores;
+      if (scoreMap.size() > 0) {
+        for (String playerKey : scoreMap.keySet()) {
+          if (scoreMap.get(playerKey) > bestPlayerScore) {
+            bestPlayer1String = playerKey;
+            bestPlayerScore = scoreMap.get(playerKey);
+          }
+        }
+        scoreMap.remove(bestPlayer1String);
+      }
+      if (scoreMap.size() > 0) {
+        for (String playerKey : scoreMap.keySet()) {
+          if (scoreMap.get(playerKey) > bestPlayerScore) {
+            bestPlayer2String = playerKey;
+            bestPlayer2Score = scoreMap.get(playerKey);
+          }
+        }
+        scoreMap.remove(bestPlayer2String);
+      }
+      if (scoreMap.size() > 0) {
+        for (String playerKey : scoreMap.keySet()) {
+          if (scoreMap.get(playerKey) > bestPlayerScore) {
+            bestPlayer3String = playerKey;
+            bestPlayer3Score = scoreMap.get(playerKey);
+          }
+        }
+        scoreMap.remove(bestPlayer3String);
+      }
+    }
+    this.gameNumber.setText(gamesPlayed + "");
+    bestPlayer.setText(bestPlayer1String);
+    secondBestPlayer.setText(bestPlayer2String);
+    thirdBestPlayer.setText(bestPlayer3String);
 
     if (this.gameSession.getPlayerList().size() == 1) {
       hostPlayerName.setText(this.gameSession.getPlayerList().get(0).getUsername() + " (HOST)");

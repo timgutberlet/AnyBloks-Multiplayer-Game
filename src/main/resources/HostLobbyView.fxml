@@ -65,10 +65,10 @@
                     <GridPane GridPane.columnIndex="1">
                       <children>
                         <Button GridPane.columnIndex="1" GridPane.rowIndex="2"
-                          mnemonicParsing="false" onAction="#kickPlayer1">
+                          mnemonicParsing="false" onAction="#kickPlayer1" fx:id="trashBin1">
                           <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true"
-                              preserveRatio="true" fx:id="trashBin1">
+                              preserveRatio="true">
                               <image>
                                 <Image url="@images/trash-can.png"/>
                               </image>
@@ -76,10 +76,10 @@
                           </graphic>
                         </Button>
                         <Button GridPane.columnIndex="1" GridPane.rowIndex="3"
-                          mnemonicParsing="false" onAction="#kickPlayer2">
+                          mnemonicParsing="false" onAction="#kickPlayer2" fx:id="trashBin2">
                           <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true"
-                              preserveRatio="true" fx:id="trashBin2">
+                              preserveRatio="true">
                               <image>
                                 <Image url="@images/trash-can.png"/>
                               </image>
@@ -100,7 +100,7 @@
                         <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0"
                           spacing="50.0">
                           <children>
-                            <Label text="Human Players:" fx:id="nameHostPlayer">
+                            <Label text="Human Players:">
                               <HBox.margin>
                                 <Insets top="20.0"/>
                               </HBox.margin>

@@ -544,7 +544,7 @@ public abstract class InGameUiController extends AbstractUiController {
         topPane.setStyle("-fx-background-color:#0A123D;");
         chatPane.setStyle("-fx-background-color:#D8EFFF;");
         errorLabel.setStyle((
-            "-fx-background-color: #0A123D; -fx-background-radius: 5; -fx-text-fill: #000000;"));
+            "-fx-background-color: #0A123D; -fx-background-radius: 5; -fx-text-fill: #FFFFFF;"));
         dragLabel.setStyle(
             "-fx-background-color:#0A123D; -fx-text-fill: #FFFFFF; -fx-background-radius: 10;");
         buttonBox.setStyle("-fx-background-color:#D8EFFF;");
