@@ -3,6 +3,8 @@ package net.packet.account;
 import net.packet.abstr.Packet;
 
 /**
+ * Packet send by client to delete Account from Hosts DB.
+ *
  * @author tbuscher
  */
 public class DeleteAccountRequestPacket extends Packet {

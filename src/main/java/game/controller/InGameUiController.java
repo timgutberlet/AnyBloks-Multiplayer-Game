@@ -738,7 +738,7 @@ public abstract class InGameUiController extends AbstractUiController {
       }
       skipTurnButton.setVisible(false);
       if (!game.getGameState().playsTurn()) {
-        Debug.printMessage(this, "" + game.getGameState().playsTurn());
+        //Debug.printMessage(this, "" + game.getGameState().playsTurn());
         refreshUi();
       }
     } else {
@@ -1006,7 +1006,6 @@ public abstract class InGameUiController extends AbstractUiController {
       ScoreBoardUiController.sortScoreBoard(gameSession);
       gameController.setActiveUiController(
           new ScoreBoardUiController(gameController, gameSession));
-      this.gameSession.setGameOver(false);
     }
     //check if user got kicked
     if (gameSession.getGotKicked()) {

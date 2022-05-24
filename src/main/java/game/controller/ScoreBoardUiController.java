@@ -180,6 +180,24 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @FXML
   public void backMainMenu() {
+    if(gameSession.getLocalPlayer().getType() != PlayerType.HOST_PLAYER){
+      gameSession.getHostServer().stopWebsocket();
+      try {
+        TimeUnit.MILLISECONDS.sleep(2000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      try {
+        gameSession.getClientHandler().getClient().getSession().close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+
+    }
+
+    this.gameSession.setGameOver(false);
+    gameSession.getClientHandler().stopClient();
+
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
