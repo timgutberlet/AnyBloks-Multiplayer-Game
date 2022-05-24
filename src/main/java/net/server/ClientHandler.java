@@ -228,7 +228,9 @@ public class ClientHandler {
     GameState gameState = gameStartPacket.getGameState();
     this.client.getGameSession().startGame(gamemode);
     this.client.getGameSession().updateGame(gameState);
+    this.client.getGameSession().setGameOver(false);
     this.client.getGameSession().setGameStarted(true);
+
   }
 
   /**
