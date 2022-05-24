@@ -205,7 +205,6 @@ public class OutboundServerHandler {
     GameWinPacket gameWinPacket = new GameWinPacket(new GameScoreBoard(gameMode, scoreboard),
         gameSessionScoreBoard, this.gameSession.getGameList());
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.GAME_WIN_PACKET, gameWinPacket);
-    GameSession.currentGameIds.add(gameId);
 
     this.server.broadcastMessage(wrappedPacket);
 
