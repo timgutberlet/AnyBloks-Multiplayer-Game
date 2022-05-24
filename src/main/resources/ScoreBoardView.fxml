@@ -57,7 +57,7 @@
                                 stroke="WHITE"/>
                               <VBox alignment="CENTER">
                                  <children>
-                                    <Label text="Scoreboard">
+                                    <Label text="Last Round">
                                        <font>
                                           <Font size="40.0"/>
                                        </font>
@@ -153,7 +153,7 @@
                           prefWidth="200.0" spacing="100.0">
                            <children>
                               <Button fx:id="backMainMenu" mnemonicParsing="false"
-                                onAction="#backMainMenu" text="BACK TO MAIN MENU">
+                                onAction="#backMainMenu" text="Main Menu">
                                  <font>
                                     <Font size="20.0"/>
                                  </font>

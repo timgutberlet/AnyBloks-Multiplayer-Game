@@ -255,7 +255,7 @@ public class ScoreBoardUiController extends AbstractUiController {
       vbox.setAlignment(Pos.CENTER);
       vbox.setFillWidth(true);
       Label label0 = new Label();
-      label0.setText("Leaderboard");
+      label0.setText("Game Session");
       label0.setFont(Font.font("System", 40));
       Label label1 = new Label();
       label1.setText("Games played: " + gameSession.getGameSessionScoreBoard().gamesPlayed);
@@ -263,7 +263,7 @@ public class ScoreBoardUiController extends AbstractUiController {
       vbox.getChildren().add(label0);
       vbox.getChildren().add(label1);
 
-      for (int i = 0; i < 4; i++) {
+      for (int i = 0; i < 3; i++) {
 
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
@@ -301,13 +301,6 @@ public class ScoreBoardUiController extends AbstractUiController {
             score.setFill(Color.color(0.66, 0.4375, 0));
             score.setFont(Font.font("System", 30));
             break;
-          case 3:
-            hbox.setPrefHeight(70);
-            name.setFill(Color.WHITE);
-            name.setFont(Font.font("System", 30));
-            score.setFill(Color.WHITE);
-            score.setFont(Font.font("System", 30));
-            break;
           default:
             break;
         }
@@ -316,6 +309,28 @@ public class ScoreBoardUiController extends AbstractUiController {
         hbox.getChildren().add(score);
         vbox.getChildren().add(hbox);
       }
+
+      HBox hbox = new HBox();
+      hbox.setPrefHeight(70);
+      hbox.setAlignment(Pos.CENTER);
+      hbox.setSpacing(20);
+      Label name = new Label();
+      Label score = new Label();
+      hbox.getChildren().add(name);
+      hbox.getChildren().add(score);
+      if (gameSession.getPlayerList().size() == 4) {
+        name.setText((sessionPlayers.get(3)));
+        score.setText(" " + sessionScores.get(3));
+      } else {
+        name.setText("");
+        score.setText("");
+      }
+
+      name.setFont(Font.font("System", 30));
+      score.setFont(Font.font("System", 30));
+
+      vbox.getChildren().add(hbox);
+
       board.getChildren().remove(line);
       board.getChildren().add(vbox);
 
