@@ -60,18 +60,18 @@ public class MainT {
     Debug.printMessage(game.getGameState().getRound());
     gameSession.stopSession();*/
 
-    Ai.setRoundSections(0, new int[]{0, 24});
+
     int[] result = playClassicGame(true);
-    Debug.printMessage("" + result);
-    Ai.setRoundSections(1, new int[]{0, 24});
+    Debug.printMessage(""+result);
+
     result = playDuoGame(true);
-    Debug.printMessage("" + result);
-    Ai.setRoundSections(2, new int[]{0, 24});
+    Debug.printMessage(""+result);
+
     result = playJuniorGame(true);
-    Debug.printMessage("" + result);
-    Ai.setRoundSections(3, new int[]{0, 24});
+    Debug.printMessage(""+result);
+
     result = playTrigonGame(true);
-    Debug.printMessage("" + result);
+    Debug.printMessage(""+result);
 
     Debug.printMessage("Everything works");
 
@@ -171,7 +171,7 @@ public class MainT {
     GameSession gameSession = new GameSession();
 
     gameSession.addPlayer(new Player("BOT1", PlayerType.AI_HARD));
-    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_MIDDLE));
+    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_GODLIKE));
 
     Game game = gameSession.startGame(new GMDuo());
 
@@ -180,15 +180,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        Debug.printMessage("" + t1);
-        Debug.printMessage("" + game.getGameState().getBoard());
-      }
-
-      Turn t2 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      game.getGameState().playTurn(t2);
-      if (print) {
-        Debug.printMessage("" + t2);
-        Debug.printMessage("" + game.getGameState().getBoard());
+        System.out.println(""+t1);
+        System.out.println(""+game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -229,9 +222,9 @@ public class MainT {
     GameSession gameSession = new GameSession();
 
     gameSession.addPlayer(new Player("BOT1", PlayerType.AI_HARD));
-    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_MIDDLE));
+    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_GODLIKE));
     gameSession.addPlayer(new Player("BOT3", PlayerType.AI_HARD));
-    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_MIDDLE));
+    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_GODLIKE));
 
     Game game = gameSession.startGame(new GMTrigon());
 
@@ -240,29 +233,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        Debug.printMessage("" + t1);
-        Debug.printMessage("" + game.getGameState().getBoard());
-      }
-
-      Turn t2 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      game.getGameState().playTurn(t2);
-      if (print) {
-        Debug.printMessage("" + t2);
-        Debug.printMessage("" + game.getGameState().getBoard());
-      }
-
-      Turn t3 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      game.getGameState().playTurn(t3);
-      if (print) {
-        Debug.printMessage("" + t3);
-        Debug.printMessage("" + game.getGameState().getBoard());
-      }
-
-      Turn t4 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      game.getGameState().playTurn(t4);
-      if (print) {
-        Debug.printMessage("" + t4);
-        Debug.printMessage("" + game.getGameState().getBoard());
+        System.out.println(""+t1);
+        System.out.println(""+game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -275,9 +247,9 @@ public class MainT {
     GameSession gameSession = new GameSession();
 
     gameSession.addPlayer(new Player("BOT1", PlayerType.AI_HARD));
-    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_MIDDLE));
+    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_GODLIKE));
     gameSession.addPlayer(new Player("BOT3", PlayerType.AI_HARD));
-    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_MIDDLE));
+    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_GODLIKE));
 
     Game game = gameSession.startGame(new GMClassic());
 
@@ -286,29 +258,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        Debug.printMessage("" + t1);
-        Debug.printMessage("" + game.getGameState().getBoard());
-      }
-
-      Turn t2 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      game.getGameState().playTurn(t2);
-      if (print) {
-        Debug.printMessage("" + t2);
-        Debug.printMessage("" + game.getGameState().getBoard());
-      }
-
-      Turn t3 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      game.getGameState().playTurn(t3);
-      if (print) {
-        Debug.printMessage("" + t3);
-        Debug.printMessage("" + game.getGameState().getBoard());
-      }
-
-      Turn t4 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      game.getGameState().playTurn(t4);
-      if (print) {
-        Debug.printMessage("" + t4);
-        Debug.printMessage("" + game.getGameState().getBoard());
+        System.out.println(""+t1);
+        System.out.println(""+game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();

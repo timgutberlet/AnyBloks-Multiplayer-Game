@@ -84,7 +84,7 @@ public class Player implements Serializable {
     this.type = type;
     this.score = 0;
     this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
-        type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM));
+        type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM) || type.equals(PlayerType.AI_GODLIKE));
     this.isHost = false;
     this.selectedTurn = null;
     if (!this.isAI) {
@@ -184,6 +184,7 @@ public class Player implements Serializable {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
+      System.out.println("Spielertyp: " + this.getType().toString());
 
       return Ai.calculateNextMove(gameState, this);
     } else {
