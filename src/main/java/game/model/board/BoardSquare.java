@@ -9,7 +9,6 @@ import game.model.field.FieldSquare;
 import game.model.gamemodes.GameMode;
 import game.model.polygon.Poly;
 import game.model.polygon.PolySquare;
-import game.view.InGameView;
 import game.view.board.SquareBoardPane;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -548,19 +547,6 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
       return true;
     }
     return false;
-  }
-
-  /**
-   * Method updates the IngameView with the current colored Squares
-   *
-   * @param view current InGameView that is shown to the user
-   * @author tgutberl
-   */
-  public void updateBoard(InGameView view) {
-    for (FieldSquare fs : board) {
-      SquareBoardPane help = (SquareBoardPane) view.getBoardPane();
-      help.setSquare(fs.getPos()[0], fs.getPos()[1], ColorHandler.getJavaColor(fs.getColor()));
-    }
   }
 
   // ======================================================================

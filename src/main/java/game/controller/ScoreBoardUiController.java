@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -258,7 +259,7 @@ public class ScoreBoardUiController extends AbstractUiController {
       label0.setFont(Font.font("System", 40));
       Label label1 = new Label();
       label1.setText("Games played: " + gameSession.getGameSessionScoreBoard().gamesPlayed);
-      label1.setFont(Font.font("System", 24));
+      label1.setFont(Font.font("System", 25));
       vbox.getChildren().add(label0);
       vbox.getChildren().add(label1);
 
@@ -267,7 +268,6 @@ public class ScoreBoardUiController extends AbstractUiController {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER);
         hbox.setSpacing(20);
-        hbox.setPrefHeight(80);
         Text name = new Text();
         Text score = new Text();
 
@@ -281,24 +281,28 @@ public class ScoreBoardUiController extends AbstractUiController {
 
         switch (i) {
           case 0:
+            hbox.setPrefHeight(80);
             name.setFill(Color.GOLD);
             name.setFont(Font.font("System", 40));
             score.setFill(Color.GOLD);
             score.setFont(Font.font("System", 40));
             break;
           case 1:
+            hbox.setPrefHeight(70);
             name.setFill(Color.SILVER);
             name.setFont(Font.font("System", 30));
             score.setFill(Color.SILVER);
             score.setFont(Font.font("System", 30));
             break;
           case 2:
+            hbox.setPrefHeight(70);
             name.setFill(Color.color(0.66, 0.4375, 0));
             name.setFont(Font.font("System", 30));
             score.setFill(Color.color(0.66, 0.4375, 0));
             score.setFont(Font.font("System", 30));
             break;
           case 3:
+            hbox.setPrefHeight(70);
             name.setFill(Color.WHITE);
             name.setFont(Font.font("System", 30));
             score.setFill(Color.WHITE);

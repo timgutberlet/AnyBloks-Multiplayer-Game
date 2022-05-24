@@ -16,14 +16,14 @@ import javafx.scene.paint.Color;
 public class SquareBoardPane extends BoardPane {
 
   /**
-   * Constructor of the Squareboardpane intializing the variables of the super
+   * Constructor of the Squareboardpane intializing the variables of the super.
    *
    * @param board        Board of the gamelogic
    * @param inputHandler inputhandler used for collision detection
    * @param width        width of frame
    */
   public SquareBoardPane(Board board, InputHandler inputHandler, double width) {
-    super(board, inputHandler, width);
+    super(board, inputHandler);
     super.size = (0.4 * width) / board.getSize();
     setBoard();
   }
@@ -67,7 +67,7 @@ public class SquareBoardPane extends BoardPane {
   }
 
   /**
-   * Sets the Board of the game
+   * Sets the Board of the game.
    */
   @Override
   public void setBoard() {
@@ -80,9 +80,9 @@ public class SquareBoardPane extends BoardPane {
   }
 
   /**
-   * Resizes the baord
+   * Resizes the Board.
    *
-   * @param width width of the board
+   * @param width Width of the current Stage.
    */
   public void resize(double width) {
     this.size = (0.4 * width) / board.getSize();

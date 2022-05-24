@@ -49,10 +49,9 @@ public class BoardPane extends Pane {
    *
    * @param board        Board of the game logic
    * @param inputHandler Handler used to control inputs for collision
-   * @param width        width of frame
    * @author lbaudenb
    */
-  public BoardPane(Board board, InputHandler inputHandler, double width) {
+  public BoardPane(Board board, InputHandler inputHandler) {
     this.board = board;
     fields = new ArrayList<>();
     checkFields = new ArrayList<>();
@@ -79,6 +78,7 @@ public class BoardPane extends Pane {
    * @param x       coord x
    * @param y       coord y
    * @param isRight marks if right or left triangle is to be painted
+   *
    * @author tgutberl
    */
   public void setCheckFieldColor(Paint color, int x, int y, int isRight) {
@@ -146,7 +146,7 @@ public class BoardPane extends Pane {
   /**
    * Method that updates the BoardPane.
    *
-   * @param board
+   * @param board board from the current GameState
    */
   public void repaint(Board board) {
     this.board = board;
@@ -167,9 +167,9 @@ public class BoardPane extends Pane {
   }
 
   /**
-   * Resizes the Boardpane.
+   * Method that resizes BoardPane.
    *
-   * @param width
+   * @param width Width of the Stage.
    */
   public void resize(double width) {
   }

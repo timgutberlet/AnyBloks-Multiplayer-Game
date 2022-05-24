@@ -8,6 +8,8 @@ import game.view.poly.SquarePolyPane;
 import java.util.List;
 
 /**
+ * GridPane to display remaining SquarePolys from Player.
+ *
  * @author lbaudenb
  */
 public class StackSquarePane extends StackPane {
@@ -18,9 +20,9 @@ public class StackSquarePane extends StackPane {
 
   /**
    * Method that creates SquarePolyPane objects, from a list of SquarePoly objects, and stores them
-   * in a list
+   * in a list.
    *
-   * @param polys
+   * @param polys Remaining Polys from Player.
    */
   @Override
   public void setUpStack(List<Poly> polys) {

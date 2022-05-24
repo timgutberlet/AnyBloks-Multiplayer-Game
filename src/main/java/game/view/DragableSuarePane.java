@@ -8,6 +8,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 /**
+ * DragableSquarePane to make SquarePolyPane dragable.
+ *
  * @author lbaudenb
  */
 public class DragableSuarePane extends DragablePolyPane {
@@ -17,7 +19,9 @@ public class DragableSuarePane extends DragablePolyPane {
     super(polyPane, size, inputHandler, inGameUiController);
   }
 
-
+  /**
+   * Method to build DragableSquarePane.
+   */
   public void build() {
 
     circleX = 2.5 * size + size;
@@ -39,24 +43,14 @@ public class DragableSuarePane extends DragablePolyPane {
     donut.setFill(Color.GRAY);
 
     polyPane.setSize(size);
-    /*double polyX = 0;
-    double polyY = 0;
-    for(Field field : polyPane.getFields()){
-      polyX += field.getX();
-      polyY += field.getY();
-    }
-    polyX /= polyPane.getFields().size();
-    polyY /= polyPane.getFields().size();
 
-    polyX *= polyPane.getSize();
-    polyY *= polyPane.getSize();*/
     double polyX = polyPane.getSize() * (polyPane.getPoly().getHeight() / 2.0);
     double polyY = polyPane.getSize() * (polyPane.getPoly().getWidth() / 2.0);
 
-    double xOfSet = circleX - polyX;
-    double yOfSet = circleY - polyY;
+    double ofSetX = circleX - polyX;
+    double ofSetY = circleY - polyY;
 
-    polyPane.relocate(xOfSet, yOfSet);
+    polyPane.relocate(ofSetX, ofSetY);
 
     this.getChildren().add(donut);
     this.getChildren().add(innerCircle);

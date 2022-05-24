@@ -9,7 +9,7 @@ import game.model.board.Board;
 import javafx.scene.paint.Color;
 
 /**
- * Trigon Board Class representing the Board for the trigon game
+ * Trigon Board Class representing the Board for the trigon game.
  *
  * @author lbaudenb
  * @author tgutberl
@@ -17,30 +17,31 @@ import javafx.scene.paint.Color;
 public class TrigonBoardPane extends BoardPane {
 
   /**
-   * Shift variable used for triangle painting
+   * Shift variable used for triangle painting.
    */
   private final double shift;
   /**
-   * Offset Variable used for triangle painting in the parallelogram
+   * Offset Variable used for triangle painting in the parallelogram.
    */
-  private double xOfSet;
+  private double ofSetX;
   /**
-   * Offset Variable used for triangle painting in the parallelogram
+   * Offset Variable used for triangle painting in the parallelogram.
    */
-  private double yOfSet;
+  private double ofSetY;
 
   /**
-   * Constrcutor used for intializing
+   * Constructor for TrigonBoardPane.
    *
    * @param board        Board of the game logic
    * @param inputHandler Inputhandler used for collision detection
    * @param width        width used for board
    */
+
   public TrigonBoardPane(Board board, InputHandler inputHandler, double width) {
-    super(board, inputHandler, width);
+    super(board, inputHandler);
     size = 0.4 * width / 18;
-    xOfSet = Math.sin(Math.toRadians(30)) * size;
-    yOfSet = Math.sin(Math.toRadians(60)) * size;
+    ofSetX = Math.sin(Math.toRadians(30)) * size;
+    ofSetY = Math.sin(Math.toRadians(60)) * size;
     shift = 9 * size * 0.5;
     setBoard();
   }
@@ -57,14 +58,14 @@ public class TrigonBoardPane extends BoardPane {
     double sizeHelp = size * 0.4;
     double move = size / 2 - sizeHelp / 2;
 
-    double yOfSetHelp = yOfSet * 0.4;
-    double moveYOfSet = yOfSet / 2 - yOfSetHelp / 2;
+    double ofSetHelpY = ofSetY * 0.4;
+    double moveOfSetY = ofSetY / 2 - ofSetHelpY / 2;
 
     checkTrigonField.getPoints()
-        .addAll(xOfSet + size + j * size + i * xOfSet - move - shift,
-            yOfSet + i * yOfSet - moveYOfSet, //right vertex
-            size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet + moveYOfSet, // top vertex
-            xOfSet + j * size + i * xOfSet + move - shift, yOfSet + i * yOfSet - moveYOfSet);
+        .addAll(ofSetX + size + j * size + i * ofSetX - move - shift,
+            ofSetY + i * ofSetY - moveOfSetY, //right vertex
+            size + j * size + i * ofSetX - shift, 0.0 + i * ofSetY + moveOfSetY, // top vertex
+            ofSetX + j * size + i * ofSetX + move - shift, ofSetY + i * ofSetY - moveOfSetY);
     if (checkFieldColor.containsKey("" + (i * 1000) + j + 1)) {
       checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 1));
     } else {
@@ -74,9 +75,9 @@ public class TrigonBoardPane extends BoardPane {
     this.getChildren().add(checkTrigonField);
     Field triangleRight = new TrigonField(i, j, 1);
     triangleRight.getPoints().addAll(
-        xOfSet + size + j * size + i * xOfSet - shift, yOfSet + i * yOfSet, //right vertex
-        size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet, // top vertex
-        xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet); // left vertex
+        ofSetX + size + j * size + i * ofSetX - shift, ofSetY + i * ofSetY, //right vertex
+        size + j * size + i * ofSetX - shift, 0.0 + i * ofSetY, // top vertex
+        ofSetX + j * size + i * ofSetX - shift, ofSetY + i * ofSetY); // left vertex
     triangleRight.setFill(color);
     triangleRight.setStroke(ColorHandler.getBoardStrokeColor());
     this.getChildren().add(triangleRight);
@@ -96,15 +97,15 @@ public class TrigonBoardPane extends BoardPane {
     double sizeHelp = size * 0.4;
     double move = size / 2 - sizeHelp / 2;
 
-    double yOfSetHelp = yOfSet * 0.4;
-    double moveYOfSet = yOfSet / 2 - yOfSetHelp / 2;
+    double ofSetHelpY = ofSetY * 0.4;
+    double moveOfSetY = ofSetY / 2 - ofSetHelpY / 2;
 
     checkTrigonField.getPoints()
-        .addAll(xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet - moveYOfSet,
+        .addAll(ofSetX + j * size + i * ofSetX - shift, ofSetY + i * ofSetY - moveOfSetY,
             // top vertex
-            size + j * size + i * xOfSet - move - shift, 0.0 + i * yOfSet + moveYOfSet,
+            size + j * size + i * ofSetX - move - shift, 0.0 + i * ofSetY + moveOfSetY,
             // right vertex
-            0.0 + j * size + i * xOfSet + move - shift, 0.0 + i * yOfSet + moveYOfSet);
+            0.0 + j * size + i * ofSetX + move - shift, 0.0 + i * ofSetY + moveOfSetY);
     if (checkFieldColor.containsKey("" + (i * 1000) + j + 0)) {
       checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
     } else {
@@ -115,9 +116,9 @@ public class TrigonBoardPane extends BoardPane {
 
     Field triangleLeft = new TrigonField(i, j, 0);
     triangleLeft.getPoints().addAll(
-        xOfSet + j * size + i * xOfSet - shift, yOfSet + i * yOfSet, // top vertex
-        size + j * size + i * xOfSet - shift, 0.0 + i * yOfSet, // right vertex
-        0.0 + j * size + i * xOfSet - shift, 0.0 + i * yOfSet);  // left vertex
+        ofSetX + j * size + i * ofSetX - shift, ofSetY + i * ofSetY, // top vertex
+        size + j * size + i * ofSetX - shift, 0.0 + i * ofSetY, // right vertex
+        0.0 + j * size + i * ofSetX - shift, 0.0 + i * ofSetY);  // left vertex
     triangleLeft.setFill(color);
     triangleLeft.setStroke(ColorHandler.getBoardStrokeColor());
     this.getChildren().add(triangleLeft);
@@ -154,7 +155,7 @@ public class TrigonBoardPane extends BoardPane {
   }
 
   /**
-   * Sets board of game
+   * Sets Board.
    */
   @Override
   public void setBoard() {
@@ -166,14 +167,14 @@ public class TrigonBoardPane extends BoardPane {
   }
 
   /**
-   * Resizes board
+   * Resizes Board.
    *
    * @param width width of board
    */
   public void resize(double width) {
     size = 0.4 * width / 18;
-    xOfSet = Math.sin(Math.toRadians(30)) * size;
-    yOfSet = Math.sin(Math.toRadians(60)) * size;
+    ofSetX = Math.sin(Math.toRadians(30)) * size;
+    ofSetY = Math.sin(Math.toRadians(60)) * size;
     this.fields.clear();
     this.getChildren().clear();
     setBoard();

@@ -8,6 +8,8 @@ import game.view.poly.TrigonPolyPane;
 import java.util.List;
 
 /**
+ * GridPane to display TrigonPolys from Player.
+ *
  * @author lbaudenb
  */
 public class StackTrigonPane extends StackPane {
@@ -19,9 +21,9 @@ public class StackTrigonPane extends StackPane {
 
   /**
    * Method that creates TrigonPolyPane objects, from a list of TrigonPoly objects, and stores them
-   * in a list
+   * in a list.
    *
-   * @param polys
+   * @param polys Remaining Polys from Player.
    */
   @Override
   public void setUpStack(List<Poly> polys) {

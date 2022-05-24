@@ -8,27 +8,36 @@ import game.model.polygon.Poly;
 import javafx.scene.paint.Color;
 
 /**
+ * SquarePolyPane to display SquarePoly in Game.
+ *
  * @author lbaudenb
  */
 
 public class SquarePolyPane extends PolyPane {
 
+  /**
+   * Object to display SquarePoly in Game.
+   *
+   * @param poly         Poly from GameState.
+   * @param inputHandler InputHandler from GameSate.
+   * @param width        Width from Stage.
+   */
   public SquarePolyPane(Poly poly, InputHandler inputHandler, double width) {
-    super(poly, inputHandler, width);
+    super(poly, inputHandler);
     this.size = width / 120;
     this.setPrefWidth(5 * size + 10);
     setPoly();
   }
 
   /**
-   * Method that draws a square with a specific color at the coordinates i,j
+   * Method that draws a square with a specific color at the coordinates i,j.
    *
-   * @param i
-   * @param j
-   * @param color
+   * @param i     x coordinate  of square
+   * @param j     y coordinate of square
+   * @param color color of square
    */
   public void setSquare(int i, int j, Color color) {
-    //This sets the checkField used for checkng intersections with the Board
+    //This sets the checkField used for checking intersections with the Board
     if (i == 0 && j == 0) {
       CheckField checkField = new CheckField(i, j);
       double sizeHelp = size * 0.25;
@@ -56,8 +65,7 @@ public class SquarePolyPane extends PolyPane {
   }
 
   /**
-   * Method that draws a poly This is done by a double for loop, which covers the maximum height as
-   * well as the maximum width of a square poly
+   * Method that draws a Poly.
    */
   public void setPoly() {
     for (int i = 0; i < 5; i++) {
@@ -72,6 +80,11 @@ public class SquarePolyPane extends PolyPane {
     }
   }
 
+  /**
+   * Method to resize SquarePolyPane.
+   *
+   * @param size Size from PolyPane.
+   */
   public void setSize(double size) {
     this.size = size;
     this.fields.clear();

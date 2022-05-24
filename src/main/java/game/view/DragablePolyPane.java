@@ -13,6 +13,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 /**
+ * DragablePolyPane to make PolyPane dragable.
+ *
  * @author lbaudenb
  */
 public class DragablePolyPane extends Pane {
@@ -34,7 +36,14 @@ public class DragablePolyPane extends Pane {
   protected double circleX;
   protected double circleY;
 
-
+  /**
+   * DragablePolyPane to make PolyPane dragable.
+   *
+   * @param polyPane           PolyPane, clicked by Player.
+   * @param size               Size of the PolyPane.
+   * @param inputHandler       InputHandler from GameState.
+   * @param inGameUiController Current InGameUiController.
+   */
   public DragablePolyPane(PolyPane polyPane, double size, InputHandler inputHandler,
       InGameUiController inGameUiController) {
     this.polyPane = polyPane;
@@ -66,13 +75,6 @@ public class DragablePolyPane extends Pane {
     return polyPane.getPoly();
   }
 
-  public void setPoly(PolyPane polyPane) {
-    this.getChildren().clear();
-    this.polyPane = polyPane;
-    build();
-    buttons();
-  }
-
   public Field getCheckPolyField() {
     return this.polyPane.getCheckPolyField();
   }
@@ -80,6 +82,9 @@ public class DragablePolyPane extends Pane {
   public void build() {
   }
 
+  /**
+   * Method to initialize all Buttons.
+   */
   public void buttons() {
     mirror = new Button("M");
     mirror.setPrefWidth(size + 3);
@@ -127,6 +132,9 @@ public class DragablePolyPane extends Pane {
     this.getChildren().add(submit);
   }
 
+  /**
+   * Method to rerender DragablePolyPane. Buttons are not rerenderd.
+   */
   public void rerender() {
     this.getChildren().remove(innerCircle);
     this.getChildren().remove(donut);

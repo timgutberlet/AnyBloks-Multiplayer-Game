@@ -9,11 +9,13 @@ import java.util.List;
 import javafx.scene.layout.GridPane;
 
 /**
+ * GridPane to display remaining Polys from Player.
+ *
  * @author lbaudenb
  */
 public class StackPane extends GridPane {
 
-  private final int MAX_NB_POLYS = 12;
+  private final int nmbPoly = 12;
 
   protected List<PolyPane> polyPanes;
 
@@ -21,6 +23,14 @@ public class StackPane extends GridPane {
 
   protected double width;
 
+  /**
+   * StackPane to display remaining Polys from Player.
+   *
+   * @param player       Player from GameState.
+   * @param inputHandler InputHandler from GameState.
+   * @param polys        Remaining Polys from Players.
+   * @param width        Width from current Stage.
+   */
   public StackPane(Player player, InputHandler inputHandler, List<Poly> polys, double width) {
     polyPanes = new ArrayList<>();
     this.inputHandler = inputHandler;
@@ -33,7 +43,7 @@ public class StackPane extends GridPane {
   }
 
   /**
-   * Method that fills the StackSquarePane with SquarePolyPane objects
+   * Method that fills the StackSquarePane with SquarePolyPane objects.
    */
   public void setContent() {
     int row = 0;
@@ -43,16 +53,10 @@ public class StackPane extends GridPane {
       inputHandler.registerPoly(polyPane);
       this.add(polyPane, col, row);
       col++;
-      if (col % MAX_NB_POLYS == 0) {
+      if (col % nmbPoly == 0) {
         row++;
         col = 0;
       }
-    }
-  }
-
-  public void resize(double width) {
-    for (PolyPane polyPane : polyPanes) {
-      polyPane.resize(width);
     }
   }
 

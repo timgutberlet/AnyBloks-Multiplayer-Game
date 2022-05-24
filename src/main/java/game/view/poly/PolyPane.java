@@ -10,8 +10,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
+ * PolyPane to display a Poly in Game.
+ *
  * @author lbaudenb
  */
+
 public class PolyPane extends Pane {
 
   protected Poly poly;
@@ -20,7 +23,13 @@ public class PolyPane extends Pane {
   protected InputHandler inputHandler;
   protected double size;
 
-  public PolyPane(Poly poly, InputHandler inputHandler, double width) {
+  /**
+   * PolyPane to display Poly.
+   *
+   * @param poly         Poly from GameState.
+   * @param inputHandler InputHandler from GameState.
+   */
+  public PolyPane(Poly poly, InputHandler inputHandler) {
     this.poly = poly;
     fields = new ArrayList<>();
     this.inputHandler = inputHandler;
@@ -37,6 +46,11 @@ public class PolyPane extends Pane {
     return this.checkPolyField;
   }
 
+  /**
+   * Method that returns the size of the PolyPane.
+   *
+   * @return returns size of the PolyPane.
+   */
   public double getSize() {
     return this.size;
   }
@@ -44,20 +58,12 @@ public class PolyPane extends Pane {
   public void setSize(double size) {
   }
 
-  public void resize(double width) {
-    this.size = width * 0.00128;
-    this.fields.clear();
-    this.getChildren().clear();
-    setPoly();
-  }
-
+  /**
+   * Returns the Fields of the PolyPane.
+   *
+   * @return List of fields contained in PolyPane.
+   */
   public List<Field> getFields() {
     return fields;
-  }
-
-  public void reset() {
-    Rectangle r = new Rectangle(0, 0, this.getWidth(), this.getHeight());
-    r.setFill(Color.WHITE);
-    this.getChildren().add(r);
   }
 }

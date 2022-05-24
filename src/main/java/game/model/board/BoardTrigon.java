@@ -7,7 +7,6 @@ import game.model.field.Field;
 import game.model.field.FieldTrigon;
 import game.model.polygon.Poly;
 import game.model.polygon.PolyTrigon;
-import game.view.InGameView;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -568,19 +567,6 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
           ft.getPos()[2]).setColor(turn.getPolyTrigon().getColor());
     }
     return true;
-  }
-
-  /**
-   * Method updates the IngameView with the current colored Squares
-   *
-   * @param view current InGameView that is shown to the user
-   * @author tgutberl
-   */
-  public void updateBoard(InGameView view) {
-    for (FieldTrigon ft : board) {
-      //Funktioniert nicht weil noch kein TrigonBoardPane exestiert
-      //view.getBoardPane().setSquare(ft.getJavaColor(), ft.getPos()[0], ft.getPos()[1]);
-    }
   }
 
   // ======================================================================

@@ -10,6 +10,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 /**
+ * DragableTrigonPane to make TrigonPolyPane dragable.
+ *
  * @author lbaudenb
  */
 public class DragableTrigonPane extends DragablePolyPane {
@@ -19,6 +21,9 @@ public class DragableTrigonPane extends DragablePolyPane {
     super(polyPane, size, inputHandler, inGameUiController);
   }
 
+  /**
+   * Method to build DragableTrigonPane.
+   */
   public void build() {
     circleX = 2.5 * size + size;
     circleY = 2.5 * size + size;
@@ -40,9 +45,6 @@ public class DragableTrigonPane extends DragablePolyPane {
 
     polyPane.setSize(size);
 
-    double polyX;
-    double polyY;
-    double yOfSet = Math.sin(Math.toRadians(60)) * size;
     double x = 0;
     double y = 0;
     double right = 0;
@@ -55,7 +57,10 @@ public class DragableTrigonPane extends DragablePolyPane {
     y /= polyPane.getPoly().getSize();
     right /= polyPane.getPoly().getSize();
 
-    polyY = (x + 0.5) * yOfSet;
+    double polyX;
+    double polyY;
+    double ofSetY = Math.sin(Math.toRadians(60)) * size;
+    polyY = (x + 0.5) * ofSetY;
     polyX = (y + 0.5 + 0.5 * x + 0.5 * right) * size;
 
     double shiftX = circleX - polyX;

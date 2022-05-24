@@ -194,5 +194,4 @@ public class ScoreProvider {
     return winnerName;
   }
 
-
 }

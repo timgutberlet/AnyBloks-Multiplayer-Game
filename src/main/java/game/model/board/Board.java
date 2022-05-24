@@ -7,7 +7,6 @@ import game.model.Color;
 import game.model.Turn;
 import game.model.field.Field;
 import game.model.polygon.Poly;
-import game.view.InGameView;
 import java.util.ArrayList;
 
 
@@ -158,13 +157,6 @@ public abstract class Board {
    */
   public abstract Board clone();
 
-  /**
-   * Method updates the IngameView with the current colored Squares.
-   *
-   * @param view current InGameView that is shown to the user
-   * @author tgutberl
-   */
-  public abstract void updateBoard(InGameView view);
 
   /**
    * converts to board to a string.

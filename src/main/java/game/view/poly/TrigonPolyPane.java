@@ -8,31 +8,30 @@ import game.model.polygon.Poly;
 import javafx.scene.paint.Color;
 
 /**
+ * TrigonPolyPane to display TrigonPoly in game.
+ *
  * @author lbaudenb
  */
 
 public class TrigonPolyPane extends PolyPane {
 
-  /**
-   * Each parallelogram consists of two equilateral triangles the attribute size determines the side
-   * length of those triangles and hence the side length of the parallelogram
-   */
+
+  private double ofSetX;
+
+  private double ofSetY;
 
   /**
-   * The attribute xOfSet is calculated from the attribute size, so that each angle of the
-   * equilateral triangles is exactly 60 degrees
+   * TrigonPolyPane to display TrigonPoly in Game.
+   *
+   * @param poly         Poly from Player.
+   * @param inputHandler InputHandler from GameState.
+   * @param width        Width from Stage.
    */
-  private double xOfSet;
-  /**
-   * the attrubite yOfSet is the shift in y direction
-   */
-  private double yOfSet;
-
   public TrigonPolyPane(Poly poly, InputHandler inputHandler, double width) {
-    super(poly, inputHandler, width);
+    super(poly, inputHandler);
     this.size = width / 132;
-    xOfSet = Math.sin(Math.toRadians(30)) * size;
-    yOfSet = Math.sin(Math.toRadians(60)) * size;
+    ofSetX = Math.sin(Math.toRadians(30)) * size;
+    ofSetY = Math.sin(Math.toRadians(60)) * size;
     setPoly();
   }
 
@@ -40,18 +39,18 @@ public class TrigonPolyPane extends PolyPane {
    * Method that draws a right triangle with a specific color at the coordinates i,j. This is done
    * by calculating each point of the triangle.
    *
-   * @param i
-   * @param j
-   * @param color
+   * @param i x coordinate of triangle
+   * @param j y coordinate of triangle
+   * @param color color of triangle
    */
   private void setTriangleRight(int i, int j, Color color) {
     //This sets the checkField used for checkng intersections with the Board
 
     TrigonField triangleRight = new TrigonField(i, j, 1);
     triangleRight.getPoints().addAll(
-        size + j * size + i * xOfSet, 0.0 + i * yOfSet, // top vertex
-        xOfSet + size + j * size + i * xOfSet, yOfSet + i * yOfSet, //right vertex
-        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet); // left vertex
+        size + j * size + i * ofSetX, 0.0 + i * ofSetY, // top vertex
+        ofSetX + size + j * size + i * ofSetX, ofSetY + i * ofSetY, //right vertex
+        ofSetX + j * size + i * ofSetX, ofSetY + i * ofSetY); // left vertex
     triangleRight.setFill(color);
     triangleRight.setStroke(Color.TRANSPARENT);
     if (!color.equals(Color.TRANSPARENT)) {
@@ -65,21 +64,21 @@ public class TrigonPolyPane extends PolyPane {
    * Method that draws a left triangle with a specific color at the coordinates i,j. This is done by
    * calculating each point of the triangle.
    *
-   * @param i
-   * @param j
-   * @param color
+   * @param i x coordinate of triangle
+   * @param j y coordinate of triangle
+   * @param color color of triangle
    */
   private void setTriangleLeft(int i, int j, Color color) {
     if (i == 0 && j == 0) {
       CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 0);
       double sizeHelp = size * 0.4;
       double move = size / 2 - sizeHelp / 2;
-      double yOfSetHelp = yOfSet * 0.4;
-      double moveYOfSet = yOfSet / 2 - yOfSetHelp / 2;
+      double ofSetHelpX = ofSetY * 0.4;
+      double moveOfSetY = ofSetY / 2 - ofSetHelpX / 2;
       checkTrigonField.getPoints()
-          .addAll(xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet - moveYOfSet, // top vertex
-              size + j * size + i * xOfSet - move, 0.0 + i * yOfSet + moveYOfSet, // right vertex
-              0.0 + j * size + i * xOfSet + move, 0.0 + i * yOfSet + moveYOfSet);
+          .addAll(ofSetX + j * size + i * ofSetX, ofSetY + i * ofSetY - moveOfSetY, // top vertex
+              size + j * size + i * ofSetX - move, 0.0 + i * ofSetY + moveOfSetY, // right vertex
+              0.0 + j * size + i * ofSetX + move, 0.0 + i * ofSetY + moveOfSetY);
       checkTrigonField.setFill(color);
       checkPolyField = checkTrigonField;
       this.getChildren().add(checkTrigonField);
@@ -87,9 +86,9 @@ public class TrigonPolyPane extends PolyPane {
 
     TrigonField triangleLeft = new TrigonField(i, j, 0);
     triangleLeft.getPoints().addAll(
-        xOfSet + j * size + i * xOfSet, yOfSet + i * yOfSet, // top vertex
-        size + j * size + i * xOfSet, 0.0 + i * yOfSet, // right vertex
-        0.0 + j * size + i * xOfSet, 0.0 + i * yOfSet);  // left vertex
+        ofSetX + j * size + i * ofSetX, ofSetY + i * ofSetY, // top vertex
+        size + j * size + i * ofSetX, 0.0 + i * ofSetY, // right vertex
+        0.0 + j * size + i * ofSetX, 0.0 + i * ofSetY);  // left vertex
     triangleLeft.setFill(color);
     triangleLeft.setStroke(Color.TRANSPARENT);
     if (!color.equals(Color.TRANSPARENT)) {
@@ -100,13 +99,12 @@ public class TrigonPolyPane extends PolyPane {
   }
 
   /**
-   * Method that draws a triangle at the coordinates i,j Depending on the parameter isRight, a right
-   * or a left triangle is drawn
-   *
-   * @param i
-   * @param j
-   * @param isRight
-   * @param color
+   * Method that draws a triangle at the coordinates i,j.
+   * Position in Parallelogram depends on isRight.
+   * @param i x coordinate of triangle
+   * @param j y coordinate of triangle
+   * @param isRight position of triangle in parallelogram
+   * @param color color of triangle
    */
   private void setTriangle(int i, int j, int isRight, Color color) {
     switch (isRight) {
@@ -116,12 +114,13 @@ public class TrigonPolyPane extends PolyPane {
       case 0:
         setTriangleLeft(i, j, color);
         break;
+      default:
+        break;
     }
   }
 
   /**
-   * Method that draws a poly. This is done by a double for loop, which covers the maximum height as
-   * well as the maximum width of a trigon poly
+   * Method that draws a Poly.
    */
   public void setPoly() {
     for (int i = 0; i < 4; i++) {
@@ -141,10 +140,16 @@ public class TrigonPolyPane extends PolyPane {
     }
   }
 
+
+  /**
+   * Method to resize TrigonPolyPane.
+   *
+   * @param size Size from TrigonPolyPane.
+   */
   public void setSize(double size) {
     this.size = size;
-    xOfSet = Math.sin(Math.toRadians(30)) * size;
-    yOfSet = Math.sin(Math.toRadians(60)) * size;
+    ofSetX = Math.sin(Math.toRadians(30)) * size;
+    ofSetY = Math.sin(Math.toRadians(60)) * size;
     this.fields.clear();
     this.getChildren().clear();
     setPoly();
