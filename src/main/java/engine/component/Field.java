@@ -12,21 +12,21 @@ public abstract class Field extends Polygon {
   /**
    * X Coordinate of the field object in a field.
    */
-  private final int x;
+  private final int xcord;
   /**
    * Y Coordinate of the field object in a field.
    */
-  private final int y;
+  private final int ycord;
 
   /**
    * Field Constructor.
    *
-   * @param x Coordinate X of the field.
-   * @param y Coordinate Y of the field.
+   * @param xcord Coordinate X of the field.
+   * @param ycord Coordinate Y of the field.
    */
-  public Field(int x, int y) {
-    this.x = x;
-    this.y = y;
+  public Field(int xcord, int ycord) {
+    this.xcord = xcord;
+    this.ycord = ycord;
   }
 
   /**
@@ -34,8 +34,8 @@ public abstract class Field extends Polygon {
    *
    * @return returns X Integer
    */
-  public int getX() {
-    return x;
+  public int getXcord() {
+    return xcord;
   }
 
   /**
@@ -43,7 +43,7 @@ public abstract class Field extends Polygon {
    *
    * @return returns Y Integer
    */
-  public int getY() {
-    return y;
+  public int getYcord() {
+    return ycord;
   }
 }

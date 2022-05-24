@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * represents a trigon board.
+ *
  * @author tiotto
  * @date 29.03.2022
  */

@@ -26,6 +26,7 @@ import net.transmission.EndpointServer;
  * Provides functions to ServerEndpoint.
  *
  * @author tbuscher
+ * @author tgeilen
  */
 public class InboundServerHandler {
 
@@ -33,13 +34,17 @@ public class InboundServerHandler {
   private EndpointServer server;
 
   /**
-   * constructor for jackson
+   * constructor for jackson.
+   *
+   * @author tgeilen
    */
   public InboundServerHandler() {
   }
 
   /**
-   * Constructor
+   * Constructor.
+   *
+   * @author tgeilen
    */
   public InboundServerHandler(EndpointServer server, GameSession gameSession) {
 
@@ -53,10 +58,10 @@ public class InboundServerHandler {
 
 
   /**
-   * Verifies whether Login is correct according to Database
+   * Verifies whether Login is correct according to Database.
    *
    * @param wrappedPacket wrapped LoginRequestPacket
-   * @return String[] [0] "true"/"false" [1] username
+   * @author tbuscher
    */
   public void verifyLogin(WrappedPacket wrappedPacket, Session session) {
     Debug.printMessage(this, "LOGIN_REQUEST_PACKET received in Handler");
@@ -72,7 +77,7 @@ public class InboundServerHandler {
     if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
       Debug.printMessage(username + "Delete me in verify Login");
       try {
-        DbServer dbServer = DbServer.getInstance();
+        DBServer dbServer = DBServer.getInstance();
         if (!dbServer.doesUserHaveAuthToken(username)) {
           loginSuccess = false;
         } else {
@@ -107,6 +112,8 @@ public class InboundServerHandler {
    * @param wrappedPacket received packet
    * @param session       actual session
    * @return a string array out of the success boolean and the username
+   *
+   * @author tgeilen
    */
   public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {
     LoginRequestPacket loginPacket = (LoginRequestPacket) wrappedPacket.getPacket();
@@ -142,20 +149,7 @@ public class InboundServerHandler {
         }
       }
     } else {
-      // handle a new player by adding to gamesession and in the dictionary
-//      if (gameSession.getGame().getGameState().isStateRunning()) {
-//        LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
-//            "This Lobby is currently playing. Try again at another time.",
-//            "ipAddress");
-//        WrappedPacket wrappedPacketLoginResponse = new WrappedPacket(
-//            PacketType.LOGIN_RESPONSE_PACKET,
-//            loginResponsePacket);
-//        this.server.sendMessage(wrappedPacketLoginResponse, session);
-//      } else
-
-      //Debug.printMessage(gameSession.getPlayerList().size());
       Debug.printMessage("" + gameSession.getPlayerList());
-      //Debug.printMessage(gameSession.getPlayerList().get(0));
       if (gameSession.getPlayerList().size() < 4) {
 
         Debug.printMessage(this, "ADDING A NEW PLAYER TO THE GAMESESSION!");
@@ -197,22 +191,22 @@ public class InboundServerHandler {
   }
 
   /**
-   * <p>
    * Method called after receiving a CreateAccountRequestPacket. This tries to save the account in
    * the Database, depending on the result of the attempted DB Insertion the response message for
    * the createAccountResponsePacket is set.
    *
    * @param packet that contains a createAccountRequestPacket
+   * @author tbuscher
    */
   public String createAccount(WrappedPacket packet) {
     CreateAccountRequestPacket carp = (CreateAccountRequestPacket) packet.getPacket();
     String username = carp.getUsername();
     String passwordHash = carp.getPasswordHash();
     String errorMessage = "";
-    DbServer dbServer = null;
+    DBServer dbServer = null;
     boolean success = false;
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
       //Check if the username is already in DB, return with errorMessage
       if (dbServer.doesUsernameExist(username)) {
         return "The requested username already exists. Please choose another one!";
@@ -234,6 +228,7 @@ public class InboundServerHandler {
    * starts the game out of the game init packet.
    *
    * @param wrappedPacket init game packet.
+   * @author tgeilen
    */
   public void startGame(WrappedPacket wrappedPacket) {
 
@@ -259,9 +254,9 @@ public class InboundServerHandler {
 
 
   /**
-   * receive a turn from a remote player and forward it to game logic
+   * receive a turn from a remote player and forward it to game logic.
    *
-   * @param packet
+   * @param packet wrappedPacket
    * @author tgeilen
    */
   public void receiveTurn(Session client, WrappedPacket packet) {
@@ -278,10 +273,11 @@ public class InboundServerHandler {
   }
 
   /**
-   * remove a player from the server
+   * remove a player from the server.
    *
-   * @param client
-   * @param packet
+   * @param client client
+   * @param packet wrappedPacket
+   * @author tgeilen
    */
   public void disconnectClient(Session client, WrappedPacket packet) {
     PlayerQuitPacket playerQuitPacket = (PlayerQuitPacket) packet.getPacket();
@@ -308,6 +304,13 @@ public class InboundServerHandler {
 
   }
 
+  /**
+   * function that informs a server that a local host has kicked a player.
+   *
+   * @param client client
+   * @param packet packet
+   * @author tgeilen
+   */
   public void kickClient(Session client, WrappedPacket packet) {
     PlayerKickPacket playerKickPacket = (PlayerKickPacket) packet.getPacket();
     String username = playerKickPacket.getUsername();

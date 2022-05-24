@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.UpdateAccountRequestPacket;
-import net.server.DbServer;
+import net.server.DBServer;
 
 /**
  * Class that provides the option to change the password of an existing account.
@@ -23,7 +23,7 @@ public class UpdateAccountRessource {
   /**
    * This method registers and processes an update account request packet.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @return response on the update account request
    */
   @PUT
@@ -40,7 +40,8 @@ public class UpdateAccountRessource {
         throw new Exception();
       } else {
 
-        UpdateAccountRequestPacket updateAccountRequestPacket = (UpdateAccountRequestPacket) wrappedPacket.getPacket();
+        UpdateAccountRequestPacket updateAccountRequestPacket =
+            (UpdateAccountRequestPacket) wrappedPacket.getPacket();
         String username = updateAccountRequestPacket.getUsername();
         String passwordHash = updateAccountRequestPacket.getPasswordHash();
         String updatedPasswordHash = updateAccountRequestPacket.getUpdatedPasswordHash();
@@ -48,7 +49,7 @@ public class UpdateAccountRessource {
         Debug.printMessage("newPW: " + updatedPasswordHash);
         Debug.printMessage("username : " + username);
 
-        DbServer dbServer = DbServer.getInstance();
+        DBServer dbServer = DBServer.getInstance();
         //Make sure the is a user with that username
         if (!dbServer.doesUsernameExist(username)) {
           throw new Exception("The provided credentials appear to be false.");

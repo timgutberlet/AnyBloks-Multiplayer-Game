@@ -56,7 +56,7 @@ public class LoginRequestPacket extends Packet {
   /**
    * Getter.
    *
-   * @return
+   * @return PlayerType
    */
   public PlayerType getPlayerType() {
     return playerType;

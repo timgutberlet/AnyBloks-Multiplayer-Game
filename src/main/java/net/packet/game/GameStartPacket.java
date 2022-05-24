@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import net.packet.abstr.Packet;
 
 /**
+ * Packets that gets send to client to tell a game has started.
+ *
  * @author tgeilen
  * @Date 10.05.22
  */
@@ -35,7 +37,7 @@ public class GameStartPacket extends Packet {
   /**
    * Initializes the GameStartPacket with the corresponding game state.
    *
-   * @param gameState
+   * @param gameState gameState
    */
   public GameStartPacket(GameState gameState) {
     this.gameMode = gameState.getGameMode();
@@ -64,7 +66,8 @@ public class GameStartPacket extends Packet {
    */
   public GameState getGameState() {
 
-    ArrayList<Player> players = this.playerList;
+    ArrayList<Player> players;
+    players   = this.playerList;
 
     ArrayList<ArrayList<Poly>> remPoly = this.remainingPolys;
     ArrayList<ArrayList<Turn>> hist = new ArrayList<ArrayList<Turn>>();

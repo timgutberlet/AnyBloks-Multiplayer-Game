@@ -2,10 +2,10 @@ package game.scores;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import net.server.DbServer;
+import net.server.DBServer;
 
 /**
- * This class provides the data shown while waiting
+ * This class provides the data shown while waiting.
  *
  * @author tbuscher
  */
@@ -18,10 +18,10 @@ public class ScoreProvider {
    */
   public static GameScoreBoard getLastGameScoreBoard() {
 
-    DbServer dbServer = null;
+    DBServer dbServer = null;
 
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
       if (dbServer == null) {
         throw new Exception("DB Connect failed!");
       }
@@ -49,9 +49,9 @@ public class ScoreProvider {
     int gamesPlayed = 0;
     for (GameScoreBoard gameScoreBoard : gameScoreBoards) {
       gamesPlayed += 1;
-      for (String uName : gameScoreBoard.getPlayerScores().keySet()) {
-        if (!user2ScoreAndWin.containsKey(uName)) {
-          user2ScoreAndWin.put(uName, new Integer[2]);
+      for (String username : gameScoreBoard.getPlayerScores().keySet()) {
+        if (!user2ScoreAndWin.containsKey(username)) {
+          user2ScoreAndWin.put(username, new Integer[2]);
         }
       }
     }
@@ -61,9 +61,9 @@ public class ScoreProvider {
       //Evaluate game Winner
       int max = 0;
       String winner = "";
-      for (String uName : gameScoreBoard.getPlayerScores().keySet()) {
-        if (gameScoreBoard.getPlayerScores().get(uName) > max) {
-          winner = uName;
+      for (String username : gameScoreBoard.getPlayerScores().keySet()) {
+        if (gameScoreBoard.getPlayerScores().get(username) > max) {
+          winner = username;
         }
       }
       Integer[] oldEntry = user2ScoreAndWin.get(winner);
@@ -76,31 +76,31 @@ public class ScoreProvider {
 
     //Iterate over all gameScores and now count scores
     for (GameScoreBoard gameScoreBoard : gameScoreBoards) {
-      for (String uName : gameScoreBoard.getPlayerScores().keySet()) {
-        Integer[] oldEntry = user2ScoreAndWin.get(uName);
+      for (String username : gameScoreBoard.getPlayerScores().keySet()) {
+        Integer[] oldEntry = user2ScoreAndWin.get(username);
         if (oldEntry[0] == null) {
           oldEntry[0] = 0;
         }
-        oldEntry[0] += gameScoreBoard.getPlayerScores().get(uName);
-        user2ScoreAndWin.put(uName, oldEntry);
+        oldEntry[0] += gameScoreBoard.getPlayerScores().get(username);
+        user2ScoreAndWin.put(username, oldEntry);
       }
     }
 
-    for (String uName : user2ScoreAndWin.keySet()) {
-      if (user2ScoreAndWin.get(uName)[0] == null) {
-        Integer[] oldEntry = user2ScoreAndWin.get(uName);
+    for (String username : user2ScoreAndWin.keySet()) {
+      if (user2ScoreAndWin.get(username)[0] == null) {
+        Integer[] oldEntry = user2ScoreAndWin.get(username);
         if (oldEntry[0] == null) {
           oldEntry[0] = 0;
         }
-        user2ScoreAndWin.put(uName, oldEntry);
+        user2ScoreAndWin.put(username, oldEntry);
       }
-      if (user2ScoreAndWin.get(uName)[1] == null) {
+      if (user2ScoreAndWin.get(username)[1] == null) {
 
-        Integer[] oldEntry = user2ScoreAndWin.get(uName);
+        Integer[] oldEntry = user2ScoreAndWin.get(username);
         if (oldEntry[1] == null) {
           oldEntry[1] = 0;
         }
-        user2ScoreAndWin.put(uName, oldEntry);
+        user2ScoreAndWin.put(username, oldEntry);
       }
     }
 
@@ -118,9 +118,9 @@ public class ScoreProvider {
    * @return GameSessionScoreBoard
    */
   public static GameSessionScoreBoard getGameSessionScoreBoard(String gameSessionScoreId) {
-    DbServer dbServer = null;
+    DBServer dbServer = null;
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
       if (dbServer == null) {
         throw new Exception("Connection to DB failed");
       }
@@ -139,9 +139,9 @@ public class ScoreProvider {
    * @return GameSessionScoreBoard
    */
   public static GameSessionScoreBoard getGameSessionScoreBoard(String[] gameIds) {
-    DbServer dbServer = null;
+    DBServer dbServer = null;
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
       if (dbServer == null) {
         throw new Exception("Connection to DB failed");
       }
@@ -159,14 +159,14 @@ public class ScoreProvider {
   }
 
   /**
-   * This function gathers all the information about previously hosted games
+   * This function gathers all the information about previously hosted games.
    *
-   * @return
+   * @return LobbyScoreBoard
    */
   public static LobbyScoreBoard getLobbyScoreBoard() {
-    DbServer dbServer = null;
+    DBServer dbServer = null;
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

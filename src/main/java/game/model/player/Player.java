@@ -114,6 +114,8 @@ public class Player implements Serializable {
   }
 
   /**
+   * signal for UI whether player is connected.
+   *
    * @return returns if boolean connected.
    * @author tgutberl
    */
@@ -123,6 +125,7 @@ public class Player implements Serializable {
 
   /**
    * sets the if the player is connected.
+   *
    * @param playerConnected if the player is connected
    */
   public void setPlayerConnected(boolean playerConnected) {
@@ -200,7 +203,7 @@ public class Player implements Serializable {
         try {
           Thread.sleep(10);
          } catch (InterruptedException e) {
-          Debug.printMessage("Catched: "+ e.getMessage());
+          Debug.printMessage("Catched: " + e.getMessage());
         }
       }
       Debug.printMessage("Turn Selected from player " + this);
@@ -269,8 +272,8 @@ public class Player implements Serializable {
     return this.orderNum;
   }
 
-  public void setAi(Boolean AI) {
-    isAi = AI;
+  public void setAi(Boolean ai) {
+    isAi = ai;
   }
 
   public Boolean isAi() {

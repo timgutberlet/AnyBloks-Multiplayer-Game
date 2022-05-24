@@ -158,11 +158,6 @@ public abstract class Board {
    */
   public abstract Board clone();
 
-/**
- * abstract representation of a board.
- * @author tiotto
- * @date 27.03.2022
- */
 
   /**
    * converts to board to a string.

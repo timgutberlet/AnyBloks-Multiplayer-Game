@@ -7,6 +7,7 @@ import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.chat.ChatMessage;
+import game.model.gamemodes.GameMode;
 import game.model.gamemodes.GameModeClassic;
 import game.model.gamemodes.GameModeDuo;
 import game.model.gamemodes.GameModeJunior;

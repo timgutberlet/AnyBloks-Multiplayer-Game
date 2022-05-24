@@ -7,6 +7,7 @@ import game.model.Color;
 
 /**
  * represents a single polygon in general.
+ *
  * @author tiotto
  * @date 23.03.2022
  */

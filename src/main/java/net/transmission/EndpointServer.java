@@ -24,7 +24,7 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.server.DbServer;
+import net.server.DBServer;
 import net.server.InboundServerHandler;
 import net.server.OutboundServerHandler;
 import org.slf4j.Logger;
@@ -45,12 +45,10 @@ public class EndpointServer {
   private static final Logger LOG = LoggerFactory.getLogger(EndpointServer.class);
   private static final HashMap<String, Session> username2Session = new HashMap<String, Session>();
   // Creating HashSet for all Sessions
-//  private static final HashMap<String, Session> allSessions = (HashMap<String, Session>) Collections.synchronizedMap(
-//      new HashMap<String, Session>());
   private static GameSession gameSession;
   private InboundServerHandler inboundServerHandler;
   private OutboundServerHandler outboundServerHandler;
-  private DbServer dbServer = null;
+  private DBServer dbServer = null;
 
   public static GameSession getGameSession() {
     return gameSession;
@@ -104,7 +102,7 @@ public class EndpointServer {
     this.inboundServerHandler = new InboundServerHandler(this, gameSession);
     this.outboundServerHandler = new OutboundServerHandler(this, gameSession);
     try {
-      this.dbServer = DbServer.getInstance();
+      this.dbServer = DBServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -132,7 +130,6 @@ public class EndpointServer {
 
 
   @OnMessage
-//  public void onMessage(final WrappedPacket packet) throws IOException, EncodeException {
   public void onMessage(final WrappedPacket packet, final Session client)
       throws IOException, EncodeException {
 
@@ -189,9 +186,6 @@ public class EndpointServer {
           break;
         case PLAYER_ORDER_PACKET:
           Debug.printMessage(this, "PLAYER_ORDER_PACKET received");
-//        for (Map.Entry<String, Session> clientEntry : allSessions.entrySet()) {
-//          clientEntry.getValue().getBasicRemote().sendObject(packet);
-//        }
           break;
         case TURN_PACKET:
           inboundServerHandler.receiveTurn(client, packet);
@@ -211,19 +205,20 @@ public class EndpointServer {
 
         case PLAYER_KICK_PACKET:
           inboundServerHandler.kickClient(client, packet);
+          break;
 
         default:
           Debug.printMessage("Received a packet of type: " + type);
-
+          break;
       }
     }
   }
 
   /**
-   * function to easyily send a packet to a client based on username
+   * function to easyily send a packet to a client based on username.
    *
-   * @param wrappedPacket
-   * @param username
+   * @param wrappedPacket wrappedPacket
+   * @param username username
    */
   public void sendMessage(WrappedPacket wrappedPacket, String username) {
 
@@ -242,8 +237,8 @@ public class EndpointServer {
   /**
    * function to easily send a packet to client based on session.
    *
-   * @param wrappedPacket
-   * @param client
+   * @param wrappedPacket wrappedPacket
+   * @param client client
    */
   public void sendMessage(WrappedPacket wrappedPacket, Session client) {
 
@@ -286,8 +281,8 @@ public class EndpointServer {
   /**
    * adds username and a client session to the hash map username2session.
    *
-   * @param username
-   * @param client
+   * @param username username
+   * @param client client
    */
   public void addUsernameSession(String username, Session client) {
     username2Session.put(username, client);

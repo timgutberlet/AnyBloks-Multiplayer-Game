@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import net.packet.abstr.Packet;
 
 /**
- * Packet to send GameState and allow Players to determine they have to make a move
+ * Packet to send GameState and allow Players to determine they have to make a move.
  *
  * @author tbuscher
  */
@@ -30,7 +30,7 @@ public class GameUpdatePacket extends Packet {
   public String stateEnding;
 
   /**
-   * empty constructor for jackson
+   * empty constructor for jackson.
    */
 
   public GameUpdatePacket() {
@@ -46,7 +46,7 @@ public class GameUpdatePacket extends Packet {
   }
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param gameState gs
    */
@@ -65,12 +65,7 @@ public class GameUpdatePacket extends Packet {
   }
 
   /**
-   * Getter
-   */
-
-
-  /**
-   * Getter
+   * Getter.
    */
   public GameState getGameState() {
 

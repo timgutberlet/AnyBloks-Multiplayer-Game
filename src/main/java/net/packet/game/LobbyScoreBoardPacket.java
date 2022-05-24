@@ -22,7 +22,7 @@ public class LobbyScoreBoardPacket extends Packet {
   /**
    * Constructor with lobbyScoreBoard.
    *
-   * @param lobbyScoreBoard
+   * @param lobbyScoreBoard LobbyScoreBoard
    */
   public LobbyScoreBoardPacket(LobbyScoreBoard lobbyScoreBoard) {
     this.lobbyScoreBoard = lobbyScoreBoard;

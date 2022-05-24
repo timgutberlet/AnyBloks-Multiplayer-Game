@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 /**
  * represents the chat of a game session.
+ *
  * @author tgeilen
  * @Date 21.03.22
  */
@@ -46,8 +47,6 @@ public class Chat {
 
   /**
    * function to add a message to the chat.
-   *
-   * for now it debugs to the console
    *
    * @param player author of the message
    * @param message text message

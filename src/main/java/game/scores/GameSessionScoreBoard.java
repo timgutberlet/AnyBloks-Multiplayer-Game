@@ -3,6 +3,7 @@ package game.scores;
 import java.util.HashMap;
 
 /**
+ * represents the scorebaord of a gamesession.
  * @author tbuscher
  */
 public class GameSessionScoreBoard {

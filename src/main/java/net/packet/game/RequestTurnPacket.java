@@ -32,7 +32,7 @@ public class RequestTurnPacket extends Packet {
 
 
   /**
-   * empty constructor for jackson
+   * empty constructor for jackson.
    *
    * @author tgeilen
    */

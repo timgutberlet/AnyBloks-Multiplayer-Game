@@ -19,6 +19,11 @@ public class UseServerCom {
 
   static HostServer hostServer = new HostServer();
 
+  /**
+   * run the local setting tests.
+   *
+   * @param args String[]
+   */
   public static void main(String[] args) {
 
     try {

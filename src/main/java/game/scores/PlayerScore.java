@@ -3,6 +3,8 @@ package game.scores;
 import game.model.player.Player;
 
 /**
+ * score of player.
+ *
  * @author tiotto
  * @date 23.05.2022
  */
@@ -23,6 +25,13 @@ public class PlayerScore {
    */
   int[] numberMostWins = new int[3];
 
+  /**
+   * constructor.
+   *
+   * @param numberOfGames numberOfGAmes
+   * @param playerMostWins player with most wins
+   * @param numberMostWins number of most wins
+   */
   public PlayerScore(int numberOfGames, Player[] playerMostWins, int[] numberMostWins) {
     this.numberOfGames = numberOfGames;
     this.playerMostWins = playerMostWins;

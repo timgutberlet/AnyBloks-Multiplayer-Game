@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.DeleteAccountRequestPacket;
-import net.server.DbServer;
+import net.server.DBServer;
 
 /**
  * Class that enables users to delete a remote account.
@@ -23,7 +23,7 @@ public class DeleteAccountRessource {
   /**
    * This method registers and processes a delete account request packet.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @return response on the delete account request
    */
   @PUT
@@ -39,11 +39,12 @@ public class DeleteAccountRessource {
         throw new Exception();
       } else {
 
-        DeleteAccountRequestPacket deleteAccountRequestPacket = (DeleteAccountRequestPacket) wrappedPacket.getPacket();
+        DeleteAccountRequestPacket deleteAccountRequestPacket =
+            (DeleteAccountRequestPacket) wrappedPacket.getPacket();
         String username = deleteAccountRequestPacket.getUsername();
         String passwordHash = deleteAccountRequestPacket.getPasswordHash();
 
-        DbServer dbServer = DbServer.getInstance();
+        DBServer dbServer = DBServer.getInstance();
         //Make sure there is a user with that username
         if (!dbServer.doesUsernameExist(username)) {
           throw new Exception("The provided credentials appear to be false.");

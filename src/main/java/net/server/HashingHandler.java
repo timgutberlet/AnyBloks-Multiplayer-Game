@@ -3,6 +3,8 @@ package net.server;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
+ * used to hash the passwords.
+ *
  * @author tbuscher
  */
 public class HashingHandler {
@@ -10,8 +12,8 @@ public class HashingHandler {
   /**
    * encodes a string input into the output string.
    *
-   * @param input
-   * @return
+   * @param input input
+   * @return hashedPassword
    */
   public static String sha256encode(String input) {
     String output = DigestUtils.sha256Hex(input);
@@ -21,8 +23,8 @@ public class HashingHandler {
   /**
    * checks if two passwords are equal.
    *
-   * @param passwordA
-   * @param passwordB
+   * @param passwordA password
+   * @param passwordB password to comapre with
    * @return boolean if the passwords are equal
    */
   public static boolean checkPassword(String passwordA, String passwordB) {

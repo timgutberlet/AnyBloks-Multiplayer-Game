@@ -100,7 +100,7 @@ public class PolyTrigon extends Poly {
   public ArrayList<FieldTrigon> shape;
 
   /**
-   * poly type
+   * poly type.
    */
   private String polyType = "Trigon";
 

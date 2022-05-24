@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * represents one chat message.
+ *
  * @author tgeilen
  * @Date 21.03.22
  */
@@ -17,6 +18,7 @@ public class ChatMessage {
 
   /**
    * initializes a chat message.
+   *
    * @param username player name
    * @param message message
    */

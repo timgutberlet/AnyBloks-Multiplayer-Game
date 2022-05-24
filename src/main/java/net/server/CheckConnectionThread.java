@@ -10,6 +10,8 @@ import net.packet.abstr.WrappedPacket;
 import net.transmission.EndpointServer;
 
 /**
+ * a new thread to send check connection packets.
+ *
  * @author tgeilen
  * @Date 16.05.22
  */
@@ -28,9 +30,9 @@ public class CheckConnectionThread extends Thread {
    * initializes a new check connection thread out of a game session, the considered username and
    * the serverEndpoint.
    *
-   * @param gameSession
-   * @param username
-   * @param serverEndpoint
+   * @param gameSession gameSession
+   * @param username username
+   * @param serverEndpoint serverEndpoint
    */
   public CheckConnectionThread(GameSession gameSession, String username,
       EndpointServer serverEndpoint) {

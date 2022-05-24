@@ -13,10 +13,10 @@ import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.RestfulLoginPacket;
-import net.server.DbServer;
+import net.server.DBServer;
 
 /**
- * Class to be used in REST Server to provide tokens
+ * Class to be used in REST Server to provide tokens.
  *
  * @author tbuscher
  */
@@ -26,7 +26,7 @@ public class TokenGenerationRessource {
   /**
    * This method registers and processes a restful login packet.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @return response on the restful login packet
    */
   @PUT
@@ -37,8 +37,10 @@ public class TokenGenerationRessource {
     Debug.printMessage("Hi from auth method");
 
     try {
-      String username = "";
-      String passwordHash = "";
+      String username;
+      username = "";
+      String passwordHash;
+      passwordHash = "";
       RestfulLoginPacket restfulLoginPacket = null;
       if (wrappedPacket.getPacketType() != PacketType.RESTFUL_LOGIN_PACKET) {
         throw new Exception("This packet is not of the correct type");
@@ -49,8 +51,8 @@ public class TokenGenerationRessource {
       username = restfulLoginPacket.getUsername();
       passwordHash = restfulLoginPacket.getPasswordHash();
 
-      Debug.printMessage("The user " +
-          restfulLoginPacket.getUsername() + " is trying to login with the passwordHash: "
+      Debug.printMessage("The user "
+          + restfulLoginPacket.getUsername() + " is trying to login with the passwordHash: "
           + restfulLoginPacket.getPasswordHash());
 
       // Authenticate user with db
@@ -68,8 +70,15 @@ public class TokenGenerationRessource {
     }
   }
 
+  /**
+   * authenticates a user.
+   *
+   * @param username username
+   * @param password password
+   * @throws Exception expection
+   */
   private void authenticate(String username, String password) throws Exception {
-    DbServer dbServer = DbServer.getInstance();
+    DBServer dbServer = DBServer.getInstance();
     if (!(dbServer.doesUsernameExist(username))) {
       throw new Exception("The username doesn't exist!");
     }
@@ -80,13 +89,19 @@ public class TokenGenerationRessource {
     }
   }
 
+  /**
+   * flag for token.
+   *
+   * @param username
+   * @return String
+   */
   public String issueToken(String username) {
     boolean passed = true;
 
     //delete any old authTokens that might exist for the user
-    DbServer dbServer = null;
+    DBServer dbServer = null;
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

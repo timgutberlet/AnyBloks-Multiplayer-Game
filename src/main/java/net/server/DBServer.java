@@ -14,7 +14,7 @@ import java.util.HashMap;
  *
  * @author tbuscher
  */
-public class DbServer extends AbstractDB {
+public class DBServer extends AbstractDB {
 
   /**
    * Location of Db file.
@@ -23,14 +23,14 @@ public class DbServer extends AbstractDB {
   /**
    * Instance that can be provided.
    */
-  private static DbServer instance;
+  private static DBServer instance;
 
   /**
    * Constructor.
    *
    * @throws Exception if init fails.
    */
-  private DbServer() throws Exception {
+  private DBServer() throws Exception {
     super();
   }
 
@@ -40,9 +40,9 @@ public class DbServer extends AbstractDB {
    * @throws Exception if instance can't be provided
    */
 
-  public static synchronized DbServer getInstance() throws Exception {
+  public static synchronized DBServer getInstance() throws Exception {
     if (instance == null) {
-      instance = new DbServer();
+      instance = new DBServer();
     }
     return instance;
   }

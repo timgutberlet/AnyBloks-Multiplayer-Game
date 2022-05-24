@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import game.scores.GameScoreBoard;
 import java.util.ArrayList;
-import net.server.DbServer;
+import net.server.DBServer;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -19,7 +19,7 @@ public class DbScoreTrackingTest {
   @Test
   public void testDbScoreTracking() {
     try {
-      DbServer dbServer = DbServer.getInstance();
+      DBServer dbServer = DBServer.getInstance();
       dbServer.resetDb();
       //Make sure the 2 dummy accounts in use are not already there
       dbServer.deleteAccount("testuser1");

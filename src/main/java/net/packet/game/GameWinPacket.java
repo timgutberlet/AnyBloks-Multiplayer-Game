@@ -63,7 +63,7 @@ public class GameWinPacket extends Packet {
   /**
    * Getter.
    *
-   * @return
+   * @return gameList
    */
   public LinkedList<GameMode> getGameList() {
     return gameList;

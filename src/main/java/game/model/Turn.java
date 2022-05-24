@@ -74,6 +74,7 @@ public class Turn {
 
   /**
    * gets the poly as a poly square.
+   *
    * @return poly square
    */
   public PolySquare getPolySquare() {
@@ -86,6 +87,7 @@ public class Turn {
 
   /**
    * gets the poly as a poly trigon.
+   *
    * @return poly trigon
    */
   public PolyTrigon getPolyTrigon() {

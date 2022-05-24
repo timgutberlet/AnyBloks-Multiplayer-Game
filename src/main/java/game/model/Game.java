@@ -26,6 +26,7 @@ public class Game {
 
   /**
    * initializes a game.
+   *
    * @param gameSession referencing game session.
    * @param gamemode game mode that is played
    */
@@ -44,6 +45,7 @@ public class Game {
 
   /**
    * initializes a game.
+   *
    * @param gameSession referencing game session.
    * @param gamemode game mode that is played
    * @param isServer if it is the server
@@ -138,6 +140,7 @@ public class Game {
 
   /**
    * updates the game state.
+   *
    * @param gameState game state
    */
   public void updateGameState(GameState gameState) {
@@ -149,7 +152,8 @@ public class Game {
   }
 
   /**
-   * initializes the passed turns
+   * initializes the passed turns.
+   *
    */
   public void initPassedTurns() {
     for (Player p : this.gameState.getPlayerList()) {
@@ -159,6 +163,7 @@ public class Game {
 
   /**
    * increases the passed turns for the user.
+   *
    * @param username user
    */
   public void increasePassedTurns(String username) {
@@ -172,6 +177,7 @@ public class Game {
 
   /**
    * resets the passed turns.
+   *
    * @param username user
    */
   public void resetPassedTurns(String username) {
@@ -180,6 +186,7 @@ public class Game {
 
   /**
    * checks the passed turns.
+   *
    * @return if passed turns >= 3.
    */
   public boolean checkPassedTurns() {

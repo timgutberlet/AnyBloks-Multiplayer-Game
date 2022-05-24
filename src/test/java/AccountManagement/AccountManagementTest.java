@@ -19,7 +19,7 @@ import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
 import net.packet.account.DeleteAccountRequestPacket;
 import net.packet.account.UpdateAccountRequestPacket;
-import net.server.DbServer;
+import net.server.DBServer;
 import net.server.HashingHandler;
 import net.server.HostServer;
 import org.glassfish.jersey.jackson.JacksonFeature;
@@ -46,9 +46,9 @@ public class AccountManagementTest {
       e.printStackTrace();
     }
 
-    DbServer dbServer = null;
+    DBServer dbServer = null;
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

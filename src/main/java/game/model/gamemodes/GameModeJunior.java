@@ -2,6 +2,7 @@ package game.model.gamemodes;
 
 /**
  * represents the game mode junior.
+ *
  * @author tgeilen
  * @Date 21.03.22
  */

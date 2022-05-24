@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import game.scores.GameScoreBoard;
 import game.scores.GameSessionScoreBoard;
 import game.scores.ScoreProvider;
-import net.server.DbServer;
+import net.server.DBServer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -26,9 +26,9 @@ public class ScoreProviderTest {
 
   @Test
   public void testScoreProvider() {
-    DbServer dbServer = null;
+    DBServer dbServer = null;
     try {
-      dbServer = DbServer.getInstance();
+      dbServer = DBServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }

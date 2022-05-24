@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import net.packet.abstr.Packet;
 
 /**
+ * packet containing a list of all players.
+ *
  * @author tgeilen
  * @Date 17.05.22
  */
@@ -23,7 +25,7 @@ public class PlayerListPacket extends Packet {
   /**
    * constructor.
    *
-   * @param playerList
+   * @param playerList playerList
    */
   public PlayerListPacket(ArrayList<Player> playerList) {
     this.playerList = playerList;
@@ -37,7 +39,7 @@ public class PlayerListPacket extends Packet {
   /**
    * getter.
    *
-   * @return
+   * @return playerList
    */
   public ArrayList<Player> getPlayerList() {
     ArrayList playerList = this.playerList;
@@ -47,7 +49,7 @@ public class PlayerListPacket extends Packet {
   /**
    * getter.
    *
-   * @return
+   * @return hostPlayer
    */
   public Player getHost() {
     return this.host;

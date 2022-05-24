@@ -459,6 +459,7 @@ public class GameSession {
 
   /**
    * joins the local game.
+   *
    * @return gives back the resulting endpoint client
    */
   public EndpointClient joinLocalGame() {
@@ -470,9 +471,9 @@ public class GameSession {
 
     try {
 
-      String IpAdress = Inet4Address.getLocalHost().getHostAddress();
+      String ipAdress = Inet4Address.getLocalHost().getHostAddress();
 
-      ses = container.connectToServer(client, URI.create("ws://" + IpAdress + ":8081/packet"));
+      ses = container.connectToServer(client, URI.create("ws://" + ipAdress + ":8081/packet"));
 
       //Init session
       InitSessionPacket initSessionPacket = new InitSessionPacket();
@@ -575,7 +576,7 @@ public class GameSession {
   /**
    * returns teh current PlayerList.
    *
-   * @return ArrayList<Player> array list of the player
+   * @return array list of the player
    */
   public ArrayList<Player> getPlayerList() {
     return this.playerList;

@@ -3,13 +3,12 @@ package net.packet.abstr;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-
 /**
  * The class packets are wrapped in, when sent.
  *
  * @author tbuscher
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class WrappedPacket implements Serializable {
 
   /**
@@ -23,7 +22,7 @@ public class WrappedPacket implements Serializable {
   private String token;
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param type   of packet
    * @param packet to be sent
@@ -36,7 +35,7 @@ public class WrappedPacket implements Serializable {
   }
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param type   of packet
    * @param packet to be sent
@@ -49,14 +48,14 @@ public class WrappedPacket implements Serializable {
   }
 
   /**
-   * Constructor
+   * Constructor.
    */
   public WrappedPacket() {
   }
 
 
   /**
-   * Getter
+   * Getter.
    *
    * @return packet packet
    */

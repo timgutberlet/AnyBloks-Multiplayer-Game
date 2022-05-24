@@ -38,7 +38,12 @@ public class OutboundServerHandler {
 
 
   /**
-   * Constructor
+   * constructor.
+   *
+   * @param server server
+   * @param gameSession gameSession
+   *
+   * @author tgeilen
    */
   public OutboundServerHandler(EndpointServer server, GameSession gameSession) {
 
@@ -51,9 +56,9 @@ public class OutboundServerHandler {
   }
 
   /**
-   * send a REQUEST_TURN_PACKET to a client
+   * send a REQUEST_TURN_PACKET to a client.
    *
-   * @param username
+   * @param username username of player
    * @author tgeilen
    */
   public void requestTurn(String username) {
@@ -74,9 +79,9 @@ public class OutboundServerHandler {
 
 
   /**
-   * send GAME_START_PACKET to all clients
+   * send GAME_START_PACKET to all clients.
    *
-   * @param gameState
+   * @param gameState gameState
    * @tgeilen
    */
   public void sendGameStart(String username, GameState gameState) {
@@ -87,9 +92,9 @@ public class OutboundServerHandler {
   }
 
   /**
-   * broadcast GAME_START_PACKET to all clients
+   * broadcast GAME_START_PACKET to all clients.
    *
-   * @param gameState
+   * @param gameState gameState
    * @tgeilen
    */
   public void broadcastGameStart(GameState gameState) {
@@ -100,7 +105,7 @@ public class OutboundServerHandler {
   }
 
   /**
-   * broadcast GAME_UPDATE_PACKET to all clients
+   * broadcast GAME_UPDATE_PACKET to all clients.
    *
    * @author tgeilen
    */
@@ -178,7 +183,7 @@ public class OutboundServerHandler {
     }
     String gameMode = gameState.getGameMode().getName();
     try {
-      DbServer dbServer = DbServer.getInstance();
+      DBServer dbServer = DBServer.getInstance();
       //Insert the game and save its gameId
       gameId = dbServer.insertGame(gameMode);
       Debug.printMessage("Inserting game: " + gameId + gameMode);
@@ -218,7 +223,7 @@ public class OutboundServerHandler {
 
       //Saving the scores of the gameSession
       try {
-        DbServer dbServer = DbServer.getInstance();
+        DBServer dbServer = DBServer.getInstance();
         //Creating a new gameSessionScore
         String gameSessionScoreId = dbServer.insertGameSessionScore();
 
@@ -241,7 +246,8 @@ public class OutboundServerHandler {
   /**
    * broadcasts a chat to all clients.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
+   * @author tgeilen
    */
   public void broadcastChatMessage(WrappedPacket wrappedPacket) {
     this.server.broadcastMessage(wrappedPacket);
@@ -250,7 +256,8 @@ public class OutboundServerHandler {
   /**
    * kicks a player from the server.
    *
-   * @param username
+   * @param username username
+   * @author tgeilen
    */
   public void kickPlayer(String username) {
     PlayerKickPacket playerKickPacket = new PlayerKickPacket(username);

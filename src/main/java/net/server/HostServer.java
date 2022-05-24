@@ -35,8 +35,8 @@ public class HostServer {
    */
   public void startRestfulServer(int portNumber) throws Exception {
 
-    String IPAdress = Inet4Address.getLocalHost().getHostAddress();
-    URI baseUri = UriBuilder.fromUri("http://" + IPAdress + "/").port(portNumber).build();
+    String ipAdress = Inet4Address.getLocalHost().getHostAddress();
+    URI baseUri = UriBuilder.fromUri("http://" + ipAdress + "/").port(portNumber).build();
     ServerConfig config = new ServerConfig();
 
     try {
@@ -52,7 +52,7 @@ public class HostServer {
   }
 
   /**
-   * Start websockets on the webserver-
+   * Start websockets on the webserver.
    *
    * @param portNumber bind to specified port
    */
@@ -104,7 +104,7 @@ public class HostServer {
   }
 
   /**
-   * Stop the restful server
+   * Stop the restful server.
    */
   public void stopRestful() {
     if (restServer == null || !restServer.isRunning()) {

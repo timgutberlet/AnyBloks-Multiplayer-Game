@@ -10,55 +10,18 @@ import game.model.player.PlayerType;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+/**
+ * class used to locally run optimise the AI.
+ */
 public class MainT {
 
   /**
-   * a simple test class that shows how the domain works at the moment
+   * a simple test class that shows how the domain works at the moment.
    *
-   * @param args
+   * @param args String[]
    * @author tgeilen
    */
   public static void main(String[] args) {
-/*
-    GameSession gameSession = new GameSession();
-
-    gameSession.addPlayer(new Player("BOT1", PlayerType.AI_MIDDLE));
-    gameSession.addPlayer(new Player("BOT2", PlayerType.AI_MIDDLE));
-    gameSession.addPlayer(new Player("BOT3", PlayerType.AI_HARD));
-    gameSession.addPlayer(new Player("BOT4", PlayerType.AI_MIDDLE));
-
-    Game game = gameSession.startGame(new GMTrigon());
-
-//    while (game.getGameState().isStateRunning()) {
-//      Debug.printMessage(gameSession.toString());
-//      //game.makeMove();
-//    }
-
-    game.startGame();
-    while (game.getGameState().isStateRunning()) {
-      Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      Debug.printMessage(t1);
-      game.getGameState().playTurn(t1);
-      Debug.printMessage(game.getGameState().getBoard());
-
-      Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      Debug.printMessage(t2);
-      game.getGameState().playTurn(t2);
-      Debug.printMessage(game.getGameState().getBoard());
-
-      Turn t3 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      Debug.printMessage(t3);
-      game.getGameState().playTurn(t3);
-      Debug.printMessage(game.getGameState().getBoard());
-
-      Turn t4 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
-      Debug.printMessage(t4);
-      game.getGameState().playTurn(t4);
-      Debug.printMessage(game.getGameState().getBoard());
-    }
-    Debug.printMessage(game.getGameState().getRound());
-    gameSession.stopSession();*/
 
     int[] result = playClassicGame(true);
     Debug.printMessage("" + result);
@@ -91,7 +54,8 @@ public class MainT {
         }
         Ai.setRoundSections(0, new int[]{i, j});
         Ai.setRoundSections(3, new int[]{i, j});
-        long start = System.currentTimeMillis();
+        long start;
+        start = System.currentTimeMillis();
         int[] erg = playTrigonGame(false);
         resTrigon[i][j] = resTrigon[i][j] + erg[0] + erg[2] - erg[1] - erg[3];
         erg = playClassicGame(false);

@@ -57,7 +57,7 @@ public class ClientHandler {
   /**
    * initializes a new client handler out of the endpoint client.
    *
-   * @param client
+   * @param client Client
    */
   public ClientHandler(EndpointClient client) {
     this.client = client;
@@ -73,13 +73,10 @@ public class ClientHandler {
    */
   public void initLocalGame(Player localPlayer) {
 
-    TokenGenerationRessource tokenGenerationRessource = new TokenGenerationRessource();
 
-    String token = tokenGenerationRessource.issueToken(localPlayer.getUsername());
-
-    DbServer db = null;
+    DBServer db = null;
     try {
-      db = DbServer.getInstance();
+      db = DBServer.getInstance();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -91,6 +88,9 @@ public class ClientHandler {
     if (db.doesUserHaveAuthToken(localPlayer.getUsername())) {
       db.deleteAuthToken(localPlayer.getUsername());
     }
+
+    TokenGenerationRessource tokenGenerationRessource = new TokenGenerationRessource();
+    String token = tokenGenerationRessource.issueToken(localPlayer.getUsername());
 
     db.insertAuthToken(localPlayer.getUsername(), token);
 
@@ -106,8 +106,8 @@ public class ClientHandler {
   /**
    * initializes a local game out of the local player and its ip.
    *
-   * @param localPlayer
-   * @param ip
+   * @param localPlayer LocalPlayer
+   * @param ip Ip
    */
   public void initLocalGame(Player localPlayer, String ip) {
     String token = "";
@@ -117,9 +117,9 @@ public class ClientHandler {
   /**
    * initializes a local game out of a local player and its ip as well as its token.
    *
-   * @param localPlayer
-   * @param ip
-   * @param token
+   * @param localPlayer LocalPlayer
+   * @param ip  Ip
+   * @param token token
    */
   public void initLocalGame(Player localPlayer, String ip, String token) {
 
@@ -135,9 +135,9 @@ public class ClientHandler {
 
     try {
 
-      String IPAdress = ip;
+      String ipAdress = ip;
 
-      ses = container.connectToServer(this.client, URI.create("ws://" + IPAdress + ":8081/packet"));
+      ses = container.connectToServer(this.client, URI.create("ws://" + ipAdress + ":8081/packet"));
       this.session = ses;
       TimeUnit.MILLISECONDS.sleep(150);
 
@@ -174,9 +174,9 @@ public class ClientHandler {
   }
 
   /**
-   * function called on client side to send INIT GAME PACKET TO SERVER
+   * function called on client side to send INIT GAME PACKET TO SERVER.
    *
-   * @param gameModes
+   * @param gameModes gameModes
    */
   public void startLocalGame(LinkedList<GameMode> gameModes, LinkedList<PlayerType> playerTypes) {
     InitGamePacket initGamePacket = new InitGamePacket(gameModes, playerTypes);
@@ -188,12 +188,12 @@ public class ClientHandler {
   }
 
   /**
-   * function called on client side to send INIT GAME PACKET TO SERVER
+   * function called on client side to send INIT GAME PACKET TO SERVER.
    *
-   * @param gameModes
+   * @param gameModes gameMOdes
    */
-  public void startLocalGame(LinkedList<GameMode> gameModes, PlayerType defaultAI) {
-    InitGamePacket initGamePacket = new InitGamePacket(gameModes, defaultAI);
+  public void startLocalGame(LinkedList<GameMode> gameModes, PlayerType defaultAi) {
+    InitGamePacket initGamePacket = new InitGamePacket(gameModes, defaultAi);
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
 
     this.client.sendToServer(wrappedPacket);
@@ -202,9 +202,9 @@ public class ClientHandler {
   }
 
   /**
-   * function called on client side to send INIT GAME PACKET TO SERVER
+   * function called on client side to send INIT GAME PACKET TO SERVER.
    *
-   * @param gameModes
+   * @param gameModes gameModes
    */
   public void startLocalGame(LinkedList<GameMode> gameModes) {
     InitGamePacket initGamePacket = new InitGamePacket(gameModes);
@@ -219,7 +219,7 @@ public class ClientHandler {
   /**
    * function that starts a game on the client side.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @author tgeilen
    */
   public void startGame(WrappedPacket wrappedPacket) {
@@ -233,9 +233,9 @@ public class ClientHandler {
   }
 
   /**
-   * function that calls the client to make a turn and sends it to serve
+   * function that calls the client to make a turn and sends it to serve.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @author tgeilen
    */
   public void makeTurn(WrappedPacket wrappedPacket) {
@@ -282,7 +282,7 @@ public class ClientHandler {
   /**
    * sends the turn to the server.
    *
-   * @param turn
+   * @param turn turn
    */
   public void sendTurn(Turn turn) {
     TurnPacket turnPacket = new TurnPacket(player.getUsername(), turn);
@@ -294,7 +294,7 @@ public class ClientHandler {
   /**
    * updates the gameState for the local client.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    */
   public void updateGame(WrappedPacket wrappedPacket) {
     GameUpdatePacket gameUpdatePacket = (GameUpdatePacket) wrappedPacket.getPacket();
@@ -312,7 +312,7 @@ public class ClientHandler {
   /**
    * end a local game.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @author tgeilen
    */
   public void endGame(WrappedPacket wrappedPacket) {
@@ -327,11 +327,7 @@ public class ClientHandler {
   }
 
   /**
-   * Called if a HostQuitPacket is received. Sends the player back to the lobby. TODOKICK: resets
-   * the local gameSession? is LocalPlayer relevant here?
-   * <p>
-   * lass uns das nicht hier machen. Wenn wir den Endpoint killen, sind auch alle lokal
-   * gespeicherten variablen weg
+   * Called if a HostQuitPacket is received. Sends the player back to the lobby.
    */
   public void handleHostQuit() {
     if (!player.getType().equals(PlayerType.HOST_PLAYER)) {
@@ -343,7 +339,7 @@ public class ClientHandler {
   /**
    * Receives a wrapped LobbyScoreBoard and sets the received it in the gameSession.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    */
   public void handleLobbyScoreBoardPacket(WrappedPacket wrappedPacket) {
     LobbyScoreBoardPacket lobbyScoreBoardPacket = (LobbyScoreBoardPacket) wrappedPacket.getPacket();
@@ -352,6 +348,8 @@ public class ClientHandler {
 
   /**
    * save a ChatMessage in the chat.
+   *
+   * @param  wrappedPacket wrappedPacket
    */
   public void saveChatMessage(WrappedPacket wrappedPacket) {
     ChatMessagePacket chatMessagePacket = (ChatMessagePacket) wrappedPacket.getPacket();
@@ -362,7 +360,7 @@ public class ClientHandler {
   /**
    * updates the player list out of the player list packet.
    *
-   * @param wrappedPacket player list packet
+   *  @param  wrappedPacket player list packet
    */
   public void updatePlayerList(WrappedPacket wrappedPacket) {
     PlayerListPacket playerListPacket = (PlayerListPacket) wrappedPacket.getPacket();
@@ -395,6 +393,12 @@ public class ClientHandler {
 
   }
 
+
+  /**
+   * kicks a client from the server and removes all connections.
+   *
+   * @param player Player
+   */
   public void kickClient(Player player) {
     PlayerKickPacket playerKickPacket = new PlayerKickPacket(player.getUsername());
     WrappedPacket wrappedPacket = new WrappedPacket(PacketType.PLAYER_KICK_PACKET,
@@ -403,6 +407,11 @@ public class ClientHandler {
     this.client.sendToServer(wrappedPacket);
   }
 
+  /**
+   * disconnects a dlient from the server and closes all connections.
+   *
+   *  @param packet wrappedPacket
+   */
   public void disconnectClient(WrappedPacket packet) {
     PlayerKickPacket playerKickPacket = (PlayerKickPacket) packet.getPacket();
 

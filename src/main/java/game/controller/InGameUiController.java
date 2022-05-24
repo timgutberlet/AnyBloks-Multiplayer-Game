@@ -907,10 +907,10 @@ public abstract class InGameUiController extends AbstractUiController {
               //Check collision fields to paint them afterwards
               for (Field field : boardPane.getCheckFields()) {
                 if (game.getGamemode().getName().equals("TRIGON")) {
-                  boardPane.resetCheckFieldColor(field.getX(), field.getY(),
+                  boardPane.resetCheckFieldColor(field.getXcord(), field.getYcord(),
                       ((TrigonField) field).getIsRight());
                 } else {
-                  boardPane.resetCheckFieldColor(field.getX(), field.getY());
+                  boardPane.resetCheckFieldColor(field.getXcord(), field.getYcord());
                 }
                 Bounds boardBounds = field.localToScene(field.getBoundsInParent());
                 if (polyBounds.intersects(boardBounds)) {
@@ -926,15 +926,15 @@ public abstract class InGameUiController extends AbstractUiController {
                     addIsRight = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0)
                         .getPos()[2];
                     pos = new int[3];
-                    pos[0] = field.getX() + addX;
-                    pos[1] = field.getY() + addY;
+                    pos[0] = field.getXcord() + addX;
+                    pos[1] = field.getYcord() + addY;
                     pos[2] = addIsRight;
                   } else {
                     addX = ((PolySquare) dragablePolyPane.getPoly()).getShape().get(0).getPos()[0];
                     addY = ((PolySquare) dragablePolyPane.getPoly()).getShape().get(0).getPos()[1];
                     pos = new int[2];
-                    pos[0] = field.getX() + addX;
-                    pos[1] = field.getY() + addY;
+                    pos[0] = field.getXcord() + addX;
+                    pos[1] = field.getYcord() + addY;
                   }
                   //Show that a poly is possible and paint it yellow
                   if (game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(),
@@ -943,7 +943,8 @@ public abstract class InGameUiController extends AbstractUiController {
                     dragablePolyPane.inncerCircleSetColor();
                     currentIntersection = true;
                     dragablePolyPane.rerender();
-                    //When enter was pressed on possible Poly, put it into a right turn and send to server
+                    //When enter was pressed on possible Poly, put it into a
+                    // right turn and send to server
                     if (inputHandler.isKeyPressed(KeyCode.ENTER) || inputHandler.isKeyPressed(
                         KeyCode.SPACE) || submitRequested) {
                       errorLabelText = "";

@@ -15,8 +15,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 /**
  * this class represents the current state of one specific game.
+ *
  * @author tiotto
  */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 
@@ -496,7 +498,8 @@ public class GameState implements Serializable, Cloneable {
   @Override
   public GameState clone() {
     ArrayList<ArrayList<Poly>> remainingPolysCopy = new ArrayList<>();
-    Board boardCopy = this.board.clone();
+    Board boardCopy;
+    boardCopy = this.board.clone();
     for (ArrayList<Poly> polys : this.remainingPolys) {
       ArrayList<Poly> polysCopy = new ArrayList<>();
       for (Poly p : polys) {

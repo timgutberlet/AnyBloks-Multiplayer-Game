@@ -253,7 +253,7 @@ public class EndpointClient {
   /**
    * function to easily send packets to server from bot.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @author tgeilen
    */
   public void sendToServer(WrappedPacket wrappedPacket, String botUsername) {
@@ -275,7 +275,7 @@ public class EndpointClient {
   /**
    * function to easily send packets to server.
    *
-   * @param wrappedPacket
+   * @param wrappedPacket wrappedPacket
    * @author tgeilen
    */
   public void sendToServer(WrappedPacket wrappedPacket) {
@@ -297,7 +297,7 @@ public class EndpointClient {
   /**
    * getter.
    *
-   * @return
+   * @return gameSession
    */
   public GameSession getGameSession() {
     return gameSession;
@@ -306,7 +306,7 @@ public class EndpointClient {
   /**
    * setter.
    *
-   * @param gameSession
+   * @param gameSession gameSession
    */
   public void setGameSession(GameSession gameSession) {
     this.gameSession = gameSession;
@@ -315,7 +315,7 @@ public class EndpointClient {
   /**
    * getter.
    *
-   * @return
+   * @return Player
    */
   public Player getPlayer() {
     return player;
@@ -324,7 +324,7 @@ public class EndpointClient {
   /**
    * setter.
    *
-   * @param player
+   * @param player Player
    */
   public void setPlayer(Player player) {
     this.player = player;
@@ -333,7 +333,7 @@ public class EndpointClient {
   /**
    * getter.
    *
-   * @return
+   * @return Clienthandler
    */
   public ClientHandler getClientHandler() {
     return this.clientHandler;

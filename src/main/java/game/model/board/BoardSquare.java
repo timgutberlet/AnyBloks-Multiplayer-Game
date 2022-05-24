@@ -502,7 +502,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   /**
    * this method gives back a list of the possible positions and the specific placement of possible
-   * placements of a given polygon represented by a list of turns
+   * placements of a given polygon represented by a list of turns.
    *
    * @param poly         the given polygon
    * @param isFirstRound boolean, if it is the firstRound

@@ -26,7 +26,10 @@ import net.packet.game.PlayerQuitPacket;
 import net.packet.game.RequestTurnPacket;
 import net.packet.game.TurnPacket;
 
-
+/**
+ * parent class for all packets.
+ * @author tbuscher
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({@JsonSubTypes.Type(value = ChatMessagePacket.class, name = "ChatMessage"),
@@ -54,11 +57,6 @@ import net.packet.game.TurnPacket;
     @JsonSubTypes.Type(value = PlayerListPacket.class, name = "PlayerListPacket"),
     @JsonSubTypes.Type(value = CheckConnectionPacket.class, name = "CheckConnectionPacketPacket")})
 
-/**
- * Parent class for Packets
- *
- * @author tbuscher
- */
 public abstract class Packet {
 
 

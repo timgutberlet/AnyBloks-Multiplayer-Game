@@ -16,9 +16,9 @@ public class PlayerOrderPacket extends Packet {
   }
 
   /**
-   * Constructor
+   * constructor.
    *
-   * @param playerOrder
+   * @param playerOrder playerOrder
    */
   public PlayerOrderPacket(HashMap<String, Integer> playerOrder) {
     this.playerOrder = playerOrder;
@@ -26,7 +26,9 @@ public class PlayerOrderPacket extends Packet {
 
 
   /**
-   * Getter
+   * Getter.
+   *
+   * @return playerOrder
    */
   public HashMap<String, Integer> getPlayerOrder() {
     return playerOrder;

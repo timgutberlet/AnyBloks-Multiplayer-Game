@@ -3,14 +3,16 @@ package net.tests;
 import org.eclipse.jetty.util.log.Logger;
 
 /**
- * @author tgeilen CC stackoverflow
+ * can be used to turn of logs.
+ *
+ * @author tgeilen
  * @Date 10.05.22
  */
 public class NoLogging implements Logger {
 
   @Override
   public String getName() {
-    return "no";
+    return null;
   }
 
   @Override
