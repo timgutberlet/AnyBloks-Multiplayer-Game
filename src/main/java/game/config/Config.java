@@ -18,20 +18,20 @@ import java.util.Properties;
 public class Config {
 
   /**
-   * Path of config.properties path
+   * Path of config.properties path.
    */
   private static final String configPath = "./bloks3/config.properties";
   /**
-   * Folderpath to build Folder
+   * Folderpath to build Folder.
    */
   private static final String folderPath = "./bloks3/";
   /**
-   * Properties Object, which will be used locally in the Class
+   * Properties Object, which will be used locally in the Class.
    */
   private static final Properties property = new Properties();
 
   /**
-   * Make Config private
+   * Make Config private.
    */
   private Config() {
 
@@ -39,7 +39,7 @@ public class Config {
 
   /**
    * Void Method that loads the value of the StandardConfig Java Class. Will mainly be used, if the
-   * Config File does not exist or if a reset is done
+   * Config File does not exist or if a reset is done.
    */
   public static void loadStandardConfig() {
     for (int i = 0; i < StandardConfig.standardConfig.length; i++) {
@@ -49,7 +49,7 @@ public class Config {
   }
 
   /**
-   * Returns value of Config, as String
+   * Returns value of Config, as String.
    *
    * @param name String for that the value should be returned of
    * @return value
@@ -71,20 +71,20 @@ public class Config {
   }
 
   /**
-   * Getter for intValues
+   * Getter for intValues.
    *
-   * @param name
-   * @return
+   * @param name name
+   * @return parsed value
    */
   public static Integer getIntValue(String name) {
     return Integer.parseInt(getStringValue(name));
   }
 
   /**
-   * Getter for BooleanValues
+   * Getter for BooleanValues.
    *
-   * @param name
-   * @return
+   * @param name name
+   * @return parsed value
    */
   public static Boolean getBooleanValue(String name) {
     return Boolean.parseBoolean(getStringValue(name));
@@ -99,6 +99,7 @@ public class Config {
       property.store(outStream, "File for Config values");
       outStream.close();
     } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
@@ -137,7 +138,7 @@ public class Config {
   }
 
   /**
-   * The Method is used to store Config Values
+   * The Method is used to store Config Values.
    *
    * @param key   Identifier
    * @param value String value to store
@@ -147,7 +148,7 @@ public class Config {
   }
 
   /**
-   * The Method is used to store Config Values
+   * The Method is used to store Config Values.
    *
    * @param key   Identifier
    * @param value Int value to store
@@ -157,7 +158,7 @@ public class Config {
   }
 
   /**
-   * The Method is used to store Config Values
+   * The Method is used to store Config Values.
    *
    * @param key   Identifier
    * @param value Double value to store
@@ -167,7 +168,7 @@ public class Config {
   }
 
   /**
-   * The Method is used to store Config Values
+   * The Method is used to store Config Values.
    *
    * @param key   Identifier
    * @param value Boolean value to store

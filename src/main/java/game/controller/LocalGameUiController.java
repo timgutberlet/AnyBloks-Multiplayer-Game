@@ -12,7 +12,7 @@ import game.model.GameSession;
 public class LocalGameUiController extends InGameUiController {
 
   /**
-   * Construcor
+   * Constructor.
    *
    * @param gameController Gamecontroller class
    * @param game           Game input

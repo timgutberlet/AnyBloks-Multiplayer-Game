@@ -86,7 +86,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   private final ClientHandler clientHandler;
   /**
-   * Button to start Game
+   * Button to start Game.
    */
   @FXML
   Button playButton;
@@ -111,7 +111,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   @FXML
   Text gamemodeError;
   /**
-   * Rectangle used to disable Ui
+   * Rectangle used to disable Ui.
    */
   private Rectangle disableUi;
   /**
@@ -232,6 +232,8 @@ public class LocalLobbyUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
+        default:
+          break;
       }
       youPlayer.setText(Config.getStringValue("HOSTPLAYER"));
     } catch (IOException e) {
@@ -283,6 +285,8 @@ public class LocalLobbyUiController extends AbstractUiController {
         case "Godlike":
           aiPlayers.add(PlayerType.AI_GODLIKE);
           break;
+        default:
+          break;
       }
     }
     if (!player2.getText().equals("-")) {
@@ -298,6 +302,8 @@ public class LocalLobbyUiController extends AbstractUiController {
           break;
         case "Godlike":
           aiPlayers.add(PlayerType.AI_GODLIKE);
+          break;
+        default:
           break;
       }
     }
@@ -315,6 +321,8 @@ public class LocalLobbyUiController extends AbstractUiController {
           break;
         case "Godlike":
           aiPlayers.add(PlayerType.AI_GODLIKE);
+          break;
+        default:
           break;
       }
     }
@@ -353,6 +361,7 @@ public class LocalLobbyUiController extends AbstractUiController {
         default:
           ErrorMessageHandler.showErrorMessage("No GameMode was selected");
           error = true;
+          break;
       }
     }
 
@@ -394,7 +403,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to initializing Gamemode Combobox
+   * Method to initializing Gamemode Combobox.
    *
    * @param comboBox box
    * @author tgutberl
@@ -406,7 +415,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to add a round
+   * Method to add a round.
    *
    * @author tgutberl
    */
@@ -416,20 +425,20 @@ public class LocalLobbyUiController extends AbstractUiController {
       gamemodeError.setText("");
     }
     round++;
-    HBox hBox = new HBox();
-    hBox.setAlignment(Pos.CENTER);
+    HBox hbox = new HBox();
+    hbox.setAlignment(Pos.CENTER);
     ComboBox<String> comboBox = new ComboBox<>();
     comboBox.setPrefWidth(150);
     comboBox.setPrefHeight(25);
     initializeComboBox(comboBox);
     roundCount.setText("" + round);
-    hBox.getChildren().add(comboBox);
+    hbox.getChildren().add(comboBox);
     rounds.add(comboBox);
-    box.getChildren().add(hBox);
+    box.getChildren().add(hbox);
   }
 
   /**
-   * Method to delete a round
+   * Method to delete a round.
    *
    * @author tgutberl
    */
@@ -446,7 +455,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to increase difficulty of first Ai
+   * Method to increase difficulty of first Ai.
    *
    * @author tgutberl
    */
@@ -457,7 +466,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to increase difficulty of second Ai
+   * Method to increase difficulty of second Ai.
    *
    * @author tgutberl
    */
@@ -468,7 +477,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to increase difficulty of third Ai
+   * Method to increase difficulty of third Ai.
    *
    * @author tgutberl
    */
@@ -479,7 +488,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to decrease difficulty of first Ai
+   * Method to decrease difficulty of first Ai.
    *
    * @author tgutberl
    */
@@ -490,7 +499,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to decrease difficulty of second Ai
+   * Method to decrease difficulty of second Ai.
    *
    * @author tgutberl
    */
@@ -501,7 +510,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to decrease difficulty of third Ai
+   * Method to decrease difficulty of third Ai.
    *
    * @author tgutberl
    */
@@ -512,7 +521,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to initialize Gamemodes
+   * Method to initialize Gamemodes.
    *
    * @author tgutberl
    */
@@ -525,7 +534,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to increase Ai difficulty
+   * Method to increase Ai difficulty.
    *
    * @param difficultyPlayer difficulty
    * @param name             name of Ai
@@ -554,12 +563,14 @@ public class LocalLobbyUiController extends AbstractUiController {
           difficultyPlayer.setText("None");
           player.setText("-");
           break;
+        default:
+          break;
       }
     }
   }
 
   /**
-   * Method to decrease Ai difficulty
+   * Method to decrease Ai difficulty.
    *
    * @param difficultyPlayer difficulty
    * @param name             name of Ai
@@ -584,6 +595,8 @@ public class LocalLobbyUiController extends AbstractUiController {
         difficultyPlayer.setText("Hard");
         player.setText(name);
         break;
+      default:
+        break;
     }
   }
 
@@ -599,7 +612,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Override onExit Method
+   * Override onExit Method.
    *
    * @author tgutberl
    */
@@ -609,10 +622,10 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Update Method used for starting game when server messages
+   * Update Method used for starting game when server messages.
    *
-   * @param gameController
-   * @param deltaTime
+   * @param gameController gameController
+   * @param deltaTime deltaTime
    * @author tgutberl
    */
   @Override
@@ -628,7 +641,7 @@ public class LocalLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Override Update Method
+   * Override Update Method.
    *
    * @param gameController GameController of game
    */

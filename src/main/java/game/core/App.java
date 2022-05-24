@@ -21,7 +21,7 @@ public class App extends Application {
   }
 
   /**
-   * Method used to stop the Application
+   * Method used to stop the Application.
    *
    * @author tgutberl
    */

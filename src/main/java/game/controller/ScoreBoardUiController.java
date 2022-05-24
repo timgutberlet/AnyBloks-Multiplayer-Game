@@ -27,7 +27,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- * Class that controls the Scoreboard View
+ * Class that controls the Scoreboard View.
  *
  * @author lbaudenb
  */
@@ -84,6 +84,12 @@ public class ScoreBoardUiController extends AbstractUiController {
   @FXML
   private HBox buttonBox;
 
+  /**
+   * Constructor
+   *
+   * @param gameController gameController
+   * @param gameSession gameSession
+   */
   public ScoreBoardUiController(AbstractGameController gameController, GameSession gameSession) {
     super(gameController);
     this.gameController = gameController;
@@ -91,6 +97,9 @@ public class ScoreBoardUiController extends AbstractUiController {
     this.init(super.root);
   }
 
+  /**
+   * Method for sorting the score board by score.
+   */
   public static void sortScoreBoard(GameSession gameSession) {
     List<Map.Entry<String, Integer>> list0
         = new ArrayList<Entry<String, Integer>>(
@@ -155,6 +164,8 @@ public class ScoreBoardUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
+        default:
+          break;
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -174,8 +185,8 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @FXML
   public void nextRound() {
-    if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER) &&
-        this.gameSession.getGameList().size() > 0) {
+    if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)
+        && this.gameSession.getGameList().size() > 0) {
       this.gameSession.getClientHandler().startLocalGame(this.gameSession.getGameList());
     }
   }
@@ -221,24 +232,24 @@ public class ScoreBoardUiController extends AbstractUiController {
 
     if (gameSession.isMultiRound()) {
 
-      VBox vBox = new VBox();
-      vBox.setAlignment(Pos.CENTER);
-      vBox.setFillWidth(true);
+      VBox vbox = new VBox();
+      vbox.setAlignment(Pos.CENTER);
+      vbox.setFillWidth(true);
       Label label0 = new Label();
       label0.setText("Leaderboard");
       label0.setFont(Font.font("System", 40));
       Label label1 = new Label();
       label1.setText("Games played: " + gameSession.getGameSessionScoreBoard().gamesPlayed);
       label1.setFont(Font.font("System", 24));
-      vBox.getChildren().add(label0);
-      vBox.getChildren().add(label1);
+      vbox.getChildren().add(label0);
+      vbox.getChildren().add(label1);
 
       for (int i = 0; i < 4; i++) {
 
-        HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setSpacing(20);
-        hBox.setPrefHeight(80);
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(20);
+        hbox.setPrefHeight(80);
         Text name = new Text();
         Text score = new Text();
 
@@ -275,14 +286,16 @@ public class ScoreBoardUiController extends AbstractUiController {
             score.setFill(Color.WHITE);
             score.setFont(Font.font("System", 30));
             break;
+          default:
+            break;
         }
 
-        hBox.getChildren().add(name);
-        hBox.getChildren().add(score);
-        vBox.getChildren().add(hBox);
+        hbox.getChildren().add(name);
+        hbox.getChildren().add(score);
+        vbox.getChildren().add(hbox);
       }
       board.getChildren().remove(line);
-      board.getChildren().add(vBox);
+      board.getChildren().add(vbox);
 
       if (gameSession.getLocalPlayer().equals(gameSession.getHostPlayer())) {
         Button button = new Button();
@@ -315,6 +328,8 @@ public class ScoreBoardUiController extends AbstractUiController {
         case 3:
           userMessage.setText("Keep going!");
           break;
+        default:
+          break;
       }
     } else {
       switch (overall) {
@@ -327,6 +342,8 @@ public class ScoreBoardUiController extends AbstractUiController {
           break;
         case 3:
           userMessage.setText("Better luck next time!");
+          break;
+        default:
           break;
       }
     }

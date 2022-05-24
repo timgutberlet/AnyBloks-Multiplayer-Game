@@ -74,6 +74,8 @@ public class KickInfoUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
+        default:
+          break;
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -107,7 +109,7 @@ public class KickInfoUiController extends AbstractUiController {
   }
 
   /**
-   * Override onExit Method
+   * Override onExit Method.
    *
    * @author tgutberl
    */
@@ -117,7 +119,7 @@ public class KickInfoUiController extends AbstractUiController {
   }
 
   /**
-   * Override Update Method
+   * Override Update Method.
    *
    * @param gameController GameController of game
    * @author tgutberl
@@ -128,7 +130,7 @@ public class KickInfoUiController extends AbstractUiController {
   }
 
   /**
-   * Override Initalize
+   * Override Initalize.
    *
    * @author tgutberl
    */

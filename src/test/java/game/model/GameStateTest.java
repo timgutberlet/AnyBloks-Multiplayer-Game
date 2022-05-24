@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import game.model.gamemodes.GMClassic;
-import game.model.player.AI;
+import game.model.player.Ai;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import org.junit.jupiter.api.Test;
@@ -35,13 +35,13 @@ class GameStateTest {
     int i = 0;
     while (game.getGameState().isStateRunning() && i < 40) {
       game.getGameState()
-          .playTurn(AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer()));
+          .playTurn(Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer()));
       i++;
     }
     assertFalse(game.getGameState().checkEnd());
     while (game.getGameState().isStateRunning()) {
       game.getGameState()
-          .playTurn(AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer()));
+          .playTurn(Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer()));
     }
     assertTrue(game.getGameState().checkEnd());
   }

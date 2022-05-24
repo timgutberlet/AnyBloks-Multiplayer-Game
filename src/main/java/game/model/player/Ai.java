@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author tiotto
  */
 
-public class AI {
+public class Ai {
 
   static int[][] roundSections = new int[][]{{5, 20}, //Classic Gamemode
       {2, 16}, //Duo Gamemode
@@ -51,7 +51,7 @@ public class AI {
   }
 
   /**
-   * chooses out of the possible next moves a random one
+   * chooses out of the possible next moves a random one.
    *
    * @param board          considered board
    * @param remainingPolys remaining polys of the player which the calculation is for
@@ -174,13 +174,15 @@ public class AI {
       case "TRIGON":
         gameModeNumber = 3;
         break;
+      default:
+        break;
     }
     if (gameState.getRound() < roundSections[gameModeNumber][0] + 1) {
       return calculateNextHardMoveRoomDiscovery(gameState, player);
     } else if (gameState.getRound() < roundSections[gameModeNumber][1] + 1) {
       return calculateNextHardMoveAggressive(gameState, player);
     } else {
-      return calculateNextHardMoveMCTS(gameState, player);
+      return calculateNextHardMoveMcts(gameState, player);
     }
   }
 
@@ -262,18 +264,18 @@ public class AI {
   }
 
   /**
-   * calculates the next move, which is calculated by the monte carlo tree search
+   * calculates the next move, which is calculated by the monte carlo tree search.
    *
    * @param gameState current state
    * @param player    ai player which needs to play
    * @return "best" turn
    */
-  public static Turn calculateNextHardMoveMCTS(GameState gameState, Player player) {
+  public static Turn calculateNextHardMoveMcts(GameState gameState, Player player) {
     return MonteCarloTreeSearch.findNextMove(gameState);
   }
 
   /**
-   * calculates the next move, which is calculated by the minimax algorithm
+   * calculates the next move, which is calculated by the minimax algorithm.
    *
    * @param gameState current state
    * @param player    ai player which needs to play
@@ -284,7 +286,7 @@ public class AI {
   }
 
   /**
-   * sets the round sections for a specific game mode
+   * sets the round sections for a specific game mode.
    *
    * @param a     number of the game mode
    * @param value new round sections

@@ -54,7 +54,10 @@ public class CreateAccountController extends AbstractUiController {
    * 2 Password Fields for used to setting the password and also for comapring the two.
    */
   @FXML
-  PasswordField passwordField1, passwordField2;
+  PasswordField passwordField1;
+
+  @FXML
+  PasswordField passwordField2;
   /**
    * Error Variables used for informing the Player of wrong input.
    */

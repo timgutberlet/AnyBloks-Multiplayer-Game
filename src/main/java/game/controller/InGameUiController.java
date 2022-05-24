@@ -244,8 +244,10 @@ public abstract class InGameUiController extends AbstractUiController {
         ColorHandler.whiteMode = false;
     }
 
-    double width = stage.getWidth();
-    double height = stage.getHeight();
+    double width;
+    width = stage.getWidth();
+    double height;
+    height = stage.getHeight();
 
     container = new VBox();
     container.setTranslateY(110);
@@ -283,7 +285,8 @@ public abstract class InGameUiController extends AbstractUiController {
     int i = 0;
     int playerSize = game.getPlayers().size();
     for (Player p : this.gameSession.getPlayerList()) {
-      VBox vbox = new VBox();
+      VBox vbox;
+      vbox = new VBox();
       Label name = new Label(p.getUsername());
       name.setTextFill(ColorHandler.getJavaColor(game.getGameState().getColorFromPlayer(p)));
       name.setFont(Font.font("System", 20));
@@ -350,6 +353,7 @@ public abstract class InGameUiController extends AbstractUiController {
             score.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #fff44f;");
           }
+          break;
         default:
           break;
       }
@@ -379,7 +383,8 @@ public abstract class InGameUiController extends AbstractUiController {
     row.setPrefHeight(100);
     scorePane.getRowConstraints().add(row);
 
-    VBox vbox = new VBox();
+    VBox vbox;
+    vbox = new VBox();
     turn = new Label("");
     turn.setFont(Font.font("System", 30));
     turn.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 10;");
@@ -634,12 +639,62 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   /**
-   * function that updates the screen and calls the next move to be made
+   * Method repaints the BoardPane.
+   */
+  public void repaintBoardPane() {
+    if (possibleFields != null) {
+      for (int[] coords : possibleFields) {
+        switch (dragablePolyPane.getPoly().getColor().toString()) {
+          case "RED":
+            color = Color.RED;
+            break;
+          case "BLUE":
+            color = Color.BLUE;
+            break;
+          case "GREEN":
+            color = Color.GREEN;
+            break;
+          case "YELLOW":
+            color = Color.YELLOW;
+            break;
+          default:
+            color = Color.BLACK;
+        }
+        if (game.getGamemode().getName().equals("TRIGON")) {
+          boardPane.setCheckFieldColor(color, coords[0], coords[1], coords[2]);
+        } else {
+          boardPane.setCheckFieldColor(color, coords[0], coords[1]);
+        }
+      }
+    }
+    this.boardPane.repaint(game.getGameState().getBoard());
+  }
+
+  /**
+   * Paints all possible Fields for a move by the player.
+   *
+   * @param dragablePolyPane dragablePolyPane
+   */
+  public void paintPossibleFields(DragablePolyPane dragablePolyPane) {
+    possibleFields = game.getGameState().getBoard()
+        .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
+            game.getGameState().isFirstRound());
+  }
+
+  /**
+   * Handles Button Submit Request of DraggablePolyPane.
+   *
+   * @author tgutberl
+   */
+  public void setSubmitRequested() {
+    this.submitRequested = true;
+  }
+
+  /**
+   * function that updates the screen and calls the next move to be made.
    *
    * @param gameController gameController
    * @param deltaTime deltaTime
-   * @author //TODO hier die klasse hat jemand anders geschrieben. ich habe nur paar changes
-   * gemacht. echter autor am besten noch dazu schreiben
    * @author tgeilen
    */
   @Override
@@ -922,7 +977,7 @@ public abstract class InGameUiController extends AbstractUiController {
           }
 
           //If localPlayer has selected a Poly, check if he also already click on the Board
-        /*
+          /*
           if (localPlayer.getSelectedPoly() != null) {
           localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
           Debug.out.println("Localplayer Selected Poly");
@@ -969,56 +1024,15 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   /**
-   * Method repaints the BoardPane
-   */
-  public void repaintBoardPane() {
-    if (possibleFields != null) {
-      for (int[] coords : possibleFields) {
-        switch (dragablePolyPane.getPoly().getColor().toString()) {
-          case "RED":
-            color = Color.RED;
-            break;
-          case "BLUE":
-            color = Color.BLUE;
-            break;
-          case "GREEN":
-            color = Color.GREEN;
-            break;
-          case "YELLOW":
-            color = Color.YELLOW;
-            break;
-          default:
-            color = Color.BLACK;
-        }
-        if (game.getGamemode().getName().equals("TRIGON")) {
-          boardPane.setCheckFieldColor(color, coords[0], coords[1], coords[2]);
-        } else {
-          boardPane.setCheckFieldColor(color, coords[0], coords[1]);
-        }
-      }
-    }
-    this.boardPane.repaint(game.getGameState().getBoard());
-  }
-
-  /**
-   * Paints all possible Fields for a move by the player.
-   * @param dragablePolyPane dragablePolyPane
-   */
-  public void paintPossibleFields(DragablePolyPane dragablePolyPane) {
-    possibleFields = game.getGameState().getBoard()
-        .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
-            game.getGameState().isFirstRound());
-  }
-
-  /**
-   * Handles Button Submit Request of DraggablePolyPane.
+   * Method used to update the current frame.
    *
+   * @param gameController GameController of game
    * @author tgutberl
    */
-  public void setSubmitRequested() {
-    this.submitRequested = true;
-  }
+  @Override
+  public void update(AbstractGameController gameController) {
 
+  }
 
   /**
    * Exit Method given by Abstract Class.
@@ -1036,17 +1050,6 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   @Override
   public void init(Group root) {
-
-  }
-
-  /**
-   * Method used to update the current frame.
-   *
-   * @param gameController GameController of game
-   * @author tgutberl
-   */
-  @Override
-  public void update(AbstractGameController gameController) {
 
   }
 

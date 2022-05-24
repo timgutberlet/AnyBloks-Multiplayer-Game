@@ -51,15 +51,35 @@ public class EditAccountController extends AbstractUiController {
   @FXML
   TextField usernameField;
   /**
-   * Textfield used for password input and comparing.
+   * Textfield used for password input and comparing (old).
    */
   @FXML
-  PasswordField oldPasswordField, newPasswordField;
+  PasswordField oldPasswordField;
+  /**
+   * Textfield used for password input and comparing (new).
+   */
+  @FXML
+  PasswordField newPasswordField;
   /**
    * Error Labels used for informing user of errors.
    */
   @FXML
-  Text usernameError, oldPasswordError, newPasswordError, ipError;
+  Text usernameError;
+  /**
+   * Error Labels used for informing user of errors.
+   */
+  @FXML
+  Text    oldPasswordError;
+  /**
+   * Error Labels used for informing user of errors.
+   */
+  @FXML
+  Text newPasswordError;
+  /**
+   * Error Labels used for informing user of errors.
+   */
+  @FXML
+  Text ipError;
 
   /**
    * Constructor used for initalizg the controller and UI.
@@ -110,6 +130,8 @@ public class EditAccountController extends AbstractUiController {
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          break;
+        default:
           break;
       }
     } catch (IOException e) {

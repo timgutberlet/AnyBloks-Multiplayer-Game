@@ -29,12 +29,12 @@ public class SettingUiController extends AbstractUiController {
    */
   private final AbstractGameController gameController;
   /**
-   * Button to enable/Disable Tooltips in Game
+   * Button to enable/Disable Tooltips in Game.
    */
   @FXML
   Button tooltips;
   /**
-   * Button to set Music on
+   * Button to set Music on.
    */
   @FXML
   Button music;
@@ -67,10 +67,15 @@ public class SettingUiController extends AbstractUiController {
    */
   private String saveMessage = "";
   /**
-   * Label to set Window width and window Height.
+   * Label to set Window width.
    */
   @FXML
-  private Label windowWidth, windowHeight;
+  private Label windowWidth;
+  /**
+   * Label to set Window height.
+   */
+  @FXML
+  private Label windowHeight;
 
   /**
    * Sets Gamecontroller and calls init Method.
@@ -161,7 +166,7 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Button to enable/disable the music
+   * Button to enable/disable the music.
    */
   @FXML
   private void musicPush() {
@@ -175,7 +180,7 @@ public class SettingUiController extends AbstractUiController {
   }
 
   /**
-   * Button to enable/disable tooltips
+   * Button to enable/disable tooltips.
    */
   @FXML
   private void tooltipPush() {
@@ -206,6 +211,8 @@ public class SettingUiController extends AbstractUiController {
           break;
         case "THINC!":
           Config.set("THEME", "THINC!");
+          break;
+        default:
           break;
       }
     }
@@ -239,6 +246,8 @@ public class SettingUiController extends AbstractUiController {
           break;
         case "THINK":
           Config.set("THEME", "THINK");
+          break;
+        default:
           break;
       }
     }
@@ -290,6 +299,8 @@ public class SettingUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           themeBox.setValue("THINC!");
+          break;
+        default:
           break;
       }
       saveConfirm.setText(saveMessage);

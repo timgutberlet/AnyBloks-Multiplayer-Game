@@ -64,7 +64,17 @@ public class JoinAuthController extends AbstractUiController {
    * Textmessages to inform user of errors.
    */
   @FXML
-  Text ipError, passwordError, usernameError;
+  Text ipError;
+  /**
+   * Textmessages to inform user of errors.
+   */
+  @FXML
+  Text passwordError;
+  /**
+   * Textmessages to inform user of errors.
+   */
+  @FXML
+  Text usernameError;
   /**
    * Endpoint client used for server connection.
    */
@@ -146,6 +156,8 @@ public class JoinAuthController extends AbstractUiController {
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          break;
+        default:
           break;
       }
     } catch (IOException e) {
@@ -296,7 +308,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Update Method used for starting Gamessesion, when palyer is connected
+   * Update Method used for starting Gamessesion, when palyer is connected.
    *
    * @param gameController GameController of game
    */
@@ -312,7 +324,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Update Method used for error messages and joining
+   * Update Method used for error messages and joining.
    *
    * @param gameController Gamecontroller class
    * @param deltaTime      used for Frames
@@ -354,7 +366,7 @@ public class JoinAuthController extends AbstractUiController {
   }
 
   /**
-   * Override Initialize
+   * Override Initialize.
    */
   @FXML
   public void initialize() {

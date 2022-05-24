@@ -30,7 +30,7 @@ public class PlayUiController extends AbstractUiController {
   /**
    * Constructor used for setting the gamecontroller.
    *
-   * @param gameController
+   * @param gameController gameController
    * @author tgutberl
    */
   public PlayUiController(AbstractGameController gameController) {
@@ -73,6 +73,8 @@ public class PlayUiController extends AbstractUiController {
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          break;
+        default:
           break;
       }
     } catch (IOException e) {

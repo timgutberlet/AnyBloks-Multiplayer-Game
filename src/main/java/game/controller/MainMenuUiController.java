@@ -31,7 +31,7 @@ public class MainMenuUiController extends AbstractUiController {
   /**
    * Construcotr used for setting gamecontroller.
    *
-   * @param gameController
+   * @param gameController gameController
    * @author tgutberl
    */
   public MainMenuUiController(AbstractGameController gameController) {
@@ -75,6 +75,8 @@ public class MainMenuUiController extends AbstractUiController {
           mainPane.setStyle("-fx-background-color: #D8EFFF;");
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
+          break;
+        default:
           break;
       }
     } catch (IOException e) {
@@ -139,7 +141,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on Exit
+   * Method for override on Exit.
    *
    * @author tgutberl
    */
@@ -149,7 +151,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on update
+   * Method for override on update.
    *
    * @author tgutberl
    */
@@ -159,7 +161,7 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on initalize
+   * Method for override on initalize.
    *
    * @author tgutberl
    */

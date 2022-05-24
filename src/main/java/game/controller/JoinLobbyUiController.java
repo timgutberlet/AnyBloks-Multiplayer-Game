@@ -39,22 +39,22 @@ public class JoinLobbyUiController extends AbstractUiController {
    */
   ArrayList<String> alreadyInChat;
   /**
-   * Name of Host Player
+   * Name of Host Player.
    */
   @FXML
   private Label hostPlayerName;
   /**
-   * Name of Remote Player one
+   * Name of Remote Player one.
    */
   @FXML
   private Label remotePlayer1;
   /**
-   * Name of Remote Player two
+   * Name of Remote Player two.
    */
   @FXML
   private Label remotePlayer2;
   /**
-   * Name of Remote Player three
+   * Name of Remote Player three.
    */
   @FXML
   private Label remotePlayer3;
@@ -126,6 +126,8 @@ public class JoinLobbyUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
+        default:
+          break;
       }
       chatInput.setOnKeyPressed(event -> {
         if (event.getCode().equals(KeyCode.ENTER)) {
@@ -165,7 +167,6 @@ public class JoinLobbyUiController extends AbstractUiController {
     if (chatInput.getText().length() > 0) {
       gameSession.addChatMessage(chatInput.getText());
       chatInput.setText("");
-    } else {
     }
   }
 

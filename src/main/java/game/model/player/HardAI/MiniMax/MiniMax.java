@@ -1,6 +1,6 @@
 package game.model.player.HardAI.MiniMax;
 
-import static game.model.player.AI.calculateNextMiddleMove;
+import static game.model.player.Ai.calculateNextMiddleMove;
 
 import game.model.Color;
 import game.model.Debug;

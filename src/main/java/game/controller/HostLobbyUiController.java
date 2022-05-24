@@ -108,7 +108,7 @@ public class HostLobbyUiController extends AbstractUiController {
    */
   private final LinkedList<GameMode> gameModes = new LinkedList<>();
   /**
-   * Button to play the game
+   * Button to play the game.
    */
   @FXML
   Button playButton;
@@ -123,7 +123,7 @@ public class HostLobbyUiController extends AbstractUiController {
   @FXML
   Label roundCount;
   /**
-   * Rectangle used to disable Ui
+   * Rectangle used to disable Ui.
    */
   private Rectangle disableUi;
   /**
@@ -185,10 +185,10 @@ public class HostLobbyUiController extends AbstractUiController {
   @FXML
   private Label playerName3;
   /**
-   * Label that shows IP
+   * Label that shows IP.
    */
   @FXML
-  private Label informationIP;
+  private Label informationIp;
 
   /**
    * Constructor of Lobycontroller Class. Used set Gamesession, Controller and to initialize.
@@ -227,7 +227,6 @@ public class HostLobbyUiController extends AbstractUiController {
     if (chatInput.getText().length() > 0) {
       gameSession.addChatMessage(chatInput.getText());
       chatInput.setText("");
-    } else {
     }
   }
 
@@ -250,7 +249,7 @@ public class HostLobbyUiController extends AbstractUiController {
       chatInput.setOnMousePressed(event -> {
         chatInput.setText("");
       });
-      setIP();
+      setIp();
       //Sets the Theme, according to the settings
       switch (Config.getStringValue("THEME")) {
         case "BRIGHT":
@@ -273,6 +272,8 @@ public class HostLobbyUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
+        default:
+          break;
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -282,17 +283,17 @@ public class HostLobbyUiController extends AbstractUiController {
   /**
    * sets the IP label, so that users can get Join Info.
    */
-  public void setIP() {
+  public void setIp() {
     try {
-      this.informationIP.setText(Inet4Address.getLocalHost().getHostAddress());
+      this.informationIp.setText(Inet4Address.getLocalHost().getHostAddress());
     } catch (UnknownHostException e) {
-      this.informationIP.setText("No IP Found");
+      this.informationIp.setText("No IP Found");
       e.printStackTrace();
     }
   }
 
   /**
-   * Kicks first Player
+   * Kicks first Player.
    */
   @FXML
   public void kickPlayer1() {
@@ -300,7 +301,7 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * kicks second player
+   * kicks second player.
    */
   @FXML
   public void kickPlayer2() {
@@ -308,7 +309,7 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Kicks third player
+   * Kicks third player.
    */
   @FXML
   public void kickPlayer3() {
@@ -316,13 +317,13 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Copy to Clipboard Method, for the IP
+   * Copy to Clipboard Method, for the IP.
    *
    * @author tgutberl
    */
   @FXML
   public void copyToClipboard() {
-    String clipBoardString = informationIP.getText();
+    String clipBoardString = informationIp.getText();
     StringSelection stringSelection = new StringSelection(clipBoardString);
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     clipboard.setContents(stringSelection, null);
@@ -346,7 +347,7 @@ public class HostLobbyUiController extends AbstractUiController {
   }
 
   /**
-   * Method to close the whole game
+   * Method to close the whole game.
    */
   @FXML
   public void close() {
@@ -385,6 +386,8 @@ public class HostLobbyUiController extends AbstractUiController {
         break;
       case "Godlike":
         defaultAi = PlayerType.AI_GODLIKE;
+        break;
+      default:
         break;
     }
 
@@ -472,16 +475,16 @@ public class HostLobbyUiController extends AbstractUiController {
       gamemodeError.setText("");
     }
     round++;
-    HBox hBox = new HBox();
-    hBox.setAlignment(Pos.CENTER);
+    HBox hbox = new HBox();
+    hbox.setAlignment(Pos.CENTER);
     ComboBox<String> comboBox = new ComboBox<>();
     comboBox.setPrefWidth(150);
     comboBox.setPrefHeight(25);
     initializeComboBox(comboBox);
     roundCount.setText("" + round);
-    hBox.getChildren().add(comboBox);
+    hbox.getChildren().add(comboBox);
     rounds.add(comboBox);
-    box.getChildren().add(hBox);
+    box.getChildren().add(hbox);
   }
 
   /**
@@ -545,6 +548,8 @@ public class HostLobbyUiController extends AbstractUiController {
       case "Godlike":
         difficultyPlayer.setText("Easy");
         break;
+      default:
+        break;
     }
   }
 
@@ -566,6 +571,8 @@ public class HostLobbyUiController extends AbstractUiController {
         break;
       case "Godlike":
         difficultyPlayer.setText("Hard");
+        break;
+      default:
         break;
     }
   }

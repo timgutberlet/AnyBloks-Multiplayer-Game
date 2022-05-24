@@ -48,10 +48,7 @@ public class InboundServerHandler {
       this.gameSession = gameSession;
       this.gameSession.setInboundServerHandler(this);
     }
-
     Debug.printMessage(this, "InboundServerHandler created");
-
-
   }
 
 

@@ -463,7 +463,7 @@
                       <children>
                         <Button mnemonicParsing="false" onAction="#copyToClipboard"
                           text="Copy to Clipboard"/>
-                        <Label text="IP" fx:id="informationIP">
+                        <Label text="IP" fx:id="informationIp">
                           <font>
                             <Font name="System Italic" size="25.0"/>
                           </font>

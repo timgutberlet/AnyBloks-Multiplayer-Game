@@ -185,7 +185,7 @@ public class Player implements Serializable {
         e.printStackTrace();
       }
 
-      return AI.calculateNextMove(gameState, this);
+      return Ai.calculateNextMove(gameState, this);
     } else {
       this.aiCalcRunning = false;
       while (this.selectedTurn == null && nullTurn == false) {

@@ -2,7 +2,7 @@ package game.model.player.HardAI.MonteCarloTreeSearch;
 
 import game.model.GameState;
 import game.model.Turn;
-import game.model.player.AI;
+import game.model.player.Ai;
 import java.util.ArrayList;
 
 /**
@@ -89,7 +89,7 @@ public class NodeState {
    * a random play is played within the game state.
    */
   public void randomPlay() {
-    gameState.playTurn(AI.calculateNextRandomMove(gameState.getBoard(),
+    gameState.playTurn(Ai.calculateNextRandomMove(gameState.getBoard(),
         gameState.getRemainingPolys(gameState.getPlayerCurrent()), gameState.isFirstRound()));
   }
 

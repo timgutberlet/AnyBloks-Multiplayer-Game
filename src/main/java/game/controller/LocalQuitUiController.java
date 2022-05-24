@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 /**
+ * Controller used manage the local Quit view.
+ *
  * @author tgutberl
  */
 public class LocalQuitUiController extends AbstractUiController {
@@ -105,6 +107,8 @@ public class LocalQuitUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
+        default:
+          break;
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -112,7 +116,7 @@ public class LocalQuitUiController extends AbstractUiController {
   }
 
   /**
-   * Gets User Back to lobby
+   * Gets User Back to lobby.
    */
   @FXML
   public void backToLobby() {
@@ -136,7 +140,7 @@ public class LocalQuitUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on Exit
+   * Method for override on Exit.
    *
    * @author tgutberl
    */
@@ -146,7 +150,7 @@ public class LocalQuitUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on update
+   * Method for override on update.
    *
    * @author tbuscher
    */
@@ -183,7 +187,7 @@ public class LocalQuitUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on update
+   * Method for override on update.
    *
    * @author tgutberl
    */
@@ -193,7 +197,7 @@ public class LocalQuitUiController extends AbstractUiController {
   }
 
   /**
-   * Method for override on initalize
+   * Method for override on initalize.
    *
    * @author tgutberl
    */

@@ -138,19 +138,23 @@ public class TutorialUiController extends AbstractUiController {
           mainPane.getStylesheets()
               .add(getClass().getResource("/styles/styleThinc.css").toExternalForm());
           break;
+        default:
+          break;
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-
+  /**
+   * override Initialize Method.
+   */
   @FXML
   public void initialize() {
   }
 
   /**
-   * override Exit Method
+   * override Exit Method.
    */
   @Override
   public void onExit() {
@@ -158,10 +162,10 @@ public class TutorialUiController extends AbstractUiController {
   }
 
   /**
-   * Update Method used for starting game when server messages
+   * Update Method used for starting game when server messages.
    *
-   * @param gameController
-   * @param deltaTime
+   * @param gameController gameController
+   * @param deltaTime deltaTime
    * @author tgutberl
    */
   @Override
@@ -177,7 +181,7 @@ public class TutorialUiController extends AbstractUiController {
   }
 
   /**
-   * Override Update Method
+   * Override Update Method.
    *
    * @param gameController GameController of game
    */

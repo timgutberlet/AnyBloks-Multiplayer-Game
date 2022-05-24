@@ -1,7 +1,7 @@
 package game.config;
 
 /**
- * Class to Store default properties and make them accessible
+ * Class to Store default properties and make them accessible.
  *
  * @author tgutberl
  */
@@ -9,7 +9,7 @@ public class StandardConfig {
 
   /**
    * 2D Field, used for storing standard/default values for the config file. Will be used if the
-   * Config File is not used or outdated
+   * Config File is not used or outdated.
    */
   public static final String[][] standardConfig = new String[][]{
       {"VERSION", "15"},
@@ -29,7 +29,7 @@ public class StandardConfig {
   };
 
   /**
-   * Constructor
+   * Constructor.
    */
   private StandardConfig() {
 

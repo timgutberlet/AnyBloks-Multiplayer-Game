@@ -4,7 +4,7 @@ import game.model.gamemodes.GMClassic;
 import game.model.gamemodes.GMDuo;
 import game.model.gamemodes.GMJunior;
 import game.model.gamemodes.GMTrigon;
-import game.model.player.AI;
+import game.model.player.Ai;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.util.ArrayList;
@@ -60,16 +60,16 @@ public class MainT {
     Debug.printMessage(game.getGameState().getRound());
     gameSession.stopSession();*/
 
-    AI.setRoundSections(0, new int[]{0, 24});
+    Ai.setRoundSections(0, new int[]{0, 24});
     int[] result = playClassicGame(true);
     Debug.printMessage("" + result);
-    AI.setRoundSections(1, new int[]{0, 24});
+    Ai.setRoundSections(1, new int[]{0, 24});
     result = playDuoGame(true);
     Debug.printMessage("" + result);
-    AI.setRoundSections(2, new int[]{0, 24});
+    Ai.setRoundSections(2, new int[]{0, 24});
     result = playJuniorGame(true);
     Debug.printMessage("" + result);
-    AI.setRoundSections(3, new int[]{0, 24});
+    Ai.setRoundSections(3, new int[]{0, 24});
     result = playTrigonGame(true);
     Debug.printMessage("" + result);
 
@@ -90,8 +90,8 @@ public class MainT {
         if (j < i) {
           continue;
         }
-        AI.setRoundSections(0, new int[]{i, j});
-        AI.setRoundSections(3, new int[]{i, j});
+        Ai.setRoundSections(0, new int[]{i, j});
+        Ai.setRoundSections(3, new int[]{i, j});
         long start = System.currentTimeMillis();
         int[] erg = playTrigonGame(false);
         resTrigon[i][j] = resTrigon[i][j] + erg[0] + erg[2] - erg[1] - erg[3];
@@ -177,14 +177,14 @@ public class MainT {
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
-      Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
         Debug.printMessage("" + t1);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t2 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
         Debug.printMessage("" + t2);
@@ -206,14 +206,14 @@ public class MainT {
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
-      Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
         Debug.printMessage("" + t1);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t2 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
         Debug.printMessage("" + t2);
@@ -237,28 +237,28 @@ public class MainT {
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
-      Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
         Debug.printMessage("" + t1);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t2 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
         Debug.printMessage("" + t2);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t3 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t3 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t3);
       if (print) {
         Debug.printMessage("" + t3);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t4 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t4 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t4);
       if (print) {
         Debug.printMessage("" + t4);
@@ -283,28 +283,28 @@ public class MainT {
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
-      Turn t1 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
         Debug.printMessage("" + t1);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t2 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t2 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t2);
       if (print) {
         Debug.printMessage("" + t2);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t3 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t3 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t3);
       if (print) {
         Debug.printMessage("" + t3);
         Debug.printMessage("" + game.getGameState().getBoard());
       }
 
-      Turn t4 = AI.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
+      Turn t4 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t4);
       if (print) {
         Debug.printMessage("" + t4);
