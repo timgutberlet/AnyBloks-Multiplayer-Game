@@ -222,7 +222,7 @@ public class Game {
       firstPlayer = this.gameState.getPlayerCurrent();
       Debug.printMessage(this, "Name of first player :" + firstPlayer.getUsername());
       try {
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(1);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

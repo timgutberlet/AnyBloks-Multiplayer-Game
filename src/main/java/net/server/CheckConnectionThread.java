@@ -79,7 +79,7 @@ public class CheckConnectionThread extends Thread {
       }
 
       try {
-        TimeUnit.SECONDS.sleep(6);
+        TimeUnit.SECONDS.sleep(2);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

@@ -126,6 +126,37 @@ public class TrigonBoardPane extends BoardPane {
   }
 
   /**
+   * Method to draw the triangle out of the board bounds.
+   *
+   * @param i     coord x
+   * @param j     coord y
+   * @param color Color of triangle
+   */
+  private void setTriangleCheckfield(int i, int j, Color color) {
+
+    CheckTrigonField checkTrigonField = new CheckTrigonField(i, j, 0);
+    double sizeHelp = size * 0.4;
+    double move = size / 2 - sizeHelp / 2;
+
+    double ofSetHelpY = ofSetY * 0.4;
+    double moveOfSetY = ofSetY / 2 - ofSetHelpY / 2;
+
+    checkTrigonField.getPoints()
+        .addAll(ofSetX + j * size + i * ofSetX - shift, ofSetY + i * ofSetY - moveOfSetY,
+            // top vertex
+            size + j * size + i * ofSetX - move - shift, 0.0 + i * ofSetY + moveOfSetY,
+            // right vertex
+            0.0 + j * size + i * ofSetX + move - shift, 0.0 + i * ofSetY + moveOfSetY);
+    if (checkFieldColor.containsKey("" + (i * 1000) + j + 0)) {
+      checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
+    } else {
+      checkTrigonField.setFill(color);
+    }
+    checkFields.add(checkTrigonField);
+    this.getChildren().add(checkTrigonField);
+  }
+
+  /**
    * Method that draws a triangle at the coordinates {i,j}.
    *
    * @param i coord x
@@ -134,17 +165,26 @@ public class TrigonBoardPane extends BoardPane {
   private void setTriangle(int i, int j) {
     Color color;
     int[] pos;
-    if (i + j == 8) {
+    if(i==-1){
+      pos = new int[]{i,j,0};
+      setTriangleCheckfield(i,j,Color.TRANSPARENT);
+    }
+    else if(i+j==7){
+      pos = new int[]{i,j,0};
+      setTriangleCheckfield(i,j,Color.TRANSPARENT);
+    }
+    else if (i + j == 8) {
       pos = new int[]{i, j, 1};
       color = ColorHandler.getJavaColor(board.getColor(pos));
+      setTriangleLeft(i,j,Color.WHITE);
       setTriangleRight(i, j, color);
     }
-    if (i + j == 26) {
+    else if (i + j == 26) {
       pos = new int[]{i, j, 0};
       color = ColorHandler.getJavaColor(board.getColor(pos));
       setTriangleLeft(i, j, color);
     }
-    if (i + j > 8 && i + j < 26) {
+    else if (i + j > 8 && i + j < 26) {
       pos = new int[]{i, j, 1};
       color = ColorHandler.getJavaColor(board.getColor(pos));
       setTriangleRight(i, j, color);
@@ -159,7 +199,7 @@ public class TrigonBoardPane extends BoardPane {
    */
   @Override
   public void setBoard() {
-    for (int i = 0; i < 18; i++) {
+    for (int i = -1; i < 18; i++) {
       for (int j = 0; j < 18; j++) {
         setTriangle(i, j);
       }

@@ -273,7 +273,7 @@ public class EndpointServer {
       } catch (Exception e) {
         Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
         gameSession.changePlayer2Ai(username);
-        //e.printStackTrace();
+        e.printStackTrace();
       }
     }
   }

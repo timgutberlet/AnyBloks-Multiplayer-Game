@@ -245,7 +245,7 @@ public class GameSession {
     Debug.printMessage("Server gamesession 5: " + this);
     try {
       Debug.printMessage(this, "Waiting for clients to establish connection");
-      TimeUnit.SECONDS.sleep(5);
+      TimeUnit.SECONDS.sleep(1);
       Debug.printMessage(this, "Starting a new game");
     } catch (InterruptedException e) {
       e.printStackTrace();
@@ -437,7 +437,7 @@ public class GameSession {
 
           Debug.printMessage(this, "Waiting for new AI to connect (with a fixed amount of time)");
 
-          TimeUnit.SECONDS.sleep(5);
+          TimeUnit.SECONDS.sleep(1);
 
           this.outboundServerHandler.sendGameStart(player.getUsername(), this.game.getGameState());
 
@@ -493,7 +493,7 @@ public class GameSession {
 
       //Sleep so updates can be made in DB
       try {
-        TimeUnit.MILLISECONDS.sleep(5000);
+        TimeUnit.MILLISECONDS.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
