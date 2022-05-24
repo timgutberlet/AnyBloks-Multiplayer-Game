@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.PlayUiController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" style="-fx-background-color: #E7E7E0;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.PlayUiController">
   <children>
     <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
@@ -26,7 +26,7 @@
                     <Font size="25.0" />
                   </font>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="138.0" text="CLOSE" GridPane.columnIndex="2">
+                <Button mnemonicParsing="false" onAction="#close" prefHeight="60.0" prefWidth="150.0" text="CLOSE" GridPane.columnIndex="2">
                   <font>
                     <Font size="25.0" />
                   </font>

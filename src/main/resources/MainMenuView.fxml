@@ -30,7 +30,7 @@
                     <Font size="25.0" />
                   </font>
                 </Button>
-                <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="130.0" text="CLOSE" GridPane.columnIndex="2">
+                <Button mnemonicParsing="false" onAction="#close" prefHeight="60.0" prefWidth="150.0" text="CLOSE" GridPane.columnIndex="2">
                   <font>
                     <Font size="25.0" />
                   </font>
