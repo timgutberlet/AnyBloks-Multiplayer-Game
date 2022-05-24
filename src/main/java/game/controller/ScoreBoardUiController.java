@@ -355,6 +355,7 @@ public class ScoreBoardUiController extends AbstractUiController {
       Label score = new Label();
       hbox.getChildren().add(name);
       hbox.getChildren().add(score);
+
       if (gameSession.getPlayerList().size() == 4) {
         name.setText((sessionPlayers.get(3)));
         score.setText(" " + sessionScores.get(3));
@@ -372,7 +373,8 @@ public class ScoreBoardUiController extends AbstractUiController {
       board.getChildren().add(vbox);
 
       if (gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
-        if (flag) {
+        //if (flag) {
+        if (gameSession.getGameList().size() > 0) {
           Button button = new Button();
           button.setText("Next Round");
           button.setFont(Font.font("System", 20));
@@ -382,8 +384,12 @@ public class ScoreBoardUiController extends AbstractUiController {
           buttonBox.getChildren().add(button);
         }
       }
-    }
 
+      if (gameSession.getGameList().size() == 0) {
+        hostWaiting.setVisible(true);
+        hostWaiting.setText("The tournament is over! Thank you for playing...");
+      }
+    }
   }
 
   /**
