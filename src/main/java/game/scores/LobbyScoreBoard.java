@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class LobbyScoreBoard {
 
   public int gamesPlayedOnServer = 0;
-  public HashMap<String, Integer> playerScores = new HashMap<>();
+  public HashMap<String, Integer[]> playerScores = new HashMap<>();
 
   /**
    * Constructor.
@@ -18,7 +18,7 @@ public class LobbyScoreBoard {
    * @param gamesPlayedOnServer int
    * @param playerScores        HashMap of String, int
    */
-  public LobbyScoreBoard(int gamesPlayedOnServer, HashMap<String, Integer> playerScores) {
+  public LobbyScoreBoard(int gamesPlayedOnServer, HashMap<String, Integer[]> playerScores) {
     this.gamesPlayedOnServer = gamesPlayedOnServer;
     this.playerScores = playerScores;
   }

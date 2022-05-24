@@ -572,7 +572,7 @@ public class DbServer extends AbstractDB {
    *
    * @return Hashmap of String, Integer
    */
-  public HashMap<String, Integer> getGameWins() {
+  public HashMap<String, Integer[]> getGameWins() {
     ResultSet resultSet = null;
     try {
       Statement statement = con.createStatement();
@@ -582,25 +582,43 @@ public class DbServer extends AbstractDB {
     }
     int number = 0;
     GameScoreBoard gameScoreBoard;
-    HashMap<String, Integer> topThreePlayers = new HashMap<>();
+    HashMap<String, Integer[]> topPlayers = new HashMap<>();
     try {
       while (resultSet.next()) {
         String gameId = String.valueOf(resultSet.getRow());
         System.out.println(gameId);
         gameScoreBoard = getGameScores(gameId);
         String winnerUsername = ScoreProvider.getWinner(gameScoreBoard);
+
+
+
+        for(String username : gameScoreBoard.getPlayerScores().keySet()){
+          int formerMaxScore = topPlayers.get(username) == null ? 0 : topPlayers.get(username)[1];
+          int currentScore = gameScoreBoard.getPlayerScores().get(username);
+          int updatedMaxScore = Math.max(formerMaxScore, currentScore);
+          int wins = 0;
+          if(username.equals(winnerUsername)){
+            wins =
+                topPlayers.get(winnerUsername) == null ? 1
+                    : (topPlayers.get(winnerUsername)[0] + 1);
+          } else  {
+            wins = topPlayers.get(winnerUsername) == null ? 0
+                : (topPlayers.get(winnerUsername)[0] + 1);
+          }
+
+
+          Integer[] value = {wins, updatedMaxScore};
+          topPlayers.put(ScoreProvider.getWinner(gameScoreBoard), value);
+
+        }
         System.out.println(winnerUsername);
         System.out.println(gameScoreBoard.getPlayerScores().toString());
-        int wins =
-            topThreePlayers.get(winnerUsername) == null ? 1
-                : (topThreePlayers.get(winnerUsername) + 1);
-        topThreePlayers.put(ScoreProvider.getWinner(gameScoreBoard), wins);
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    System.out.println(topThreePlayers);
-    return topThreePlayers;
+    System.out.println(topPlayers);
+    return topPlayers;
 
 
   }

@@ -171,7 +171,7 @@ public class ScoreProvider {
       e.printStackTrace();
     }
     int gamesPlayed = dbServer.getNumberOfLocalGames();
-    HashMap<String, Integer> playerWins = dbServer.getGameWins();
+    HashMap<String, Integer[]> playerWins = dbServer.getGameWins();
 
     return new LobbyScoreBoard(gamesPlayed, playerWins);
 
