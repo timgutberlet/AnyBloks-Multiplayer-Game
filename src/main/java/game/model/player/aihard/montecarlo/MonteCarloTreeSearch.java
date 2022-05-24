@@ -1,4 +1,4 @@
-package game.model.player.HardAI.MonteCarloTreeSearch;
+package game.model.player.aihard.montecarlo;
 
 import game.model.Color;
 import game.model.Debug;

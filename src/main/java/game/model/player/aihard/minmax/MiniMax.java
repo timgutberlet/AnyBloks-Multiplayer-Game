@@ -1,4 +1,4 @@
-package game.model.player.HardAI.MiniMax;
+package game.model.player.aihard.minmax;
 
 import static game.model.player.Ai.calculateNextMiddleMove;
 
