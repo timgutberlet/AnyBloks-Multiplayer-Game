@@ -147,11 +147,7 @@ public class TrigonBoardPane extends BoardPane {
             size + j * size + i * ofSetX - move - shift, 0.0 + i * ofSetY + moveOfSetY,
             // right vertex
             0.0 + j * size + i * ofSetX + move - shift, 0.0 + i * ofSetY + moveOfSetY);
-    if (checkFieldColor.containsKey("" + (i * 1000) + j + 0)) {
-      checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
-    } else {
       checkTrigonField.setFill(color);
-    }
     checkFields.add(checkTrigonField);
     this.getChildren().add(checkTrigonField);
   }
@@ -176,7 +172,6 @@ public class TrigonBoardPane extends BoardPane {
     else if (i + j == 8) {
       pos = new int[]{i, j, 1};
       color = ColorHandler.getJavaColor(board.getColor(pos));
-      setTriangleLeft(i,j,Color.WHITE);
       setTriangleRight(i, j, color);
     }
     else if (i + j == 26) {

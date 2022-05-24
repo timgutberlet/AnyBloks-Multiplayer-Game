@@ -49,6 +49,7 @@ public class ScoreBoardUiController extends AbstractUiController {
   @FXML
   private HBox board;
 
+
   @FXML
   private Line line;
 
@@ -87,6 +88,9 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @FXML
   private HBox buttonBox;
+
+  @FXML
+  private Button backMainMenuButton;
 
   /**
    * Constructor to initiate the Class.
@@ -192,6 +196,7 @@ public class ScoreBoardUiController extends AbstractUiController {
    */
   @FXML
   public void backMainMenu() {
+    backMainMenuButton.setDisable(true);
     this.userMessage.setText("Back to the Main Menu");
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
       //Player is the host
@@ -215,7 +220,7 @@ public class ScoreBoardUiController extends AbstractUiController {
     }
 
     try {
-      TimeUnit.MILLISECONDS.sleep(1000);
+      TimeUnit.MILLISECONDS.sleep(4000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -362,7 +367,7 @@ public class ScoreBoardUiController extends AbstractUiController {
       board.getChildren().remove(line);
       board.getChildren().add(vbox);
 
-      if (gameSession.getLocalPlayer().equals(gameSession.getHostPlayer())) {
+      if (gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
         Button button = new Button();
         button.setText("Next Round");
         button.setFont(Font.font("System", 20));

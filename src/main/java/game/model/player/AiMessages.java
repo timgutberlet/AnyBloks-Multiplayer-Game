@@ -50,7 +50,7 @@ public class AiMessages {
   public static void getAfterMatchAiComment(GameSession gameSession) {
     if (gameSession.getLocalPlayer().isAi()) {
       String message = afterGameComments[(int) Math.round(
-          Math.random() * (afterTurnComments.length - 1))];
+          Math.random() * (afterGameComments.length - 1))];
       gameSession.addChatMessage(message);
     }
   }

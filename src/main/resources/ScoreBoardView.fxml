@@ -152,7 +152,7 @@
                         <HBox fx:id="buttonBox" alignment="CENTER" prefHeight="100.0"
                           prefWidth="200.0" spacing="100.0">
                            <children>
-                              <Button fx:id="backMainMenu" mnemonicParsing="false"
+                              <Button fx:id="backMainMenuButton" mnemonicParsing="false"
                                 onAction="#backMainMenu" text="Main Menu">
                                  <font>
                                     <Font size="20.0"/>
