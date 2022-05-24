@@ -230,7 +230,7 @@ public class ScoreBoardUiController extends AbstractUiController {
     this.gameSession.setGameOver(false);
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)
         && this.gameSession.getGameList().size() > 0) {
-      System.out.println("STARTING A NEW GAME IN A TOURNAMENT");
+      Debug.printMessage("STARTING A NEW GAME IN A TOURNAMENT");
       this.gameSession.getClientHandler().startLocalGame(this.gameSession.getGameList());
     }
   }

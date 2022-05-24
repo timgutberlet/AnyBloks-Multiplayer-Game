@@ -195,11 +195,11 @@ public class JoinLobbyUiController extends AbstractUiController {
   @FXML
   public void back() {
 
-    System.out.println("Disconnecting client");
+    Debug.printMessage("Disconnecting client");
     gameSession.clientHandler.disconnectClient();
-    System.out.println("Stopping session");
+    Debug.printMessage("Stopping session");
     gameSession.stopSession();
-    System.out.println("Changing UI");
+    Debug.printMessage("Changing UI");
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
@@ -271,7 +271,7 @@ public class JoinLobbyUiController extends AbstractUiController {
       if (lobbyScoreBoard != null) {
         gamesPlayed = lobbyScoreBoard.gamesPlayedOnServer;
         scoreMap = lobbyScoreBoard.playerScores;
-        System.out.println(scoreMap.toString());
+        Debug.printMessage(scoreMap.toString());
 
         if (scoreMap.size() > 0) {
           for (String playerKey : scoreMap.keySet()) {
@@ -325,7 +325,7 @@ public class JoinLobbyUiController extends AbstractUiController {
     if (this.gameSession.isGameStarted()) {
 
       if (this.gameSession.getGame() == null) {
-        System.out.println("gs is null");
+        Debug.printMessage("gs is null");
       }
       gameController.setActiveUiController(
           new LocalGameUiController(gameController, this.gameSession.getGame(), gameSession));

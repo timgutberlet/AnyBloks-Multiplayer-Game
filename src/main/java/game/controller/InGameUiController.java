@@ -623,7 +623,7 @@ public abstract class InGameUiController extends AbstractUiController {
     //Paint scorepanes by gamemode
     stackPanes.clear();
     stacks.getChildren().clear();
-    System.out.println(game.getGamemode().getName());
+    Debug.printMessage(game.getGamemode().getName());
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":

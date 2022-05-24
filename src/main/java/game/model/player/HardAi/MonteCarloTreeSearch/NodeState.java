@@ -1,4 +1,4 @@
-package game.model.player.HardAi.MonteCarloTreeSearch;
+package game.model.player.HardAI.MonteCarloTreeSearch;
 
 import game.model.GameState;
 import game.model.Turn;

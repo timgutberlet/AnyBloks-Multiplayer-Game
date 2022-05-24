@@ -346,13 +346,6 @@ public class ClientHandler {
    * @param wrappedPacket
    */
   public void handleLobbyScoreBoardPacket(WrappedPacket wrappedPacket) {
-    System.out.println("LOBYYSCORE PACKET CAME!!!!");
-    System.out.println("LOBYYSCORE PACKET CAME!!!!");
-    System.out.println("LOBYYSCORE PACKET CAME!!!!");
-    System.out.println("LOBYYSCORE PACKET CAME!!!!");
-    System.out.println("LOBYYSCORE PACKET CAME!!!!");
-    System.out.println("LOBYYSCORE PACKET CAME!!!!");
-    System.out.println("LOBYYSCORE PACKET CAME!!!!");
     LobbyScoreBoardPacket lobbyScoreBoardPacket = (LobbyScoreBoardPacket) wrappedPacket.getPacket();
     this.gameSession.setLobbyScoreBoard(lobbyScoreBoardPacket.getLobbyScoreBoard());
   }

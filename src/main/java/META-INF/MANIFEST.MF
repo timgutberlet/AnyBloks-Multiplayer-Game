@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: game.core.Launcher2
+Main-Class: game.core.Launcher
 

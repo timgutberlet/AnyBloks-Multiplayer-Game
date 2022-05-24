@@ -270,7 +270,7 @@ public class HostLobbyUiController extends AbstractUiController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.AI_HARD);
+    Player player = new Player(Config.getStringValue("HOSTPLAYER"), PlayerType.HOST_PLAYER);
     this.client = new EndpointClient(this, player);
 
     this.gameSession = client.getGameSession();
@@ -680,7 +680,7 @@ public class HostLobbyUiController extends AbstractUiController {
       if (lobbyScoreBoard != null) {
         gamesPlayed = lobbyScoreBoard.gamesPlayedOnServer;
         scoreMap = lobbyScoreBoard.playerScores;
-        System.out.println(scoreMap.toString());
+        Debug.printMessage(scoreMap.toString());
 
         if (scoreMap.size() > 0) {
           for (String playerKey : scoreMap.keySet()) {

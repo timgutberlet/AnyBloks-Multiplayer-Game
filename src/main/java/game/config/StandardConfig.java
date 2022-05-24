@@ -12,15 +12,15 @@ public class StandardConfig {
    * Config File is not used or outdated.
    */
   public static final String[][] standardConfig = new String[][]{
-      {"VERSION", "15"},
+      {"VERSION", "16"},
       {"SCREEN_WIDTH", "1280"},
       {"SCREEN_HEIGHT", "720"},
       {"SCREEN_MINIMUM_WIDTH", "1280"},
       {"SCREEN_MINIMUM_HEIGHT", "720"},
       {"THEME", "DARK"},
-      {"SHOW_FPS", "TRUE"},
+      {"SHOW_FPS", "FALSE"},
       {"MAXIMUM_FPS", "25"},
-      {"HOSTPLAYER", "HOST"},
+      {"HOSTPLAYER", "HOSTPLAYER"},
       {"AIPLAYER1", "AlphaGo"},
       {"AIPLAYER2", "DeepMind"},
       {"AIPLAYER3", "Stockfish"},

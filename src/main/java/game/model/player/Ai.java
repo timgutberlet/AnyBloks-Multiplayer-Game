@@ -4,8 +4,8 @@ import game.model.Debug;
 import game.model.GameState;
 import game.model.Turn;
 import game.model.board.Board;
-import game.model.player.HardAi.MiniMax.MiniMax;
-import game.model.player.HardAi.MonteCarloTreeSearch.MonteCarloTreeSearch;
+import game.model.player.HardAI.MiniMax.MiniMax;
+import game.model.player.HardAI.MonteCarloTreeSearch.MonteCarloTreeSearch;
 import game.model.polygon.Poly;
 import java.util.ArrayList;
 

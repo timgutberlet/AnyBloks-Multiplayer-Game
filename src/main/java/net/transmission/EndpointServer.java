@@ -136,7 +136,7 @@ public class EndpointServer {
   public void onMessage(final WrappedPacket packet, final Session client)
       throws IOException, EncodeException {
 
-    System.out.println("Server gamesession: " + gameSession);
+    Debug.printMessage("Server gamesession: " + gameSession);
 
     PacketType type = packet.getPacketType();
 

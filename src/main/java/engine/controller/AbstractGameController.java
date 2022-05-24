@@ -1,6 +1,7 @@
 package engine.controller;
 
 import engine.handler.InputHandler;
+import engine.handler.MusicThread;
 import game.config.Config;
 import game.model.Debug;
 import javafx.animation.AnimationTimer;
@@ -91,8 +92,8 @@ public abstract class AbstractGameController extends AnimationTimer {
     stage.setMinHeight(Config.getIntValue("SCREEN_MINIMUM_HEIGHT"));
     //Starts the music
     try {
-      //MusicThread musicThread = new MusicThread();
-      //musicThread.start();
+      MusicThread musicThread = new MusicThread();
+      musicThread.start();
     } catch (Exception e) {
       Debug.printMessage("");
     }

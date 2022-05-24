@@ -3,6 +3,9 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.Debug;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -101,7 +104,16 @@ public class MainMenuUiController extends AbstractUiController {
    */
   @FXML
   public void tutorial() {
-    new TutorialUiController(gameController);
+    if (Desktop.isDesktopSupported()) {
+      try {
+        File myFile = new File(getClass().getResource("/documents/UserManual.pdf").getFile());
+        //File myFile = new File("/src/main/resources/documents/UserManual.pdf");
+        Desktop.getDesktop().open(myFile);
+      } catch (IOException ex) {
+        // no application registered for PDFs
+        Debug.printMessage("");
+      }
+    }
   }
 
   /**

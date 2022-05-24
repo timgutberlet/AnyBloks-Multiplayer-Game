@@ -1,4 +1,4 @@
-package game.model.player.HardAi.MonteCarloTreeSearch;
+package game.model.player.HardAI.MonteCarloTreeSearch;
 
 import java.util.Collections;
 import java.util.Comparator;

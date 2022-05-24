@@ -7,7 +7,6 @@ import game.controller.HostLobbyUiController;
 import game.controller.JoinAuthController;
 import game.controller.JoinLobbyUiController;
 import game.controller.LocalLobbyUiController;
-import game.controller.TutorialUiController;
 import game.model.Debug;
 import game.model.GameSession;
 import game.model.player.Player;
@@ -60,26 +59,6 @@ public class EndpointClient {
    * @param player                 given player
    */
   public EndpointClient(LocalLobbyUiController localLobbyUiController, Player player) {
-    super();
-    this.player = player;
-    this.gameSession = new GameSession(player);
-    Debug.printMessage(this, "GameSession EndpointClient" + this.gameSession);
-    this.gameSession.setLocalPlayer(player);
-    this.player.setGameSession(this.gameSession);
-    this.clientHandler = new ClientHandler(this);
-    Debug.printMessage(this, "EndpointClient created from GUI 1");
-    this.clientHandler.initLocalGame(player);
-
-    Debug.printMessage(this, "EndpointClient created from GUI 2");
-  }
-
-  /**
-   * shows the tutorial ui controller and initializes the tutorial game.
-   *
-   * @param localLobbyUiController lobby controller
-   * @param player                 player
-   */
-  public EndpointClient(TutorialUiController localLobbyUiController, Player player) {
     super();
     this.player = player;
     this.gameSession = new GameSession(player);
@@ -203,7 +182,7 @@ public class EndpointClient {
   @OnMessage
   public void onMessage(final WrappedPacket packet, Session ses) {
 
-    System.out.println("Client gamesession: " + this.gameSession);
+    Debug.printMessage("Client gamesession: " + this.gameSession);
 
     // LOG.info(this.player.getUsername()
     //         + ": A packet has been sent here by the server, it is of the type: {} send by {}",

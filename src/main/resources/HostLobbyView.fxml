@@ -477,20 +477,20 @@
                     </GridPane>
                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="1">
                       <children>
+                        <Label text="AI Default Strength:">
+                          <HBox.margin>
+                            <Insets />
+                          </HBox.margin>
+                          <font>
+                            <Font size="20.0" />
+                          </font>
+                        </Label>
                         <Button mnemonicParsing="false" onAction="#decreaseDifficulty" text="-">
                           <font>
                             <Font size="15.0" />
                           </font>
                         </Button>
                         <Label fx:id="aiDefault" text="Easy">
-                          <font>
-                            <Font size="20.0" />
-                          </font>
-                        </Label>
-                        <Label text="AI Default Strength:">
-                          <HBox.margin>
-                            <Insets />
-                          </HBox.margin>
                           <font>
                             <Font size="20.0" />
                           </font>

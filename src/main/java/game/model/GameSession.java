@@ -191,17 +191,17 @@ public class GameSession {
   public Game startGameServer() {
 
     //Debug.printMessage("DAS GAME WIRD HIER GESTARTET");
-    System.out.println("Server gamesession 1: " + this);
+    Debug.printMessage("Server gamesession 1: " + this);
     if (this.defaultAi == null) {
       this.defaultAi = PlayerType.AI_MIDDLE;
     }
-    System.out.println("Server gamesession 2: " + this);
+    Debug.printMessage("Server gamesession 2: " + this);
     //while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
     GameMode gameMode = this.gameList.pop();
     Debug.printMessage("Needed players: " + gameMode.getNeededPlayers());
     Debug.printMessage("Current player size: " + this.getPlayerList().size());
     int numPlayersToAdd = gameMode.getNeededPlayers() - this.getPlayerList().size();
-    System.out.println("Server gamesession 3: " + this);
+    Debug.printMessage("Server gamesession 3: " + this);
 
     if (numPlayersToAdd > 0) {
       Debug.printMessage("Players to be added:" + numPlayersToAdd);
@@ -223,7 +223,7 @@ public class GameSession {
           this.addBot(this.defaultAi);
         }
       }
-      System.out.println("Server gamesession 4: " + this);
+      Debug.printMessage("Server gamesession 4: " + this);
     } else {
       //In this case there are too many players, so some need to be kicked
       int playerToRemove = (-1) * numPlayersToAdd;
@@ -238,11 +238,11 @@ public class GameSession {
           e.printStackTrace();
         }
       }
-      System.out.println("Server gamesession 4.1: " + this);
+      Debug.printMessage("Server gamesession 4.1: " + this);
     }
 
     Debug.printMessage("There a now" + this.getPlayerList().size() + " players connected");
-    System.out.println("Server gamesession 5: " + this);
+    Debug.printMessage("Server gamesession 5: " + this);
     try {
       Debug.printMessage(this, "Waiting for clients to establish connection");
       TimeUnit.SECONDS.sleep(5);
@@ -250,10 +250,10 @@ public class GameSession {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
-    System.out.println("Server gamesession 6: " + this);
+    Debug.printMessage("Server gamesession 6: " + this);
     this.game = new Game(this, gameMode, true);
     this.game.startGame();
-    System.out.println("Server gamesession 7: " + this);
+    Debug.printMessage("Server gamesession 7: " + this);
     return this.game;
   }
 

@@ -179,8 +179,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        System.out.println("" + t1);
-        System.out.println("" + game.getGameState().getBoard());
+        Debug.printMessage("" + t1);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -232,8 +232,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        System.out.println("" + t1);
-        System.out.println("" + game.getGameState().getBoard());
+        Debug.printMessage("" + t1);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -257,8 +257,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        System.out.println("" + t1);
-        System.out.println("" + game.getGameState().getBoard());
+        Debug.printMessage("" + t1);
+        Debug.printMessage("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();

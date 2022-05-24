@@ -11,75 +11,66 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity"
-  minHeight="-Infinity"
-  minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/17.0.2-ea"
-  fx:controller="game.controller.MainMenuUiController" fx:id="mainPane">
+
+<?import javafx.scene.image.Image?>
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.MainMenuUiController">
   <children>
-    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-      AnchorPane.topAnchor="0.0" alignment="CENTER" gridLinesVisible="true">
+    <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
         <GridPane GridPane.rowIndex="1">
           <children>
-            <GridPane GridPane.rowIndex="1" prefHeight="68.0" prefWidth="1280.0">
+            <GridPane prefHeight="68.0" prefWidth="1280.0" GridPane.rowIndex="1">
               <children>
-                <Button GridPane.columnIndex="0" mnemonicParsing="false" onAction="#credits"
-                  prefHeight="50.0" prefWidth="135.0" text="CREDITS">
+                <Button mnemonicParsing="false" onAction="#credits" prefHeight="50.0" prefWidth="135.0" text="CREDITS" GridPane.columnIndex="0">
                   <font>
-                    <Font size="25.0"/>
+                    <Font size="25.0" />
                   </font>
                 </Button>
-                <Button GridPane.columnIndex="2" mnemonicParsing="false" onAction="#close"
-                  prefHeight="50.0" prefWidth="130.0" text="CLOSE">
+                <Button mnemonicParsing="false" onAction="#close" prefHeight="50.0" prefWidth="130.0" text="CLOSE" GridPane.columnIndex="2">
                   <font>
-                    <Font size="25.0"/>
+                    <Font size="25.0" />
                   </font>
                 </Button>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="937.0" GridPane.columnIndex="1">
+                           <children>
+                      <Button graphicTextGap="30.0" mnemonicParsing="false" onAction="#tutorial" prefWidth="250.0" text="OPEN TUTORIAL">
+                        <font>
+                          <Font size="20.0" />
+                        </font>
+                      </Button>
+                           </children>
+                        </HBox>
               </children>
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0"
-                  minWidth="160.0" prefWidth="160.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0"
-                  prefWidth="1348.2804870605469"/>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0"
-                  minWidth="150.0" prefWidth="150.0"/>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="1768.0629577636719" minWidth="10.0" prefWidth="940.5" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="202.0" minWidth="150.0" prefWidth="180.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
-                  vgrow="SOMETIMES"/>
+                <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="50.0">
               <children>
-                <Button graphicTextGap="30.0" mnemonicParsing="false" onAction="#play"
-                  prefWidth="400.0" text="PLAY">
+                <Button graphicTextGap="30.0" mnemonicParsing="false" onAction="#play" prefWidth="400.0" text="PLAY">
                   <font>
-                    <Font name="System Bold" size="40.0"/>
+                    <Font name="System Bold" size="40.0" />
                   </font>
                 </Button>
-                <Button graphicTextGap="30.0" mnemonicParsing="false" onAction="#tutorial"
-                  prefWidth="400.0" text="PLAY TUTORIAL">
+                <Button graphicTextGap="30.0" mnemonicParsing="false" onAction="#setting" prefWidth="400.0" text="SETTINGS">
                   <font>
-                    <Font size="40.0"/>
-                  </font>
-                </Button>
-                <Button graphicTextGap="30.0" mnemonicParsing="false" onAction="#setting"
-                  prefWidth="400.0" text="SETTINGS">
-                  <font>
-                    <Font size="40.0"/>
+                    <Font size="40.0" />
                   </font>
                 </Button>
               </children>
             </VBox>
           </children>
           <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           </columnConstraints>
           <rowConstraints>
-            <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5"
-              vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0"
-              vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="957.3074951171875" minHeight="10.0" prefHeight="539.5" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
           </rowConstraints>
         </GridPane>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -91,19 +82,18 @@
             </ImageView>
             <Label alignment="CENTER" graphicTextGap="20.0" text="BLOKS3">
               <font>
-                <Font size="50.0"/>
+                <Font size="50.0" />
               </font>
             </Label>
           </children>
         </HBox>
       </children>
       <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES"/>
-        <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5"
-          vgrow="SOMETIMES"/>
+        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="977.0655059814453" minHeight="10.0" prefHeight="624.5" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
   </children>
