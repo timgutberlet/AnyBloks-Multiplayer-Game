@@ -32,7 +32,7 @@ public class CreateAccountResponsePacket extends Packet {
   }
 
   /**
-   * Empty constructor for Jackson deserialization
+   * Empty constructor for Jackson deserialization.
    */
   public CreateAccountResponsePacket() {
     this.accountCreated = false;

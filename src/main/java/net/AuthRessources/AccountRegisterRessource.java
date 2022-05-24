@@ -39,7 +39,6 @@ public class AccountRegisterRessource {
       if (wrappedPacket.getPacketType() != PacketType.CREATE_ACCOUNT_REQUEST_PACKET) {
         errorMessage = "This packet is not of the correct type";
         throw new Exception();
-      } else {
       }
 
       CreateAccountRequestPacket createAccountRequestPacket = (CreateAccountRequestPacket) wrappedPacket.getPacket();

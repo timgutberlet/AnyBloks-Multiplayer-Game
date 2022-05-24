@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Abstract class to allow connection to SQLite DB
+ * Abstract class to allow connection to SQLite DB.
  *
  * @author tbuscher
  */

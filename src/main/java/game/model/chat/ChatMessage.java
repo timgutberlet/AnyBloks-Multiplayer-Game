@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
+ * Chatmessage object hold the username, timestamp and mesage of a user, that sent
+ * a chat message.
+ *
  * @author tgeilen
  * @Date 21.03.22
  */
@@ -13,7 +16,11 @@ public class ChatMessage {
   private Timestamp time;
   private String message;
 
-
+  /**
+   * Constructor that initializes date, message and username.
+   * @param username name of user who sent the message
+   * @param message String of message that was sent
+   */
   public ChatMessage(String username, String message) {
 
     this.username = username;
@@ -26,7 +33,7 @@ public class ChatMessage {
   }
 
   /**
-   * empty constructor jackson
+   * empty constructor jackson.
    */
   public ChatMessage() {
 

@@ -421,7 +421,7 @@ public class ClientHandler {
   }
 
   /**
-   * sends a disconnect message to the server
+   * sends a disconnect message to the server.
    */
   public void disconnectClient() {
 

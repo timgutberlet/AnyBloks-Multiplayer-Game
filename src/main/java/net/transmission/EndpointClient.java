@@ -262,6 +262,8 @@ public class EndpointClient {
       case PLAYER_KICK_PACKET:
         this.clientHandler.disconnectClient(packet);
         break;
+      default:
+        break;
 
       //
     }
@@ -270,7 +272,7 @@ public class EndpointClient {
 
 
   /**
-   * function to easily send packets to server from bot
+   * function to easily send packets to server from bot.
    *
    * @param wrappedPacket
    * @author tgeilen
@@ -292,7 +294,7 @@ public class EndpointClient {
   }
 
   /**
-   * function to easily send packets to server
+   * function to easily send packets to server.
    *
    * @param wrappedPacket
    * @author tgeilen

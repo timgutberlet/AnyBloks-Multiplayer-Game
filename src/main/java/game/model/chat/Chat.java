@@ -5,6 +5,9 @@ import game.model.player.Player;
 import java.util.ArrayList;
 
 /**
+ * Chat class, that holds all the chat Messages that were sent beetween
+ * client and Server.
+ *
  * @author tgeilen
  * @Date 21.03.22
  */
@@ -45,11 +48,10 @@ public class Chat {
 
   /**
    * function to add a message to the chat.
-   * <p>
-   * for now it debugs to the console
+   * for now it debugs to the console.
    *
-   * @param player
-   * @param message
+   * @param player Player object, representing the player that sent the message
+   * @param message Message object representing a string
    * @author tgeilen
    */
   public void addMessage(Player player, String message) {

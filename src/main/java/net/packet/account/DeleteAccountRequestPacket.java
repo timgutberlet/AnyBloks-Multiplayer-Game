@@ -13,7 +13,7 @@ public class DeleteAccountRequestPacket extends Packet {
   private String passwordHash;
 
   /**
-   * default constructor for Jackson
+   * default constructor for Jackson.
    */
   public DeleteAccountRequestPacket() {
     this.passwordHash = "";

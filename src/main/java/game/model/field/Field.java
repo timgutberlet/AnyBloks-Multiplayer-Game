@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * This class is the abstract version of a single peace on the board
+ * This class is the abstract version of a single peace on the board.
  *
  * @author tiotto
  */
@@ -43,7 +43,7 @@ public abstract class Field {
   }
 
   /**
-   * if the field is already occupied
+   * if the field is already occupied.
    *
    * @return boolean, if the field is already occupied
    */
@@ -52,7 +52,7 @@ public abstract class Field {
   }
 
   /**
-   * abstract clone method, that needs to be implemented in the subclasses
+   * abstract clone method, that needs to be implemented in the subclasses.
    *
    * @return gives back a real copy of the field
    */
@@ -60,7 +60,7 @@ public abstract class Field {
   public abstract Field clone();
 
   /**
-   * method, that converts the field into a string for a Terminaloutput
+   * method, that converts the field into a string for a Terminaloutput.
    *
    * @return String of the Field
    */

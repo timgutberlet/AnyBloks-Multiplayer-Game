@@ -14,6 +14,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
+ * BoardSquare class, representing a Board with its squares on it.
+ *
  * @author tiotto
  * @date 27.03.2022
  */
@@ -91,7 +93,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   // ======================================================================
 
   /**
-   * gives back the board
+   * gives back the board.
    *
    * @return board
    */
@@ -318,8 +320,6 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
         for (FieldSquare fs : startFields) {
           indirectNeighbor = indirectNeighbor || (fs.pos[0] == fsPoly.getPos()[0] + x - xRef
               && fs.pos[1] == fsPoly.getPos()[1] + y - yRef);
-          if (fsPoly.equals(fs)) {
-          }
         }
       } else {
         indirectNeighbor =
@@ -466,8 +466,8 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    * @param y            y value of the position
    * @param isFirstRound boolean, if it is the first Round
    * @param poly         given polygon
-   * @return list turns which contain the poly and a tuple out of integers: {row, column, rotation,
-   * mirrored}
+   * @return list turns which contain the poly and a tuple out of integers:
+   * {row, column, rotation,mirrored}
    */
   private ArrayList<Turn> getPolyShadesPossible(int x, int y, PolySquare poly,
       boolean isFirstRound) {
@@ -501,7 +501,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   /**
    * this method gives back a list of the possible positions and the specific placement of possible
-   * placements of a given polygon represented by a list of turns
+   * placements of a given polygon represented by a list of turns.
    *
    * @param poly         the given polygon
    * @param isFirstRound boolean, if it is the firstRound
@@ -555,7 +555,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
 
   /**
    * method that counts and safes the number of squares which could lead to a next turn for a
-   * different color, which are covered by the given turn
+   * different color, which are covered by the given turn.
    *
    * @param turn the considered turn as a result the number is stored as an attribute of the turn
    *             itself
@@ -615,7 +615,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * this method returns the maximum width a color has occupied measured from the starting edge
+   * this method returns the maximum width a color has occupied measured from the starting edge.
    *
    * @param c Color, which is looked for
    * @return maximum width
@@ -634,7 +634,7 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   }
 
   /**
-   * this method returns the maximum height a color has occupied measured from the starting edge
+   * this method returns the maximum height a color has occupied measured from the starting edge.
    *
    * @param c Color, which is looked for
    * @return maximum height

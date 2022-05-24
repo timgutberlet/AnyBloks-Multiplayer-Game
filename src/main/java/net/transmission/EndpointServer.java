@@ -240,7 +240,7 @@ public class EndpointServer {
   }
 
   /**
-   * function to easily send a packet to client based on session
+   * function to easily send a packet to client based on session.
    *
    * @param wrappedPacket
    * @param client

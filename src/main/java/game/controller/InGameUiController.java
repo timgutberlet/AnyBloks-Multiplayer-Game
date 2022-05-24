@@ -977,7 +977,7 @@ public abstract class InGameUiController extends AbstractUiController {
               }
             }
           } catch (Exception e) {
-            e.printStackTrace();
+            Debug.printMessage("");
           }
 
           //If localPlayer has selected a Poly, check if he also already click on the Board

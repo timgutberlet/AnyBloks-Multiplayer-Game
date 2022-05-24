@@ -173,7 +173,7 @@ public class DbServer extends AbstractDB {
   }
 
   /**
-   * Test whether there is a token already saved for a user
+   * Test whether there is a token already saved for a user.
    *
    * @param username of user
    * @return boolean
@@ -199,7 +199,7 @@ public class DbServer extends AbstractDB {
   }
 
   /**
-   * Deletes any saved tokens for a user
+   * Deletes any saved tokens for a user.
    *
    * @param username of user
    */
@@ -215,7 +215,7 @@ public class DbServer extends AbstractDB {
   }
 
   /**
-   * Inserts an authToken or a certain user
+   * Inserts an authToken or a certain user.
    *
    * @param username of user
    * @param token    to be inserted
@@ -266,7 +266,7 @@ public class DbServer extends AbstractDB {
   }
 
   /**
-   * puts a game into the DB so that scores can be added (with the id of the game)
+   * puts a game into the DB so that scores can be added (with the id of the game).
    *
    * @param gameMode of the played game
    * @return id of inserted game as String
@@ -305,7 +305,7 @@ public class DbServer extends AbstractDB {
   }
 
   /**
-   * Insert a new GameSessionScore
+   * Insert a new GameSessionScore.
    *
    * @return the id of the newly inserted GameSessionScore
    */
@@ -325,7 +325,7 @@ public class DbServer extends AbstractDB {
   }
 
   /**
-   * Insert into the table GameSessionScore2Game after a GameSessionScore has been inserted
+   * Insert into the table GameSessionScore2Game after a GameSessionScore has been inserted.
    *
    * @param gameSessionScoreId of gameSessionScore
    * @param gameId             and the game that belongs to that sessionScore
@@ -366,7 +366,7 @@ public class DbServer extends AbstractDB {
 
 
   /**
-   * Checks whether or not a username is already present in the database
+   * Checks whether or not a username is already present in the database.
    *
    * @param username to check
    * @return true if there is an account / false if the username is unused
@@ -448,7 +448,7 @@ public class DbServer extends AbstractDB {
   }
 
   /**
-   * Gat all Scores of games associated with a gameSession(Score)
+   * Gat all Scores of games associated with a gameSession(Score).
    *
    * @param gameSessionScoreId id of relevant gameSession
    * @return ArrayList<GameScoreBoard></GameScoreBoard>

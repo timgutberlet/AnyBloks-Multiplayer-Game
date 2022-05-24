@@ -13,7 +13,7 @@ import net.packet.account.DeleteAccountRequestPacket;
 import net.server.DbServer;
 
 /**
- * Class that enables users to delete a remote account
+ * Class that enables users to delete a remote account.
  *
  * @author tbuscher
  */

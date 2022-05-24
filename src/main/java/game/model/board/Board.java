@@ -9,19 +9,21 @@ import game.model.field.Field;
 import game.model.polygon.Poly;
 import java.util.ArrayList;
 
-
+/**
+ * Board Class, that represents abstract version of the used Boards
+ * in the game.
+ *
+ * @author tiotto
+ * @date 27.03.2022
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = BoardSquare.class, name = "BoardSquare"),
-    @JsonSubTypes.Type(value = BoardTrigon.class, name = "BoardTrigon"),}
+    @JsonSubTypes.Type(value = BoardTrigon.class, name = "BoardTrigon"), }
 
 )
 
-/**
- * @author tiotto
- * @date 27.03.2022
- */
 public abstract class Board {
 
   public int SIZE;

@@ -4,6 +4,12 @@ import game.config.Config;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Application class, that starts the Frameable application,
+ * initiates a gamecontroller instances and loads the Config.
+ *
+ * @author tgutberl
+ */
 public class App extends Application {
 
   private GameController controller;

@@ -37,7 +37,7 @@ public class AIMessages {
     if (gameSession.getLocalPlayer().isAI()) {
       if (Math.round(Math.random() * 4) < 1) {
         String message = afterTurnComments[(int) Math.round(
-            Math.random() * (afterTurnComments.length-1))];
+            Math.random() * (afterTurnComments.length - 1))];
         return (message);
       }
     }
@@ -47,12 +47,11 @@ public class AIMessages {
   /**
    * gets a random comment after a finished game.
    *
-   * @return gets a random comment after a finished game
    */
   public static void getAfterMatchAIComment(GameSession gameSession) {
     if (gameSession.getLocalPlayer().isAI()) {
       String message = afterGameComments[(int) Math.round(
-          Math.random() * (afterTurnComments.length-1))];
+          Math.random() * (afterTurnComments.length - 1))];
       gameSession.addChatMessage(message);
     }
   }

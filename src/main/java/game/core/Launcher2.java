@@ -4,7 +4,7 @@ package game.core;
  * Launcher Class, built for launching the App.main, as Building the Jarfile otherwise caused some
  * failure
  *
- * @author timgutberlet
+ * @author tgutberl
  */
 public class Launcher2 {
 
