@@ -23,6 +23,7 @@ public class HostQuitUiController extends AbstractUiController {
    * Anbstract Game controller used in Application.
    */
   private final AbstractGameController gameController;
+  private final GameSession gameSession;
   /**
    * Main Anchorpane used for resizing.
    */
@@ -30,7 +31,6 @@ public class HostQuitUiController extends AbstractUiController {
   AnchorPane mainPane;
   @FXML
   private Button backToLobbyButton;
-  private final GameSession gameSession;
   private boolean buttonActive;
   private int waited;
 

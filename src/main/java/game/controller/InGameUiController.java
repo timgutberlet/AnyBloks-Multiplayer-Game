@@ -62,6 +62,7 @@ import net.packet.game.HostQuitPacket;
  * UiController controlling the Ingame Inputs and Outputs, as well as the VIew.
  *
  * @author tgutberl
+ * @author lbaudenb
  */
 
 public abstract class InGameUiController extends AbstractUiController {
@@ -167,9 +168,11 @@ public abstract class InGameUiController extends AbstractUiController {
    * Constructor used for setting gameController, game and gameSession.
    *
    * @author tgutberl
+   * @author lbaudenb
    */
   public InGameUiController(AbstractGameController gameController, Game game,
       GameSession gameSession) {
+    //Initializing all needed variables
     super(gameController);
     this.inputHandler = gameController.getInputHandler();
     this.gameSession = gameSession;
@@ -186,6 +189,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
   /**
    * Method that is called when chatInput Enter was done. Sends Chatmessage to Server.
+   * @author tgutberl
    */
   public void registerChatMessage() {
     if (chatInput.getText().length() > 0) {
@@ -200,8 +204,11 @@ public abstract class InGameUiController extends AbstractUiController {
 
   /**
    * Method to create Board.
+   *
+   * @author lbaudenb
    */
   public void createBoard() {
+    //Create Board by gamemode
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
@@ -216,6 +223,7 @@ public abstract class InGameUiController extends AbstractUiController {
       default:
         break;
     }
+    //init error label
     errorLabel = new Label("This is the Error Label");
     errorLabel.setPrefHeight(20);
     errorLabel.setPrefWidth(350);
@@ -229,6 +237,8 @@ public abstract class InGameUiController extends AbstractUiController {
 
   /**
    * Method to setup UI.
+   *
+   * @author lbaudenb
    */
   private void setUpUi() {
 
@@ -248,7 +258,7 @@ public abstract class InGameUiController extends AbstractUiController {
     width = stage.getWidth();
     double height;
     height = stage.getHeight();
-
+    //setup main anchorpane and container box
     container = new VBox();
     container.setTranslateY(110);
     container.setPrefWidth(width);
@@ -265,7 +275,7 @@ public abstract class InGameUiController extends AbstractUiController {
     container.getChildren().add(content);
 
     createBoard();
-
+    //Setup toppane with scores
     topPane = new Pane();
     topPane.setStyle("-fx-background-color: #eeeeee");
     topPane.setEffect(new DropShadow());
@@ -281,7 +291,7 @@ public abstract class InGameUiController extends AbstractUiController {
     scorePane.setPrefHeight(100);
     scorePane.setMaxHeight(100);
     anchorPane.getChildren().add(scorePane);
-
+    //Init the scores and the turn label
     int i = 0;
     int playerSize = game.getPlayers().size();
     for (Player p : this.gameSession.getPlayerList()) {
@@ -294,7 +304,7 @@ public abstract class InGameUiController extends AbstractUiController {
       Label score = new Label("0");
       score.setPadding(new Insets(0, 10, 0, 10));
       score.setFont(Font.font("System", 30));
-
+      //Set colors of Scores by player color
       switch (game.getGameState().getColorFromPlayer(p).toString()) {
         case "RED":
           if (ColorHandler.darkMode) {
@@ -382,7 +392,7 @@ public abstract class InGameUiController extends AbstractUiController {
     RowConstraints row = new RowConstraints();
     row.setPrefHeight(100);
     scorePane.getRowConstraints().add(row);
-
+    //Init the turn label
     VBox vbox;
     vbox = new VBox();
     turn = new Label("");
@@ -395,7 +405,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
     stacks = new VBox();
     stacks.setSpacing(10);
-
+    //Init the right gamemode so that the stacks are painted right
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
@@ -419,7 +429,7 @@ public abstract class InGameUiController extends AbstractUiController {
         break;
     }
     content.getChildren().add(stacks);
-
+    //Init the chat
     chat = new TextArea();
     chat.setPrefHeight(height / 7);
     chat.setPrefWidth(300);
@@ -429,6 +439,7 @@ public abstract class InGameUiController extends AbstractUiController {
       this.chatInput.setText("");
       chatSelected = true;
     });
+    //Make chat draggable
     dragLabel = new Label("Drag and Move the Chat here!");
     dragLabel.setPrefHeight(30);
     dragLabel.setPrefWidth(300);
@@ -456,7 +467,7 @@ public abstract class InGameUiController extends AbstractUiController {
     buttonBox.setAlignment(Pos.BOTTOM_CENTER);
     buttonBox.setMinHeight(50);
     buttonBox.setSpacing(40);
-
+    //Init all the Buttons
     skipTurnButton = new Button("Skip Turn");
     infoButton = new Button("Help");
     quitButton = new Button("Quit");
@@ -495,14 +506,14 @@ public abstract class InGameUiController extends AbstractUiController {
     });
 
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
-
+    //Add all Buttons to buttonbox
     buttonBox.getChildren().add(infoButton);
     buttonBox.getChildren().add(quitButton);
     buttonBox.getChildren().add(chatButton);
     buttonBox.getChildren().add(skipTurnButton);
     container.getChildren().add(buttonBox);
     this.root.getChildren().add(anchorPane);
-
+    //Init the right css by theme
     switch (Config.getStringValue("THEME")) {
       case "BRIGHT":
         topPane.setStyle("-fx-background-color:#FF4B4B;");
@@ -579,6 +590,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void refreshUi() {
+    //Repaint the scorepane
     int playerSize = gameSession.getGame().getGamemode().getNeededPlayers();
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
 
@@ -608,7 +620,7 @@ public abstract class InGameUiController extends AbstractUiController {
       turn.setText(
           this.gameSession.getGame().getGameState().getPlayerCurrent().getUsername() + " 's Turn");
     }
-
+    //Paint scorepanes by gamemode
     stackPanes.clear();
     stacks.getChildren().clear();
     System.out.println(game.getGamemode().getName());
@@ -643,6 +655,7 @@ public abstract class InGameUiController extends AbstractUiController {
    * Method repaints the BoardPane.
    */
   public void repaintBoardPane() {
+    //Repaint board and color the right collision fields
     boardPane.resetAllCheckFields();
     if (possibleFields != null) {
       for (int[] coords : possibleFields) {
@@ -696,11 +709,12 @@ public abstract class InGameUiController extends AbstractUiController {
    * function that updates the screen and calls the next move to be made.
    *
    * @param gameController gameController
-   * @param deltaTime deltaTime
+   * @param deltaTime      deltaTime
    * @author tgeilen
    */
   @Override
   public void update(AbstractGameController gameController, double deltaTime) {
+    //Check if player has moves left. If not : auto-skip
     if (moveCheck == 1) {
       if (this.game.getGameState().getBoard().getPossibleMoves(
           this.gameSession.getGame().getGameState().getRemainingPolys(localPlayer),
@@ -717,7 +731,7 @@ public abstract class InGameUiController extends AbstractUiController {
     }
 
     String help = "";
-
+    //Write new Chatmessages into chat
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
       if (!alreadyInChat.contains(chatMessage.getTime() + " "
           + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")) {
@@ -786,7 +800,7 @@ public abstract class InGameUiController extends AbstractUiController {
         //hintLabel1.setText("Erkannt");
         //Debug.printMessage(this, "GUI ready for input");
         boolean action = false;
-
+        //Update Dragable Polypane
         if (!this.gameSession.isUpdatingGameState()) {
           for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
               .getPolyPanes()) {
@@ -799,7 +813,7 @@ public abstract class InGameUiController extends AbstractUiController {
                 root.getChildren().remove(dragablePolyPane);
                 dragablePolyPane = null;
               }
-
+              //Init the right dragable polypane by Gamemode
               switch (game.getGamemode().getName()) {
                 case "JUNIOR":
                 case "DUO":
@@ -842,7 +856,7 @@ public abstract class InGameUiController extends AbstractUiController {
               possibleFields = game.getGameState().getBoard()
                   .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
                       game.getGameState().isFirstRound());
-
+              //Paint possible fields by color
               if (possibleFields != null) {
                 for (int[] coords : possibleFields) {
                   switch (dragablePolyPane.getPoly().getColor().toString()) {
@@ -878,7 +892,7 @@ public abstract class InGameUiController extends AbstractUiController {
               }
             }
           }
-
+          //Register inputhandler on dragablepolypane
           if (inputHandler.isKeyPressed(KeyCode.ESCAPE)) {
             root.getChildren().remove(dragablePolyPane);
             boardPane.resetAllCheckFields();
@@ -890,6 +904,7 @@ public abstract class InGameUiController extends AbstractUiController {
               boolean currentIntersection = false;
               Bounds polyBounds = dragablePolyPane.getCheckPolyField()
                   .localToScene(dragablePolyPane.getCheckPolyField().getBoundsInLocal());
+              //Check collision fields to paint them afterwards
               for (Field field : boardPane.getCheckFields()) {
                 if (game.getGamemode().getName().equals("TRIGON")) {
                   boardPane.resetCheckFieldColor(field.getX(), field.getY(),
@@ -905,7 +920,7 @@ public abstract class InGameUiController extends AbstractUiController {
                   int addIsRight = 0;
                   int[] pos;
                   if (game.getGamemode().getName().equals("TRIGON") && dragablePolyPane != null) {
-
+                    //Calculate the right position to check if a poly is possible
                     addX = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[0];
                     addY = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0).getPos()[1];
                     addIsRight = ((PolyTrigon) dragablePolyPane.getPoly()).getShape().get(0)
@@ -921,13 +936,14 @@ public abstract class InGameUiController extends AbstractUiController {
                     pos[0] = field.getX() + addX;
                     pos[1] = field.getY() + addY;
                   }
-                  //change
+                  //Show that a poly is possible and paint it yellow
                   if (game.getGameState().getBoard().isPolyPossible(pos, dragablePolyPane.getPoly(),
                       game.getGameState().isFirstRound())) {
                     errorLabelText = "  Press Enter/Space to place the Poly here!";
                     dragablePolyPane.inncerCircleSetColor();
                     currentIntersection = true;
                     dragablePolyPane.rerender();
+                    //When enter was pressed on possible Poly, put it into a right turn and send to server
                     if (inputHandler.isKeyPressed(KeyCode.ENTER) || inputHandler.isKeyPressed(
                         KeyCode.SPACE) || submitRequested) {
                       errorLabelText = "";
@@ -945,11 +961,13 @@ public abstract class InGameUiController extends AbstractUiController {
                   }
                 }
               }
+              //Reset poly light up if there is no intersection
               if (!currentIntersection) {
                 errorLabelText = "  Drag the Poly to a possible Position where it lights up!";
                 dragablePolyPane.inncerCircleResetColor();
                 dragablePolyPane.rerender();
               }
+              //Paint the right possible fields
               if (possibleFields != null) {
                 for (int[] coords : possibleFields) {
                   switch (dragablePolyPane.getPoly().getColor().toString()) {
@@ -979,30 +997,10 @@ public abstract class InGameUiController extends AbstractUiController {
           } catch (Exception e) {
             Debug.printMessage("");
           }
-
-          //If localPlayer has selected a Poly, check if he also already click on the Board
-          /*
-          if (localPlayer.getSelectedPoly() != null) {
-          localPlayer.setSelectedPoly(localPlayer.getSelectedPoly());
-          Debug.out.println("Localplayer Selected Poly");
-          //create helpArraylist containing the selectedPoly to check the possible Moves
-          ArrayList<Poly> helpList = new ArrayList<>();
-          helpList.add(localPlayer.getSelectedPoly());
-
-          ArrayList<Turn> possibleTurns = new ArrayList<Turn>();
-          possibleTurns = game.getGameState().getBoard().getPossibleMoves(helpList, false);
-          localPlayer.setSelectedTurn(possibleTurns.get(0));
-          paintPossibleTurns(possibleTurns);
-          //TODO implement check of any FieldTile if it is clicked
-        }*/
         }
-      } else {
-        //Debug.printMessage(this, "The two players are NOT the same");
-        //hintLabel1.setText("Nicht erkannt");
       }
     }
     submitRequested = false;
-
     //check if game is over
     if (this.gameSession.isGameOver()) {
       Debug.printMessage("GAME IS OVER");

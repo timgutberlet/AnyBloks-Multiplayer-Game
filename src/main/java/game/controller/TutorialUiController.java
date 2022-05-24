@@ -165,7 +165,7 @@ public class TutorialUiController extends AbstractUiController {
    * Update Method used for starting game when server messages.
    *
    * @param gameController gameController
-   * @param deltaTime deltaTime
+   * @param deltaTime      deltaTime
    * @author tgutberl
    */
   @Override

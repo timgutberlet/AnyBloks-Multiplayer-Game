@@ -78,7 +78,6 @@ public class BoardPane extends Pane {
    * @param x       coord x
    * @param y       coord y
    * @param isRight marks if right or left triangle is to be painted
-   *
    * @author tgutberl
    */
   public void setCheckFieldColor(Paint color, int x, int y, int isRight) {

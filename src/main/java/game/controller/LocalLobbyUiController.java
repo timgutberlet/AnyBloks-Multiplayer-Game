@@ -168,6 +168,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    *
    * @param gameController Gamecontroller Object currently used
    * @author tgutberl
+   * @author lbaudenb
    */
   public LocalLobbyUiController(AbstractGameController gameController) {
     super(gameController);
@@ -201,6 +202,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    *
    * @param root Root parameter
    * @author tgutberl
+   * @author lbaudenb
    */
   public void init(Group root) {
     try {
@@ -256,6 +258,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    * Method that is called when game is started.
    *
    * @author tgutberl
+   * @author lbaudenb
    */
   @FXML
   public void playGame() {
@@ -625,7 +628,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    * Update Method used for starting game when server messages.
    *
    * @param gameController gameController
-   * @param deltaTime deltaTime
+   * @param deltaTime      deltaTime
    * @author tgutberl
    */
   @Override
@@ -644,6 +647,7 @@ public class LocalLobbyUiController extends AbstractUiController {
    * Override Update Method.
    *
    * @param gameController GameController of game
+   * @author lbaudenb
    */
   @Override
   public void update(AbstractGameController gameController) {

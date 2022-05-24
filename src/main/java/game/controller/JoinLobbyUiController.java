@@ -27,6 +27,19 @@ import javafx.scene.layout.AnchorPane;
  */
 
 public class JoinLobbyUiController extends AbstractUiController {
+
+  /**
+   * Gamecontroller method used in application.
+   */
+  private final AbstractGameController gameController;
+  /**
+   * Gamessession controlling the game.
+   */
+  private final GameSession gameSession;
+  /**
+   * Arraylist saving what is already in Chat.
+   */
+  ArrayList<String> alreadyInChat;
   /**
    * Label that shows count of wins of the best Player.
    */
@@ -70,18 +83,6 @@ public class JoinLobbyUiController extends AbstractUiController {
    * Variable that shows, if the scoreboard already loaded.
    */
   private int scoreLoaded = 3;
-  /**
-   * Gamecontroller method used in application.
-   */
-  private final AbstractGameController gameController;
-  /**
-   * Gamessession controlling the game.
-   */
-  private final GameSession gameSession;
-  /**
-   * Arraylist saving what is already in Chat.
-   */
-  ArrayList<String> alreadyInChat;
   /**
    * Name of Host Player.
    */
@@ -364,6 +365,7 @@ public class JoinLobbyUiController extends AbstractUiController {
    * Override update Method.
    *
    * @param gameController GameController of game
+   * @author lbaudenb
    */
   @Override
   public void update(AbstractGameController gameController) {

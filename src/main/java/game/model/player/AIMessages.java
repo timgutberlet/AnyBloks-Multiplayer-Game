@@ -46,7 +46,6 @@ public class AIMessages {
 
   /**
    * gets a random comment after a finished game.
-   *
    */
   public static void getAfterMatchAIComment(GameSession gameSession) {
     if (gameSession.getLocalPlayer().isAI()) {

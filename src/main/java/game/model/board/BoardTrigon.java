@@ -11,9 +11,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class representing a Board that pieces can be put onto.
- * Int this case it represents a Trigon board with the different
- * Trigons on it.
+ * Class representing a Board that pieces can be put onto. Int this case it represents a Trigon
+ * board with the different Trigons on it.
  *
  * @author tiotto
  * @date 29.03.2022

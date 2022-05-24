@@ -1,7 +1,6 @@
 package engine.controller;
 
 import engine.handler.InputHandler;
-import engine.handler.MusicThread;
 import game.config.Config;
 import game.model.Debug;
 import javafx.animation.AnimationTimer;
@@ -155,6 +154,7 @@ public abstract class AbstractGameController extends AnimationTimer {
    * Returns current stage.
    *
    * @return stage object
+   * @author lbaudenb
    */
   public Stage getStage() {
     return this.stage;

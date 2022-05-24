@@ -39,8 +39,8 @@ public class TrigonPolyPane extends PolyPane {
    * Method that draws a right triangle with a specific color at the coordinates i,j. This is done
    * by calculating each point of the triangle.
    *
-   * @param i x coordinate of triangle
-   * @param j y coordinate of triangle
+   * @param i     x coordinate of triangle
+   * @param j     y coordinate of triangle
    * @param color color of triangle
    */
   private void setTriangleRight(int i, int j, Color color) {
@@ -64,8 +64,8 @@ public class TrigonPolyPane extends PolyPane {
    * Method that draws a left triangle with a specific color at the coordinates i,j. This is done by
    * calculating each point of the triangle.
    *
-   * @param i x coordinate of triangle
-   * @param j y coordinate of triangle
+   * @param i     x coordinate of triangle
+   * @param j     y coordinate of triangle
    * @param color color of triangle
    */
   private void setTriangleLeft(int i, int j, Color color) {
@@ -99,12 +99,13 @@ public class TrigonPolyPane extends PolyPane {
   }
 
   /**
-   * Method that draws a triangle at the coordinates i,j.
-   * Position in Parallelogram depends on isRight.
-   * @param i x coordinate of triangle
-   * @param j y coordinate of triangle
+   * Method that draws a triangle at the coordinates i,j. Position in Parallelogram depends on
+   * isRight.
+   *
+   * @param i       x coordinate of triangle
+   * @param j       y coordinate of triangle
    * @param isRight position of triangle in parallelogram
-   * @param color color of triangle
+   * @param color   color of triangle
    */
   private void setTriangle(int i, int j, int isRight, Color color) {
     switch (isRight) {

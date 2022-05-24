@@ -60,18 +60,17 @@ public class MainT {
     Debug.printMessage(game.getGameState().getRound());
     gameSession.stopSession();*/
 
-
     int[] result = playClassicGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
 
     result = playDuoGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
 
     result = playJuniorGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
 
     result = playTrigonGame(true);
-    Debug.printMessage(""+result);
+    Debug.printMessage("" + result);
 
     Debug.printMessage("Everything works");
 
@@ -180,8 +179,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        System.out.println(""+t1);
-        System.out.println(""+game.getGameState().getBoard());
+        System.out.println("" + t1);
+        System.out.println("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -233,8 +232,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        System.out.println(""+t1);
-        System.out.println(""+game.getGameState().getBoard());
+        System.out.println("" + t1);
+        System.out.println("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();
@@ -258,8 +257,8 @@ public class MainT {
       Turn t1 = Ai.calculateNextMove(game.getGameState(), game.getCurrentPlayer());
       game.getGameState().playTurn(t1);
       if (print) {
-        System.out.println(""+t1);
-        System.out.println(""+game.getGameState().getBoard());
+        System.out.println("" + t1);
+        System.out.println("" + game.getGameState().getBoard());
       }
     }
     int[] res = game.getGameState().getScores();

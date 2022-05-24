@@ -92,7 +92,7 @@ public class ScoreBoardUiController extends AbstractUiController {
    * Constructor to initiate the Class.
    *
    * @param gameController gameController
-   * @param gameSession gameSession
+   * @param gameSession    gameSession
    */
   public ScoreBoardUiController(AbstractGameController gameController, GameSession gameSession) {
     super(gameController);

@@ -69,7 +69,7 @@ public class EditAccountController extends AbstractUiController {
    * Error Labels used for informing user of errors.
    */
   @FXML
-  Text    oldPasswordError;
+  Text oldPasswordError;
   /**
    * Error Labels used for informing user of errors.
    */

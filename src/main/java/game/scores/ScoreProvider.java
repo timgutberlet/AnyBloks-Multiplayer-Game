@@ -176,17 +176,18 @@ public class ScoreProvider {
     return new LobbyScoreBoard(gamesPlayed, playerWins);
 
   }
+
   /**
    * Calculate the winner of the stored games.
    *
    * @return String
    */
-  public static String getWinner(GameScoreBoard gameScoreBoard){
+  public static String getWinner(GameScoreBoard gameScoreBoard) {
     String winnerName = "";
     HashMap<String, Integer> playerScores = gameScoreBoard.getPlayerScores();
     int maxScore = 0;
-    for(String username : playerScores.keySet()){
-      if(playerScores.get(username) > maxScore){
+    for (String username : playerScores.keySet()) {
+      if (playerScores.get(username) > maxScore) {
         maxScore = playerScores.get(username);
         winnerName = username;
       }

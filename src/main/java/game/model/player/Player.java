@@ -84,7 +84,8 @@ public class Player implements Serializable {
     this.type = type;
     this.score = 0;
     this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
-        type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM) || type.equals(PlayerType.AI_GODLIKE));
+        type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM) || type.equals(
+        PlayerType.AI_GODLIKE));
     this.isHost = false;
     this.selectedTurn = null;
     if (!this.isAI) {

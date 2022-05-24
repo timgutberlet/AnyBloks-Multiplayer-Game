@@ -10,8 +10,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * AbstractUiController class, being used for all UiControlling,
- * controlling an initiating the different FXML Views.
+ * AbstractUiController class, being used for all UiControlling, controlling an initiating the
+ * different FXML Views.
  *
  * @author lbaudenb
  * @author tgutberl
