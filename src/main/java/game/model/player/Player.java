@@ -202,7 +202,7 @@ public class Player implements Serializable {
       while (this.selectedTurn == null && nullTurn == false) {
         try {
           Thread.sleep(10);
-         } catch (InterruptedException e) {
+        } catch (InterruptedException e) {
           Debug.printMessage("Catched: " + e.getMessage());
         }
       }

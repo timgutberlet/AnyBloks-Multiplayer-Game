@@ -1,7 +1,6 @@
 package engine.controller;
 
 import engine.handler.InputHandler;
-import engine.handler.MusicThread;
 import game.config.Config;
 import game.model.Debug;
 import javafx.animation.AnimationTimer;

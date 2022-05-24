@@ -421,7 +421,8 @@ public class PolyTrigon extends Poly {
           }
         }
         break;
-        default: break;
+        default:
+          break;
       }
     }
     shape = newShape;

@@ -92,6 +92,9 @@ public class ScoreBoardUiController extends AbstractUiController {
   @FXML
   private Button backMainMenuButton;
 
+  @FXML
+  private boolean flag;
+
   /**
    * Constructor to initiate the Class.
    *
@@ -154,6 +157,7 @@ public class ScoreBoardUiController extends AbstractUiController {
       updateSize(mainPane, gameController.getStage());
       if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
         hostWaiting.setVisible(false);
+        flag = true;
       }
       //Sets the Theme, according to the settings
       switch (Config.getStringValue("THEME")) {
@@ -368,15 +372,16 @@ public class ScoreBoardUiController extends AbstractUiController {
       board.getChildren().add(vbox);
 
       if (gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
-        Button button = new Button();
-        button.setText("Next Round");
-        button.setFont(Font.font("System", 20));
-        button.setOnMouseClicked(mouseEvent -> {
-          this.nextRound();
-        });
-        buttonBox.getChildren().add(button);
+        if (flag) {
+          Button button = new Button();
+          button.setText("Next Round");
+          button.setFont(Font.font("System", 20));
+          button.setOnMouseClicked(mouseEvent -> {
+            this.nextRound();
+          });
+          buttonBox.getChildren().add(button);
+        }
       }
-
     }
 
   }

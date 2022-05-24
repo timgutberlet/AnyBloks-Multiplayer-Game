@@ -16,7 +16,7 @@ public class GameScoreBoard {
   /**
    * Default Constructor with gamemode and Hashmap of username and score.
    *
-   * @param gamemode gameMode
+   * @param gamemode     gameMode
    * @param playerScores playerScores
    */
   public GameScoreBoard(String gamemode, HashMap<String, Integer> playerScores) {

@@ -30,8 +30,8 @@ public class CheckConnectionThread extends Thread {
    * initializes a new check connection thread out of a game session, the considered username and
    * the serverEndpoint.
    *
-   * @param gameSession gameSession
-   * @param username username
+   * @param gameSession    gameSession
+   * @param username       username
    * @param serverEndpoint serverEndpoint
    */
   public CheckConnectionThread(GameSession gameSession, String username,

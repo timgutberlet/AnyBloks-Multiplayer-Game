@@ -73,7 +73,6 @@ public class ClientHandler {
    */
   public void initLocalGame(Player localPlayer) {
 
-
     DbServer db = null;
     try {
       db = DbServer.getInstance();
@@ -107,7 +106,7 @@ public class ClientHandler {
    * initializes a local game out of the local player and its ip.
    *
    * @param localPlayer LocalPlayer
-   * @param ip Ip
+   * @param ip          Ip
    */
   public void initLocalGame(Player localPlayer, String ip) {
     String token = "";
@@ -118,8 +117,8 @@ public class ClientHandler {
    * initializes a local game out of a local player and its ip as well as its token.
    *
    * @param localPlayer LocalPlayer
-   * @param ip  Ip
-   * @param token token
+   * @param ip          Ip
+   * @param token       token
    */
   public void initLocalGame(Player localPlayer, String ip, String token) {
 
@@ -349,7 +348,7 @@ public class ClientHandler {
   /**
    * save a ChatMessage in the chat.
    *
-   * @param  wrappedPacket wrappedPacket
+   * @param wrappedPacket wrappedPacket
    */
   public void saveChatMessage(WrappedPacket wrappedPacket) {
     ChatMessagePacket chatMessagePacket = (ChatMessagePacket) wrappedPacket.getPacket();
@@ -360,7 +359,7 @@ public class ClientHandler {
   /**
    * updates the player list out of the player list packet.
    *
-   *  @param  wrappedPacket player list packet
+   * @param wrappedPacket player list packet
    */
   public void updatePlayerList(WrappedPacket wrappedPacket) {
     PlayerListPacket playerListPacket = (PlayerListPacket) wrappedPacket.getPacket();
@@ -410,7 +409,7 @@ public class ClientHandler {
   /**
    * disconnects a dlient from the server and closes all connections.
    *
-   *  @param packet wrappedPacket
+   * @param packet wrappedPacket
    */
   public void disconnectClient(WrappedPacket packet) {
     PlayerKickPacket playerKickPacket = (PlayerKickPacket) packet.getPacket();

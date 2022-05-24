@@ -272,7 +272,7 @@ public abstract class InGameUiController extends AbstractUiController {
     content = new HBox();
     content.setPrefWidth(width);
     content.setSpacing(10);
-    content.setAlignment(Pos.CENTER);
+    content.setAlignment(Pos.CENTER_LEFT);
     container.getChildren().add(content);
 
     createBoard();
@@ -612,7 +612,7 @@ public abstract class InGameUiController extends AbstractUiController {
     });
 
     for (int i = 0; i < playerSize; i++) {
-      if(i<scores.size()){
+      if (i < scores.size()) {
         scores.get(i).setText(game.getGameState().getScores()[i] + "");
       }
     }
@@ -918,6 +918,7 @@ public abstract class InGameUiController extends AbstractUiController {
                 }
                 Bounds boardBounds = field.localToScene(field.getBoundsInParent());
                 if (polyBounds.intersects(boardBounds)) {
+                  System.out.println("INTERSECTION!!!!!!!");
                   //Add is Poly Possible
                   int addX;
                   int addY;

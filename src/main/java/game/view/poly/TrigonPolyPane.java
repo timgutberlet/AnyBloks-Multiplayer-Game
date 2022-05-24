@@ -79,7 +79,7 @@ public class TrigonPolyPane extends PolyPane {
           .addAll(ofSetX + j * size + i * ofSetX, ofSetY + i * ofSetY - moveOfSetY, // top vertex
               size + j * size + i * ofSetX - move, 0.0 + i * ofSetY + moveOfSetY, // right vertex
               0.0 + j * size + i * ofSetX + move, 0.0 + i * ofSetY + moveOfSetY);
-      checkTrigonField.setFill(color);
+      checkTrigonField.setFill(Color.BLACK);
       checkPolyField = checkTrigonField;
       this.getChildren().add(checkTrigonField);
     }

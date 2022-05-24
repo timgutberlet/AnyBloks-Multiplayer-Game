@@ -40,9 +40,8 @@ public class OutboundServerHandler {
   /**
    * constructor.
    *
-   * @param server server
+   * @param server      server
    * @param gameSession gameSession
-   *
    * @author tgeilen
    */
   public OutboundServerHandler(EndpointServer server, GameSession gameSession) {

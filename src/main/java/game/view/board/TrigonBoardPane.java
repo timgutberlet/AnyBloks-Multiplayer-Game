@@ -107,9 +107,10 @@ public class TrigonBoardPane extends BoardPane {
             // right vertex
             0.0 + j * size + i * ofSetX + move - shift, 0.0 + i * ofSetY + moveOfSetY);
     if (checkFieldColor.containsKey("" + (i * 1000) + j + 0)) {
-      checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
+      checkTrigonField.setFill(Color.BLACK);
+      //checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
     } else {
-      checkTrigonField.setFill(color);
+      checkTrigonField.setFill(Color.BLACK);
     }
     checkFields.add(checkTrigonField);
     this.getChildren().add(checkTrigonField);
@@ -147,7 +148,7 @@ public class TrigonBoardPane extends BoardPane {
             size + j * size + i * ofSetX - move - shift, 0.0 + i * ofSetY + moveOfSetY,
             // right vertex
             0.0 + j * size + i * ofSetX + move - shift, 0.0 + i * ofSetY + moveOfSetY);
-      checkTrigonField.setFill(color);
+    checkTrigonField.setFill(color);
     checkFields.add(checkTrigonField);
     this.getChildren().add(checkTrigonField);
   }
@@ -161,25 +162,22 @@ public class TrigonBoardPane extends BoardPane {
   private void setTriangle(int i, int j) {
     Color color;
     int[] pos;
-    if(i==-1){
-      pos = new int[]{i,j,0};
-      setTriangleCheckfield(i,j,Color.TRANSPARENT);
-    }
-    else if(i+j==7){
-      pos = new int[]{i,j,0};
-      setTriangleCheckfield(i,j,Color.TRANSPARENT);
-    }
-    else if (i + j == 8) {
+    if (i == -1 || i == -2 || i == -3 || i == -4) {
+      pos = new int[]{i, j, 0};
+      setTriangleCheckfield(i, j, Color.BLACK);
+    } else if (i + j == 7 || i + j == 6 || i + j == 5 || i + j == 4) {
+      pos = new int[]{i, j, 0};
+      setTriangleCheckfield(i, j, Color.BLACK);
+    } else if (i + j == 8) {
       pos = new int[]{i, j, 1};
       color = ColorHandler.getJavaColor(board.getColor(pos));
+      setTriangleCheckfield(i, j, Color.BLACK);
       setTriangleRight(i, j, color);
-    }
-    else if (i + j == 26) {
+    } else if (i + j == 26) {
       pos = new int[]{i, j, 0};
       color = ColorHandler.getJavaColor(board.getColor(pos));
       setTriangleLeft(i, j, color);
-    }
-    else if (i + j > 8 && i + j < 26) {
+    } else if (i + j > 8 && i + j < 26) {
       pos = new int[]{i, j, 1};
       color = ColorHandler.getJavaColor(board.getColor(pos));
       setTriangleRight(i, j, color);

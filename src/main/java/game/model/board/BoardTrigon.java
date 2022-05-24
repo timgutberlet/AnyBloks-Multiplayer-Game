@@ -414,7 +414,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    * Method that gives back a list of all possible moves of a list of remaining polygons.
    *
    * @param remainingPolys list of remaining polys
-   * @param isFirstRound boolean, if it is the first round
+   * @param isFirstRound   boolean, if it is the first round
    * @return returns a List with all the possible moves. This class contains position, rotation and
    * if the polygon has to be mirrored.
    */

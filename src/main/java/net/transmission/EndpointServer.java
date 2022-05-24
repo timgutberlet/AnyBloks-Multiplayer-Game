@@ -218,7 +218,7 @@ public class EndpointServer {
    * function to easyily send a packet to a client based on username.
    *
    * @param wrappedPacket wrappedPacket
-   * @param username username
+   * @param username      username
    */
   public void sendMessage(WrappedPacket wrappedPacket, String username) {
 
@@ -238,7 +238,7 @@ public class EndpointServer {
    * function to easily send a packet to client based on session.
    *
    * @param wrappedPacket wrappedPacket
-   * @param client client
+   * @param client        client
    */
   public void sendMessage(WrappedPacket wrappedPacket, Session client) {
 
@@ -282,7 +282,7 @@ public class EndpointServer {
    * adds username and a client session to the hash map username2session.
    *
    * @param username username
-   * @param client client
+   * @param client   client
    */
   public void addUsernameSession(String username, Session client) {
     username2Session.put(username, client);

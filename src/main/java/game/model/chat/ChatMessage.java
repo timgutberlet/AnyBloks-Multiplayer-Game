@@ -20,7 +20,7 @@ public class ChatMessage {
    * initializes a chat message.
    *
    * @param username player name
-   * @param message message
+   * @param message  message
    */
   public ChatMessage(String username, String message) {
 

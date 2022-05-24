@@ -28,7 +28,7 @@ public class Game {
    * initializes a game.
    *
    * @param gameSession referencing game session.
-   * @param gamemode game mode that is played
+   * @param gamemode    game mode that is played
    */
   public Game(GameSession gameSession, GameMode gamemode) {
     this.gameSession = gameSession;
@@ -47,8 +47,8 @@ public class Game {
    * initializes a game.
    *
    * @param gameSession referencing game session.
-   * @param gamemode game mode that is played
-   * @param isServer if it is the server
+   * @param gamemode    game mode that is played
+   * @param isServer    if it is the server
    */
   public Game(GameSession gameSession, GameMode gamemode, Boolean isServer) {
     this.gameSession = gameSession;
@@ -153,7 +153,6 @@ public class Game {
 
   /**
    * initializes the passed turns.
-   *
    */
   public void initPassedTurns() {
     for (Player p : this.gameState.getPlayerList()) {

@@ -1,9 +1,9 @@
 package net.tests.game;
 
 import game.model.Debug;
+import game.model.gamemodes.GameMode;
 import game.model.gamemodes.GameModeClassic;
 import game.model.gamemodes.GameModeTrigon;
-import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;

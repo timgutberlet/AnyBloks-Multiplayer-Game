@@ -112,7 +112,6 @@ public class InboundServerHandler {
    * @param wrappedPacket received packet
    * @param session       actual session
    * @return a string array out of the success boolean and the username
-   *
    * @author tgeilen
    */
   public String[] addVerifiedUser(WrappedPacket wrappedPacket, Session session) {

@@ -13,6 +13,7 @@ import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
 import java.io.Serializable;
 import java.util.ArrayList;
+
 /**
  * this class represents the current state of one specific game.
  *
@@ -20,7 +21,6 @@ import java.util.ArrayList;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-
 
 public class GameState implements Serializable, Cloneable {
 

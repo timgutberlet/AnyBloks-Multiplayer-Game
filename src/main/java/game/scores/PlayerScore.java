@@ -28,7 +28,7 @@ public class PlayerScore {
   /**
    * constructor.
    *
-   * @param numberOfGames numberOfGAmes
+   * @param numberOfGames  numberOfGAmes
    * @param playerMostWins player with most wins
    * @param numberMostWins number of most wins
    */

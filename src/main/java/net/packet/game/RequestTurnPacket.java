@@ -54,7 +54,7 @@ public class RequestTurnPacket extends Packet {
   /**
    * contructor for packet.
    *
-   * @param username username
+   * @param username  username
    * @param gameState gamestate
    * @author tgeilen
    */

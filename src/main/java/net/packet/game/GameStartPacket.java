@@ -67,7 +67,7 @@ public class GameStartPacket extends Packet {
   public GameState getGameState() {
 
     ArrayList<Player> players;
-    players   = this.playerList;
+    players = this.playerList;
 
     ArrayList<ArrayList<Poly>> remPoly = this.remainingPolys;
     ArrayList<ArrayList<Turn>> hist = new ArrayList<ArrayList<Turn>>();

@@ -48,7 +48,7 @@ public class Chat {
   /**
    * function to add a message to the chat.
    *
-   * @param player author of the message
+   * @param player  author of the message
    * @param message text message
    * @author tgeilen
    */

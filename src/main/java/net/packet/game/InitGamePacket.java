@@ -30,7 +30,7 @@ public class InitGamePacket extends Packet {
   /**
    * constructor.
    *
-   * @param gameMode gameMode
+   * @param gameMode    gameMode
    * @param playerTypes playerTypes
    */
   public InitGamePacket(LinkedList<GameMode> gameMode, LinkedList<PlayerType> playerTypes) {
@@ -53,7 +53,7 @@ public class InitGamePacket extends Packet {
   /**
    * constructor.
    *
-   * @param gameMode gameMode
+   * @param gameMode  gameMode
    * @param defaultAi defaultAi
    */
   public InitGamePacket(LinkedList<GameMode> gameMode, PlayerType defaultAi) {
