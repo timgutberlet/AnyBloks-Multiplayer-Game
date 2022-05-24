@@ -61,15 +61,17 @@ public abstract class AbstractUiController implements Initializable, Updating {
    */
   @FXML
   public void updateSize(AnchorPane anchorPane, Stage stage) {
-    anchorPane.setPrefHeight(stage.getHeight());
+    //Binds the width and height, when the screen is resized
     anchorPane.setPrefWidth(stage.getWidth());
+    anchorPane.setPrefHeight(stage.getHeight() - 28);
+    //Binds the property
+    stage.heightProperty().addListener((obs, oldVal, newVal) -> {
+      anchorPane.setPrefHeight(stage.getHeight() - 28);
+    });
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
       anchorPane.setPrefWidth(stage.getWidth());
     });
-    stage.heightProperty().addListener((obs, oldVal, newVal) -> {
-      int heightCorrection = stage.isFullScreen() ? 0 : 28;
-      anchorPane.setPrefHeight(stage.getHeight() - heightCorrection);
-    });
+
   }
 }
 

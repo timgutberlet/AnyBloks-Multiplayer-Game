@@ -200,7 +200,7 @@ public class ScoreBoardUiController extends AbstractUiController {
           .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
       this.userMessage.setText("Stopping the server");
       try {
-        TimeUnit.MILLISECONDS.sleep(5000);
+        TimeUnit.MILLISECONDS.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

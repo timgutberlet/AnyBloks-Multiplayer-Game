@@ -144,11 +144,11 @@ public class HostQuitUiController extends AbstractUiController {
     if (waited == 10) {
       try {
         //Sleep in separate blocks in order to avoid "stalling" the application
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
         waited++;
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
         waited++;
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
         backToLobbyButton.setDisable(buttonActive);
         buttonActive = true;
 

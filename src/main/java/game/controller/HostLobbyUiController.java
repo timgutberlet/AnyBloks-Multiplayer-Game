@@ -516,7 +516,7 @@ public class HostLobbyUiController extends AbstractUiController {
       this.clientHandler.startLocalGame(gameList, defaultAi);
 
       try {
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(1);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

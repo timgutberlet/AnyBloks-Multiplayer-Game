@@ -57,7 +57,7 @@ public class LocalQuitUiController extends AbstractUiController {
     //Make sure that all clients have left.
     if (host) {
       try {
-        TimeUnit.MILLISECONDS.sleep(5000);
+        TimeUnit.MILLISECONDS.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -65,7 +65,7 @@ public class LocalQuitUiController extends AbstractUiController {
       gameSession.getHostServer().stopWebsocket();
     }
     try {
-      TimeUnit.MILLISECONDS.sleep(3000);
+      TimeUnit.MILLISECONDS.sleep(1000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
@@ -165,14 +165,14 @@ public class LocalQuitUiController extends AbstractUiController {
       try {
         //Sleep in separate blocks in order to avoid "stalling" the application
         //Make sure that all clients have left.
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
         waited++;
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
 
         //now that all clients have left, reset & stop the server
         gameSession.getHostServer().stopWebsocket();
 
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(1000);
         buttonActive = true;
 
         waited++;
