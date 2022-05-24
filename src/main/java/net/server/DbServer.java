@@ -593,9 +593,18 @@ public class DbServer extends AbstractDB {
 
 
         for(String username : gameScoreBoard.getPlayerScores().keySet()){
+          //Set the updatedMaxScore to the maximum of saved scores and
           int formerMaxScore = topPlayers.get(username) == null ? 0 : topPlayers.get(username)[1];
+          System.out.println(formerMaxScore + " former max");
+
           int currentScore = gameScoreBoard.getPlayerScores().get(username);
+          System.out.println(currentScore + " current");
+
           int updatedMaxScore = Math.max(formerMaxScore, currentScore);
+          System.out.println(updatedMaxScore + " updatedMax");
+
+
+
           int wins = 0;
           if(username.equals(winnerUsername)){
             wins =
@@ -603,9 +612,8 @@ public class DbServer extends AbstractDB {
                     : (topPlayers.get(winnerUsername)[0] + 1);
           } else  {
             wins = topPlayers.get(winnerUsername) == null ? 0
-                : (topPlayers.get(winnerUsername)[0] + 1);
+                : (topPlayers.get(winnerUsername)[0]);
           }
-
 
           Integer[] value = {wins, updatedMaxScore};
           topPlayers.put(ScoreProvider.getWinner(gameScoreBoard), value);
