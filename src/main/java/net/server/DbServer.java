@@ -586,7 +586,6 @@ public class DbServer extends AbstractDB {
     try {
       while (resultSet.next()) {
         String gameId = String.valueOf(resultSet.getRow());
-        System.out.println(gameId);
         gameScoreBoard = getGameScores(gameId);
         String winnerUsername = ScoreProvider.getWinner(gameScoreBoard);
 
@@ -595,13 +594,8 @@ public class DbServer extends AbstractDB {
         for(String username : gameScoreBoard.getPlayerScores().keySet()){
           //Set the updatedMaxScore to the maximum of saved scores and
           int formerMaxScore = topPlayers.get(username) == null ? 0 : topPlayers.get(username)[1];
-          System.out.println(formerMaxScore + " former max");
-
           int currentScore = gameScoreBoard.getPlayerScores().get(username);
-          System.out.println(currentScore + " current");
-
           int updatedMaxScore = Math.max(formerMaxScore, currentScore);
-          System.out.println(updatedMaxScore + " updatedMax");
 
 
 
@@ -619,13 +613,11 @@ public class DbServer extends AbstractDB {
           topPlayers.put(ScoreProvider.getWinner(gameScoreBoard), value);
 
         }
-        System.out.println(winnerUsername);
-        System.out.println(gameScoreBoard.getPlayerScores().toString());
+
       }
     } catch (SQLException e) {
       e.printStackTrace();
     }
-    System.out.println(topPlayers);
     return topPlayers;
 
 
