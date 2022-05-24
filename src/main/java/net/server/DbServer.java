@@ -643,9 +643,6 @@ public class DbServer extends AbstractDB {
       Statement statement = con.createStatement();
       statement.execute("DELETE FROM players WHERE username = 'testuserUpdate1'");
       statement.close();
-      Statement statementInsert = con.createStatement();
-      statementInsert.execute(
-          "INSERT INTO players(username, passwordHash)  VALUES('testuserUpdate1', '123456')");
     } catch (SQLException e) {
       e.printStackTrace();
     }
