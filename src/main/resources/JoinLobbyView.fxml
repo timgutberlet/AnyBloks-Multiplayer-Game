@@ -21,9 +21,9 @@
           <children>
             <GridPane prefHeight="93.0" prefWidth="1280.0" GridPane.rowIndex="1">
               <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#back" prefHeight="50.0" prefWidth="110.0" text="BACK">
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#back" prefHeight="60.0" prefWidth="150.0" text="BACK">
                   <GridPane.margin>
-                    <Insets />
+                    <Insets bottom="30.0" left="10.0" />
                   </GridPane.margin>
                   <font>
                     <Font size="25.0" />
@@ -33,6 +33,9 @@
                   <font>
                     <Font size="25.0" />
                   </font>
+                  <GridPane.margin>
+                    <Insets bottom="30.0" right="10.0" />
+                  </GridPane.margin>
                 </Button>
               </children>
               <columnConstraints>

@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
   minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/17.0.2-ea"
   fx:controller="game.controller.HostQuitUiController" fx:id="mainPane">
@@ -27,6 +28,9 @@
                   <font>
                     <Font size="25.0"/>
                   </font>
+                  <GridPane.margin>
+                    <Insets bottom="30.0" right="10.0" />
+                  </GridPane.margin>
                 </Button>
                 <VBox GridPane.columnIndex="1" alignment="CENTER" prefHeight="200.0"
                   prefWidth="100.0">

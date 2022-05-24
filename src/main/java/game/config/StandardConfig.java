@@ -20,7 +20,7 @@ public class StandardConfig {
       {"THEME", "DARK"},
       {"SHOW_FPS", "FALSE"},
       {"MAXIMUM_FPS", "25"},
-      {"HOSTPLAYER", "HOSTPLAYER"},
+      {"HOSTPLAYER", "user"},
       {"AIPLAYER1", "AlphaGo"},
       {"AIPLAYER2", "DeepMind"},
       {"AIPLAYER3", "Stockfish"},

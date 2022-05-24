@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.MainMenuUiController">
   <children>
     <GridPane alignment="CENTER" gridLinesVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -21,7 +22,10 @@
           <children>
             <GridPane prefHeight="68.0" prefWidth="1280.0" GridPane.rowIndex="1">
               <children>
-                <Button mnemonicParsing="false" onAction="#credits" prefHeight="50.0" prefWidth="135.0" text="CREDITS" GridPane.columnIndex="0">
+                <Button mnemonicParsing="false" onAction="#credits" prefHeight="60.0" prefWidth="150.0" text="CREDITS" GridPane.columnIndex="0">
+                  <GridPane.margin>
+                    <Insets bottom="30.0" left="10.0" />
+                  </GridPane.margin>
                   <font>
                     <Font size="25.0" />
                   </font>
@@ -30,6 +34,9 @@
                   <font>
                     <Font size="25.0" />
                   </font>
+                  <GridPane.margin>
+                    <Insets bottom="30.0" right="10.0" />
+                  </GridPane.margin>
                 </Button>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="937.0" GridPane.columnIndex="1">
                            <children>
@@ -37,6 +44,9 @@
                         <font>
                           <Font size="20.0" />
                         </font>
+                        <GridPane.margin>
+                          <Insets bottom="30.0"/>
+                        </GridPane.margin>
                       </Button>
                            </children>
                         </HBox>
