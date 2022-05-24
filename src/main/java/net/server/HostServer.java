@@ -1,5 +1,6 @@
 package net.server;
 
+import game.model.Debug;
 import java.net.Inet4Address;
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
@@ -38,10 +39,15 @@ public class HostServer {
     URI baseUri = UriBuilder.fromUri("http://" + IPAdress + "/").port(portNumber).build();
     ServerConfig config = new ServerConfig();
 
-    restServer = JettyHttpContainerFactory.createServer(baseUri, config);
+    try {
+      restServer = JettyHttpContainerFactory.createServer(baseUri, config);
 
-    restServer.start();
-    restServer.join();
+      restServer.start();
+      restServer.join();
+    } catch (Exception e) {
+      Debug.printMessage("The HostServer was already running");
+    }
+
 
   }
 

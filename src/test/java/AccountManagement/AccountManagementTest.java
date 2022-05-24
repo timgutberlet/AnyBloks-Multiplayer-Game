@@ -21,6 +21,7 @@ import net.packet.account.DeleteAccountRequestPacket;
 import net.packet.account.UpdateAccountRequestPacket;
 import net.server.DbServer;
 import net.server.HashingHandler;
+import net.server.HostServer;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.Test;
 

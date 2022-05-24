@@ -16,6 +16,7 @@ import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.RestfulLoginPacket;
 import net.server.DbServer;
+import net.server.HostServer;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.junit.jupiter.api.Test;
 
