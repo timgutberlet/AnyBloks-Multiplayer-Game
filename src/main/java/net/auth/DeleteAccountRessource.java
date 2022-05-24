@@ -1,4 +1,4 @@
-package net.AuthRessources;
+package net.auth;
 
 import game.model.Debug;
 import javax.ws.rs.Consumes;
@@ -9,59 +9,53 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
-import net.packet.account.UpdateAccountRequestPacket;
+import net.packet.account.DeleteAccountRequestPacket;
 import net.server.DBServer;
 
 /**
- * Class that provides the option to change the password of an existing account.
+ * Class that enables users to delete a remote account.
  *
  * @author tbuscher
  */
-@Path(("/updateAccount/"))
-public class UpdateAccountRessource {
+@Path(("/deleteAccount/"))
+public class DeleteAccountRessource {
 
   /**
-   * This method registers and processes an update account request packet.
+   * This method registers and processes a delete account request packet.
    *
    * @param wrappedPacket wrappedPacket
-   * @return response on the update account request
+   * @return response on the delete account request
    */
   @PUT
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
 
   public Response update(WrappedPacket wrappedPacket) {
-    Debug.printMessage("Hi from updateAcc method");
+    Debug.printMessage("Hi from deleteAcc method");
     String errorMessage = "";
-
     try {
-      if (wrappedPacket.getPacketType() != PacketType.UPDATE_ACCOUNT_REQUEST_PACKET) {
+      if (wrappedPacket.getPacketType() != PacketType.DELETE_ACCOUNT_REQUEST_PACKET) {
         errorMessage = "This packet is not of the correct type";
         throw new Exception();
       } else {
 
-        UpdateAccountRequestPacket updateAccountRequestPacket =
-            (UpdateAccountRequestPacket) wrappedPacket.getPacket();
-        String username = updateAccountRequestPacket.getUsername();
-        String passwordHash = updateAccountRequestPacket.getPasswordHash();
-        String updatedPasswordHash = updateAccountRequestPacket.getUpdatedPasswordHash();
-        Debug.printMessage("oldPW: " + passwordHash);
-        Debug.printMessage("newPW: " + updatedPasswordHash);
-        Debug.printMessage("username : " + username);
+        DeleteAccountRequestPacket deleteAccountRequestPacket =
+            (DeleteAccountRequestPacket) wrappedPacket.getPacket();
+        String username = deleteAccountRequestPacket.getUsername();
+        String passwordHash = deleteAccountRequestPacket.getPasswordHash();
 
         DBServer dbServer = DBServer.getInstance();
-        //Make sure the is a user with that username
+        //Make sure there is a user with that username
         if (!dbServer.doesUsernameExist(username)) {
           throw new Exception("The provided credentials appear to be false.");
         }
-
         //Ensure the user entered the right password
         if (!dbServer.getUserPasswordHash(username).equals(passwordHash)) {
           errorMessage = "The provided credentials appear to be false";
           throw new Exception();
         } else {
-          //Save changes in DB with updatePassword()
-          if (dbServer.updatePassword(username, updatedPasswordHash)) {
+          //With the proper credentials the user is deleted.
+          if (dbServer.deleteAccount(username)) {
             // Return ok is the update works.
             return Response.ok().build();
           } else {

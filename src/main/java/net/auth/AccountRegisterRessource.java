@@ -1,4 +1,4 @@
-package net.AuthRessources;
+package net.auth;
 
 import game.model.Debug;
 import javax.ws.rs.Consumes;

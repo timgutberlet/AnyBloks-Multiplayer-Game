@@ -2,10 +2,10 @@ package net.server;
 
 import java.util.HashMap;
 import javax.ws.rs.ApplicationPath;
-import net.AuthRessources.AccountRegisterRessource;
-import net.AuthRessources.DeleteAccountRessource;
-import net.AuthRessources.TokenGenerationRessource;
-import net.AuthRessources.UpdateAccountRessource;
+import net.auth.AccountRegisterRessource;
+import net.auth.DeleteAccountRessource;
+import net.auth.TokenGenerationRessource;
+import net.auth.UpdateAccountRessource;
 import net.LoggingRequestFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;

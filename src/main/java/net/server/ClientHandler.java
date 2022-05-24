@@ -23,7 +23,7 @@ import javax.websocket.DeploymentException;
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import net.AuthRessources.TokenGenerationRessource;
+import net.auth.TokenGenerationRessource;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.LoginRequestPacket;
