@@ -3,14 +3,6 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <!-- local repo to store websocket.all -->
-  <repositories>
-    <repository>
-      <id>local-maven-repo</id>
-      <url>file://${project.basedir}/local-maven-repo</url>
-    </repository>
-  </repositories>
-
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>bloks3</groupId>
@@ -103,7 +95,8 @@
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
-      <!-- if your container implements Servlet API older than 3.0, use "jersey-container-servlet-core"  -->
+      <!-- if your container implements Servlet API older than 3.0,
+      use "jersey-container-servlet-core"  -->
       <artifactId>jersey-container-servlet</artifactId>
       <version>${jersey.version}</version>
     </dependency>

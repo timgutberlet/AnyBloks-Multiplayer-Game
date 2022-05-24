@@ -535,7 +535,7 @@ public class DbServer extends AbstractDB {
           "SELECT * FROM games");
       while (rsGames.next()) {
         //Fetch the Scoreboard for every game and save it to the ArrayList
-        id = String.valueOf(rsGames.getInt("games_id"));
+        id = String.valueOf(rsGames.getInt("id"));
       }
     } catch (SQLException e) {
       e.printStackTrace();
@@ -589,22 +589,18 @@ public class DbServer extends AbstractDB {
         gameScoreBoard = getGameScores(gameId);
         String winnerUsername = ScoreProvider.getWinner(gameScoreBoard);
 
-
-
-        for(String username : gameScoreBoard.getPlayerScores().keySet()){
+        for (String username : gameScoreBoard.getPlayerScores().keySet()) {
           //Set the updatedMaxScore to the maximum of saved scores and
           int formerMaxScore = topPlayers.get(username) == null ? 0 : topPlayers.get(username)[1];
           int currentScore = gameScoreBoard.getPlayerScores().get(username);
           int updatedMaxScore = Math.max(formerMaxScore, currentScore);
 
-
-
           int wins = 0;
-          if(username.equals(winnerUsername)){
+          if (username.equals(winnerUsername)) {
             wins =
                 topPlayers.get(winnerUsername) == null ? 1
                     : (topPlayers.get(winnerUsername)[0] + 1);
-          } else  {
+          } else {
             wins = topPlayers.get(winnerUsername) == null ? 0
                 : (topPlayers.get(winnerUsername)[0]);
           }
@@ -622,4 +618,37 @@ public class DbServer extends AbstractDB {
 
 
   }
+
+  /**
+   * This method prepares an account in the database to be used in testing.
+   */
+  public void prepareTokenGenerationTest() {
+    try {
+      Statement statement = con.createStatement();
+      statement.execute("DELETE FROM players WHERE username = 'testuser'");
+      statement.close();
+      Statement statementInsert = con.createStatement();
+      statementInsert.execute(
+          "INSERT INTO players(username, passwordHash)  VALUES('testuser', '123456')");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * This method ensures there is no account with the username of the account created in tests.
+   */
+  public void prepareRemoteAccountManagementTest() {
+    try {
+      Statement statement = con.createStatement();
+      statement.execute("DELETE FROM players WHERE username = 'testuserUpdate1'");
+      statement.close();
+      Statement statementInsert = con.createStatement();
+      statementInsert.execute(
+          "INSERT INTO players(username, passwordHash)  VALUES('testuserUpdate1', '123456')");
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

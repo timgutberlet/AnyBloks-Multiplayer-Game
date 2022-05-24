@@ -1,5 +1,6 @@
 package net.server;
 
+import java.util.HashMap;
 import javax.ws.rs.ApplicationPath;
 import net.AuthRessources.AccountRegisterRessource;
 import net.AuthRessources.DeleteAccountRessource;
@@ -24,6 +25,9 @@ public class ServerConfig extends ResourceConfig {
   public ServerConfig() {
     // activate the request filters
     //register(AuthenticationFilter.class);
+    HashMap<String, Object> propertiesToSet = new HashMap<>();
+    propertiesToSet.put("jersey.config.server.wadl.disableWadl", "true");
+    addProperties(propertiesToSet);
 
     //Create tokens on login
     register(TokenGenerationRessource.class);

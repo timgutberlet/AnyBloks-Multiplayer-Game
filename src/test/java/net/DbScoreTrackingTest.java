@@ -9,8 +9,8 @@ import net.server.DbServer;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests that gameScores & gameSessionScores are put in, and read out of the DB correctly. That is
- * done by inserting 2 gameScores in one GameSessionScore and verifying them.
+ * Tests that gameScores & gameSessionScores are put in, and read out of the DB correctly.
+ * That is done by inserting 2 gameScores in one GameSessionScore and verifying them.
  *
  * @author tbuscher
  */
@@ -21,7 +21,11 @@ public class DbScoreTrackingTest {
     try {
       DbServer dbServer = DbServer.getInstance();
       dbServer.resetDb();
-      //Insert 2 dummy accounts
+      //Make sure the 2 dummy accounts in use are not already there
+      dbServer.deleteAccount("testuser1");
+      dbServer.deleteAccount("testuser2");
+
+      //Insert the 2 dummy accounts
       dbServer.newAccount("testuser1", "unhashed");
       dbServer.newAccount("testuser2", "unhashed");
 
@@ -49,17 +53,15 @@ public class DbScoreTrackingTest {
       assertEquals(50, fetchedBoard.getPlayerScores().get("testuser1"));
       assertEquals(70, fetchedBoard.getPlayerScores().get("testuser2"));
 
-      ArrayList<GameScoreBoard> gameSessionScoeres = dbServer.getGameSessionScores(
+      ArrayList<GameScoreBoard> gameSessionScores = dbServer.getGameSessionScores(
           gameSessionScoreId);
 
       //Verfiy that both gameScores that belong to the gameSessionScore are loaded correctly
-      assertTrue(gameSessionScoeres.size() == 2);
-      assertEquals(fetchedBoard.getPlayerScores(), gameSessionScoeres.get(0).getPlayerScores());
-      assertEquals(gameSessionScoeres.get(1).getPlayerScores().get("testuser1"), 60);
-      assertEquals(gameSessionScoeres.get(1).getPlayerScores().get("testuser2"), 80);
-      assertEquals(gameSessionScoeres.get(1).getGamemode(), "CLASSIC");
-
-
+      assertTrue(gameSessionScores.size() == 2);
+      assertEquals(fetchedBoard.getPlayerScores(), gameSessionScores.get(0).getPlayerScores());
+      assertEquals(gameSessionScores.get(1).getPlayerScores().get("testuser1"), 60);
+      assertEquals(gameSessionScores.get(1).getPlayerScores().get("testuser2"), 80);
+      assertEquals(gameSessionScores.get(1).getGamemode(), "CLASSIC");
     } catch (Exception e) {
       e.printStackTrace();
     }

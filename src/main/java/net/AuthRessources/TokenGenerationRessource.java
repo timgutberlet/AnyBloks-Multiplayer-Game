@@ -49,8 +49,9 @@ public class TokenGenerationRessource {
       username = restfulLoginPacket.getUsername();
       passwordHash = restfulLoginPacket.getPasswordHash();
 
-      Debug.printMessage(
-          restfulLoginPacket.getUsername() + " " + restfulLoginPacket.getPasswordHash());
+      Debug.printMessage("The user " +
+          restfulLoginPacket.getUsername() + " is trying to login with the passwordHash: "
+          + restfulLoginPacket.getPasswordHash());
 
       // Authenticate user with db
       authenticate(username, passwordHash);
@@ -69,15 +70,11 @@ public class TokenGenerationRessource {
 
   private void authenticate(String username, String password) throws Exception {
     DbServer dbServer = DbServer.getInstance();
-    Debug.printMessage("" + dbServer.doesUsernameExist(username));
-    Debug.printMessage("" + !dbServer.doesUsernameExist(username));
     if (!(dbServer.doesUsernameExist(username))) {
       throw new Exception("The username doesn't exist!");
     }
     String dbpasswordHash = dbServer.getUserPasswordHash(username);
 
-    Debug.printMessage(username + " " + password);
-    Debug.printMessage(username + " " + dbpasswordHash);
     if (!password.equals(dbpasswordHash)) {
       throw new Exception("The credentials are wrong!");
     }
