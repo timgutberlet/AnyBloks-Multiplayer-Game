@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #E7E7E0;" maxHeight="-Infinity" maxWidth="-Infinity"
   minHeight="-Infinity" minWidth="-Infinity" prefHeight="720" prefWidth="1280"
-  xmlns="http://javafx.com/javafx/18" fx:controller="game.controller.TutorialUiController"
+  xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="game.controller.TutorialUiController"
   fx:id="mainPane">
   <children>
     <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
