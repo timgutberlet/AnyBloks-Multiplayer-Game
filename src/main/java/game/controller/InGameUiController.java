@@ -643,6 +643,7 @@ public abstract class InGameUiController extends AbstractUiController {
    * Method repaints the BoardPane.
    */
   public void repaintBoardPane() {
+    boardPane.resetAllCheckFields();
     if (possibleFields != null) {
       for (int[] coords : possibleFields) {
         switch (dragablePolyPane.getPoly().getColor().toString()) {
@@ -716,6 +717,7 @@ public abstract class InGameUiController extends AbstractUiController {
     }
 
     String help = "";
+
     for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
       if (!alreadyInChat.contains(chatMessage.getTime() + " "
           + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n")) {
@@ -725,6 +727,7 @@ public abstract class InGameUiController extends AbstractUiController {
             + chatMessage.getUsername() + " : " + chatMessage.getMessage() + "\n";
       }
     }
+
     this.chat.appendText(help);
 
     localPlayer = gameSession.getLocalPlayer();
