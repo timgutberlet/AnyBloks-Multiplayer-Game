@@ -18,7 +18,7 @@ public class Player implements Serializable {
       "How can become as good as yoU?"};
 
   /**
-   * Sets null turn
+   * Sets null turn.
    */
   private boolean nullTurn = false;
   /**
@@ -30,7 +30,7 @@ public class Player implements Serializable {
    */
   private PlayerType type;
   /**
-   * Boolean if player is Connected
+   * Boolean if player is Connected.
    */
   private boolean isPlayerConnected;
 
@@ -39,30 +39,27 @@ public class Player implements Serializable {
    */
   private int score;
   /**
-   * tells wether player is played by AI or not
+   * tells wether player is played by AI or not.
    */
-  private Boolean isAI;
+  private Boolean isAi;
   /**
-   * tells whether player is the host of a session
+   * tells whether player is the host of a session.
    */
   private Boolean isHost;
   /**
-   * word list for automated chat messages
-   */
-  /**
-   * number in range (0,3) stating the order of the player
+   * number in range (0,3) stating the order of the player.
    */
   private int orderNum;
   /**
-   * Check if AI Calc is currently running
+   * Check if AI Calc is currently running.
    */
   private boolean aiCalcRunning;
   /**
-   * Poly the Player has Selected in the UI
+   * Poly the Player has Selected in the UI.
    */
   private Poly selectedPoly;
   /**
-   * Boolean saying if the player has active turn or not
+   * Boolean saying if the player has active turn or not.
    */
   private boolean hasTurn;
   private Turn selectedTurn;
@@ -73,7 +70,7 @@ public class Player implements Serializable {
   //public Session session;
 
   /**
-   * values of a player
+   * values of a player.
    *
    * @param username name of the player
    * @param type     type of the player
@@ -83,19 +80,21 @@ public class Player implements Serializable {
     this.username = username;
     this.type = type;
     this.score = 0;
-    this.isAI = (type.equals(PlayerType.AI_EASY) || type.equals(PlayerType.AI_MIDDLE) ||
-        type.equals(PlayerType.AI_HARD) || type.equals(PlayerType.AI_RANDOM) || type.equals(
-        PlayerType.AI_GODLIKE));
+    this.isAi = (type.equals(PlayerType.AI_EASY)
+        || type.equals(PlayerType.AI_MIDDLE)
+        || type.equals(PlayerType.AI_HARD)
+        || type.equals(PlayerType.AI_RANDOM)
+        || type.equals(PlayerType.AI_GODLIKE));
     this.isHost = false;
     this.selectedTurn = null;
-    if (!this.isAI) {
+    if (!this.isAi) {
       this.aiCalcRunning = false;
 
     }
   }
 
   /**
-   * values of a player
+   * values of a player.
    *
    * @param username name of the player
    * @param type     type of the player
@@ -107,7 +106,7 @@ public class Player implements Serializable {
   }
 
   /**
-   * empty constructor for jackson
+   * empty constructor for jackson.
    */
 
   public Player() {
@@ -115,17 +114,24 @@ public class Player implements Serializable {
   }
 
   /**
-   * @return returns if boolean connected
+   * @return returns if boolean connected.
    * @author tgutberl
    */
   public boolean isPlayerConnected() {
     return this.isPlayerConnected;
   }
 
+  /**
+   * sets the if the player is connected.
+   * @param playerConnected if the player is connected
+   */
   public void setPlayerConnected(boolean playerConnected) {
     this.isPlayerConnected = playerConnected;
   }
 
+  /**
+   * activates the thread.
+   */
   public void run() {
     this.threadIsActive = true;
     Debug.printMessage(this, this.username + " Thread has been started");
@@ -134,15 +140,17 @@ public class Player implements Serializable {
     }
   }
 
-
+  /**
+   * kills the thread.
+   */
   public void killThread() {
     this.threadIsActive = false;
   }
 
   /**
-   * join an existing session
+   * join an existing session.
    *
-   * @param gameSession
+   * @param gameSession game session
    * @author tgeilen
    */
   public void setGameSession(GameSession gameSession) {
@@ -151,9 +159,9 @@ public class Player implements Serializable {
 
 
   /**
-   * add message to chat
+   * add message to chat.
    *
-   * @param msg
+   * @param msg message
    * @author tgeilen
    */
   public void addChatMessage(String msg) {
@@ -162,7 +170,7 @@ public class Player implements Serializable {
   }
 
   /**
-   * Function to set Nullturn
+   * Function to set null turn.
    */
   public void nullTurn() {
     this.setSelectedTurn(null);
@@ -170,14 +178,14 @@ public class Player implements Serializable {
   }
 
   /**
-   * function used to return the next turn of a player
+   * function used to return the next turn of a player.
    *
-   * @param gameState
-   * @return
+   * @param gameState game State
+   * @return made turn
    * @author tgeilen
    */
   public Turn makeTurn(GameState gameState) {
-    if (this.isAI) {
+    if (this.isAi) {
       this.aiCalcRunning = true;
 
       try {
@@ -185,27 +193,23 @@ public class Player implements Serializable {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      System.out.println("Spielertyp: " + this.getType().toString());
-
       return Ai.calculateNextMove(gameState, this);
     } else {
       this.aiCalcRunning = false;
       while (this.selectedTurn == null && nullTurn == false) {
         try {
-          //Debug.printMessage(this, this.getUsername() + " " + this);
-          // Debug.printMessage(this, "A TURN NEEDS TO BE MADE");
           Thread.sleep(10);
-          //Debug.printMessage(this, "Waiting for PlayerInput from this " + this);
-        } catch (InterruptedException e) {
+         } catch (InterruptedException e) {
+          Debug.printMessage("Catched: "+ e.getMessage());
         }
       }
       Debug.printMessage("Turn Selected from player " + this);
 
       gameState.playTurn(this.selectedTurn);
+      this.nullTurn = false;
       Turn returnTurn = this.selectedTurn;
       this.selectedTurn = null;
       this.aiCalcRunning = true;
-      this.nullTurn = false;
 
       return returnTurn;
     }
@@ -232,7 +236,7 @@ public class Player implements Serializable {
   }
 
   /**
-   * function that adds a random chat message from the given wordlist
+   * function that adds a random chat message from the given wordlist.
    *
    * @author tgeilen
    */
@@ -265,12 +269,12 @@ public class Player implements Serializable {
     return this.orderNum;
   }
 
-  public void setAI(Boolean AI) {
-    isAI = AI;
+  public void setAi(Boolean AI) {
+    isAi = AI;
   }
 
-  public Boolean isAI() {
-    return isAI;
+  public Boolean isAi() {
+    return isAi;
   }
 
   @Override

@@ -1,9 +1,9 @@
 package game.model;
 
-import game.model.gamemodes.GMClassic;
-import game.model.gamemodes.GMDuo;
-import game.model.gamemodes.GMJunior;
-import game.model.gamemodes.GMTrigon;
+import game.model.gamemodes.GameModeClassic;
+import game.model.gamemodes.GameModeDuo;
+import game.model.gamemodes.GameModeJunior;
+import game.model.gamemodes.GameModeTrigon;
 import game.model.player.Ai;
 import game.model.player.Player;
 import game.model.player.PlayerType;
@@ -172,7 +172,7 @@ public class MainT {
     gameSession.addPlayer(new Player("BOT1", PlayerType.AI_HARD));
     gameSession.addPlayer(new Player("BOT2", PlayerType.AI_GODLIKE));
 
-    Game game = gameSession.startGame(new GMDuo());
+    Game game = gameSession.startGame(new GameModeDuo());
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
@@ -194,7 +194,7 @@ public class MainT {
     gameSession.addPlayer(new Player("BOT1", PlayerType.AI_HARD));
     gameSession.addPlayer(new Player("BOT2", PlayerType.AI_MIDDLE));
 
-    Game game = gameSession.startGame(new GMJunior());
+    Game game = gameSession.startGame(new GameModeJunior());
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
@@ -225,7 +225,7 @@ public class MainT {
     gameSession.addPlayer(new Player("BOT3", PlayerType.AI_HARD));
     gameSession.addPlayer(new Player("BOT4", PlayerType.AI_GODLIKE));
 
-    Game game = gameSession.startGame(new GMTrigon());
+    Game game = gameSession.startGame(new GameModeTrigon());
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {
@@ -250,7 +250,7 @@ public class MainT {
     gameSession.addPlayer(new Player("BOT3", PlayerType.AI_HARD));
     gameSession.addPlayer(new Player("BOT4", PlayerType.AI_GODLIKE));
 
-    Game game = gameSession.startGame(new GMClassic());
+    Game game = gameSession.startGame(new GameModeClassic());
 
     game.startGame();
     while (game.getGameState().isStateRunning()) {

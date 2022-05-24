@@ -59,11 +59,10 @@ public abstract class Field {
   @Override
   public abstract Field clone();
 
-  /**
-   * method, that converts the field into a string for a Terminaloutput.
+  /*
+   * method, that converts the field into a string for a Terminal output.
    *
    * @return String of the Field
-   */
   @Override
   public String toString() {
     switch (getColor()) {
@@ -80,10 +79,10 @@ public abstract class Field {
       default:
         return "Error for Square color";
     }
-  }
+  }*/
 
   /**
-   * method, that determine if to fields are the same, depending on their position
+   * method, that determine if to fields are the same, depending on their position.
    *
    * @param o field, that will be determined, if it is equal
    * @return boolean, if the two fields have the same position

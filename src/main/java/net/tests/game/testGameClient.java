@@ -1,8 +1,8 @@
 package net.tests.game;
 
 import game.model.Debug;
-import game.model.gamemodes.GMClassic;
-import game.model.gamemodes.GMTrigon;
+import game.model.gamemodes.GameModeClassic;
+import game.model.gamemodes.GameModeTrigon;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
@@ -85,8 +85,8 @@ public class testGameClient {
       TimeUnit.SECONDS.sleep(2);
       //Start game
       LinkedList<GameMode> gameModeLinkedList = new LinkedList<>();
-      gameModeLinkedList.add(new GMTrigon());
-      gameModeLinkedList.add(new GMClassic());
+      gameModeLinkedList.add(new GameModeTrigon());
+      gameModeLinkedList.add(new GameModeClassic());
       //InitGamePacket initGamePacket = new InitGamePacket(gameModeLinkedList);
       //wrappedPacket = new WrappedPacket(PacketType.INIT_GAME_PACKET, initGamePacket);
       ses.getBasicRemote().sendObject(wrappedPacket);

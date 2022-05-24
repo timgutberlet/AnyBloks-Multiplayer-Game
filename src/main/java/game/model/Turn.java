@@ -72,6 +72,10 @@ public class Turn {
     return this.poly.getSize();
   }
 
+  /**
+   * gets the poly as a poly square.
+   * @return poly square
+   */
   public PolySquare getPolySquare() {
     if (poly.getPolyType().equals("Square")) {
       return (PolySquare) poly;
@@ -80,6 +84,10 @@ public class Turn {
     }
   }
 
+  /**
+   * gets the poly as a poly trigon.
+   * @return poly trigon
+   */
   public PolyTrigon getPolyTrigon() {
     if (poly.getPolyType().equals("Trigon")) {
       return (PolyTrigon) poly;

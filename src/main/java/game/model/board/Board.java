@@ -19,13 +19,13 @@ import java.util.ArrayList;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = BoardSquare.class, name = "BoardSquare"),
-    @JsonSubTypes.Type(value = BoardTrigon.class, name = "BoardTrigon"),}
+    @JsonSubTypes.Type(value = BoardTrigon.class, name = "BoardTrigon")}
 
 )
 
 public abstract class Board {
 
-  public int SIZE;
+  public int size;
 
   /**
    * returns the size of the board.
@@ -33,7 +33,7 @@ public abstract class Board {
    * @return size of the board
    */
   public int getSize() {
-    return SIZE;
+    return size;
   }
 
   /**
@@ -158,6 +158,11 @@ public abstract class Board {
    */
   public abstract Board clone();
 
+/**
+ * abstract representation of a board.
+ * @author tiotto
+ * @date 27.03.2022
+ */
 
   /**
    * converts to board to a string.

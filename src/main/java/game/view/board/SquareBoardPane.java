@@ -71,8 +71,8 @@ public class SquareBoardPane extends BoardPane {
    */
   @Override
   public void setBoard() {
-    for (int i = 0; i < board.SIZE; i++) {
-      for (int j = 0; j < board.SIZE; j++) {
+    for (int i = 0; i < board.size; i++) {
+      for (int j = 0; j < board.size; j++) {
         int[] pos = {i, j};
         setSquare(i, j, ColorHandler.getJavaColor(board.getColor(pos)));
       }

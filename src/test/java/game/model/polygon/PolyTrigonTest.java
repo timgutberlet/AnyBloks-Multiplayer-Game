@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 
 /**
+ * this class tests the PolyTrigon class.
  * @author tiotto
  * @date 15.05.2022
  */

@@ -6,10 +6,10 @@ import engine.handler.ErrorMessageHandler;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.gamemodes.GMClassic;
-import game.model.gamemodes.GMDuo;
-import game.model.gamemodes.GMJunior;
-import game.model.gamemodes.GMTrigon;
+import game.model.gamemodes.GameModeClassic;
+import game.model.gamemodes.GameModeDuo;
+import game.model.gamemodes.GameModeJunior;
+import game.model.gamemodes.GameModeTrigon;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
@@ -271,7 +271,7 @@ public class LocalLobbyUiController extends AbstractUiController {
     playButton.setText("Waiting for game to start!");
     playButton.setDisable(true);
 
-    this.gameSession.setDefaultAI(PlayerType.AI_MIDDLE);
+    this.gameSession.setDefaultAi(PlayerType.AI_MIDDLE);
     boolean error = false;
 
     if (!player1.getText().equals("-")) {
@@ -341,24 +341,24 @@ public class LocalLobbyUiController extends AbstractUiController {
 
       switch (gameMode) {
         case "Classic":
-          this.gameModes.add(new GMClassic());
+          this.gameModes.add(new GameModeClassic());
           break;
         case "Duo":
           if (aiPlayers.size() > 1) {
             ErrorMessageHandler.showErrorMessage("The GameMode Duo only allows for 2 players");
             error = true;
           }
-          this.gameModes.add(new GMDuo());
+          this.gameModes.add(new GameModeDuo());
           break;
         case "Junior":
           if (aiPlayers.size() > 2) {
             ErrorMessageHandler.showErrorMessage("The GameMode Junior only allows for 2 players");
             error = true;
           }
-          this.gameModes.add(new GMJunior());
+          this.gameModes.add(new GameModeJunior());
           break;
         case "Trigon":
-          this.gameModes.add(new GMTrigon());
+          this.gameModes.add(new GameModeTrigon());
           break;
 
         default:

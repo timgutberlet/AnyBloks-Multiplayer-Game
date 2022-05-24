@@ -13,13 +13,13 @@ import game.model.polygon.PolySquare;
 import game.model.polygon.PolyTrigon;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-
 /**
  * this class represents the current state of one specific game.
  * @author tiotto
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+
+
 public class GameState implements Serializable, Cloneable {
 
   /**
@@ -32,11 +32,11 @@ public class GameState implements Serializable, Cloneable {
    */
   private final ArrayList<ArrayList<Poly>> remainingPolys = new ArrayList<>();
   /**
-   *
+   * turn history sorted after players.
    */
   private final ArrayList<ArrayList<Turn>> history = new ArrayList<>();
   /**
-   *
+   * winner of the game.
    */
   private final ArrayList<Color> winners = new ArrayList<>();
   /**
@@ -143,7 +143,7 @@ public class GameState implements Serializable, Cloneable {
   }
 
   /**
-   * converts an integer into a two digit string
+   * converts an integer into a two digit string.
    *
    * @param i integer
    * @return two digit string
@@ -190,6 +190,8 @@ public class GameState implements Serializable, Cloneable {
           }
           break;
         }
+        default:
+          break;
       }
       //Debug.printMessage(this,"Remaing polys calculated and added to GameState");
       remainingPolys.add(polyOfPlayer);
@@ -213,21 +215,19 @@ public class GameState implements Serializable, Cloneable {
    */
   public ArrayList<Poly> getRemainingPolys(Player p) {
 
-    //Debug.printMessage(this, "Size fo remainingPolys arrayList:");
-    //Debug.printMessage(this, "Entries: " + remainingPolys.size());
     for (ArrayList<Poly> arr : this.remainingPolys) {
-      //Debug.printMessage(this, "Polys: " + arr.size());
     }
 
-    //Debug.printMessage(this,"GET REMAINING POLYS: " + this.playerList.size());
     for (Player player : this.playerList) {
-      //	Debug.printMessage(this,"Comparing " + p.getUsername() +" to " + player.getUsername());
       if (p.getUsername().equals(player.getUsername())) {
-        //		Debug.printMessage(this,"Getting remaining polys for " + player.getUsername());
         return remainingPolys.get(this.playerList.indexOf(player));
       }
     }
     return null;
+  }
+
+  public ArrayList<ArrayList<Poly>> getRemainingPolys() {
+    return remainingPolys;
   }
 
   /**
@@ -237,18 +237,11 @@ public class GameState implements Serializable, Cloneable {
    * @return cloned remaining polys for a specific player
    */
   public ArrayList<Poly> getRemainingPolysClone(Player p) {
-
-    // Debug.printMessage(this, "Size fo remainingPolys arrayList:");
-    // Debug.printMessage(this, "Entries: " + remainingPolys.size());
     for (ArrayList<Poly> arr : this.remainingPolys) {
-      // Debug.printMessage(this, "Polys: " + arr.size());
     }
 
-    //Debug.printMessage(this,"GET REMAINING POLYS: " + this.playerList.size());
     for (Player player : this.playerList) {
-      //	Debug.printMessage(this,"Comparing " + p.getUsername() +" to " + player.getUsername());
       if (p.getUsername().equals(player.getUsername())) {
-        //		Debug.printMessage(this,"Getting remaining polys for " + player.getUsername());
         ArrayList<Poly> copy = new ArrayList<>();
         for (Poly poly : remainingPolys.get(this.playerList.indexOf(player))) {
           copy.add(poly.clone());
@@ -389,11 +382,6 @@ public class GameState implements Serializable, Cloneable {
   public boolean checkEnd() {
     boolean end = true;
     for (Player p : playerList) {
-     /*Debug.printMessage(
-          board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
-              + " Möglichkeiten Steine zu legen");
-      Debug.printMessage(this,
-          "Remaining Polys for __" + p.getUsername() + "__ : " + this.getRemainingPolys(p).size());*/
       if (getRemainingPolys(p).size() > 0 && (
           board.getPossibleMoves(remainingPolys.get(playerList.indexOf(p)), isFirstRound()).size()
               > 0)) {
@@ -501,14 +489,14 @@ public class GameState implements Serializable, Cloneable {
   }
 
   /**
-   * deep clone of the game state
+   * deep clone of the game state.
    *
    * @return deep clone of the game state
    */
   @Override
   public GameState clone() {
-    Board boardCopy = this.board.clone();
     ArrayList<ArrayList<Poly>> remainingPolysCopy = new ArrayList<>();
+    Board boardCopy = this.board.clone();
     for (ArrayList<Poly> polys : this.remainingPolys) {
       ArrayList<Poly> polysCopy = new ArrayList<>();
       for (Poly p : polys) {
@@ -583,31 +571,11 @@ public class GameState implements Serializable, Cloneable {
       result += "Player " + p.getUsername() + " Color: " + getColorFromPlayer(p) + "\n";
 
     }
-    /*
-    if (Debug.debug) {
-      result += "\nSize fo remainingPolys arrayList:\n";
-      result += "Entries: " + remainingPolys.size() + "\n";
-      for (ArrayList<Poly> arr : this.remainingPolys) {
-        result += "		Polys: " + arr.size() + "\n";
-      }
-    }
-
-
-    if (Debug.debug) {
-      return "GameState{" +
-          "\n player=" + playerList +
-          "\n round=" + round +
-          "\n turn=" + turn +
-          "\n running=" + running +
-          "\n started=" + started +
-          "\n stateEnding='" + stateEnding + '\'' +
-          '}' + '\n';
-    }*/
     return result;
   }
 
   /**
-   * gives back a String that represents the history of the game
+   * gives back a String that represents the history of the game.
    *
    * @return String that represents the history of the game
    */
@@ -647,10 +615,6 @@ public class GameState implements Serializable, Cloneable {
     return gameMode;
   }
 
-  public ArrayList<ArrayList<Poly>> getRemainingPolys() {
-    return remainingPolys;
-  }
-
   public ArrayList<ArrayList<Turn>> getHistory() {
     return history;
   }
@@ -668,7 +632,7 @@ public class GameState implements Serializable, Cloneable {
   }
 
   /**
-   * returns an array with all the current scores sorted after their color
+   * returns an array with all the current scores sorted after their color.
    *
    * @return array with all the current scores sorted after their color
    */
@@ -702,7 +666,7 @@ public class GameState implements Serializable, Cloneable {
   /**
    * method that counts and safes the number of squares which could lead to a next turn for a
    * different color, which are covered by the given turn multiplied by the size of potential polys
-   * that could be placed there
+   * that could be placed there.
    *
    * @param turn the considered turn as a result the number is stored as an attribute of the turn
    *             itself

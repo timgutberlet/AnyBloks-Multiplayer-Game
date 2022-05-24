@@ -5,7 +5,7 @@ import static net.packet.abstr.PacketType.GAME_UPDATE_PACKET;
 import game.model.Debug;
 import game.model.Game;
 import game.model.GameSession;
-import game.model.gamemodes.GMClassic;
+import game.model.gamemodes.GameModeClassic;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class testGameStateTransmission {
     gameSession.addPlayer(new Player("BOT3", PlayerType.AI_EASY));
     gameSession.addPlayer(new Player("BOT4", PlayerType.AI_EASY));
 
-    Game game = gameSession.startGame(new GMClassic());
+    Game game = gameSession.startGame(new GameModeClassic());
 
     while (game.getGameState().isStateRunning()) {
       Debug.printMessage(gameSession.toString());

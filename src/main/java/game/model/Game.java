@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * a game is started in a Session by the host and dies when someone wins
+ * a game is started in a Session by the host and dies when someone wins.
  *
  * @author tgeilen
  */
@@ -24,6 +24,11 @@ public class Game {
   private Boolean isServer = false;
 
 
+  /**
+   * initializes a game.
+   * @param gameSession referencing game session.
+   * @param gamemode game mode that is played
+   */
   public Game(GameSession gameSession, GameMode gamemode) {
     this.gameSession = gameSession;
     this.board = new BoardSquare(gamemode);
@@ -37,6 +42,12 @@ public class Game {
 
   }
 
+  /**
+   * initializes a game.
+   * @param gameSession referencing game session.
+   * @param gamemode game mode that is played
+   * @param isServer if it is the server
+   */
   public Game(GameSession gameSession, GameMode gamemode, Boolean isServer) {
     this.gameSession = gameSession;
     this.board = new BoardSquare(gamemode);
@@ -58,7 +69,7 @@ public class Game {
 
   /**
    * function used by the server to make a turn either call s the next player to make a move or
-   * broadcasts the winner to all clients
+   * broadcasts the winner to all clients.
    *
    * @author tgeilen
    */
@@ -125,6 +136,10 @@ public class Game {
     return gameState;
   }
 
+  /**
+   * updates the game state.
+   * @param gameState game state
+   */
   public void updateGameState(GameState gameState) {
     this.gameState = gameState;
   }
@@ -133,12 +148,19 @@ public class Game {
     return passedTurns;
   }
 
+  /**
+   * initializes the passed turns
+   */
   public void initPassedTurns() {
     for (Player p : this.gameState.getPlayerList()) {
       this.passedTurns.put(p.getUsername(), 0);
     }
   }
 
+  /**
+   * increases the passed turns for the user.
+   * @param username user
+   */
   public void increasePassedTurns(String username) {
 
     if (this.passedTurns.get(username) != null) {
@@ -148,10 +170,18 @@ public class Game {
     }
   }
 
+  /**
+   * resets the passed turns.
+   * @param username user
+   */
   public void resetPassedTurns(String username) {
     this.passedTurns.put(username, 0);
   }
 
+  /**
+   * checks the passed turns.
+   * @return if passed turns >= 3.
+   */
   public boolean checkPassedTurns() {
     boolean result = false;
     for (Player p : this.gameState.getPlayerList()) {
@@ -164,7 +194,7 @@ public class Game {
   }
 
   /**
-   * starts a new game and calls the first player to make a move
+   * starts a new game and calls the first player to make a move.
    *
    * @author tgeilen
    */

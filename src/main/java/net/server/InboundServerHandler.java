@@ -120,7 +120,7 @@ public class InboundServerHandler {
         if (player.getUsername().equals(username)) {
           //only override if player is of type AI (former remote players have been made into an AI
           //by the changePlayer"AI from GameSession)
-          if (player.isAI()) {
+          if (player.isAi()) {
             Debug.printMessage(this, "THE REMOTE SESSION WILL REPLACE AN AI");
             this.server.getUsername2Session().put(username, session);
             Debug.printMessage(this, "" + loginPacket.getPlayerType());
@@ -131,7 +131,7 @@ public class InboundServerHandler {
             if (loginPacket.getPlayerType().equals(PlayerType.REMOTE_PLAYER)) {
 
               Debug.printMessage(this, "AN OLD PLAYER JOINED THE SESSION AGAIN!!!!");
-              player.setAI(false);
+              player.setAi(false);
               player.setType(loginPacket.getPlayerType());
               this.server.getOutboundServerHandler()
                   .sendGameStart(player.getUsername(), gameSession.getGame()
@@ -244,7 +244,7 @@ public class InboundServerHandler {
     LinkedList<GameMode> gameModes = initGamePacket.getGameMode();
 
     if (initGamePacket.getDefaultAi() != null) {
-      gameSession.setDefaultAI(initGamePacket.getDefaultAi());
+      gameSession.setDefaultAi(initGamePacket.getDefaultAi());
     }
     if (initGamePacket.getPlayerTypes() != null) {
       gameSession.setAiPlayers(initGamePacket.getPlayerTypes());

@@ -5,7 +5,7 @@ import engine.controller.AbstractUiController;
 import game.config.Config;
 import game.model.Debug;
 import game.model.GameSession;
-import game.model.gamemodes.GMDuo;
+import game.model.gamemodes.GameModeDuo;
 import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
@@ -86,11 +86,11 @@ public class TutorialUiController extends AbstractUiController {
     this.clientHandler = client.getClientHandler();
     gameSession.setClientHandler(this.clientHandler);
 
-    this.gameSession.setDefaultAI(PlayerType.AI_EASY);
+    this.gameSession.setDefaultAi(PlayerType.AI_EASY);
 
     List<String> gameModes = new ArrayList<>();
 
-    this.gameModes.add(new GMDuo());
+    this.gameModes.add(new GameModeDuo());
 
     this.gameSession.setGameList(this.gameModes);
 

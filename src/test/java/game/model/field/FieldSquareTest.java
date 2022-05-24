@@ -9,6 +9,7 @@ import game.model.Color;
 import org.junit.jupiter.api.Test;
 
 /**
+ * This class tests the FieldSquare class.
  * @author tiotto
  * @date 15.05.2022
  */

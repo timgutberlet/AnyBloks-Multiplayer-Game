@@ -18,12 +18,7 @@ public class PolySquare extends Poly {
   public static ArrayList<ArrayList<FieldSquare>> shapeListDuo;
   public static ArrayList<ArrayList<FieldSquare>> shapeListJunior = new ArrayList<>();
 
-  /**
-   * Initializing all pieces of the basic Game modes.
-   *
-   * @author tgutberl
-   * @author tiotto
-   */
+  // Initializing all pieces of classic, duo and junior game.
   static {
     FieldSquare f00 = new FieldSquare(0, 0);
     FieldSquare f01 = new FieldSquare(0, 1);
@@ -344,9 +339,9 @@ public class PolySquare extends Poly {
   }
 
   /**
-   * method that returns true if shape contains field with coordinates {i,j}
+   * method that returns true if shape contains field with coordinates {i,j}.
    *
-   * @param pos
+   * @param pos position
    * @author lbaudenb
    */
   @Override
@@ -360,7 +355,7 @@ public class PolySquare extends Poly {
   }
 
   /**
-   * checks if the poly contains the given field
+   * checks if the poly contains the given field.
    *
    * @param x coordinate
    * @param y coordinate
@@ -375,11 +370,11 @@ public class PolySquare extends Poly {
     return false;
   }
 
-  /**
+  /*
    * converts to board to a string.
    *
    * @return the string representation of the board
-   */
+   *//*
   @Override
   public String toString() {
     StringBuffer res = new StringBuffer();
@@ -409,12 +404,12 @@ public class PolySquare extends Poly {
       res.append("\n");
     }
     return res.toString();
-  }
+  }*/
 
   /**
    * returns the type of the poly.
    *
-   * @return
+   * @return type as String
    */
   public String getPolyType() {
     return this.polyType;

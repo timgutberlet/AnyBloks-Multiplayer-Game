@@ -54,7 +54,7 @@ public class GameSession {
   private Player hostPlayer;
   private Game game;
   private LinkedList<GameMode> gameList;
-  private PlayerType defaultAI;
+  private PlayerType defaultAi;
   private int numOfBots = 0;
   private Player localPlayer;
   private Boolean localPlayerTurn = false;
@@ -86,7 +86,7 @@ public class GameSession {
   /**
    * a Session is created by a Player in the MainMenu.
    *
-   * @param player
+   * @param player player
    * @author tgeilen
    */
   public GameSession(Player player) {
@@ -100,20 +100,12 @@ public class GameSession {
     this.addPlayer(this.hostPlayer);
     this.localPlayer = this.hostPlayer;
 
-    this.defaultAI = PlayerType.AI_EASY;
-/*
-		try {
-			hostServer.startWebsocket(8080);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
+    this.defaultAi = PlayerType.AI_EASY;
   }
 
   /**
    * a Session is created.
    *
-   * @param
    * @author tgeilen
    */
   public GameSession() {
@@ -123,7 +115,7 @@ public class GameSession {
 
     this.playerList = new ArrayList<>();
 
-    this.defaultAI = PlayerType.AI_EASY;
+    this.defaultAi = PlayerType.AI_EASY;
 
     Debug.printMessage(this, "GameSession started");
 
@@ -200,8 +192,8 @@ public class GameSession {
 
     //Debug.printMessage("DAS GAME WIRD HIER GESTARTET");
     System.out.println("Server gamesession 1: " + this);
-    if (this.defaultAI == null) {
-      this.defaultAI = PlayerType.AI_MIDDLE;
+    if (this.defaultAi == null) {
+      this.defaultAi = PlayerType.AI_MIDDLE;
     }
     System.out.println("Server gamesession 2: " + this);
     //while (this.getPlayerList().size()!=gameMode.getNeededPlayers()){
@@ -223,12 +215,12 @@ public class GameSession {
             Debug.printMessage("PT of new player: " + pt);
             this.addBot(pt);
           } else {
-            Debug.printMessage("Adding a bot with default ai" + this.defaultAI);
-            this.addBot(this.defaultAI);
+            Debug.printMessage("Adding a bot with default ai" + this.defaultAi);
+            this.addBot(this.defaultAi);
           }
         } else {
-          Debug.printMessage("Adding a bot with default ai because null " + this.defaultAI);
-          this.addBot(this.defaultAI);
+          Debug.printMessage("Adding a bot with default ai because null " + this.defaultAi);
+          this.addBot(this.defaultAi);
         }
       }
       System.out.println("Server gamesession 4: " + this);
@@ -275,15 +267,6 @@ public class GameSession {
   }
 
   /**
-   * Method let the game know, if
-   *
-   * @author tgutberl
-   */
-  public void setChatAdded() {
-
-  }
-
-  /**
    * add the value of the placed poly to the scoreboard.
    *
    * @param player player
@@ -323,7 +306,7 @@ public class GameSession {
   }
 
   /**
-   * function to add a new msg and broadcast to all players
+   * function to add a new msg and broadcast to all players.
    *
    * @param msg message
    */
@@ -336,7 +319,7 @@ public class GameSession {
   }
 
   /**
-   * function to save a msg from remote in the local chat
+   * function to save a msg from remote in the local chat.
    */
 
   public void saveChatMessage(ChatMessage chatMessage) {
@@ -432,8 +415,8 @@ public class GameSession {
   public void changePlayer2Ai(String username) {
     for (Player player : this.playerList) {
       if (player.getUsername().equals(username)) {
-        player.setAI(true);
-        player.setType(this.defaultAI);
+        player.setAi(true);
+        player.setType(this.defaultAi);
 
         final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         EndpointClient endpointClient = new EndpointClient(player);
@@ -474,6 +457,10 @@ public class GameSession {
 
   }
 
+  /**
+   * joins the local game.
+   * @return gives back the resulting endpoint client
+   */
   public EndpointClient joinLocalGame() {
     final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
     Player localPlayer = new Player("LocalPlayer", PlayerType.AI_EASY);
@@ -483,9 +470,9 @@ public class GameSession {
 
     try {
 
-      String IPAdress = Inet4Address.getLocalHost().getHostAddress();
+      String IpAdress = Inet4Address.getLocalHost().getHostAddress();
 
-      ses = container.connectToServer(client, URI.create("ws://" + IPAdress + ":8081/packet"));
+      ses = container.connectToServer(client, URI.create("ws://" + IpAdress + ":8081/packet"));
 
       //Init session
       InitSessionPacket initSessionPacket = new InitSessionPacket();
@@ -537,13 +524,11 @@ public class GameSession {
   public void stopSession() {
     if (hostServer != null) {
       hostServer.stopWebsocket();
-    } else {
-
     }
   }
 
   /**
-   * Getter
+   * Getter.
    */
   public HostServer getHostServer() {
     return hostServer;
@@ -590,16 +575,16 @@ public class GameSession {
   /**
    * returns teh current PlayerList.
    *
-   * @return ArrayList<Player>
+   * @return ArrayList<Player> array list of the player
    */
   public ArrayList<Player> getPlayerList() {
     return this.playerList;
   }
 
   /**
-   * sets the playerList of the current gamesession
+   * sets the playerList of the current gamesession.
    *
-   * @param playerList
+   * @param playerList player list
    */
   public void setPlayerList(ArrayList<Player> playerList) {
     this.playerList = playerList;
@@ -635,7 +620,7 @@ public class GameSession {
   /**
    * sets the OutboundServerHandler.
    *
-   * @param outboundServerHandler
+   * @param outboundServerHandler outbound server handler
    */
   public void setOutboundServerHandler(OutboundServerHandler outboundServerHandler) {
     this.outboundServerHandler = outboundServerHandler;
@@ -653,7 +638,7 @@ public class GameSession {
   /**
    * sets the InboundServerHandler.
    *
-   * @param inboundServerHandler
+   * @param inboundServerHandler inbound server handler
    */
 
   public void setInboundServerHandler(InboundServerHandler inboundServerHandler) {
@@ -687,9 +672,9 @@ public class GameSession {
   }
 
   /**
-   * sets the list games that will be played in a tournament
+   * sets the list games that will be played in a tournament.
    *
-   * @param gameList
+   * @param gameList game list
    */
   public void setGameList(LinkedList<GameMode> gameList) {
     if (gameList.size() > 1) {
@@ -699,12 +684,12 @@ public class GameSession {
   }
 
   /**
-   * sets the value of the defaultAI
+   * sets the value of the defaultAI.
    *
-   * @param defaultAI dfault AI type
+   * @param defaultAi dfault AI type
    */
-  public void setDefaultAI(PlayerType defaultAI) {
-    this.defaultAI = defaultAI;
+  public void setDefaultAi(PlayerType defaultAi) {
+    this.defaultAi = defaultAi;
   }
 
   public void setLocalPlayerTurn(Boolean localPlayerTurn) {
@@ -872,7 +857,7 @@ public class GameSession {
   /**
    * setter.
    *
-   * @param playerKicked
+   * @param playerKicked playerKicked
    */
   public void setPlayerKicked(Boolean playerKicked) {
     this.playerKicked = playerKicked;
@@ -881,30 +866,11 @@ public class GameSession {
   /**
    * getter.
    *
-   * @return
+   * @return playerKicked
    */
   public Boolean isPlayerKicked() {
     return playerKicked;
   }
-
-  //  /**
-//   * function that helps to output the most relevant information of a session.
-//   *
-//   * @return String
-//   * @author tgeilen
-//   */
-//  @Override
-//  public String toString() {
-//    String str = "[SESSION INFO] \n";
-//
-//    for (Player p : this.playerList) {
-//      str +=
-//          p.getUsername() + "  |  " + p.getType() + "  |  " + this.scoreboard.get(p.getUsername())
-//              + "\n";
-//    }
-//
-//    return str;
-//  }
 
   /**
    * Getter.

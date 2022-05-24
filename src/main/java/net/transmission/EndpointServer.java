@@ -78,7 +78,7 @@ public class EndpointServer {
     //gameSession.setHostPlayer(null);
     gameSession.setGameSessionScoreBoard(new GameSessionScoreBoard());
     gameSession.setGameList(new LinkedList<>());
-    gameSession.setDefaultAI(PlayerType.AI_EASY);
+    gameSession.setDefaultAi(PlayerType.AI_EASY);
     //gameSession.setLocalPlayer(null);
     gameSession.setAiPlayers(null);
     gameSession.setGameScoreBoard(new GameScoreBoard());

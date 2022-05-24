@@ -3,13 +3,14 @@ package game.model.field;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.Color;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 /**
- * This class represents one triangle of a trigon game board
+ * This class represents one triangle of a trigon game board.
  *
  * @author tiotto
  * @date 21.03.2022
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class FieldTrigon extends Field implements Cloneable {
 
   /**
@@ -21,7 +22,7 @@ public class FieldTrigon extends Field implements Cloneable {
 
 
   /**
-   * initializing the default values
+   * initializing the default values.
    *
    * @param x       x position of the triangle on the board
    * @param y       y position of the triangle on the board
@@ -36,7 +37,7 @@ public class FieldTrigon extends Field implements Cloneable {
 
 
   /**
-   * initializing the default values
+   * initializing the default values.
    *
    * @param x       x position of the triangle on the board
    * @param y       y position of the triangle on the board
@@ -51,7 +52,7 @@ public class FieldTrigon extends Field implements Cloneable {
   }
 
   /**
-   * checks if the triangle has e specific position
+   * checks if the triangle has e specific position.
    *
    * @param x       x position of the triangle on the board
    * @param y       y position of the triangle on the board
@@ -63,7 +64,7 @@ public class FieldTrigon extends Field implements Cloneable {
   }
 
   /**
-   * creates a real copy of the triangle
+   * creates a real copy of the triangle.
    *
    * @return real copy of the triangle
    */
@@ -83,9 +84,9 @@ public class FieldTrigon extends Field implements Cloneable {
   }
 
   /**
-   * override of function.
+   * if the field is occupied.
    *
-   * @return
+   * @return if its occupied
    */
   @Override
   public Boolean isOccupied() {
@@ -95,7 +96,7 @@ public class FieldTrigon extends Field implements Cloneable {
   /**
    * override of function.
    *
-   * @return
+   * @return if its occupied.
    */
   @Override
   public Color getColor() {

@@ -3,24 +3,15 @@ package game.model.field;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import game.model.Color;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-
 /**
  * This class represents one square of a square game board.
  *
  * @author tiotto
  * @date 27.03.2022
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class FieldSquare extends Field implements Cloneable {
-
-  /**
-   * initializing the default values
-   *
-   * @param col column of the square on the board
-   * @param row row of the square on the board
-   * @author tiotto
-   */
 
   /**
    * empty constructor for jackson.
@@ -30,7 +21,7 @@ public class FieldSquare extends Field implements Cloneable {
   }
 
   /**
-   * creates a new empty field
+   * creates a new empty field.
    *
    * @param col column of the square on the board
    * @param row row of the square on the board

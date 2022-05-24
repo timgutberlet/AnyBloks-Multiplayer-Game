@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import game.model.Color;
 
 /**
+ * represents a single polygon in general.
  * @author tiotto
  * @date 23.03.2022
  */
@@ -19,19 +20,19 @@ public abstract class Poly implements Cloneable {
 
 
   /**
-   * number of single squares contained
+   * number of single squares contained.
    */
   public int size;
   /**
-   * color of the polygon
+   * color of the polygon.
    */
   public Color color;
   /**
-   * rotation of the polygon compared to the initial position
+   * rotation of the polygon compared to the initial position.
    */
   public int rotation; // rotation * 60 degrees
   /**
-   * states if the polygon was mirrored compared to the initial position
+   * states if the polygon was mirrored compared to the initial position.
    */
   public boolean isMirrored;
 
@@ -41,7 +42,7 @@ public abstract class Poly implements Cloneable {
   public String polyType = "";
 
   /**
-   * empty constructor for jackson
+   * empty constructor for jackson.
    */
   public Poly() {
 
@@ -118,15 +119,15 @@ public abstract class Poly implements Cloneable {
   public abstract boolean equalsReal(Object o);
 
   /**
-   * method that returns true if shape contains field with coordinates {i,j}
+   * method that returns true if shape contains field with coordinates {i,j}.
    *
-   * @param pos
+   * @param pos position
    * @author lbaudenb
    */
   public abstract boolean containsField(int[] pos);
 
   /**
-   * checks if the equals test works for every rotation and mirror
+   * checks if the equals test works for every rotation and mirror.
    *
    * @return result of the test, true if everything works, false if not
    */
@@ -160,7 +161,7 @@ public abstract class Poly implements Cloneable {
   /**
    * returns the type of the poly.
    *
-   * @return
+   * @return type as string
    */
   public abstract String getPolyType();
 

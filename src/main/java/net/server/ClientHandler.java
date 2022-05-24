@@ -1,6 +1,7 @@
 package net.server;
 
-import static game.model.player.AIMessages.getAfterTurnAIComment;
+import static game.model.player.AiMessages.getAfterMatchAiComment;
+import static game.model.player.AiMessages.getAfterTurnAiComment;
 
 import game.model.Debug;
 import game.model.GameSession;
@@ -300,7 +301,7 @@ public class ClientHandler {
     GameState gameState = gameUpdatePacket.getGameState();
 
     this.client.getGameSession().updateGame(gameState);
-    String aiMessage = getAfterTurnAIComment(this.gameSession);
+    String aiMessage = getAfterTurnAiComment(this.gameSession);
     if (!aiMessage.equals("")) {
       Chat chat = this.gameSession.getChat();
       chat.addMessage(new ChatMessage(this.player.getUsername(), aiMessage));
@@ -322,7 +323,7 @@ public class ClientHandler {
     gameSession.setGameOver(true);
     gameSession.setGameScoreBoard(gameWinPacket.getGameScoreBoard());
     gameSession.setGameSessionScoreBoard(gameWinPacket.getGameSessionScoreBoard());
-    //getAfterMatchAIComment(this.gameSession);
+    getAfterMatchAiComment(this.gameSession);
   }
 
   /**

@@ -3,13 +3,14 @@ package game.model;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import game.model.gamemodes.GMClassic;
+import game.model.gamemodes.GameModeClassic;
 import game.model.player.Ai;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import org.junit.jupiter.api.Test;
 
 /**
+ * This class tests the GameState class, focusing on the important checkEnd method.
  * @author tiotto
  * @date 15.05.2022
  */
@@ -24,7 +25,7 @@ class GameStateTest {
     gameSession.addPlayer(new Player("BOT3", PlayerType.AI_MIDDLE));
     gameSession.addPlayer(new Player("BOT4", PlayerType.AI_EASY));
 
-    game = gameSession.startGame(new GMClassic());
+    game = gameSession.startGame(new GameModeClassic());
   }
 
   @Test

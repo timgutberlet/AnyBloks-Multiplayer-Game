@@ -9,6 +9,7 @@ import game.model.Color;
 import org.junit.jupiter.api.Test;
 
 /**
+ * this class tests the FieldTrigon class.
  * @author tiotto
  * @date 15.05.2022
  */

@@ -16,10 +16,7 @@ public class PolyTrigon extends Poly {
 
   public static ArrayList<ArrayList<FieldTrigon>> shapeListTrigon = new ArrayList<>();
 
-  /**
-   * Initializing all pieces of the trigon game.
-   * @author tiotto
-   */
+  // Initializing all pieces of the trigon game.
   static {
     FieldTrigon f000 = new FieldTrigon(0, 0, 0);
     FieldTrigon f001 = new FieldTrigon(0, 0, 1);
@@ -98,9 +95,13 @@ public class PolyTrigon extends Poly {
 
   /**
    * represents the shape of the polygon as an array of boolean whether the position is filled with
-   * the polygon or not
+   * the polygon or not.
    */
   public ArrayList<FieldTrigon> shape;
+
+  /**
+   * poly type
+   */
   private String polyType = "Trigon";
 
   /**
@@ -111,7 +112,7 @@ public class PolyTrigon extends Poly {
   }
 
   /**
-   * Initializes the default values of a polygon
+   * Initializes the default values of a polygon.
    *
    * @param shape shape of the polygon
    * @param color color of the polygon
@@ -166,7 +167,7 @@ public class PolyTrigon extends Poly {
   }
 
   /**
-   * rotates the polygon to the right
+   * rotates the polygon to the right.
    */
   public void rotateLeft() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
@@ -244,7 +245,7 @@ public class PolyTrigon extends Poly {
   }
 
   /**
-   * rotates the polygon to the left
+   * rotates the polygon to the left.
    */
   public void rotateRight() {
     for (int i = 1; i < 6; i++) {
@@ -253,7 +254,7 @@ public class PolyTrigon extends Poly {
   }
 
   /**
-   * mirrors the polygon
+   * mirrors the polygon.
    */
   public void mirror() {
     ArrayList<FieldTrigon> newShape = new ArrayList<>();
@@ -294,6 +295,9 @@ public class PolyTrigon extends Poly {
               }
               continue A;
             }
+            default -> {
+              break;
+            }
           }
         }
         case 1: {
@@ -329,6 +333,9 @@ public class PolyTrigon extends Poly {
                 newShape.add(new FieldTrigon(1, 0, 0, getColor()));
               }
               continue A;
+            }
+            default -> {
+              break;
             }
           }
         }
@@ -366,6 +373,9 @@ public class PolyTrigon extends Poly {
               }
               continue A;
             }
+            default -> {
+              break;
+            }
           }
         }
         case 3: {
@@ -402,8 +412,12 @@ public class PolyTrigon extends Poly {
               }
               continue A;
             }
+            default -> {
+              break;
+            }
           }
         }
+        default: break;
       }
     }
     shape = newShape;
@@ -497,15 +511,32 @@ public class PolyTrigon extends Poly {
   }
 
   /**
-   * method that returns true if shape contains field with coordinates {i,j,isRight}
+   * method that returns true if shape contains field with coordinates {i,j,isRight}.
    *
-   * @param pos
+   * @param pos position
    * @author lbaudenb
    */
   @Override
   public boolean containsField(int[] pos) {
     for (FieldTrigon ft : shape) {
       if (ft.pos[0] == pos[0] && ft.pos[1] == pos[1] && ft.pos[2] == pos[2]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * checks if the poly contains the given field.
+   *
+   * @param x       coordinate
+   * @param y       coordinate
+   * @param isRight coordinate
+   * @return boolean if the poly contains the field
+   */
+  public boolean containsField(int x, int y, int isRight) {
+    for (FieldTrigon ft : shape) {
+      if (ft.pos[0] == x && ft.pos[1] == y && ft.pos[2] == isRight) {
         return true;
       }
     }
@@ -546,26 +577,9 @@ public class PolyTrigon extends Poly {
 
 
   /**
-   * checks if the poly contains the given field
-   *
-   * @param x       coordinate
-   * @param y       coordinate
-   * @param isRight coordinate
-   * @return boolean if the poly contains the field
-   */
-  public boolean containsField(int x, int y, int isRight) {
-    for (FieldTrigon ft : shape) {
-      if (ft.pos[0] == x && ft.pos[1] == y && ft.pos[2] == isRight) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
    * returns the type of the poly.
    *
-   * @return
+   * @return poly type
    */
   public String getPolyType() {
     return this.polyType;
