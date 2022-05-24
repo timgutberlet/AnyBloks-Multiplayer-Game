@@ -307,7 +307,7 @@ public abstract class InGameUiController extends AbstractUiController {
       //Set colors of Scores by player color
       switch (game.getGameState().getColorFromPlayer(p).toString()) {
         case "RED":
-          if (ColorHandler.darkMode) {
+          if (ColorHandler.whiteMode) {
             name.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #8b0000;");
             score.setStyle(
@@ -320,7 +320,7 @@ public abstract class InGameUiController extends AbstractUiController {
           }
           break;
         case "BLUE":
-          if (ColorHandler.darkMode) {
+          if (ColorHandler.whiteMode) {
             name.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00008b;");
             score.setStyle(
@@ -333,13 +333,13 @@ public abstract class InGameUiController extends AbstractUiController {
           }
           break;
         case "GREEN":
-          if (ColorHandler.darkMode) {
+          if (ColorHandler.whiteMode) {
             name.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #006400;");
             score.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #006400;");
           }
-          if (ColorHandler.whiteMode) {
+          if (ColorHandler.darkMode) {
             name.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #00ff00;");
             score.setStyle(
@@ -352,7 +352,7 @@ public abstract class InGameUiController extends AbstractUiController {
           }
           break;
         case "YELLOW":
-          if (ColorHandler.darkMode) {
+          if (ColorHandler.whiteMode) {
             name.setStyle(
                 "-fx-background-color:#FFFFFF; -fx-background-radius: 5; -fx-text-fill: #b2b200;");
             score.setStyle(
@@ -857,6 +857,7 @@ public abstract class InGameUiController extends AbstractUiController {
                   .getPossibleFieldsForPoly(dragablePolyPane.getPoly(),
                       game.getGameState().isFirstRound());
               //Paint possible fields by color
+              boardPane.resetAllCheckFields();
               if (possibleFields != null) {
                 for (int[] coords : possibleFields) {
                   switch (dragablePolyPane.getPoly().getColor().toString()) {

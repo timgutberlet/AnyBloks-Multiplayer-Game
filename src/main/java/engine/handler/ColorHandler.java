@@ -19,7 +19,7 @@ public class ColorHandler {
    * @return returns right Java.Fx Color element
    */
   public static javafx.scene.paint.Color getJavaColor(Color color) {
-    if (darkMode) {
+    if (whiteMode) {
       switch (color) {
         case RED:
           return javafx.scene.paint.Color.DARKRED;
@@ -33,7 +33,7 @@ public class ColorHandler {
           return javafx.scene.paint.Color.TRANSPARENT;
       }
     }
-    if (whiteMode) {
+    if (darkMode) {
       switch (color) {
         case RED:
           return javafx.scene.paint.Color.RED.brighter();
