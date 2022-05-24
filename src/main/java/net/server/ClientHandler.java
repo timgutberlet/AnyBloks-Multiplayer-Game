@@ -412,10 +412,10 @@ public class ClientHandler {
   public void disconnectClient(WrappedPacket packet) {
     PlayerKickPacket playerKickPacket = (PlayerKickPacket) packet.getPacket();
 
-    if (this.player.equals(playerKickPacket.getUsername())) {
+    if (this.player.getUsername().equals(playerKickPacket.getUsername())) {
       this.gameSession.setPlayerKicked(true);
       disconnectClient();
-      this.gameSession.setPlayerKicked(false);
+      //this.gameSession.setPlayerKicked(false);
     }
 
   }
@@ -452,5 +452,9 @@ public class ClientHandler {
 
   public EndpointClient getClient() {
     return client;
+  }
+
+  public void setPlayer(Player player) {
+    this.player = player;
   }
 }

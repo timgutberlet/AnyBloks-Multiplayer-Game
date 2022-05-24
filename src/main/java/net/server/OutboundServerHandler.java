@@ -259,6 +259,16 @@ public class OutboundServerHandler {
 
     this.server.sendMessage(wrappedPacket, username);
 
+    this.server.getUsername2Session().remove(username);
+    EndpointServer.getSessions().remove(this.server.getUsername2Session().get(username));
+    int indexPlayerToRemove = -1;
+    for (int i = 0; i < gameSession.getPlayerList().size(); i++) {
+      if (gameSession.getPlayerList().get(i).getUsername().equals(username)) {
+        indexPlayerToRemove = i;
+      }
+    }
+    gameSession.getPlayerList().remove(indexPlayerToRemove);
+
   }
 
 

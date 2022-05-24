@@ -49,6 +49,7 @@ public class EndpointClient {
     this.gameSession.setLocalPlayer(player);
     this.player.setGameSession(this.gameSession);
     this.clientHandler = new ClientHandler(this);
+    this.clientHandler.setPlayer(player);
     this.gameSession.setClientHandler(this.clientHandler);
   }
 

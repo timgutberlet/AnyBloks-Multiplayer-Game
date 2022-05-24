@@ -239,7 +239,7 @@ public class GameSession {
       for (int i = 0; i < playerToRemove; i++) {
 
         String username = this.getPlayerList().get(playerList.size() - 1).getUsername();
-        this.getInboundServerHandler().getServer().dropUser(username);
+        this.outboundServerHandler.kickPlayer(username);
         try {
           TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {

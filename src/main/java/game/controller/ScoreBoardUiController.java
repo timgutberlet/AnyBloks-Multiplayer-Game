@@ -26,6 +26,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
+import net.packet.game.HostQuitPacket;
 
 /**
  * Class that controls the Scoreboard View.
@@ -189,24 +192,33 @@ public class ScoreBoardUiController extends AbstractUiController {
    */
   @FXML
   public void backMainMenu() {
-    if (gameSession.getLocalPlayer().getType() != PlayerType.HOST_PLAYER) {
-      gameSession.getHostServer().stopWebsocket();
+    this.userMessage.setText("Back to the Main Menu");
+    if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
+      //Player is the host
+      this.userMessage.setText("Informing the other players");
+      this.gameSession.getClientHandler().getClient()
+          .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
+      this.userMessage.setText("Stopping the server");
       try {
-        TimeUnit.MILLISECONDS.sleep(2000);
+        TimeUnit.MILLISECONDS.sleep(5000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-      try {
-        gameSession.getClientHandler().getClient().getSession().close();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      //now that all clients have left, reset & stop the server
+      gameSession.getHostServer().stopWebsocket();
+      this.userMessage.setText("Server has stopped - back to Main Menu");
 
+    } else {
+      //Player is a remote player
+      this.userMessage.setText("Leaving the current game session");
+      this.gameSession.getClientHandler().disconnectClient();
     }
 
-    this.gameSession.setGameOver(false);
-    gameSession.getClientHandler().stopClient();
-
+    try {
+      TimeUnit.MILLISECONDS.sleep(1000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
     gameController.setActiveUiController(new MainMenuUiController(gameController));
   }
 
@@ -215,8 +227,10 @@ public class ScoreBoardUiController extends AbstractUiController {
    */
   @FXML
   public void nextRound() {
+    this.gameSession.setGameOver(false);
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)
         && this.gameSession.getGameList().size() > 0) {
+      System.out.println("STARTING A NEW GAME IN A TOURNAMENT");
       this.gameSession.getClientHandler().startLocalGame(this.gameSession.getGameList());
     }
   }

@@ -579,7 +579,7 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void refreshUi() {
-    int playerSize = game.getPlayers().size();
+    int playerSize = gameSession.getGame().getGamemode().getNeededPlayers();
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
 
       topPane.setPrefWidth(stage.getWidth());
@@ -611,11 +611,12 @@ public abstract class InGameUiController extends AbstractUiController {
 
     stackPanes.clear();
     stacks.getChildren().clear();
+    System.out.println(game.getGamemode().getName());
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
       case "CLASSIC":
-        for (Player p : game.getPlayers()) {
+        for (Player p : game.getGameState().getPlayerList()) {
           StackPane stackPane = new StackSquarePane(p, inputHandler,
               game.getGameState().getRemainingPolys(p), stage.getWidth());
           stackPanes.add(stackPane);

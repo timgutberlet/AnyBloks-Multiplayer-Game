@@ -313,15 +313,7 @@ public class InboundServerHandler {
     String username = playerKickPacket.getUsername();
     this.server.getOutboundServerHandler().kickPlayer(username);
 
-    this.server.getUsername2Session().remove(username);
-    EndpointServer.getSessions().remove(client);
-    int indexPlayerToRemove = -1;
-    for (int i = 0; i < gameSession.getPlayerList().size(); i++) {
-      if (gameSession.getPlayerList().get(i).getUsername().equals(username)) {
-        indexPlayerToRemove = i;
-      }
-    }
-    gameSession.getPlayerList().remove(indexPlayerToRemove);
+
   }
 
   public EndpointServer getServer() {
