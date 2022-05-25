@@ -112,6 +112,9 @@ public class ScoreBoardUiController extends AbstractUiController {
    * Method for sorting the score board by score.
    */
   public static void sortScoreBoard(GameSession gameSession) {
+    sessionPlayers.clear();
+    sessionScores.clear();
+
     List<Map.Entry<String, Integer>> list0
         = new ArrayList<Entry<String, Integer>>(
         gameSession.getGameScoreBoard().playerScores.entrySet());
