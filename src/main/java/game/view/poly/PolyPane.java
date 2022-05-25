@@ -37,13 +37,6 @@ public class PolyPane extends Pane {
   public void setPoly() {
   }
 
-  public void setPolyColor(){
-    polyGrey = true;
-  }
-  public void resetPolyColor(){
-    polyGrey = false;
-  }
-
   public Poly getPoly() {
     return this.poly;
   }

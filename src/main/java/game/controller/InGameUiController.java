@@ -654,7 +654,7 @@ public abstract class InGameUiController extends AbstractUiController {
       turn.setText(
           this.gameSession.getGame().getGameState().getPlayerCurrent().getUsername() + " 's Turn");
     }
-    if(moveCheck == 0){
+
     //Paint scorepanes by gamemode
     stackPanes.clear();
     stacks.getChildren().clear();
@@ -681,7 +681,6 @@ public abstract class InGameUiController extends AbstractUiController {
       default:
         break;
     }
-  }
     errorLabel.setText(errorLabelText);
     errorLabel.setVisible(!Config.getStringValue("TOOLTIPS").equals("OFF"));
   }
@@ -822,18 +821,6 @@ public abstract class InGameUiController extends AbstractUiController {
       //Debug.printMessage(this, this.localPlayer.getUsername() + " " + this.localPlayer);
       if (this.gameSession.isLocalPlayerTurn()) {
         //Checks if a Poly has no moves anymore in this turn. Then color it grey
-        if(moveCheck == 2){
-          for (PolyPane polyForPiece : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
-              .getPolyPanes()) {
-            if (this.gameSession.getGame().getGameState().getBoard().getPossibleFieldsForPoly(
-                polyForPiece.getPoly(), this.gameSession.getGame().getGameState().isFirstRound()).size() == 0) {
-              polyForPiece.setPolyColor();
-              polyForPiece.setPoly();
-            }else{
-              polyForPiece.resetPolyColor();
-            }
-          }
-        }
         help = "";
         for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
           if (!alreadyInChat.contains(chatMessage.getTime() + " "
