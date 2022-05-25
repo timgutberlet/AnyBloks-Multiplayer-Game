@@ -71,7 +71,7 @@ public class SquarePolyPane extends PolyPane {
     for (int i = 0; i < 5; i++) {
       for (int j = 0; j < 5; j++) {
         if (poly.containsField(new int[]{i, j})) {
-            setSquare(i, j, ColorHandler.getJavaColor(poly.getColor()));
+          setSquare(i, j, ColorHandler.getJavaColor(poly.getColor()));
         } else {
           setSquare(i, j, Color.TRANSPARENT);
         }

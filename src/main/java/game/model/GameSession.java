@@ -444,7 +444,7 @@ public class GameSession {
           Debug.printMessage(this, "sending game update");
           this.outboundServerHandler.sendGameStart(player.getUsername(), this.game.getGameState());
 
-          if(this.game.getGameState().getPlayerCurrent().equals(player)) {
+          if (this.game.getGameState().getPlayerCurrent().equals(player)) {
             Debug.printMessage(this, "requesting game from 2ai");
             this.outboundServerHandler.requestTurn(player.getUsername());
           }

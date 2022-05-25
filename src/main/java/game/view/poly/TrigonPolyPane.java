@@ -127,13 +127,13 @@ public class TrigonPolyPane extends PolyPane {
     for (int i = 0; i < 4; i++) {
       for (int j = 0; j < 4; j++) {
         if (poly.containsField(new int[]{i, j, 0})) {
-            setTriangle(i, j, 0, ColorHandler.getJavaColor(poly.getColor()));
+          setTriangle(i, j, 0, ColorHandler.getJavaColor(poly.getColor()));
         } else {
           setTriangle(i, j, 0, Color.TRANSPARENT);
         }
 
         if (poly.containsField(new int[]{i, j, 1})) {
-            setTriangle(i, j, 1, ColorHandler.getJavaColor(poly.getColor()));
+          setTriangle(i, j, 1, ColorHandler.getJavaColor(poly.getColor()));
         } else {
           setTriangle(i, j, 1, Color.TRANSPARENT);
         }
