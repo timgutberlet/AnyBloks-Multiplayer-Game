@@ -572,7 +572,9 @@ public abstract class InGameUiController extends AbstractUiController {
     }
   }
 
-
+  /**
+   * Handles the Quit Button getting clicked.
+   */
   private void handleQuitButtonClicked() {
     Debug.printMessage(
         "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
