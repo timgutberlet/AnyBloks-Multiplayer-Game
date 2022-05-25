@@ -7,11 +7,8 @@ import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import game.scores.ScoreProvider;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 import javax.websocket.Session;
-import net.packet.abstr.Packet;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
@@ -143,8 +140,7 @@ public class InboundServerHandler {
               player.setAi(false);
               player.setType(loginPacket.getPlayerType());
               this.server.getOutboundServerHandler()
-                  .sendGameStart(player.getUsername(), gameSession.getGame()
-                      .getGameState());
+                  .sendGameStart(player.getUsername(), gameSession.getGame().getGameState());
             }
 
           }
@@ -159,16 +155,14 @@ public class InboundServerHandler {
         gameSession.addPlayer(new Player(username, loginPacket.getPlayerType()));
 
         this.server.getUsername2Session().put(username, session);
-        Debug.printMessage(
-            "Username2Session size: " + this.server.getUsername2Session().size());
+        Debug.printMessage("Username2Session size: " + this.server.getUsername2Session().size());
         Debug.printMessage(
             "Gamesession size: " + EndpointServer.getGameSession().getPlayerList().size());
       } else {
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket(
             "This Lobby is full. Try again at another time.", "ipAddress");
         WrappedPacket wrappedPacketLoginResponse = new WrappedPacket(
-            PacketType.LOGIN_RESPONSE_PACKET,
-            loginResponsePacket);
+            PacketType.LOGIN_RESPONSE_PACKET, loginResponsePacket);
         this.server.sendMessage(wrappedPacketLoginResponse, session);
 
       }
@@ -307,7 +301,7 @@ public class InboundServerHandler {
       this.server.getOutboundServerHandler().broadcastGameWin();
 
 
-     }
+    }
   }
 
   /**
