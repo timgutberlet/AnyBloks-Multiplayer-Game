@@ -510,7 +510,7 @@ public abstract class InGameUiController extends AbstractUiController {
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
     //Add all Buttons to buttonbox
     buttonBox.getChildren().add(infoButton);
-    buttonBox.getChildren().add(quitButton);
+    //buttonBox.getChildren().add(quitButton);
     buttonBox.getChildren().add(chatButton);
     buttonBox.getChildren().add(skipTurnButton);
     double errerHeight = gameController.getStage().getScene().getHeight();
