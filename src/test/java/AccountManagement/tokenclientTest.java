@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author tbuscher
  */
-public class tokenClientTest {
+public class tokenclientTest {
 
 
   @Test
@@ -47,7 +47,6 @@ public class tokenClientTest {
     }
     assertNotNull(dbServer);
 
-    dbServer.prepareTokenGenerationTest();
     dbServer.prepareTokenGenerationTest();
 
     Client testClient = ClientBuilder.newBuilder().register(JacksonFeature.class).build();

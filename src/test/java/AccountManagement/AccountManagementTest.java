@@ -32,9 +32,11 @@ import org.junit.jupiter.api.Test;
 public class AccountManagementTest {
 
 
-
+  /**
+   * Method called by test, see purpose above.
+   */
   @Test
-  public void testUpdateAccount() {
+  public void testRemoteAccountManagement() {
     //Cant start this thread in beforeAll since beforeAll needs to be static
     ThreadHandlerRestful threadHandlerRestful = new ThreadHandlerRestful();
     threadHandlerRestful.start();
