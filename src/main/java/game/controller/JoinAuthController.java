@@ -219,7 +219,7 @@ public class JoinAuthController extends AbstractUiController {
       WrappedPacket wrappedPacket = new WrappedPacket(PacketType.RESTFUL_LOGIN_PACKET,
           restfulLoginPacket);
 
-      Debug.printMessage("PasswortHash" + passwordHash);
+      Debug.printMessage("PasswordHash" + passwordHash);
 
       WebTarget targetPath = testClient.target(targetAddress).path("/authentication/");
       Response receivedToken = targetPath.request(MediaType.APPLICATION_JSON)

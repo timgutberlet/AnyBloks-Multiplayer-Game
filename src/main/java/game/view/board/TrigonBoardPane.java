@@ -107,10 +107,9 @@ public class TrigonBoardPane extends BoardPane {
             // right vertex
             0.0 + j * size + i * ofSetX + move - shift, 0.0 + i * ofSetY + moveOfSetY);
     if (checkFieldColor.containsKey("" + (i * 1000) + j + 0)) {
-      checkTrigonField.setFill(Color.BLACK);
-      //checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
+      checkTrigonField.setFill(checkFieldColor.get("" + (i * 1000) + j + 0));
     } else {
-      checkTrigonField.setFill(Color.BLACK);
+      checkTrigonField.setFill(color);
     }
     checkFields.add(checkTrigonField);
     this.getChildren().add(checkTrigonField);
@@ -164,14 +163,14 @@ public class TrigonBoardPane extends BoardPane {
     int[] pos;
     if (i == -1 || i == -2 || i == -3 || i == -4) {
       pos = new int[]{i, j, 0};
-      setTriangleCheckfield(i, j, Color.BLACK);
+      setTriangleCheckfield(i, j, Color.TRANSPARENT);
     } else if (i + j == 7 || i + j == 6 || i + j == 5 || i + j == 4) {
       pos = new int[]{i, j, 0};
-      setTriangleCheckfield(i, j, Color.BLACK);
+      setTriangleCheckfield(i, j, Color.TRANSPARENT);
     } else if (i + j == 8) {
       pos = new int[]{i, j, 1};
       color = ColorHandler.getJavaColor(board.getColor(pos));
-      setTriangleCheckfield(i, j, Color.BLACK);
+      setTriangleCheckfield(i, j, Color.TRANSPARENT);
       setTriangleRight(i, j, color);
     } else if (i + j == 26) {
       pos = new int[]{i, j, 0};
