@@ -30,6 +30,7 @@ import game.view.stack.StackSquarePane;
 import game.view.stack.StackTrigonPane;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -574,20 +575,43 @@ public abstract class InGameUiController extends AbstractUiController {
 
 
   private void handleQuitButtonClicked() {
-    Debug.printMessage(
-        "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
+
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
-      //Player is the host
+      //Player is the host this.userMessage.setText("Informing the other players");
       this.gameSession.getClientHandler().getClient()
           .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
+
+      try {
+        TimeUnit.MILLISECONDS.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      //now that all clients have left, reset & stop the server
+      gameSession.getHostServer().stopWebsocket();
       gameController.setActiveUiController(
           new LocalQuitUiController(gameController, gameSession, true));
+
     } else {
       //Player is a remote player
       this.gameSession.getClientHandler().disconnectClient();
       gameController.setActiveUiController(
-          new LocalQuitUiController(gameController, gameSession, false));
+          new MainMenuUiController(gameController));
     }
+
+//    Debug.printMessage(
+//        "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
+//    if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
+//      //Player is the host
+//      this.gameSession.getClientHandler().getClient()
+//          .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
+//      gameController.setActiveUiController(
+//          new LocalQuitUiController(gameController, gameSession, true));
+//    } else {
+//      //Player is a remote player
+//      //this.gameSession.getClientHandler().disconnectClient();
+//      gameController.setActiveUiController(
+//          new LocalQuitUiController(gameController, gameSession, false));
+//    }
   }
 
   private void refreshUi() {
