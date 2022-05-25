@@ -127,8 +127,6 @@ public class EndpointServer {
    * @throws IOException     is thrown
    * @throws EncodeException is thrown
    */
-
-
   @OnMessage
   public void onMessage(final WrappedPacket packet, final Session client)
       throws IOException, EncodeException {
@@ -217,8 +215,8 @@ public class EndpointServer {
   /**
    * function to easyily send a packet to a client based on username.
    *
-   * @param wrappedPacket wrappedPacket
-   * @param username      username
+   * @param wrappedPacket wrappedPacket to be sent
+   * @param username      username to be sent to
    */
   public void sendMessage(WrappedPacket wrappedPacket, String username) {
 
@@ -237,8 +235,8 @@ public class EndpointServer {
   /**
    * function to easily send a packet to client based on session.
    *
-   * @param wrappedPacket wrappedPacket
-   * @param client        client
+   * @param wrappedPacket wrappedPacket that is supposed to be sent
+   * @param client        Session where a packet is supposed to be sent
    */
   public void sendMessage(WrappedPacket wrappedPacket, Session client) {
 
@@ -282,8 +280,8 @@ public class EndpointServer {
   /**
    * adds username and a client session to the hash map username2session.
    *
-   * @param username username
-   * @param client   client
+   * @param username of connected user
+   * @param client   Session to be added
    */
   public void addUsernameSession(String username, Session client) {
     username2Session.put(username, client);
@@ -318,7 +316,7 @@ public class EndpointServer {
   /**
    * Remove player from gameSession.
    *
-   * @param username String
+   * @param username String to be removed
    */
   public void dropUser(String username) {
     Debug.printMessage("The user: " + username + " has been kicked");
@@ -347,12 +345,12 @@ public class EndpointServer {
   /**
    * handles an occurring error.
    *
-   * @param ses session
-   * @param t   error
+   * @param ses session in which the error occurred
+   * @param t   error inheriting from Throwable
    */
   @OnError
   public void onError(Session ses, Throwable t) {
-    Debug.printMessage("HI FROM CRASH");
+    Debug.printMessage("There has been a problem in the ServerEndpoint");
 
     t.printStackTrace();
   }

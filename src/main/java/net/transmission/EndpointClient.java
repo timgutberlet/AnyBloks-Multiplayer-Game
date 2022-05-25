@@ -163,8 +163,8 @@ public class EndpointClient {
   /**
    * Handles if an error occurs.
    *
-   * @param t   error
-   * @param ses session
+   * @param t   error inheriting from Throwable
+   * @param ses session in which the error occurred
    */
   @OnError
   public void onError(Throwable t, final Session ses) {
@@ -176,8 +176,8 @@ public class EndpointClient {
   /**
    * handles incoming packets.
    *
-   * @param packet packet
-   * @param ses    session
+   * @param packet packet received
+   * @param ses    session over which the packet was received
    */
   @OnMessage
   public void onMessage(final WrappedPacket packet, Session ses) {
