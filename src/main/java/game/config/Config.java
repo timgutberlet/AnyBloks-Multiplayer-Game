@@ -1,5 +1,6 @@
 package game.config;
 
+import game.model.Debug;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -99,7 +100,8 @@ public class Config {
       property.store(outStream, "File for Config values");
       outStream.close();
     } catch (IOException e) {
-      e.printStackTrace();
+      //e.printStackTrace();
+      Debug.printMessage("");
     }
   }
 
@@ -123,14 +125,16 @@ public class Config {
           saveProperty();
         }
       } catch (IOException e) {
-        e.printStackTrace();
+        //e.printStackTrace();
+        Debug.printMessage("");
       }
     } else {
       try {
         Files.createDirectories(Paths.get(folderPath));
         Files.createFile(Paths.get(configPath));
       } catch (IOException e) {
-        e.printStackTrace();
+        //e.printStackTrace();
+        Debug.printMessage("");
       }
       loadStandardConfig();
       saveProperty();

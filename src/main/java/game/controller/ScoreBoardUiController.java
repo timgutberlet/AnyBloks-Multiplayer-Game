@@ -451,6 +451,7 @@ public class ScoreBoardUiController extends AbstractUiController {
 
   @Override
   public void onExit() {
+    Config.saveProperty();
     System.exit(0);
   }
 }

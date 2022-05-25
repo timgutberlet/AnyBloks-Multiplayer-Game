@@ -317,7 +317,8 @@ public class SettingUiController extends AbstractUiController {
         tooltips.setText("ENABLE TOOLTIPS");
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      //e.printStackTrace();
+      Debug.printMessage("");
     }
   }
 
@@ -337,11 +338,6 @@ public class SettingUiController extends AbstractUiController {
    */
   @FXML
   public void close() {
-    try {
-      gameController.getApplication().stop();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
     Config.saveProperty();
     System.exit(0);
   }
@@ -353,6 +349,7 @@ public class SettingUiController extends AbstractUiController {
    */
   @Override
   public void onExit() {
+    Config.saveProperty();
     System.exit(0);
   }
 

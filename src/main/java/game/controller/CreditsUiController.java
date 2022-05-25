@@ -3,6 +3,7 @@ package game.controller;
 import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
+import game.model.Debug;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +42,8 @@ public class CreditsUiController extends AbstractUiController {
 
   @Override
   public void onExit() {
-
+    System.exit(0);
+    Config.saveProperty();
   }
 
   /**
@@ -93,7 +95,8 @@ public class CreditsUiController extends AbstractUiController {
           break;
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      //e.printStackTrace();
+      Debug.printMessage("");
     }
   }
 

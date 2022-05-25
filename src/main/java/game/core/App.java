@@ -1,6 +1,7 @@
 package game.core;
 
 import game.config.Config;
+import game.model.Debug;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,6 +17,7 @@ public class App extends Application {
 
   public static void main(String[] args) {
     Config.loadProperty();
+    Config.saveProperty();
     launch();
   }
 
@@ -38,7 +40,8 @@ public class App extends Application {
     try {
       super.stop();
     } catch (Exception e) {
-      e.printStackTrace();
+      //e.printStackTrace();
+      Debug.printMessage("");
     }
     System.exit(0);
   }

@@ -223,7 +223,8 @@ public class Game {
       try {
         TimeUnit.SECONDS.sleep(2);
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        //e.printStackTrace();
+        Debug.printMessage("");
       }
       this.gameSession.getOutboundServerHandler().requestTurn(firstPlayer.getUsername());
     }

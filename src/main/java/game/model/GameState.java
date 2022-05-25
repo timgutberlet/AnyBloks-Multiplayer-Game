@@ -300,7 +300,8 @@ public class GameState implements Serializable, Cloneable {
         try {
           throw new Exception("Wrong Player Color");
         } catch (Exception e) {
-          e.printStackTrace();
+          //e.printStackTrace();
+          Debug.printMessage("");
         }
         return null;
     }

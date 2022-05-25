@@ -918,7 +918,6 @@ public abstract class InGameUiController extends AbstractUiController {
                 }
                 Bounds boardBounds = field.localToScene(field.getBoundsInParent());
                 if (polyBounds.intersects(boardBounds)) {
-                  System.out.println("INTERSECTION!!!!!!!");
                   //Add is Poly Possible
                   int addX;
                   int addY;

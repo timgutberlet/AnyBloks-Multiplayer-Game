@@ -194,7 +194,8 @@ public class Player implements Serializable {
       try {
         TimeUnit.MILLISECONDS.sleep(200);
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        //e.printStackTrace();
+        Debug.printMessage("");
       }
       return Ai.calculateNextMove(gameState, this);
     } else {

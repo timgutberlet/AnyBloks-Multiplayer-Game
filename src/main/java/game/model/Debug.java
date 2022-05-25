@@ -7,7 +7,7 @@ package game.model;
  */
 public class Debug {
 
-  static boolean debug = true;
+  static boolean debug = false;
 
   /**
    * Prints the Message.
