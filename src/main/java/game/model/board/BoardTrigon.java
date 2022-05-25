@@ -22,12 +22,12 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
   /**
    * List with the fields of the board.
    */
-  private final ArrayList<FieldTrigon> board = new ArrayList<>();
+  private ArrayList<FieldTrigon> board = new ArrayList<>();
 
   /**
    * list with the fields of the board, where player can start the game.
    */
-  private final ArrayList<FieldTrigon> startFields = new ArrayList<>();
+  private ArrayList<FieldTrigon> startFields = new ArrayList<>();
 
   /**
    * creates a new and empty trigon board. Stores as well the right start fields.

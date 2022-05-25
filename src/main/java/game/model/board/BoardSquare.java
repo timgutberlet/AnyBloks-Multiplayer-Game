@@ -25,12 +25,12 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
   /**
    * List with the fields of the board.
    */
-  private final ArrayList<FieldSquare> board = new ArrayList<>();
+  private ArrayList<FieldSquare> board = new ArrayList<>();
 
   /**
    * list with the fields of the board, where player can start the game.
    */
-  private final ArrayList<FieldSquare> startFields = new ArrayList<>();
+  private ArrayList<FieldSquare> startFields = new ArrayList<>();
 
 
   /**
