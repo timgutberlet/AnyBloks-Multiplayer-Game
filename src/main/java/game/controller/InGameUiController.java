@@ -277,7 +277,7 @@ public abstract class InGameUiController extends AbstractUiController {
     container.getChildren().add(content);
 
     createBoard();
-    //Setup toppane with scores
+    //Setup TopPane with scores
     topPane = new Pane();
     topPane.setStyle("-fx-background-color: #eeeeee");
     topPane.setEffect(new DropShadow());
@@ -407,7 +407,7 @@ public abstract class InGameUiController extends AbstractUiController {
 
     stacks = new VBox();
     stacks.setSpacing(10);
-    //Init the right gamemode so that the stacks are painted right
+    //Init the right GameMode so that the stacks are painted right
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
@@ -508,7 +508,7 @@ public abstract class InGameUiController extends AbstractUiController {
     });
 
     quitButton.setOnMouseClicked(mouseEvent -> this.handleQuitButtonClicked());
-    //Add all Buttons to buttonbox
+    //Add all Buttons to buttonBox
     buttonBox.getChildren().add(infoButton);
     //buttonBox.getChildren().add(quitButton);
     buttonBox.getChildren().add(chatButton);
@@ -600,16 +600,16 @@ public abstract class InGameUiController extends AbstractUiController {
   }
 
   private void refreshUi() {
-    //Repaint the scorepane
     int playerSize = gameSession.getGame().getGamemode().getNeededPlayers();
     stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-
+      //makes topPane resizeable
       topPane.setPrefWidth(stage.getWidth());
-
+      //makes container, content and buttonBox fit to stage width
       container.setPrefWidth(stage.getWidth());
       content.setPrefWidth(stage.getWidth());
       buttonBox.setPrefWidth(stage.getWidth());
 
+      //makes ScorePane resizable
       ColumnConstraints coll = new ColumnConstraints();
       coll.setMinWidth(stage.getWidth() / (playerSize + 1));
       for (int i = 0; i <= playerSize; i++) {
@@ -620,12 +620,14 @@ public abstract class InGameUiController extends AbstractUiController {
       dragablePolyPane = null;
     });
 
+    //update player score labels
     for (int i = 0; i < playerSize; i++) {
       if (i < scores.size()) {
         scores.get(i).setText(game.getGameState().getScores()[i] + "");
       }
     }
 
+    //updates turn label
     if (game.getGameState().getPlayerCurrent().equals(localPlayer)) {
       turn.setText("Your Turn");
     } else {
@@ -633,7 +635,7 @@ public abstract class InGameUiController extends AbstractUiController {
           this.gameSession.getGame().getGameState().getPlayerCurrent().getUsername() + " 's Turn");
     }
 
-    //Paint scorepanes by gamemode
+    // repaint stackPanes
     stackPanes.clear();
     stacks.getChildren().clear();
     Debug.printMessage(game.getGamemode().getName());
@@ -813,7 +815,7 @@ public abstract class InGameUiController extends AbstractUiController {
         //hintLabel1.setText("Erkannt");
         //Debug.printMessage(this, "GUI ready for input");
         boolean action = false;
-        //Update Dragable Polypane
+        //Update DragablePolyPane
         if (!this.gameSession.isUpdatingGameState()) {
           for (PolyPane polyPane : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
               .getPolyPanes()) {
