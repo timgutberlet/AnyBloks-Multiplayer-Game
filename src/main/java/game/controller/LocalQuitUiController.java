@@ -53,6 +53,27 @@ public class LocalQuitUiController extends AbstractUiController {
     this.buttonActive = false;
     backToLobbyButton.setDisable(true);
 
+    try {
+      gameSession.getClientHandler().getClient().getSession().close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    init(super.root);
+//Make sure that all clients have left.
+    if (host) {
+      try {
+        TimeUnit.MILLISECONDS.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      //now that all clients have left, reset & stop the server
+      gameSession.getHostServer().stopWebsocket();
+    }
+    try {
+      TimeUnit.MILLISECONDS.sleep(5000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
   }
 

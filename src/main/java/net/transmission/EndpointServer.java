@@ -250,7 +250,8 @@ public class EndpointServer {
       Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
       for (String username : this.getUsername2Session().keySet()) {
         if (client.equals(this.getUsername2Session().get(username))) {
-          gameSession.changePlayer2Ai(username);
+          //gameSession.changePlayer2Ai(username);
+          Debug.printMessage("");
         }
       }
 
@@ -272,7 +273,7 @@ public class EndpointServer {
         client.getBasicRemote().sendObject(wrappedPacket);
       } catch (Exception e) {
         Debug.printMessage(this, "Message could not be sent \nReplacing user with AI");
-        gameSession.changePlayer2Ai(username);
+        //gameSession.changePlayer2Ai(username);
         e.printStackTrace();
       }
     }

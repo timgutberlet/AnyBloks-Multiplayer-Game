@@ -33,6 +33,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import net.packet.abstr.PacketType;
+import net.packet.abstr.WrappedPacket;
+import net.packet.game.HostQuitPacket;
 import net.server.ClientHandler;
 import net.server.HostServer;
 import net.transmission.EndpointClient;
@@ -250,8 +253,15 @@ public class LocalLobbyUiController extends AbstractUiController {
    */
   @FXML
   public void back() {
-    this.gameSession.stopSession();
-    gameController.setActiveUiController(new PlayUiController(gameController));
+
+    this.gameSession.getClientHandler().getClient()
+        .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
+
+    Debug.printMessage("change UI controller!");
+
+    gameController.setActiveUiController(
+        new LocalQuitUiController(gameController, gameSession, true));
+
   }
 
   /**

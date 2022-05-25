@@ -583,48 +583,20 @@ public abstract class InGameUiController extends AbstractUiController {
    */
   private void handleQuitButtonClicked() {
 
+    Debug.printMessage(
+        "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
     if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
-      //Player is the host this.userMessage.setText("Informing the other players");
+      //Player is the host
       this.gameSession.getClientHandler().getClient()
           .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
-
-      try {
-        TimeUnit.MILLISECONDS.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      //now that all clients have left, reset & stop the server
-      gameSession.getHostServer().stopWebsocket();
       gameController.setActiveUiController(
-          new MainMenuUiController(gameController));;
-
+          new LocalQuitUiController(gameController, gameSession, true));
     } else {
       //Player is a remote player
       this.gameSession.getClientHandler().disconnectClient();
       gameController.setActiveUiController(
-          new MainMenuUiController(gameController));
+          new LocalQuitUiController(gameController, gameSession, false));
     }
-
-    try {
-      TimeUnit.MILLISECONDS.sleep(2000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
-//    Debug.printMessage(
-//        "SOME CLICKED QUIT the some has type " + gameSession.getLocalPlayer().getType());
-//    if (this.gameSession.getLocalPlayer().getType().equals(PlayerType.HOST_PLAYER)) {
-//      //Player is the host
-//      this.gameSession.getClientHandler().getClient()
-//          .sendToServer(new WrappedPacket(PacketType.HOST_QUIT_PACKET, new HostQuitPacket()));
-//      gameController.setActiveUiController(
-//          new LocalQuitUiController(gameController, gameSession, true));
-//    } else {
-//      //Player is a remote player
-//      //this.gameSession.getClientHandler().disconnectClient();
-//      gameController.setActiveUiController(
-//          new LocalQuitUiController(gameController, gameSession, false));
-//    }
   }
 
   private void refreshUi() {
@@ -664,7 +636,7 @@ public abstract class InGameUiController extends AbstractUiController {
     //Paint scorepanes by gamemode
     stackPanes.clear();
     stacks.getChildren().clear();
-    //Debug.printMessage(game.getGamemode().getName());
+    Debug.printMessage(game.getGamemode().getName());
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
