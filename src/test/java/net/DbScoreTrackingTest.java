@@ -4,13 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import game.scores.GameScoreBoard;
+import game.scores.GameSessionScoreBoard;
+import game.scores.ScoreProvider;
 import java.util.ArrayList;
 import net.server.DbServer;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests that gameScores & gameSessionScores are put in, and read out of the DB correctly.
- * That is done by inserting 2 gameScores in one GameSessionScore and verifying them.
+ * Tests that gameScores & gameSessionScores are put in, and read out of the DB correctly. That is
+ * done by inserting 2 gameScores in one GameSessionScore and verifying them.
  *
  * @author tbuscher
  */
@@ -62,6 +64,16 @@ public class DbScoreTrackingTest {
       assertEquals(gameSessionScores.get(1).getPlayerScores().get("testuser1"), 60);
       assertEquals(gameSessionScores.get(1).getPlayerScores().get("testuser2"), 80);
       assertEquals(gameSessionScores.get(1).getGamemode(), "CLASSIC");
+
+      GameSessionScoreBoard gameSessionScoreBoard = ScoreProvider.getGameSessionScoreBoard(
+          new String[]{gameId1, gameId2});
+
+      //Test whether the ScoreProvider delivers a correct GameSessionScoreBoard
+      assertEquals(150, gameSessionScoreBoard.usernames2pointsAndWins.get("testuser2")[0]);
+      assertEquals(110, gameSessionScoreBoard.usernames2pointsAndWins.get("testuser1")[0]);
+      assertEquals(2, gameSessionScoreBoard.gamesPlayed);
+
+
     } catch (Exception e) {
       e.printStackTrace();
     }
