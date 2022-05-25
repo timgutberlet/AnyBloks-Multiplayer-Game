@@ -822,7 +822,7 @@ public abstract class InGameUiController extends AbstractUiController {
       //Debug.printMessage(this, this.localPlayer.getUsername() + " " + this.localPlayer);
       if (this.gameSession.isLocalPlayerTurn()) {
         //Checks if a Poly has no moves anymore in this turn. Then color it grey
-        if(moveCheck == 1){
+        if(moveCheck == 2){
           for (PolyPane polyForPiece : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
               .getPolyPanes()) {
             if (this.gameSession.getGame().getGameState().getBoard().getPossibleFieldsForPoly(
