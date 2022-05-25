@@ -2,7 +2,7 @@ package engine.handler;
 
 import game.model.Debug;
 import net.server.HostServer;
-import net.tests.NoLogging;
+import net.server.NoLogging;
 
 /**
  * This Handler runs a thread, to communicate with the server, while also running a smooth Ui

@@ -22,7 +22,7 @@ import net.packet.account.LoginRequestPacket;
 import net.packet.chat.ChatMessagePacket;
 import net.packet.game.InitSessionPacket;
 import net.server.HostServer;
-import net.tests.NoLogging;
+import net.server.NoLogging;
 import net.transmission.EndpointClient;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

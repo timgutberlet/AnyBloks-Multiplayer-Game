@@ -1,4 +1,4 @@
-package net.tests;
+package net.server;
 
 import org.eclipse.jetty.util.log.Logger;
 

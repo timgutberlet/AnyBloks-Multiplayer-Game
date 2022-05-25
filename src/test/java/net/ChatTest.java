@@ -1,8 +1,11 @@
 package net;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import game.model.Debug;
+import game.model.chat.Chat;
+import game.model.chat.ChatMessage;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import java.io.IOException;
@@ -15,6 +18,7 @@ import javax.websocket.Session;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.LoginRequestPacket;
+import net.packet.chat.ChatMessagePacket;
 import net.server.DbServer;
 import net.server.HostServer;
 import net.transmission.EndpointClient;
@@ -67,6 +71,7 @@ public class ChatTest {
       Player player = new Player(user, PlayerType.REMOTE_PLAYER);
       players.add(player);
       EndpointClient endpointClient = new EndpointClient(player);
+      endpointClient.getGameSession().setAuthToken(token);
       endpointClients.add(endpointClient);
       //Connect the endpoints to the server
       try {
@@ -77,14 +82,32 @@ public class ChatTest {
       } catch (IOException e) {
         e.printStackTrace();
       }
+
       //Log in the accounts that have been connected
       WrappedPacket wrappedLoginPacket = new WrappedPacket(PacketType.LOGIN_REQUEST_PACKET,
           new LoginRequestPacket(user, token, PlayerType.REMOTE_PLAYER), user, token);
       endpointClient.sendToServer(wrappedLoginPacket);
-      //Add sending chat messages here @tgeilen
-
 
     }
+      Chat chat = new Chat();
+      chat.addMessage(new ChatMessage("Player1","Hello World"));
+
+      endpointClients.get(0).getGameSession().getClientHandler().broadcastChatMessage(chat);
+
+    try {
+      TimeUnit.MILLISECONDS.sleep(500);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+    Chat chat2 = endpointClients.get(1).getGameSession().getChat();
+
+
+
+      assertEquals(1,chat2.getChatMessages().size());
+
+
+
 
     //Stopping the websocketServer again
     hostServer.stopWebsocket();
