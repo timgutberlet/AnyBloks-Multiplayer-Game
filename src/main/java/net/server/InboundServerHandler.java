@@ -7,8 +7,11 @@ import game.model.gamemodes.GameMode;
 import game.model.player.Player;
 import game.model.player.PlayerType;
 import game.scores.ScoreProvider;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 import javax.websocket.Session;
+import net.packet.abstr.Packet;
 import net.packet.abstr.PacketType;
 import net.packet.abstr.WrappedPacket;
 import net.packet.account.CreateAccountRequestPacket;
@@ -282,7 +285,9 @@ public class InboundServerHandler {
     PlayerQuitPacket playerQuitPacket = (PlayerQuitPacket) packet.getPacket();
     String username = playerQuitPacket.getUsername();
 
+    Debug.printMessage(this, "Trying to disconnect player");
     if (gameSession.getGame() == null) {
+      Debug.printMessage(this, "game null");
       //Game has not started and Lobby view is still active
       this.server.getUsername2Session().remove(username);
       EndpointServer.getSessions().remove(client);
@@ -296,11 +301,13 @@ public class InboundServerHandler {
 
     } else {
       //Game has started and players are in-game
-      gameSession.changePlayer2Ai(username);
 
-    }
+      this.server.getUsername2Session().remove(username);
+
+      this.server.getOutboundServerHandler().broadcastGameWin();
 
 
+     }
   }
 
   /**
@@ -317,6 +324,7 @@ public class InboundServerHandler {
 
 
   }
+
 
   public EndpointServer getServer() {
     return server;

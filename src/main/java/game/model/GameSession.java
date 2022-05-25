@@ -413,18 +413,21 @@ public class GameSession {
    * @param username username
    */
   public void changePlayer2Ai(String username) {
+    Debug.printMessage(this, "Trying to change player 2 ai");
     for (Player player : this.playerList) {
       if (player.getUsername().equals(username)) {
         player.setAi(true);
         player.setType(this.defaultAi);
-
+        Debug.printMessage(this, "starting 2ai websocket");
         final WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         EndpointClient endpointClient = new EndpointClient(player);
         Session session;
 
         try {
+
+          String ip = Inet4Address.getLocalHost().getHostAddress();
           session = container.connectToServer(endpointClient,
-              URI.create("ws://localhost:8081/packet"));
+              URI.create("ws://" + ip + ":8081/packet"));
 
           //Login
           LoginRequestPacket loginRequestPacket = new LoginRequestPacket(player.getUsername(),
@@ -438,10 +441,13 @@ public class GameSession {
           Debug.printMessage(this, "Waiting for new AI to connect (with a fixed amount of time)");
 
           TimeUnit.SECONDS.sleep(5);
-
+          Debug.printMessage(this, "sending game update");
           this.outboundServerHandler.sendGameStart(player.getUsername(), this.game.getGameState());
 
-          this.outboundServerHandler.requestTurn(player.getUsername());
+          if(this.game.getGameState().getPlayerCurrent().equals(player)) {
+            Debug.printMessage(this, "requesting game from 2ai");
+            this.outboundServerHandler.requestTurn(player.getUsername());
+          }
 
         } catch (DeploymentException e) {
           e.printStackTrace();

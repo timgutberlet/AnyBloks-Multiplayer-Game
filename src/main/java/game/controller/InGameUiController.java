@@ -596,13 +596,19 @@ public abstract class InGameUiController extends AbstractUiController {
       //now that all clients have left, reset & stop the server
       gameSession.getHostServer().stopWebsocket();
       gameController.setActiveUiController(
-          new LocalQuitUiController(gameController, gameSession, true));
+          new MainMenuUiController(gameController));;
 
     } else {
       //Player is a remote player
       this.gameSession.getClientHandler().disconnectClient();
       gameController.setActiveUiController(
           new MainMenuUiController(gameController));
+    }
+
+    try {
+      TimeUnit.MILLISECONDS.sleep(2000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
     }
 
 //    Debug.printMessage(
@@ -658,7 +664,7 @@ public abstract class InGameUiController extends AbstractUiController {
     //Paint scorepanes by gamemode
     stackPanes.clear();
     stacks.getChildren().clear();
-    Debug.printMessage(game.getGamemode().getName());
+    //Debug.printMessage(game.getGamemode().getName());
     switch (game.getGamemode().getName()) {
       case "JUNIOR":
       case "DUO":
