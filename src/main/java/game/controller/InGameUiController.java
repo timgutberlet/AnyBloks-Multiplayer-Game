@@ -1010,6 +1010,7 @@ public abstract class InGameUiController extends AbstractUiController {
     if (this.gameSession.isGameOver()) {
       Debug.printMessage("GAME IS OVER");
       //Sending user to ScoreBoard
+
       ScoreBoardUiController.sortScoreBoard(gameSession);
       gameController.setActiveUiController(
           new ScoreBoardUiController(gameController, gameSession));

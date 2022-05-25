@@ -321,9 +321,9 @@ public class ClientHandler {
 
     GameSession gameSession = this.client.getGameSession();
     gameSession.setGameList(gameWinPacket.getGameList());
-    gameSession.setGameOver(true);
     gameSession.setGameScoreBoard(gameWinPacket.getGameScoreBoard());
     gameSession.setGameSessionScoreBoard(gameWinPacket.getGameSessionScoreBoard());
+    gameSession.setGameOver(true);
     getAfterMatchAiComment(this.gameSession);
   }
 

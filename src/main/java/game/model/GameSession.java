@@ -678,8 +678,8 @@ public class GameSession {
    * @param gameList game list
    */
   public void setGameList(LinkedList<GameMode> gameList) {
-    if (gameList.size() > 1) {
-      multiRound = true;
+    if (gameList.size() >= 1) {
+      this.multiRound = true;
     }
     this.gameList = gameList;
   }
