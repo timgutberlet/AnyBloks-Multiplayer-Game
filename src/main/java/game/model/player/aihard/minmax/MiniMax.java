@@ -143,7 +143,7 @@ public class MiniMax {
    * @param board analyzed board
    * @param c     considered color
    * @return returns the evaluation, which subtracts the score of the opponents from the score of
-   * the considered color
+   *         the considered color
    */
   static int evaluate(Board board, Color c) {
     return board.getScoreOfColorMiniMax(c);

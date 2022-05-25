@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -13,42 +12,44 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.SettingUiController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.controller.SettingUiController">
   <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     <children>
       <GridPane alignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <children>
           <GridPane prefHeight="112.0" prefWidth="1280.0" GridPane.rowIndex="1">
             <children>
-              <Button mnemonicParsing="false" onAction="#back" prefHeight="60.0" prefWidth="150.0" text="BACK">
-                <GridPane.margin>
-                  <Insets bottom="30.0" left="10.0" />
-                </GridPane.margin>
-                <font>
-                  <Font size="25.0" />
-                </font>
-              </Button>
               <Button mnemonicParsing="false" onAction="#reset" prefHeight="60.0" prefWidth="150.0" text="RESET" GridPane.columnIndex="1">
                 <font>
                   <Font size="25.0" />
                 </font>
               </Button>
-              <Button mnemonicParsing="false" onAction="#close" prefHeight="60.0" prefWidth="150.0" text="CLOSE" GridPane.columnIndex="2">
-                <font>
-                  <Font size="25.0" />
-                </font>
-                <GridPane.margin>
-                  <Insets bottom="30.0" right="10.0" />
-                </GridPane.margin>
-              </Button>
+                     <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <children>
+                        <Button mnemonicParsing="false" onAction="#back" prefHeight="60.0" prefWidth="150.0" text="BACK">
+                        <font>
+                        <Font size="25.0" />
+                        </font>
+                        </Button>
+                        </children>
+                     </VBox>
+                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                        <children>
+                        <Button mnemonicParsing="false" onAction="#close" prefHeight="60.0" prefWidth="150.0" text="CLOSE">
+                        <font>
+                        <Font size="25.0" />
+                        </font>
+                        </Button>
+                        </children>
+                     </HBox>
             </children>
             <columnConstraints>
-              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
+              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" />
               <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
+              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="180.0" minWidth="180.0" prefWidth="180.0" />
             </columnConstraints>
             <rowConstraints>
-              <RowConstraints minHeight="68.0" prefHeight="68.0" valignment="CENTER" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
             </rowConstraints>
           </GridPane>
           <GridPane>
@@ -295,7 +296,6 @@
   </GridPane>
   <GridPane layoutX="900.0" layoutY="797.0" prefHeight="290.0" prefWidth="200.0">
     <children>
-      <AnchorPane prefHeight="70.0" prefWidth="200.0" />
       <AnchorPane prefHeight="70.0" prefWidth="200.0" GridPane.rowIndex="1" />
       <AnchorPane prefHeight="84.0" prefWidth="200.0" GridPane.rowIndex="2" />
       <AnchorPane prefHeight="84.0" prefWidth="200.0" GridPane.rowIndex="3" />

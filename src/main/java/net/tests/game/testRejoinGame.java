@@ -17,7 +17,7 @@ import net.packet.game.InitSessionPacket;
 import net.transmission.EndpointClient;
 
 /**
- * Tests only
+ * Tests only.
  *
  * @author tgeilen
  */

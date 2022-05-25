@@ -467,8 +467,8 @@ public class BoardSquare extends Board implements Serializable, Cloneable {
    * @param y            y value of the position
    * @param isFirstRound boolean, if it is the first Round
    * @param poly         given polygon
-   * @return list turns which contain the poly and a tuple out of integers: {row, column, rotation,
-   * mirrored}
+   * @return list turns which contain the poly and tuple out of integers:
+   *         {row, column, rotation,mirrored}
    */
   private ArrayList<Turn> getPolyShadesPossible(int x, int y, PolySquare poly,
       boolean isFirstRound) {

@@ -17,7 +17,7 @@ import net.packet.chat.ChatMessagePacket;
 import net.transmission.EndpointClient;
 
 /**
- * Tests only
+ * Tests only.
  *
  * @author tgeilen
  */

@@ -513,6 +513,11 @@ public abstract class InGameUiController extends AbstractUiController {
     buttonBox.getChildren().add(quitButton);
     buttonBox.getChildren().add(chatButton);
     buttonBox.getChildren().add(skipTurnButton);
+    double errerHeight = gameController.getStage().getScene().getHeight();
+    double errerWidth = gameController.getStage().getScene().getWidth();
+    errorLabel.setTranslateX(10);
+    errorLabel.setTranslateY(errerHeight - 35);
+    anchorPane.getChildren().add(errorLabel);
     container.getChildren().add(buttonBox);
     this.root.getChildren().add(anchorPane);
     //Init the right css by theme
@@ -649,6 +654,7 @@ public abstract class InGameUiController extends AbstractUiController {
       turn.setText(
           this.gameSession.getGame().getGameState().getPlayerCurrent().getUsername() + " 's Turn");
     }
+    if(moveCheck == 0){
     //Paint scorepanes by gamemode
     stackPanes.clear();
     stacks.getChildren().clear();
@@ -675,8 +681,8 @@ public abstract class InGameUiController extends AbstractUiController {
       default:
         break;
     }
+  }
     errorLabel.setText(errorLabelText);
-    stacks.getChildren().add(errorLabel);
     errorLabel.setVisible(!Config.getStringValue("TOOLTIPS").equals("OFF"));
   }
 
@@ -815,6 +821,19 @@ public abstract class InGameUiController extends AbstractUiController {
       //Check if Player has Turn
       //Debug.printMessage(this, this.localPlayer.getUsername() + " " + this.localPlayer);
       if (this.gameSession.isLocalPlayerTurn()) {
+        //Checks if a Poly has no moves anymore in this turn. Then color it grey
+        if(moveCheck == 1){
+          for (PolyPane polyForPiece : stackPanes.get(gameSession.getPlayerList().indexOf(localPlayer))
+              .getPolyPanes()) {
+            if (this.gameSession.getGame().getGameState().getBoard().getPossibleFieldsForPoly(
+                polyForPiece.getPoly(), this.gameSession.getGame().getGameState().isFirstRound()).size() == 0) {
+              polyForPiece.setPolyColor();
+              polyForPiece.setPoly();
+            }else{
+              polyForPiece.resetPolyColor();
+            }
+          }
+        }
         help = "";
         for (ChatMessage chatMessage : gameSession.getChat().getChatMessages()) {
           if (!alreadyInChat.contains(chatMessage.getTime() + " "

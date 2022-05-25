@@ -23,7 +23,7 @@ import net.server.HashingHandler;
 import net.transmission.EndpointClient;
 
 /**
- * Tests only
+ * Tests only.
  *
  * @author tgeilen
  */

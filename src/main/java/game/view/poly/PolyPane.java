@@ -20,6 +20,7 @@ public class PolyPane extends Pane {
   protected Field checkPolyField;
   protected InputHandler inputHandler;
   protected double size;
+  protected boolean polyGrey;
 
   /**
    * PolyPane to display Poly.
@@ -34,6 +35,13 @@ public class PolyPane extends Pane {
   }
 
   public void setPoly() {
+  }
+
+  public void setPolyColor(){
+    polyGrey = true;
+  }
+  public void resetPolyColor(){
+    polyGrey = false;
   }
 
   public Poly getPoly() {

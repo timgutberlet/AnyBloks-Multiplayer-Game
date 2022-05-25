@@ -21,7 +21,7 @@ import net.server.HostServer;
 import net.transmission.EndpointClient;
 
 /**
- * Tests only
+ * Tests only.
  *
  * @author tbuscher
  */

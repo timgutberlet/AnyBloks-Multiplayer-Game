@@ -416,7 +416,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    * @param remainingPolys list of remaining polys
    * @param isFirstRound   boolean, if it is the first round
    * @return returns a List with all the possible moves. This class contains position, rotation and
-   * if the polygon has to be mirrored.
+   *         if the polygon has to be mirrored.
    */
   @Override
   public ArrayList<Turn> getPossibleMoves(ArrayList<Poly> remainingPolys, boolean isFirstRound) {
@@ -486,7 +486,7 @@ public class BoardTrigon extends Board implements Serializable, Cloneable {
    * @param isFirstRound boolean, if it is the first Round
    * @param poly         given polygon
    * @return list turns which contain the poly and a tuple out of integers: {row, column, rotation,
-   * mirrored}
+   *         mirrored}
    */
   private ArrayList<Turn> getPolyShadesPossible(int x, int y, int isRight, PolyTrigon poly,
       boolean isFirstRound) {

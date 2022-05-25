@@ -99,25 +99,6 @@ public class MainMenuUiController extends AbstractUiController {
   }
 
   /**
-   * Method to Start Tutuorial.
-   *
-   * @author tgutberl
-   */
-  @FXML
-  public void tutorial() {
-    if (Desktop.isDesktopSupported()) {
-      try {
-        File myFile = new File(getClass().getResource("/documents/UserManual.pdf").getFile());
-        //File myFile = new File("/src/main/resources/documents/UserManual.pdf");
-        Desktop.getDesktop().open(myFile);
-      } catch (IOException ex) {
-        // no application registered for PDFs
-        Debug.printMessage("");
-      }
-    }
-  }
-
-  /**
    * Method to get into SettingController - to get into SettingUI.
    *
    * @author tgutberl

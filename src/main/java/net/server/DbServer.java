@@ -1,10 +1,5 @@
 package net.server;
 
-/**
- * @author tgeilen
- * @Date 24.05.22
- */
-
 import game.config.Config;
 import game.scores.GameScoreBoard;
 import game.scores.ScoreProvider;

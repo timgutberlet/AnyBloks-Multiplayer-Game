@@ -1,10 +1,5 @@
 package net.server;
 
-/**
- * @author tgeilen
- * @Date 24.05.22
- */
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;

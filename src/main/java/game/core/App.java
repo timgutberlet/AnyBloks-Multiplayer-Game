@@ -15,6 +15,11 @@ public class App extends Application {
 
   private GameController controller;
 
+  /**
+   * Loads the Config and starts the application.
+   *
+   * @param args Args of call of Main Method
+   */
   public static void main(String[] args) {
     Config.loadProperty();
     Config.saveProperty();
