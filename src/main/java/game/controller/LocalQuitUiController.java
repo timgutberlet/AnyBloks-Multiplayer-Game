@@ -4,7 +4,6 @@ import engine.controller.AbstractGameController;
 import engine.controller.AbstractUiController;
 import game.config.Config;
 import game.model.GameSession;
-import game.model.player.PlayerType;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
@@ -12,9 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import net.packet.abstr.PacketType;
-import net.packet.abstr.WrappedPacket;
-import net.packet.game.HostQuitPacket;
 
 /**
  * Controller used manage the local Quit view.
@@ -59,7 +55,7 @@ public class LocalQuitUiController extends AbstractUiController {
       e.printStackTrace();
     }
     init(super.root);
-//Make sure that all clients have left.
+    //Make sure that all clients have left.
     if (host) {
       try {
         TimeUnit.MILLISECONDS.sleep(1000);
