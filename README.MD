@@ -1,6 +1,6 @@
 # README
 ## About the game
-The game AnyBloks is based on the board game blokus and is playable alone against Ai or against up to 3 real players that are in your network!
+The game AnyBloks is inspired on the board game blokus and is playable alone against Ai or against up to 3 real players that are in your network!
 ## How to play:
 Run the jar provided in the folder "additional resources" and read the UserManual.pdf provided in the same Folder.
 ## Documentation
