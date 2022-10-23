@@ -10,3 +10,5 @@ To read the full development documentation, requirements analysis and team, read
 Get the Java-FX Sdk --> bin --> copy all dlls into the Project Structure
 ### Mac: 
 Build the Jar, rename it to bloks3.jar, open in Winrar and Edit the MANIFEST.MF like its also in the IDE
+## Credits:
+This game was developed in coorporation with Tore Buscher, Tobias Geilen, Linus Baudenbacher, Tilmann Otto and me.
